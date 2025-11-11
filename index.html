@@ -3,17 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Saheb Ali - Photoshop Designer & Data Entry Specialist</title>
+    <title>Fabric Prints - Custom Almirah Printing Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* --- Variables & Base Setup --- */
         :root {
-            --primary: #007BFF;
-            --primary-dark: #0056b3;
-            --secondary: #6c757d;
+            --primary: #8B4513;
+            --primary-dark: #654321;
+            --secondary: #D2691E;
             --light: #f8f9fa;
             --dark: #343a40;
-            --gradient: linear-gradient(135deg, #007BFF 0%, #0056b3 100%);
+            --accent: #CD853F;
+            --gradient: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
@@ -100,8 +101,8 @@
 
         /* --- Header & Hero Section --- */
         header {
-            background: linear-gradient(rgba(0, 123, 255, 0.7), rgba(0, 91, 179, 0.7)), 
-                        url('https://www.vgrow.co/wp-content/uploads/2023/05/desktop-publishing-services.jpg') center/cover no-repeat;
+            background: linear-gradient(rgba(139, 69, 19, 0.7), rgba(210, 105, 30, 0.7)), 
+                        url('https://images.unsplash.com/photo-1567401893414-76b7b1e5a7a5?ixlib=rb-4.0.3&auto=format&fit=crop&w=1350&q=80') center/cover no-repeat;
             color: white;
             min-height: 100vh;
             display: flex;
@@ -192,14 +193,14 @@
             display: block;
         }
 
-        .skills {
+        .features {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
             margin-top: 2rem;
         }
 
-        .skill {
+        .feature {
             background: var(--light);
             padding: 8px 15px;
             border-radius: 50px;
@@ -306,7 +307,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 123, 255, 0.8);
+            background: rgba(139, 69, 19, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -324,6 +325,44 @@
 
         .portfolio-info h3 {
             margin-bottom: 0.5rem;
+        }
+
+        /* --- Process Section --- */
+        #process {
+            background: var(--light);
+        }
+
+        .process-steps {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 250px;
+            text-align: center;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            position: relative;
+        }
+
+        .step-number {
+            width: 50px;
+            height: 50px;
+            background: var(--gradient);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin: 0 auto 1.5rem;
         }
 
         /* --- Contact Section --- */
@@ -439,6 +478,10 @@
             .hero-content h1 {
                 font-size: 2.8rem;
             }
+            
+            .process-steps {
+                flex-direction: column;
+            }
         }
 
         @media (max-width: 768px) {
@@ -468,12 +511,12 @@
         <div class="container">
             <div class="hero-content">
                 <div class="profile-img">
-                    <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="Saheb Ali">
+                    <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="Fabric Prints Logo">
                 </div>
-                <h1>Saheb Ali</h1>
-                <p class="subtitle">Photoshop Designer & Data Entry Specialist</p>
-                <p>Delivering 100% accurate work to support your administrative and creative needs</p>
-                <a href="#contact" class="btn">Get In Touch</a>
+                <h1>Fabric Prints</h1>
+                <p class="subtitle">Custom Almirah Printing Services</p>
+                <p>Transform your almirah with beautiful custom prints. Choose from our designs or bring your own!</p>
+                <a href="#contact" class="btn">Get Your Custom Print</a>
             </div>
         </div>
         <a href="#about" class="scroll-down">
@@ -484,24 +527,24 @@
     <!-- About Section -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title">About Me</h2>
+            <h2 class="section-title">About Our Service</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>A precise and reliable freelancer specializing in data management and basic graphic design. My focus is on delivering 100% accurate work to support your administrative and creative needs.</p>
-                    <p>With a keen eye for detail and a passion for organization, I help businesses streamline their data processes and create visually appealing graphics that communicate effectively.</p>
-                    <div class="skills">
-                        <span class="skill">Data Entry</span>
-                        <span class="skill">Excel</span>
-                        <span class="skill">Word</span>
-                        <span class="skill">PowerPoint</span>
-                        <span class="skill">Adobe Photoshop</span>
-                        <span class="skill">Data Cleaning</span>
-                        <span class="skill">Photo Editing</span>
-                        <span class="skill">Document Formatting</span>
+                    <p>At Fabric Prints, we specialize in custom fabric printing for almirahs and other home textiles. Whether you prefer a traditional two-palla design or a modern three-palla pattern, we bring your vision to life with precision and care.</p>
+                    <p>Our state-of-the-art printing technology ensures vibrant, long-lasting colors that won't fade or peel. You can choose from our extensive catalog of designs or provide your own images and patterns for a truly personalized touch.</p>
+                    <div class="features">
+                        <span class="feature">Custom Designs</span>
+                        <span class="feature">Two-Palla Patterns</span>
+                        <span class="feature">Three-Palla Patterns</span>
+                        <span class="feature">Customer Images</span>
+                        <span class="feature">High-Quality Printing</span>
+                        <span class="feature">Fast Turnaround</span>
+                        <span class="feature">Durable Results</span>
+                        <span class="feature">Affordable Pricing</span>
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Working on computer">
+                    <img src="Image/choos.jpg" alt="Fabric printing process">
                 </div>
             </div>
         </div>
@@ -510,30 +553,59 @@
     <!-- Services Section -->
     <section id="services">
         <div class="container">
-            <h2 class="section-title">My Services</h2>
+            <h2 class="section-title">Our Services</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-table"></i>
+                        <i class="fas fa-vector-square"></i>
                     </div>
-                    <h3>Data Entry & Management</h3>
-                    <p>Fast and precise data entry from any source (PDF, websites, images) into Excel or Word. Data cleaning, spreadsheet formatting, and removal of duplicate entries.</p>
+                    <h3>Two-Palla Designs</h3>
+                    <p>Traditional two-palla patterns with intricate borders and classic motifs perfect for traditional home decor.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-paint-brush"></i>
+                        <i class="fas fa-border-all"></i>
                     </div>
-                    <h3>Adobe Photoshop</h3>
-                    <p>Design Your Flyers, Books Front Pages, Business Cards & Stationery, image resizing, and simple social media graphics or banners.</p>
+                    <h3>Three-Palla Designs</h3>
+                    <p>Modern three-palla patterns with contemporary designs that add a fresh look to your almirah.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-file-alt"></i>
+                        <i class="fas fa-images"></i>
                     </div>
-                    <h3>Microsoft Office Suite</h3>
-                    <p>Professional document formatting in Word, data organization in Excel, and clean,Create professional presentation in PowerPoint.</p>
+                    <h3>Custom Image Printing</h3>
+                    <p>Print your own photos, artwork, or designs directly onto fabric for a truly personalized almirah.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section id="process">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Design</h3>
+                    <p>Select from our catalog or provide your own image/design for printing.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3>Select Palla Style</h3>
+                    <p>Decide between traditional two-palla or modern three-palla patterns.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3>Place Your Order</h3>
+                    <p>Contact us with your requirements and fabric measurements.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">4</div>
+                    <h3>Receive Your Print</h3>
+                    <p>We print and deliver your custom fabric ready for your almirah.</p>
                 </div>
             </div>
         </div>
@@ -542,44 +614,44 @@
     <!-- Portfolio Section -->
     <section id="portfolio">
         <div class="container">
-            <h2 class="section-title">My Work</h2>
+            <h2 class="section-title">Our Work</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
                     <div class="portfolio-img">
-                        <img src="https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Excel Data Cleaning">
+                        <img src="Image/2palla.jpg" alt="Traditional Two-Palla Design">
                         <div class="portfolio-overlay">
                             <a href="#" class="btn">View Details</a>
                         </div>
                     </div>
                     <div class="portfolio-info">
-                        <h3>Excel _Data Entry</h3>
-                        <p>Organized and cleaned large datasets for improved analysis.</p>
+                        <h3>Traditional Two-Palla</h3>
+                        <p>Classic design with intricate border patterns.</p>
                     </div>
                 </div>
 
                 <div class="portfolio-item">
                     <div class="portfolio-img">
-                        <img src="https://images.unsplash.com/photo-1545235617-9465d2a55698?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Photoshop Background Removal">
+                        <img src="Image/3palla.jpg" alt="Modern Three-Palla Design">
                         <div class="portfolio-overlay">
                             <a href="#" class="btn">View Details</a>
                         </div>
                     </div>
                     <div class="portfolio-info">
-                        <h3>Photoshop Design</h3>
-                        <p>Design Your Flyers, Books Front Pages, Business Cards & Stationery.</p>
+                        <h3>Modern Three-Palla</h3>
+                        <p>Contemporary patterns with vibrant colors.</p>
                     </div>
                 </div>
 
                 <div class="portfolio-item">
                     <div class="portfolio-img">
-                        <img src="https://cdn-dynmedia-1.microsoft.com/is/image/microsoftcorp/1038004-2-hero-background-2000x725?resMode=sharp2&op_usm=1.5,0.65,15,0&wid=2000&hei=725&qlt=100&fmt=png-alpha&fit=constrain" alt="Word Document Formatting">
+                        <img src="Image/choos.jpg" alt="Custom Photo Print">
                         <div class="portfolio-overlay">
                             <a href="#" class="btn">View Details</a>
                         </div>
                     </div>
                     <div class="portfolio-info">
-                        <h3>Word Document Formatting</h3>
-                        <p>Professional formatting for business reports and documents.</p>
+                        <h3>Custom Photo Print</h3>
+                        <p>Personalized design with customer's own image.</p>
                     </div>
                 </div>
             </div>
@@ -591,7 +663,7 @@
         <div class="container">
             <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
-                <p>I am available for freelance projects and new opportunities. Let's discuss how I can help with your data management and design needs.</p>
+                <p>Ready to transform your almirah with beautiful custom prints? Contact us today to discuss your design ideas and get a quote.</p>
                 
                 <div class="contact-info">
                     <div class="contact-item">
@@ -606,31 +678,36 @@
                     
                     <div class="contact-item">
                         <div class="contact-icon">
+                            <i class="fas fa-phone"></i>
+                        </div>
+                        <div>
+                            <h4>Phone</h4>
+                            <p>+91 6003816583</p>
+                        </div>
+                    </div>
+                    
+                    <div class="contact-item">
+                        <div class="contact-icon">
                             <i class="fab fa-whatsapp"></i>
                         </div>
                         <div>
-                            <h4>whatsapp</h4>
-                            <p></p>
+                            <h4>WhatsApp</h4>
+                            <p>+91 6003816583 </p>
                         </div>
                     </div>
                 </div>
                 
-                <a href="mailto:alifreeluncher20@gmail.com" class="btn">Email Me</a>
+                <a href="mailto:alifreeluncher20@gmail.com" class="btn">Email Us</a>
                 
                 <div class="social-links">
                     <a href="#" class="social-link">
-                        <i class="fab fa-linkedin-in"></i>
-                    </a>
-                    <a href="#" class="social-link">
-                        <i class="fab fa-twitter"></i>
+                        <i class="fab fa-facebook-f"></i>
                     </a>
                     <a href="https://www.instagram.com/__saheb_ali/" class="social-link">
                         <i class="fab fa-instagram"></i>
                     </a>
                     <a href="https://www.facebook.com/people/Saheb-Ali/100050209846406" class="social-link">
-                        <i class="fab fa-facebook-f"></i>
-
-                       
+                        <i class="fab fa-pinterest"></i>
                     </a>
                 </div>
             </div>
@@ -640,7 +717,7 @@
     <!-- Footer -->
     <footer>
         <div class="container">
-            <p>&copy; 2025 Saheb Ali. All rights reserved.</p>
+            <p>Powerded by Saheb Ali- <a href="eduspark.site"></a>Edu SmartSpark</p>
         </div>
     </footer>
 
