@@ -3,19 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAHEB' DIGITAL HUB - DTP, Design & Shopping Services</title>
+    <title>Saheb ali - Custom Almirah Printing Services</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         /* --- Variables & Base Setup --- */
         :root {
-            /* Changed to a more "Digital/Tech" color palette */
-            --primary: #0056b3;
-            --primary-dark: #004494;
-            --secondary: #00a8e8;
-            --light: #f0f8ff;
-            --dark: #1a1a1a;
-            --accent: #ffc107;
-            --gradient: linear-gradient(135deg, #0056b3 0%, #00a8e8 100%);
+            --primary: #8B4513;
+            --primary-dark: #654321;
+            --secondary: #D2691E;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --accent: #CD853F;
+            --gradient: linear-gradient(135deg, #8B4513 0%, #D2691E 100%);
             --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
             --transition: all 0.3s ease;
         }
@@ -102,9 +101,8 @@
 
         /* --- Header & Hero Section --- */
         header {
-            /* Updated background for a digital/tech look */
-            background: linear-gradient(rgba(0, 20, 50, 0.8), rgba(0, 86, 179, 0.7)), 
-                        url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80') center/cover no-repeat;
+            background: linear-gradient(rgba(139, 69, 19, 0.7), rgba(210, 105, 30, 0.7)), 
+                        url('https://wearebluegrass.com/wp-content/uploads/2024/05/Screen-Print-vs-Digital-Print-3-1.png') center/cover no-repeat;
             color: white;
             min-height: 100vh;
             display: flex;
@@ -142,7 +140,6 @@
             overflow: hidden;
             box-shadow: var(--shadow);
             animation: fadeIn 1.5s ease;
-            background: white;
         }
 
         .profile-img img {
@@ -209,8 +206,6 @@
             border-radius: 50px;
             font-size: 0.9rem;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            color: var(--primary-dark);
-            font-weight: 600;
         }
 
         /* --- Services Section --- */
@@ -235,7 +230,6 @@
             position: relative;
             overflow: hidden;
             z-index: 1;
-            height: 100%;
         }
 
         .service-card::before {
@@ -266,28 +260,6 @@
             margin-bottom: 1.5rem;
             display: inline-block;
         }
-        
-        .service-list {
-            list-style: none;
-            text-align: left;
-            margin-top: 1rem;
-        }
-        
-        .service-list li {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            padding-left: 1.2rem;
-            position: relative;
-        }
-        
-        .service-list li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            color: var(--secondary);
-            position: absolute;
-            left: 0;
-        }
 
         /* --- Portfolio Section --- */
         #portfolio {
@@ -316,7 +288,6 @@
             height: 250px;
             overflow: hidden;
             position: relative;
-            background: #eee;
         }
 
         .portfolio-img img {
@@ -336,7 +307,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0, 86, 179, 0.8);
+            background: rgba(139, 69, 19, 0.8);
             display: flex;
             align-items: center;
             justify-content: center;
@@ -535,191 +506,164 @@
 </head>
 <body>
 
+    <!-- Header & Hero Section -->
     <header>
         <div class="container">
             <div class="hero-content">
                 <div class="profile-img">
-                    <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="SAHEB' DIGITAL HUB Logo">
+                    <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="Fabric Prints Logo">
                 </div>
-                <h1>SAHEB' DIGITAL HUB</h1>
-                <p class="subtitle">Professional DTP, Design, and Online Shopping</p>
-                <p>Your one-stop destination for digital solutions—from professional documentation to brand design—and a curated online store for lifestyle products.</p>
-                <a href="#contact" class="btn">Get in Touch</a>
+                <h1>Saheb Ali</h1>
+                <p class="subtitle">Custom Almirah Printing Services</p>
+                <p>Transform your almirah with beautiful custom prints. Choose from our designs or bring your own!</p>
+                <a href="#contact" class="btn">Get Your Custom Print</a>
             </div>
         </div>
-        <a href="#services" class="scroll-down">
+        <a href="#about" class="scroll-down">
             <i class="fas fa-chevron-down"></i>
         </a>
     </header>
 
+    <!-- About Section -->
     <section id="about">
         <div class="container">
-            <h2 class="section-title">About Our Hub</h2>
+            <h2 class="section-title">About Our Service</h2>
             <div class="about-content">
                 <div class="about-text">
-                    <p>At <strong>SAHEB' DIGITAL HUB</strong>, we are dedicated to simplifying your digital and lifestyle needs. We combine professional office services with creative design solutions to help businesses and students alike.</p>
-                    <p>Whether you need complex documents typed and formatted, a stunning new logo for your brand, or are looking for the latest fashion accessories, we have you covered. We pride ourselves on accuracy, creativity, and reliable delivery.</p>
+                    <p>At Fabric Prints, we specialize in custom fabric printing for almirahs and other home textiles. Whether you prefer a traditional two-palla design or a modern three-palla pattern, we bring your vision to life with precision and care.</p>
+                    <p>Our state-of-the-art printing technology ensures vibrant, long-lasting colors that won't fade or peel. You can choose from our extensive catalog of designs or provide your own images and patterns for a truly personalized touch.</p>
                     <div class="features">
-                        <span class="feature">DTP Expert</span>
-                        <span class="feature">Question Paper Making</span>
-                        <span class="feature">Graphic Design</span>
-                        <span class="feature">Video Editing</span>
-                        <span class="feature">Brand Logos</span>
-                        <span class="feature">Online Shopping</span>
-                        <span class="feature">Product On-Demand</span>
+                        <span class="feature">Custom Designs</span>
+                        <span class="feature">Two-Palla Patterns</span>
+                        <span class="feature">Three-Palla Patterns</span>
+                        <span class="feature">Customer Images</span>
+                        <span class="feature">High-Quality Printing</span>
+                        <span class="feature">Fast Turnaround</span>
+                        <span class="feature">Durable Results</span>
+                        <span class="feature">Affordable Pricing</span>
                     </div>
                 </div>
                 <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Digital Workspace">
+                    <img src="Image/3palla.jpg" alt="Fabric printing process">
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Services Section -->
     <section id="services">
         <div class="container">
-            <h2 class="section-title">Our Premium Services</h2>
+            <h2 class="section-title">Our Services</h2>
             <div class="services-grid">
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-file-alt"></i>
+                        <i class="fas fa-vector-square"></i>
                     </div>
-                    <h3>DTP Services</h3>
-                    <p>Complete document solutions with proper formatting and professional design.</p>
-                    <ul class="service-list">
-                        <li>Question Paper Making</li>
-                        <li>Digital Document Typing (Word)</li>
-                        <li>Report Generation & Formatting</li>
-                        <li>Data Entry (Excel)</li>
-                        <li>High-Quality Presentations (PowerPoint)</li>
-                    </ul>
+                    <h3>Two-Palla Designs</h3>
+                    <p>Traditional two-palla patterns with intricate borders and classic motifs perfect for traditional home decor.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-pen-nib"></i>
+                        <i class="fas fa-border-all"></i>
                     </div>
-                    <h3>Graphic Design</h3>
-                    <p>Creative visual solutions to elevate your brand identity.</p>
-                    <ul class="service-list">
-                        <li>Brand Logo Design</li>
-                        <li>Customized Banners & Posters</li>
-                        <li>Photo Retouching</li>
-                        <li>Visualizing & Creative Art</li>
-                        <li>Photoshop Editing</li>
-                    </ul>
+                    <h3>Three-Palla Designs</h3>
+                    <p>Modern three-palla patterns with contemporary designs that add a fresh look to your almirah.</p>
                 </div>
 
                 <div class="service-card">
                     <div class="service-icon">
-                        <i class="fas fa-video"></i>
+                        <i class="fas fa-images"></i>
                     </div>
-                    <h3>Video Services</h3>
-                    <p>Professional video editing to make your content stand out.</p>
-                    <ul class="service-list">
-                        <li>Video Editing</li>
-                        <li>Content Visualizing</li>
-                        <li>Social Media Clips</li>
-                        <li>Promo Videos</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-                    <h3>Online Store</h3>
-                    <p>We provide high-quality products delivered according to your demand.</p>
-                    <ul class="service-list">
-                        <li>Fashion Accessories</li>
-                        <li>Cosmetic Products</li>
-                        <li>Product Sourcing on Demand</li>
-                        <li>Home Delivery</li>
-                    </ul>
+                    <h3>Custom Image Printing</h3>
+                    <p>Print your own photos, artwork, or designs directly onto fabric for a truly personalized almirah.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Process Section -->
     <section id="process">
         <div class="container">
-            <h2 class="section-title">How We Work</h2>
+            <h2 class="section-title">How It Works</h2>
             <div class="process-steps">
                 <div class="process-step">
                     <div class="step-number">1</div>
-                    <h3>Request Service</h3>
-                    <p>Send us your document details, design requirements, or product list.</p>
+                    <h3>Choose Your Design</h3>
+                    <p>Select from our catalog or provide your own image/design for printing.</p>
                 </div>
                 <div class="process-step">
                     <div class="step-number">2</div>
-                    <h3>Customization</h3>
-                    <p>We design your document/logo or source the exact product you demanded.</p>
+                    <h3>Select Palla Style</h3>
+                    <p>Decide between traditional two-palla or modern three-palla patterns.</p>
                 </div>
                 <div class="process-step">
                     <div class="step-number">3</div>
-                    <h3>Review & Approval</h3>
-                    <p>Review the digital draft or confirm the product availability and price.</p>
+                    <h3>Place Your Order</h3>
+                    <p>Contact us with your requirements and fabric measurements.</p>
                 </div>
                 <div class="process-step">
                     <div class="step-number">4</div>
-                    <h3>Delivery</h3>
-                    <p>Receive your final digital files or get your products delivered.</p>
+                    <h3>Receive Your Print</h3>
+                    <p>We print and deliver your custom fabric ready for your almirah.</p>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Portfolio Section -->
     <section id="portfolio">
         <div class="container">
-            <h2 class="section-title">Recent Work & Products</h2>
+            <h2 class="section-title">Our Work</h2>
             <div class="portfolio-grid">
                 <div class="portfolio-item">
                     <div class="portfolio-img">
-                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="DTP Work">
+                        <img src="Image/2palla.jpg" alt="Traditional Two-Palla Design">
                         <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Order Now</a>
+                            <a href="#" class="btn">View Details</a>
                         </div>
                     </div>
                     <div class="portfolio-info">
-                        <h3>Document Design</h3>
-                        <p>Professional Reports & Presentations</p>
+                        <h3>Traditional Two-Palla</h3>
+                        <p>Classic design with intricate border patterns.</p>
                     </div>
                 </div>
 
                 <div class="portfolio-item">
                     <div class="portfolio-img">
-                        <img src="https://res.cloudinary.com/vistaprint/images/w_1284,h_600,c_scale/f_auto,q_auto/v1753970636/ideas-and-advice-prod/blogadmin/Marquee_Famous-logos/Marquee_Famous-logos.jpg?_i=AA" alt="Graphic Design">
+                        <img src="Image/3palla.jpg" alt="Modern Three-Palla Design">
                         <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Contact Us</a>
+                            <a href="#" class="btn">View Details</a>
                         </div>
                     </div>
                     <div class="portfolio-info">
-                        <h3>Brand Branding</h3>
-                        <p>Logos & Banners</p>
+                        <h3>Modern Three-Palla</h3>
+                        <p>Contemporary patterns with vibrant colors.</p>
                     </div>
                 </div>
 
                 <div class="portfolio-item">
                     <div class="portfolio-img">
-                        <img src="https://www.shutterstock.com/image-photo/womens-fashion-accessories-cosmetics-pastel-260nw-1102914416.jpg" alt="Shopping Products">
+                        <img src="Image/choos.jpg" alt="Custom Photo Print">
                         <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Buy Now</a>
+                            <a href="#" class="btn">View Details</a>
                         </div>
                     </div>
                     <div class="portfolio-info">
-                        <h3>Fashion & Cosmetics</h3>
-                        <p>Trending Accessories</p>
+                        <h3>Custom Photo Print</h3>
+                        <p>Personalized design with customer's own image.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
+    <!-- Contact Section -->
     <section id="contact">
         <div class="container">
-            <h2 class="section-title">Contact Us</h2>
+            <h2 class="section-title">Get In Touch</h2>
             <div class="contact-content">
-                <p>Need a document typed, a logo designed, or looking for a specific product? Contact SAHEB' DIGITAL HUB today!</p>
+                <p>Ready to transform your almirah with beautiful custom prints? Contact us today to discuss your design ideas and get a quote.</p>
                 
                 <div class="contact-info">
                     <div class="contact-item">
@@ -748,12 +692,12 @@
                         </div>
                         <div>
                             <h4>WhatsApp</h4>
-                            <p>+91 6003816583</p>
+                            <p>+91 6003816583 </p>
                         </div>
                     </div>
                 </div>
                 
-                <a href="https://wa.me/916003816583" class="btn">Chat on WhatsApp</a>
+                <a href="mailto:alifreeluncher20@gmail.com" class="btn">Email Us</a>
                 
                 <div class="social-links">
                     <a href="#" class="social-link">
@@ -770,9 +714,10 @@
         </div>
     </section>
 
+    <!-- Footer -->
     <footer>
         <div class="container">
-            <p>Powered by Saheb Ali - SAHEB' DIGITAL HUB</p>
+            <p>Powerded by Saheb Ali </p>
         </div>
     </footer>
 
