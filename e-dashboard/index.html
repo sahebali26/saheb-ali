@@ -1,0 +1,808 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profit Calculator for Online Selling</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #4a6fa5;
+            --primary-dark: #385d8a;
+            --secondary: #6b8e23;
+            --danger: #e74c3c;
+            --success: #2ecc71;
+            --warning: #f39c12;
+            --light: #f8f9fa;
+            --dark: #343a40;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: var(--dark);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        header {
+            background: linear-gradient(to right, var(--primary), var(--primary-dark));
+            color: white;
+            padding: 25px 0;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        header h1 i {
+            font-size: 2.2rem;
+        }
+
+        header p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .tabs {
+            display: flex;
+            background-color: white;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        }
+
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 18px 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 4px solid transparent;
+        }
+
+        .tab:hover {
+            background-color: var(--light-gray);
+        }
+
+        .tab.active {
+            color: var(--primary);
+            border-bottom: 4px solid var(--primary);
+            background-color: rgba(74, 111, 165, 0.05);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 30px;
+        }
+
+        .card h2 {
+            font-size: 1.8rem;
+            margin-bottom: 25px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .card h2 i {
+            font-size: 1.5rem;
+        }
+
+        .form-group {
+            margin-bottom: 25px;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 25px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: var(--dark);
+        }
+
+        .input-icon {
+            position: relative;
+        }
+
+        .input-icon i {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--gray);
+        }
+
+        input, select {
+            width: 100%;
+            padding: 14px 15px 14px 45px;
+            border: 2px solid var(--light-gray);
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
+        }
+
+        .profit-display {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            text-align: center;
+            border-left: 5px solid var(--primary);
+        }
+
+        .profit-amount {
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .positive {
+            color: var(--success);
+        }
+
+        .negative {
+            color: var(--danger);
+        }
+
+        .neutral {
+            color: var(--gray);
+        }
+
+        .button-group {
+            display: flex;
+            gap: 15px;
+            margin-top: 30px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(74, 111, 165, 0.3);
+        }
+
+        .btn-secondary {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background-color: #5a7a1a;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(107, 142, 35, 0.3);
+        }
+
+        .btn-calculate {
+            background-color: var(--warning);
+            color: white;
+        }
+
+        .btn-calculate:hover {
+            background-color: #e67e22;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(243, 156, 18, 0.3);
+        }
+
+        .btn-danger {
+            background-color: var(--danger);
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background-color: #c0392b;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .btn-reset {
+            background-color: var(--gray);
+            color: white;
+        }
+
+        .btn-reset:hover {
+            background-color: #5a6268;
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(108, 117, 125, 0.3);
+        }
+
+        .status-message {
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            display: none;
+            font-weight: 500;
+        }
+
+        .success-message {
+            background-color: rgba(46, 204, 113, 0.1);
+            border-left: 5px solid var(--success);
+            color: #27ae60;
+        }
+
+        .error-message {
+            background-color: rgba(231, 76, 60, 0.1);
+            border-left: 5px solid var(--danger);
+            color: #c0392b;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 40px;
+            padding: 20px;
+            color: var(--gray);
+            font-size: 0.9rem;
+            border-top: 1px solid var(--light-gray);
+        }
+
+        .instructions {
+            background-color: rgba(74, 111, 165, 0.05);
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+            color: var(--primary);
+        }
+
+        .instructions ul {
+            padding-left: 20px;
+        }
+
+        .instructions li {
+            margin-bottom: 8px;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 768px) {
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .button-group {
+                flex-direction: column;
+            }
+            
+            header h1 {
+                font-size: 2rem;
+            }
+            
+            .profit-amount {
+                font-size: 2.2rem;
+            }
+            
+            .tabs {
+                flex-direction: column;
+            }
+        }
+
+        .sheet-info {
+            background-color: rgba(107, 142, 35, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 5px solid var(--secondary);
+            font-size: 0.9rem;
+        }
+
+        .sheet-info a {
+            color: var(--secondary);
+            font-weight: 600;
+            text-decoration: none;
+        }
+
+        .sheet-info a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><i class="fas fa-calculator"></i> Online Selling Profit Calculator</h1>
+            <p>Calculate your profit from online sales, track returns, and automatically sync data with Google Sheets</p>
+        </header>
+
+        <div class="tabs">
+            <div class="tab active" data-tab="profit-calc">Profit Calculator</div>
+            <div class="tab" data-tab="return-tracker">Returns Tracker</div>
+        </div>
+
+        <div class="instructions">
+            <h3><i class="fas fa-info-circle"></i> How to Use This Tool</h3>
+            <ul>
+                <li>Enter product details and costs in the Profit Calculator tab</li>
+                <li>Click "Calculate Profit" to see your profit/loss</li>
+                <li>Click "Save to Google Sheets" to store the data</li>
+                <li>Switch to Returns Tracker tab to record returned items</li>
+                <li>All data is automatically saved to your Google Sheets</li>
+            </ul>
+            <div class="sheet-info">
+                <i class="fas fa-link"></i> Connected to Google Sheets: 
+                <a href="https://docs.google.com/spreadsheets/d/1xsZWCz2UIGDB9-28mPMoZieqNitBbjUnnJI4EHAoxH0/edit?gid=0#gid=0" target="_blank">
+                    View Your Profit Sheet
+                </a>
+            </div>
+        </div>
+
+        <!-- Profit Calculator Tab -->
+        <div id="profit-calc" class="tab-content active">
+            <div class="card">
+                <h2><i class="fas fa-shopping-cart"></i> Product Sales Information</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="product-id"><i class="fas fa-barcode"></i> Product ID</label>
+                        <div class="input-icon">
+                            <i class="fas fa-tag"></i>
+                            <input type="text" id="product-id" placeholder="Enter product ID (e.g., PROD-001)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="quantity"><i class="fas fa-boxes"></i> Quantity Sold</label>
+                        <div class="input-icon">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="number" id="quantity" min="1" value="1" placeholder="Quantity sold">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="online-price"><i class="fas fa-tag"></i> Online Selling Price (₹)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                            <input type="number" id="online-price" min="0" step="0.01" placeholder="Price per unit">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="buying-price"><i class="fas fa-shopping-bag"></i> Original Buying Price (₹)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                            <input type="number" id="buying-price" min="0" step="0.01" placeholder="Cost per unit">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="packaging-cost"><i class="fas fa-box-open"></i> Packaging Cost (₹)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                            <input type="number" id="packaging-cost" min="0" step="0.01" value="0" placeholder="Packaging cost">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-cost"><i class="fas fa-shipping-fast"></i> Shipping Cost (₹)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                            <input type="number" id="shipping-cost" min="0" step="0.01" value="0" placeholder="Shipping cost">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="profit-display">
+                    <h3>Calculated Profit/Loss</h3>
+                    <div id="profit-result" class="profit-amount neutral">₹ 0.00</div>
+                    <p id="profit-per-unit">Per unit profit: ₹ 0.00</p>
+                </div>
+
+                <div class="button-group">
+                    <button id="calculate-btn" class="btn btn-calculate">
+                        <i class="fas fa-calculator"></i> Calculate Profit
+                    </button>
+                    <button id="save-btn" class="btn btn-primary">
+                        <i class="fas fa-save"></i> Save to Google Sheets
+                    </button>
+                    <button id="reset-btn" class="btn btn-reset">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                </div>
+
+                <div id="profit-message" class="status-message"></div>
+            </div>
+        </div>
+
+        <!-- Returns Tracker Tab -->
+        <div id="return-tracker" class="tab-content">
+            <div class="card">
+                <h2><i class="fas fa-undo-alt"></i> Track Returned Products</h2>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="return-product-id"><i class="fas fa-barcode"></i> Product ID</label>
+                        <div class="input-icon">
+                            <i class="fas fa-tag"></i>
+                            <input type="text" id="return-product-id" placeholder="Enter product ID (e.g., PROD-001)">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-quantity"><i class="fas fa-boxes"></i> Return Quantity</label>
+                        <div class="input-icon">
+                            <i class="fas fa-hashtag"></i>
+                            <input type="number" id="return-quantity" min="1" value="1" placeholder="Quantity returned">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="return-amount"><i class="fas fa-rupee-sign"></i> Refund Amount (₹)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-money-bill-wave"></i>
+                            <input type="number" id="return-amount" min="0" step="0.01" placeholder="Amount refunded">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-group">
+                    <button id="save-return-btn" class="btn btn-danger">
+                        <i class="fas fa-save"></i> Save Return to Google Sheets
+                    </button>
+                    <button id="reset-return-btn" class="btn btn-reset">
+                        <i class="fas fa-redo"></i> Reset Form
+                    </button>
+                </div>
+
+                <div id="return-message" class="status-message"></div>
+
+                <div class="instructions" style="margin-top: 30px;">
+                    <h3><i class="fas fa-exclamation-circle"></i> About Returns Tracking</h3>
+                    <p>When you save a return, it will be recorded in Sheet2 of your Google Sheets. The refund amount will be automatically deducted from your profit calculations in the sheet.</p>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <p>Online Selling Profit Calculator &copy; 2023 | Data is saved to your Google Sheets automatically</p>
+            <p>Connected to Google Sheets via Apps Script</p>
+        </footer>
+    </div>
+
+    <script>
+        // Google Apps Script URL
+        const scriptURL = 'https://script.google.com/macros/s/AKfycbwUjT0Rsiy7au-a0OQRpYb1TpMRG8wGzicdxj6guI6_P4dcQMat73IsY9YE10DdIT42lA/exec';
+        
+        // DOM Elements
+        const tabs = document.querySelectorAll('.tab');
+        const tabContents = document.querySelectorAll('.tab-content');
+        
+        // Profit calculator elements
+        const productIdInput = document.getElementById('product-id');
+        const quantityInput = document.getElementById('quantity');
+        const onlinePriceInput = document.getElementById('online-price');
+        const buyingPriceInput = document.getElementById('buying-price');
+        const packagingCostInput = document.getElementById('packaging-cost');
+        const shippingCostInput = document.getElementById('shipping-cost');
+        const calculateBtn = document.getElementById('calculate-btn');
+        const saveBtn = document.getElementById('save-btn');
+        const resetBtn = document.getElementById('reset-btn');
+        const profitResult = document.getElementById('profit-result');
+        const profitPerUnit = document.getElementById('profit-per-unit');
+        const profitMessage = document.getElementById('profit-message');
+        
+        // Returns tracker elements
+        const returnProductIdInput = document.getElementById('return-product-id');
+        const returnQuantityInput = document.getElementById('return-quantity');
+        const returnAmountInput = document.getElementById('return-amount');
+        const saveReturnBtn = document.getElementById('save-return-btn');
+        const resetReturnBtn = document.getElementById('reset-return-btn');
+        const returnMessage = document.getElementById('return-message');
+        
+        // Tab switching
+        tabs.forEach(tab => {
+            tab.addEventListener('click', () => {
+                const tabId = tab.getAttribute('data-tab');
+                
+                // Update active tab
+                tabs.forEach(t => t.classList.remove('active'));
+                tab.classList.add('active');
+                
+                // Show active tab content
+                tabContents.forEach(content => {
+                    content.classList.remove('active');
+                    if (content.id === tabId) {
+                        content.classList.add('active');
+                    }
+                });
+            });
+        });
+        
+        // Calculate profit
+        calculateBtn.addEventListener('click', calculateProfit);
+        
+        function calculateProfit() {
+            // Get input values
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const onlinePrice = parseFloat(onlinePriceInput.value) || 0;
+            const buyingPrice = parseFloat(buyingPriceInput.value) || 0;
+            const packagingCost = parseFloat(packagingCostInput.value) || 0;
+            const shippingCost = parseFloat(shippingCostInput.value) || 0;
+            
+            // Calculate profit
+            const totalRevenue = onlinePrice * quantity;
+            const totalCost = (buyingPrice * quantity) + packagingCost + shippingCost;
+            const profit = totalRevenue - totalCost;
+            const profitPerUnitValue = onlinePrice - buyingPrice;
+            
+            // Display result
+            profitResult.textContent = `₹ ${profit.toFixed(2)}`;
+            profitPerUnit.textContent = `Per unit profit: ₹ ${profitPerUnitValue.toFixed(2)}`;
+            
+            // Set color based on profit
+            if (profit > 0) {
+                profitResult.className = 'profit-amount positive';
+            } else if (profit < 0) {
+                profitResult.className = 'profit-amount negative';
+            } else {
+                profitResult.className = 'profit-amount neutral';
+            }
+            
+            // Show success message
+            showMessage(profitMessage, 'Profit calculated successfully!', 'success');
+        }
+        
+        // Save profit data to Google Sheets
+        saveBtn.addEventListener('click', saveProfitData);
+        
+        async function saveProfitData() {
+            // Get input values
+            const productId = productIdInput.value.trim();
+            const quantity = parseFloat(quantityInput.value) || 0;
+            const onlinePrice = parseFloat(onlinePriceInput.value) || 0;
+            const buyingPrice = parseFloat(buyingPriceInput.value) || 0;
+            const packagingCost = parseFloat(packagingCostInput.value) || 0;
+            const shippingCost = parseFloat(shippingCostInput.value) || 0;
+            
+            // Validate required fields
+            if (!productId) {
+                showMessage(profitMessage, 'Please enter a Product ID', 'error');
+                return;
+            }
+            
+            if (!onlinePrice || !buyingPrice) {
+                showMessage(profitMessage, 'Please enter both online price and buying price', 'error');
+                return;
+            }
+            
+            // Calculate profit
+            const totalRevenue = onlinePrice * quantity;
+            const totalCost = (buyingPrice * quantity) + packagingCost + shippingCost;
+            const profit = totalRevenue - totalCost;
+            
+            // Prepare data to send
+            const formData = new FormData();
+            formData.append('action', 'saveProfit');
+            formData.append('productId', productId);
+            formData.append('quantity', quantity);
+            formData.append('onlinePrice', onlinePrice);
+            formData.append('buyingPrice', buyingPrice);
+            formData.append('packagingCost', packagingCost);
+            formData.append('shippingCost', shippingCost);
+            formData.append('profit', profit);
+            formData.append('timestamp', new Date().toISOString());
+            
+            // Show loading state
+            saveBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            saveBtn.disabled = true;
+            
+            try {
+                // Send data to Google Apps Script
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showMessage(profitMessage, 'Profit data saved successfully to Google Sheets!', 'success');
+                    // Reset form after a delay
+                    setTimeout(() => {
+                        resetProfitForm();
+                    }, 1500);
+                } else {
+                    showMessage(profitMessage, 'Error saving data: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage(profitMessage, 'Failed to save data. Please check your connection and try again.', 'error');
+            } finally {
+                // Reset button state
+                saveBtn.innerHTML = '<i class="fas fa-save"></i> Save to Google Sheets';
+                saveBtn.disabled = false;
+            }
+        }
+        
+        // Save return data to Google Sheets
+        saveReturnBtn.addEventListener('click', saveReturnData);
+        
+        async function saveReturnData() {
+            // Get input values
+            const productId = returnProductIdInput.value.trim();
+            const quantity = parseFloat(returnQuantityInput.value) || 0;
+            const amount = parseFloat(returnAmountInput.value) || 0;
+            
+            // Validate required fields
+            if (!productId) {
+                showMessage(returnMessage, 'Please enter a Product ID', 'error');
+                return;
+            }
+            
+            if (!amount) {
+                showMessage(returnMessage, 'Please enter a refund amount', 'error');
+                return;
+            }
+            
+            // Prepare data to send
+            const formData = new FormData();
+            formData.append('action', 'saveReturn');
+            formData.append('productId', productId);
+            formData.append('quantity', quantity);
+            formData.append('amount', amount);
+            formData.append('timestamp', new Date().toISOString());
+            
+            // Show loading state
+            saveReturnBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Saving...';
+            saveReturnBtn.disabled = true;
+            
+            try {
+                // Send data to Google Apps Script
+                const response = await fetch(scriptURL, {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                const result = await response.json();
+                
+                if (result.status === 'success') {
+                    showMessage(returnMessage, 'Return data saved successfully to Google Sheets!', 'success');
+                    // Reset form after a delay
+                    setTimeout(() => {
+                        resetReturnForm();
+                    }, 1500);
+                } else {
+                    showMessage(returnMessage, 'Error saving data: ' + result.message, 'error');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                showMessage(returnMessage, 'Failed to save data. Please check your connection and try again.', 'error');
+            } finally {
+                // Reset button state
+                saveReturnBtn.innerHTML = '<i class="fas fa-save"></i> Save Return to Google Sheets';
+                saveReturnBtn.disabled = false;
+            }
+        }
+        
+        // Reset profit form
+        resetBtn.addEventListener('click', resetProfitForm);
+        
+        function resetProfitForm() {
+            productIdInput.value = '';
+            quantityInput.value = '1';
+            onlinePriceInput.value = '';
+            buyingPriceInput.value = '';
+            packagingCostInput.value = '0';
+            shippingCostInput.value = '0';
+            profitResult.textContent = '₹ 0.00';
+            profitResult.className = 'profit-amount neutral';
+            profitPerUnit.textContent = 'Per unit profit: ₹ 0.00';
+            profitMessage.style.display = 'none';
+        }
+        
+        // Reset return form
+        resetReturnBtn.addEventListener('click', resetReturnForm);
+        
+        function resetReturnForm() {
+            returnProductIdInput.value = '';
+            returnQuantityInput.value = '1';
+            returnAmountInput.value = '';
+            returnMessage.style.display = 'none';
+        }
+        
+        // Show message function
+        function showMessage(element, message, type) {
+            element.textContent = message;
+            element.className = 'status-message ' + (type === 'success' ? 'success-message' : 'error-message');
+            element.style.display = 'block';
+            
+            // Auto-hide message after 5 seconds
+            setTimeout(() => {
+                element.style.display = 'none';
+            }, 5000);
+        }
+        
+        // Initialize
+        document.addEventListener('DOMContentLoaded', () => {
+            // Set today's date as default ID suggestion
+            const today = new Date();
+            const dateString = today.getFullYear() + '-' + 
+                              String(today.getMonth() + 1).padStart(2, '0') + '-' + 
+                              String(today.getDate()).padStart(2, '0');
+            productIdInput.placeholder = `PROD-${dateString}-001`;
+            returnProductIdInput.placeholder = `PROD-${dateString}-001`;
+            
+            // Add input validation
+            const numberInputs = document.querySelectorAll('input[type="number"]');
+            numberInputs.forEach(input => {
+                input.addEventListener('input', (e) => {
+                    if (e.target.value < 0) e.target.value = 0;
+                });
+            });
+        });
+    </script>
+</body>
+</html>
