@@ -1,0 +1,2694 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meesho Analytics Dashboard</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <style>
+        :root {
+            --primary-color: #5a67d8;
+            --primary-light: #c3dafe;
+            --success-color: #38a169;
+            --info-color: #4299e1;
+            --warning-color: #ed8936;
+            --danger-color: #e53e3e;
+            --secondary-color: #a0aec0;
+            --purple-color: #9f7aea;
+            --pink-color: #ed64a6;
+            --teal-color: #38b2ac;
+            --light-color: #f7fafc;
+            --dark-color: #2d3748;
+            --gray-100: #f7fafc;
+            --gray-200: #edf2f7;
+            --gray-300: #e2e8f0;
+            --gray-400: #cbd5e0;
+            --gray-500: #a0aec0;
+            --gray-600: #718096;
+            --gray-700: #4a5568;
+            --gray-800: #2d3748;
+            --gray-900: #1a202c;
+            --sidebar-width: 250px;
+            --border-radius: 12px;
+            --box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #e4edf5 100%);
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            min-height: 100vh;
+            color: var(--gray-800);
+            overflow-x: hidden;
+        }
+        
+        /* Enhanced Loading Overlay */
+        .loading-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.98);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s;
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .loading-overlay.hidden {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
+        
+        .loader-container {
+            position: relative;
+            width: 120px;
+            height: 120px;
+            margin-bottom: 2rem;
+        }
+        
+        .loader {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .loader-ring {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            animation: rotate 2s linear infinite;
+        }
+        
+        .loader-ring:nth-child(1) {
+            border: 4px solid transparent;
+            border-top: 4px solid var(--primary-color);
+            border-right: 4px solid var(--primary-color);
+            animation-delay: -0.5s;
+        }
+        
+        .loader-ring:nth-child(2) {
+            border: 4px solid transparent;
+            border-top: 4px solid var(--purple-color);
+            border-right: 4px solid var(--purple-color);
+            animation-delay: -1s;
+            width: 80%;
+            height: 80%;
+            top: 10%;
+            left: 10%;
+        }
+        
+        .loader-ring:nth-child(3) {
+            border: 4px solid transparent;
+            border-top: 4px solid var(--teal-color);
+            border-right: 4px solid var(--teal-color);
+            animation-delay: -1.5s;
+            width: 60%;
+            height: 60%;
+            top: 20%;
+            left: 20%;
+        }
+        
+        .loader-center {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 40px;
+            height: 40px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            animation: pulse 2s ease-in-out infinite;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .loader-center i {
+            color: white;
+            font-size: 1.2rem;
+        }
+        
+        .loader-text {
+            text-align: center;
+            margin-top: 1rem;
+        }
+        
+        .loader-text h4 {
+            color: var(--gray-900);
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            font-size: 1.2rem;
+        }
+        
+        .loader-text p {
+            color: var(--gray-600);
+            font-size: 0.9rem;
+            margin-bottom: 0;
+        }
+        
+        .progress-bar {
+            width: 200px;
+            height: 4px;
+            background: var(--gray-200);
+            border-radius: 10px;
+            margin-top: 1rem;
+            overflow: hidden;
+        }
+        
+        .progress-fill {
+            width: 0%;
+            height: 100%;
+            background: linear-gradient(90deg, var(--primary-color), var(--purple-color));
+            border-radius: 10px;
+            animation: loadingProgress 1.5s ease-in-out infinite;
+        }
+        
+        .loading-stats {
+            display: flex;
+            gap: 2rem;
+            margin-top: 2rem;
+            opacity: 0.8;
+        }
+        
+        .loading-stat {
+            text-align: center;
+        }
+        
+        .loading-stat .number {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 0.25rem;
+        }
+        
+        .loading-stat .label {
+            font-size: 0.8rem;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        /* Floating particles */
+        .particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--primary-light);
+            border-radius: 50%;
+            opacity: 0.3;
+        }
+        
+        .particle:nth-child(1) {
+            width: 20px;
+            height: 20px;
+            top: 20%;
+            left: 10%;
+            animation: float 8s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(2) {
+            width: 15px;
+            height: 15px;
+            top: 60%;
+            right: 15%;
+            background: var(--purple-color);
+            opacity: 0.2;
+            animation: float 10s ease-in-out infinite reverse;
+        }
+        
+        .particle:nth-child(3) {
+            width: 25px;
+            height: 25px;
+            bottom: 30%;
+            left: 20%;
+            background: var(--teal-color);
+            opacity: 0.15;
+            animation: float 12s ease-in-out infinite;
+        }
+        
+        .particle:nth-child(4) {
+            width: 10px;
+            height: 10px;
+            top: 40%;
+            right: 30%;
+            background: var(--warning-color);
+            opacity: 0.25;
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        /* Sidebar Styling */
+        .sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: var(--sidebar-width);
+            height: 100vh;
+            background: linear-gradient(180deg, var(--gray-900) 0%, var(--gray-800) 100%);
+            padding: 0;
+            z-index: 1000;
+            box-shadow: 4px 0 20px rgba(0, 0, 0, 0.1);
+            transition: var(--transition);
+            transform: translateX(0);
+        }
+        
+        .sidebar-collapsed {
+            transform: translateX(-100%);
+        }
+        
+        .sidebar-brand {
+            padding: 1.5rem 1.25rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+        
+        .sidebar-brand h2 {
+            color: white;
+            font-size: 1.5rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .sidebar-brand h2 i {
+            color: var(--primary-light);
+        }
+        
+        .nav-item {
+            margin: 0.25rem 0.75rem;
+        }
+        
+        .nav-link {
+            color: rgba(255, 255, 255, 0.7);
+            padding: 0.875rem 1rem;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            transition: var(--transition);
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .nav-link::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 3px;
+            background: var(--primary-color);
+            transform: translateX(-100%);
+            transition: var(--transition);
+        }
+        
+        .nav-link:hover {
+            color: white;
+            background: rgba(255, 255, 255, 0.05);
+            transform: translateX(5px);
+        }
+        
+        .nav-link:hover::before {
+            transform: translateX(0);
+        }
+        
+        .nav-link.active {
+            color: white;
+            background: linear-gradient(90deg, rgba(90, 103, 216, 0.2) 0%, rgba(90, 103, 216, 0.1) 100%);
+            box-shadow: inset 0 0 20px rgba(90, 103, 216, 0.1);
+        }
+        
+        .nav-link.active::before {
+            transform: translateX(0);
+        }
+        
+        .nav-link i {
+            width: 20px;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+        
+        /* Main Content */
+        .main-content {
+            margin-left: var(--sidebar-width);
+            padding: 1.5rem;
+            transition: var(--transition);
+            min-height: 100vh;
+        }
+        
+        .main-content-expanded {
+            margin-left: 0;
+        }
+        
+        /* Header */
+        .header {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.25rem 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            animation: slideDown 0.5s ease-out;
+        }
+        
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+        
+        .header-controls {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        /* Filter Dropdown */
+        .filter-dropdown {
+            min-width: 200px;
+        }
+        
+        .dropdown-toggle.filter-toggle {
+            background: white;
+            border: 2px solid var(--gray-300);
+            color: var(--gray-700);
+            padding: 0.625rem 1rem;
+            border-radius: 10px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .dropdown-toggle.filter-toggle:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--box-shadow);
+            border-radius: 10px;
+            padding: 0.5rem;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        .dropdown-item {
+            padding: 0.75rem 1rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        
+        .dropdown-item:hover {
+            background: var(--primary-light);
+            color: var(--primary-color);
+        }
+        
+        .dropdown-item.active {
+            background: var(--primary-color);
+            color: white;
+        }
+        
+        /* Date Range Picker */
+        .date-range-container {
+            background: white;
+            border: 2px solid var(--gray-300);
+            border-radius: 10px;
+            padding: 0.625rem 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+        
+        .date-range-container:focus-within {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 3px rgba(90, 103, 216, 0.1);
+        }
+        
+        .date-range-container i {
+            color: var(--gray-500);
+        }
+        
+        #dateRangePicker {
+            border: none;
+            outline: none;
+            width: 180px;
+            font-size: 0.875rem;
+            color: var(--gray-700);
+        }
+        
+        /* Stats Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 1.25rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stat-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            box-shadow: var(--box-shadow);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            border: 1px solid transparent;
+            animation: fadeInUp 0.6s ease-out;
+            animation-fill-mode: both;
+        }
+        
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-light);
+        }
+        
+        .stat-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 4px;
+            height: 100%;
+            background: var(--card-color);
+        }
+        
+        .stat-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1rem;
+        }
+        
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            background: var(--card-color);
+            color: white;
+            transition: var(--transition);
+        }
+        
+        .stat-card:hover .stat-icon {
+            transform: scale(1.1) rotate(5deg);
+        }
+        
+        .stat-title {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--gray-600);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        
+        .stat-value {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--gray-900);
+            line-height: 1;
+            margin: 0.5rem 0;
+        }
+        
+        .stat-change {
+            font-size: 0.875rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .stat-change.positive {
+            color: var(--success-color);
+        }
+        
+        .stat-change.negative {
+            color: var(--danger-color);
+        }
+        
+        /* Charts */
+        .chart-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            animation: fadeInUp 0.6s ease-out 0.2s both;
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .chart-header h3 {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: var(--gray-900);
+            margin: 0;
+        }
+        
+        /* Tables */
+        .table-container {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            box-shadow: var(--box-shadow);
+            animation: fadeInUp 0.6s ease-out 0.4s both;
+            overflow-x: auto;
+        }
+        
+        .table {
+            margin-bottom: 0;
+        }
+        
+        .table thead th {
+            border-bottom: 2px solid var(--gray-200);
+            border-top: none;
+            font-weight: 600;
+            color: var(--gray-700);
+            text-transform: uppercase;
+            font-size: 0.75rem;
+            letter-spacing: 0.5px;
+            padding: 1rem 0.75rem;
+        }
+        
+        .table tbody td {
+            padding: 1rem 0.75rem;
+            vertical-align: middle;
+            border-top: 1px solid var(--gray-100);
+        }
+        
+        .table tbody tr {
+            transition: var(--transition);
+        }
+        
+        .table tbody tr:hover {
+            background: var(--gray-50);
+        }
+        
+        /* Status Badges */
+        .status-badge {
+            padding: 0.375rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.25rem;
+        }
+        
+        .badge-delivered {
+            background: rgba(56, 161, 105, 0.1);
+            color: var(--success-color);
+        }
+        
+        .badge-shipped {
+            background: rgba(66, 153, 225, 0.1);
+            color: var(--info-color);
+        }
+        
+        .badge-ready {
+            background: rgba(159, 122, 234, 0.1);
+            color: var(--purple-color);
+        }
+        
+        .badge-onway {
+            background: rgba(237, 137, 54, 0.1);
+            color: var(--warning-color);
+        }
+        
+        .badge-cancelled {
+            background: rgba(229, 62, 62, 0.1);
+            color: var(--danger-color);
+        }
+        
+        .badge-rto {
+            background: rgba(160, 174, 192, 0.1);
+            color: var(--secondary-color);
+        }
+        
+        /* Mobile Menu Toggle */
+        .mobile-menu-toggle {
+            display: none;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 12px;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.25rem;
+            transition: var(--transition);
+            position: fixed;
+            top: 1.5rem;
+            left: 1.5rem;
+            z-index: 1001;
+        }
+        
+        .mobile-menu-toggle:hover {
+            background: var(--primary-color);
+            opacity: 0.9;
+            transform: scale(1.1);
+        }
+        
+        /* Enhanced Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes slideDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+            to {
+                opacity: 1;
+            }
+        }
+        
+        @keyframes rotate {
+            0% {
+                transform: rotate(0deg);
+            }
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+        
+        @keyframes pulse {
+            0%, 100% {
+                transform: translate(-50%, -50%) scale(1);
+                box-shadow: 0 0 0 0 rgba(90, 103, 216, 0.4);
+            }
+            50% {
+                transform: translate(-50%, -50%) scale(1.1);
+                box-shadow: 0 0 0 10px rgba(90, 103, 216, 0);
+            }
+        }
+        
+        @keyframes loadingProgress {
+            0% {
+                width: 0%;
+                left: 0;
+            }
+            50% {
+                width: 70%;
+            }
+            100% {
+                width: 100%;
+                left: 100%;
+            }
+        }
+        
+        @keyframes float {
+            0%, 100% {
+                transform: translateY(0) rotate(0deg);
+            }
+            50% {
+                transform: translateY(-20px) rotate(180deg);
+            }
+        }
+        
+        /* Content fade in */
+        .content-fade-in {
+            animation: contentFadeIn 0.8s ease-out forwards;
+        }
+        
+        @keyframes contentFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 992px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            
+            .sidebar-open {
+                transform: translateX(0);
+            }
+            
+            .main-content {
+                margin-left: 0;
+                padding: 1rem;
+            }
+            
+            .mobile-menu-toggle {
+                display: flex;
+            }
+            
+            .stats-grid {
+                grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            }
+            
+            .loader-container {
+                width: 100px;
+                height: 100px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            .header {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            
+            .header-controls {
+                flex-direction: column;
+            }
+            
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .stat-card {
+                padding: 1.25rem;
+            }
+            
+            .stat-value {
+                font-size: 1.75rem;
+            }
+            
+            .filter-dropdown,
+            .date-range-container {
+                width: 100%;
+            }
+            
+            #dateRangePicker {
+                width: 100%;
+            }
+            
+            .loading-stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .loader-text h4 {
+                font-size: 1.1rem;
+            }
+        }
+        
+        /* Tab Content Animation */
+        .tab-content {
+            animation: fadeIn 0.5s ease-out;
+        }
+        
+        /* Scrollbar Styling */
+        ::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+        }
+        
+        ::-webkit-scrollbar-track {
+            background: var(--gray-100);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb {
+            background: var(--gray-400);
+            border-radius: 4px;
+        }
+        
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--gray-500);
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Loading Overlay -->
+    <div id="loadingOverlay" class="loading-overlay">
+        <div class="particles">
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+            <div class="particle"></div>
+        </div>
+        
+        <div class="loader-container">
+            <div class="loader">
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+                <div class="loader-ring"></div>
+            </div>
+            <div class="loader-center">
+                <i class="fas fa-chart-line"></i>
+            </div>
+        </div>
+        
+        <div class="loader-text">
+            <h4>Loading Dashboard</h4>
+            <p>Fetching real-time data from Data Base...</p>
+        </div>
+        
+        <div class="progress-bar">
+            <div class="progress-fill"></div>
+        </div>
+        
+        <div class="loading-stats">
+            <div class="loading-stat">
+                <div class="number" id="loadingOrders">0</div>
+                <div class="label">Orders</div>
+            </div>
+            <div class="loading-stat">
+                <div class="number" id="loadingPayments">0</div>
+                <div class="label">Payments</div>
+            </div>
+            <div class="loading-stat">
+                <div class="number" id="loadingReturns">0</div>
+                <div class="label">Returns</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Mobile Menu Toggle -->
+    <button class="mobile-menu-toggle" id="mobileMenuToggle">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Sidebar -->
+    <nav class="sidebar" id="sidebar">
+        <div class="sidebar-brand">
+            <h2>
+                <i class="fas fa-chart-line"></i>
+                <span>STH-old Analytics</span>
+            </h2>
+        </div>
+        <div class="pt-2">
+            <ul class="nav flex-column">
+                <li class="nav-item">
+                    <a class="nav-link active" href="#" data-tab="dashboard">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-tab="payments">
+                        <i class="fas fa-rupee-sign"></i>
+                        <span>Payments</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-tab="returns">
+                        <i class="fas fa-undo-alt"></i>
+                        <span>Returns</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-tab="sales">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Sales</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-tab="pending">
+                        <i class="fas fa-clock"></i>
+                        <span>Pending</span>
+                        <span class="badge bg-warning ms-auto" id="pendingBadge">0</span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" data-tab="analytics">
+                        <i class="fas fa-chart-bar"></i>
+                        <span>Analytics</span>
+                    </a>
+                </li>
+            </ul>
+            <div class="mt-auto p-3">
+                <div class="text-light opacity-75 small">
+                    <i class="fas fa-database me-2"></i>
+                    <span>Data Source: Meesho Sheet</span>
+                </div>
+                <div class="text-light opacity-75 small mt-2">
+                    <i class="fas fa-clock me-2"></i>
+                    <span id="lastUpdated">Last updated: --</span>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Header -->
+        <div class="header">
+            <h1 id="pageTitle">
+                <i class="fas fa-tachometer-alt text-primary"></i>
+                <span>Dashboard Overview</span>
+            </h1>
+            
+            <div class="header-controls">
+                <!-- Filter Dropdown -->
+                <div class="dropdown filter-dropdown">
+                    <button class="btn dropdown-toggle filter-toggle" type="button" id="filterDropdown" data-bs-toggle="dropdown">
+                        <i class="fas fa-filter"></i>
+                        <span id="filterLabel">All Time</span>
+                        <i class="fas fa-chevron-down"></i>
+                    </button>
+                    <ul class="dropdown-menu" aria-labelledby="filterDropdown">
+                        <li><a class="dropdown-item active" href="#" data-period="all">All Time</a></li>
+                        <li><a class="dropdown-item" href="#" data-period="thisMonth">This Month</a></li>
+                        <li><a class="dropdown-item" href="#" data-period="lastMonth">Last Month</a></li>
+                        <li><a class="dropdown-item" href="#" data-period="custom">Custom Range</a></li>
+                    </ul>
+                </div>
+                
+                <!-- Date Range Picker (Initially Hidden) -->
+                <div class="date-range-container d-none" id="dateRangeContainer">
+                    <i class="fas fa-calendar-alt"></i>
+                    <input type="text" class="border-0 bg-transparent" id="dateRangePicker" placeholder="Select date range">
+                </div>
+                
+                <!-- Refresh Button -->
+                <button class="btn btn-primary" id="refreshBtn">
+                    <i class="fas fa-sync-alt"></i>
+                    <span class="ms-2">Refresh</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- Period Indicator -->
+        <div class="alert alert-info d-none" id="periodIndicator" role="alert">
+            <i class="fas fa-calendar-alt me-2"></i>
+            <span id="periodText">Showing data for: All Time</span>
+        </div>
+
+        <!-- Dashboard Tab -->
+        <div id="dashboardTab" class="tab-content">
+            <!-- Sales Metrics -->
+            <div class="stats-grid">
+                <div class="stat-card" style="--card-color: var(--primary-color); animation-delay: 0.1s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Total Payments</div>
+                            <div class="stat-value" id="totalPayments">₹0</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change positive" id="paymentCount">0 transactions</div>
+                </div>
+                
+                <div class="stat-card" style="--card-color: var(--warning-color); animation-delay: 0.2s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Products On the Way</div>
+                            <div class="stat-value" id="productsOnWay">0</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-truck"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change">Pending payment & delivery</div>
+                </div>
+                
+                <div class="stat-card" style="--card-color: var(--success-color); animation-delay: 0.3s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Products Dispatched</div>
+                            <div class="stat-value" id="productsDispatched">0</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-shipping-fast"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change positive">Total Orders Shifted</div>
+                </div>
+                
+                <div class="stat-card" style="--card-color: var(--teal-color); animation-delay: 0.4s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Total Sales</div>
+                            <div class="stat-value" id="totalSales">0</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-shopping-cart"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change positive">Total Orders</div>
+                </div>
+            </div>
+
+            <!-- Returns Metrics -->
+            <div class="stats-grid">
+                <div class="stat-card" style="--card-color: var(--danger-color); animation-delay: 0.1s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Total Returns</div>
+                            <div class="stat-value" id="totalReturns">0</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-undo-alt"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change negative">All return types</div>
+                </div>
+                
+                <div class="stat-card" style="--card-color: var(--warning-color); animation-delay: 0.2s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Courier Returns (RTO)</div>
+                            <div class="stat-value" id="totalRTO">0</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-truck-loading"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change">Failed deliveries</div>
+                </div>
+                
+                <div class="stat-card" style="--card-color: var(--secondary-color); animation-delay: 0.3s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Customer Returns</div>
+                            <div class="stat-value" id="totalCustomerReturns">0</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-user-minus"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change">Post-delivery returns</div>
+                </div>
+                
+                <div class="stat-card" style="--card-color: var(--purple-color); animation-delay: 0.4s;">
+                    <div class="stat-header">
+                        <div>
+                            <div class="stat-title">Return Rate</div>
+                            <div class="stat-value" id="returnRate">0%</div>
+                        </div>
+                        <div class="stat-icon">
+                            <i class="fas fa-chart-pie"></i>
+                        </div>
+                    </div>
+                    <div class="stat-change">Returns / Total Orders</div>
+                </div>
+            </div>
+
+            <!-- Order Status Summary -->
+            <div class="table-container">
+                <div class="chart-header">
+                    <h3>Order Status Summary</h3>
+                </div>
+                <div class="row">
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="d-flex align-items-center p-3 bg-success bg-opacity-10 rounded">
+                            <div class="bg-success rounded-circle p-2 me-3">
+                                <i class="fas fa-check-circle text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-muted small">Delivered</div>
+                                <div class="h4 mb-0 text-success" id="deliveredCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="d-flex align-items-center p-3 bg-info bg-opacity-10 rounded">
+                            <div class="bg-info rounded-circle p-2 me-3">
+                                <i class="fas fa-shipping-fast text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-muted small">Shipped/Ready</div>
+                                <div class="h4 mb-0 text-info" id="shippedCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="d-flex align-items-center p-3 bg-warning bg-opacity-10 rounded">
+                            <div class="bg-warning rounded-circle p-2 me-3">
+                                <i class="fas fa-truck text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-muted small">On the Way</div>
+                                <div class="h4 mb-0 text-warning" id="onWayCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-3 col-6 mb-3">
+                        <div class="d-flex align-items-center p-3 bg-danger bg-opacity-10 rounded">
+                            <div class="bg-danger rounded-circle p-2 me-3">
+                                <i class="fas fa-times-circle text-white"></i>
+                            </div>
+                            <div>
+                                <div class="text-muted small">Cancelled</div>
+                                <div class="h4 mb-0 text-danger" id="cancelledCount">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recent Activity -->
+            <div class="row">
+                <div class="col-lg-6 mb-4">
+                    <div class="table-container">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-money-bill-wave me-2"></i>Recent Payments</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="recentPaymentsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>Amount</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data will be populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6 mb-4">
+                    <div class="table-container">
+                        <div class="chart-header">
+                            <h3><i class="fas fa-exchange-alt me-2"></i>Recent Returns</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="recentReturnsTable">
+                                <thead>
+                                    <tr>
+                                        <th>Order ID</th>
+                                        <th>Date</th>
+                                        <th>Type</th>
+                                        <th>Damage</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data will be populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payments Tab -->
+        <div id="paymentsTab" class="tab-content d-none">
+            <div class="table-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-rupee-sign me-2"></i>All Payment Transactions</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover" id="paymentsTable">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Month</th>
+                                <th>Date</th>
+                                <th>Order ID</th>
+                                <th>Amount</th>
+                                <th>Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Returns Tab -->
+        <div id="returnsTab" class="tab-content d-none">
+            <div class="table-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-undo-alt me-2"></i>All Returns</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover" id="returnsTable">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Month</th>
+                                <th>Date</th>
+                                <th>Order ID</th>
+                                <th>Received</th>
+                                <th>Return Type</th>
+                                <th>Damage</th>
+                                <th>Order Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sales Tab -->
+        <div id="salesTab" class="tab-content d-none">
+            <div class="table-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-shopping-bag me-2"></i>All Sales Orders</h3>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover" id="salesTable">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Month</th>
+                                <th>Date</th>
+                                <th>S No</th>
+                                <th>Order ID</th>
+                                <th>SKU</th>
+                                <th>Status</th>
+                                <th>Payment</th>
+                                <th>Return</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Pending Tab (New) -->
+        <div id="pendingTab" class="tab-content d-none">
+            <div class="table-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-clock me-2"></i>Products On the Way</h3>
+                    <div class="badge bg-warning" id="pendingCountBadge">0 Products</div>
+                </div>
+                <div class="table-responsive">
+                    <table class="table table-hover" id="pendingTable">
+                        <thead>
+                            <tr>
+                                <th>SL</th>
+                                <th>Month</th>
+                                <th>Date</th>
+                                <th>Order ID</th>
+                                <th>SKU</th>
+                                <th>Status</th>
+                                <th>Days Pending</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Data will be populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content d-none">
+            <div class="row mb-4">
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Sales Performance Trend</h3>
+                        </div>
+                        <canvas id="salesChart" height="250"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Order Status Distribution</h3>
+                        </div>
+                        <canvas id="orderStatusChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Returns Breakdown</h3>
+                        </div>
+                        <canvas id="returnsChart" height="250"></canvas>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="chart-container">
+                        <div class="chart-header">
+                            <h3>Payment Analysis</h3>
+                        </div>
+                        <canvas id="paymentAnalysisChart" height="250"></canvas>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-container">
+                        <div class="chart-header">
+                            <h3>Monthly Performance Summary</h3>
+                        </div>
+                        <div class="table-responsive">
+                            <table class="table table-hover" id="monthlySummaryTable">
+                                <thead>
+                                    <tr>
+                                        <th>Month</th>
+                                        <th>Total Orders</th>
+                                        <th>Delivered</th>
+                                        <th>Shipped</th>
+                                        <th>Cancelled</th>
+                                        <th>On the Way</th>
+                                        <th>Total Payments</th>
+                                        <th>Returns</th>
+                                        <th>Success Rate</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <!-- Data will be populated dynamically -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Configuration
+        const APPS_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz5P977h3HW7KtwcvT9n8hQneC4f0PA2zKew6LGJTah_iisTTlub3qGoNErol63tnb_Yg/exec';
+        
+        // Global variables
+        let dashboardData = {};
+        let salesChartInstance = null;
+        let orderStatusChartInstance = null;
+        let returnsChartInstance = null;
+        let paymentAnalysisChartInstance = null;
+        let currentFilter = {
+            period: 'all',
+            startDate: null,
+            endDate: null
+        };
+        let flatpickrInstance = null;
+        let loadingInterval = null;
+
+        // DOM Elements
+        const loadingOverlay = document.getElementById('loadingOverlay');
+        const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+        const sidebar = document.getElementById('sidebar');
+        const mainContent = document.getElementById('mainContent');
+        const pageTitle = document.getElementById('pageTitle');
+        const refreshBtn = document.getElementById('refreshBtn');
+        const lastUpdated = document.getElementById('lastUpdated');
+        const periodIndicator = document.getElementById('periodIndicator');
+        const periodText = document.getElementById('periodText');
+        const filterDropdown = document.getElementById('filterDropdown');
+        const filterLabel = document.getElementById('filterLabel');
+        const dateRangeContainer = document.getElementById('dateRangeContainer');
+        const dateRangePicker = document.getElementById('dateRangePicker');
+        const pendingBadge = document.getElementById('pendingBadge');
+        const pendingCountBadge = document.getElementById('pendingCountBadge');
+        
+        // Loading elements
+        const loadingOrders = document.getElementById('loadingOrders');
+        const loadingPayments = document.getElementById('loadingPayments');
+        const loadingReturns = document.getElementById('loadingReturns');
+        
+        // Tab elements
+        const dashboardTab = document.getElementById('dashboardTab');
+        const paymentsTab = document.getElementById('paymentsTab');
+        const returnsTab = document.getElementById('returnsTab');
+        const salesTab = document.getElementById('salesTab');
+        const pendingTab = document.getElementById('pendingTab');
+        const analyticsTab = document.getElementById('analyticsTab');
+        
+        // Stat elements
+        const totalPayments = document.getElementById('totalPayments');
+        const paymentCount = document.getElementById('paymentCount');
+        const productsOnWay = document.getElementById('productsOnWay');
+        const productsDispatched = document.getElementById('productsDispatched');
+        const totalSales = document.getElementById('totalSales');
+        const totalReturns = document.getElementById('totalReturns');
+        const totalRTO = document.getElementById('totalRTO');
+        const totalCustomerReturns = document.getElementById('totalCustomerReturns');
+        const returnRate = document.getElementById('returnRate');
+        const deliveredCount = document.getElementById('deliveredCount');
+        const shippedCount = document.getElementById('shippedCount');
+        const onWayCount = document.getElementById('onWayCount');
+        const cancelledCount = document.getElementById('cancelledCount');
+        
+        // Table elements
+        const recentPaymentsTable = document.querySelector('#recentPaymentsTable tbody');
+        const recentReturnsTable = document.querySelector('#recentReturnsTable tbody');
+        const paymentsTable = document.querySelector('#paymentsTable tbody');
+        const returnsTable = document.querySelector('#returnsTable tbody');
+        const salesTable = document.querySelector('#salesTable tbody');
+        const pendingTable = document.querySelector('#pendingTable tbody');
+        const monthlySummaryTable = document.querySelector('#monthlySummaryTable tbody');
+
+        // Initialize dashboard
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeDatePicker();
+            loadDashboardData();
+            setupEventListeners();
+        });
+
+        // Initialize date picker
+        function initializeDatePicker() {
+            flatpickrInstance = flatpickr(dateRangePicker, {
+                mode: "range",
+                dateFormat: "Y-m-d",
+                maxDate: "today",
+                onChange: function(selectedDates, dateStr, instance) {
+                    if (selectedDates.length === 2) {
+                        currentFilter.period = 'custom';
+                        currentFilter.startDate = selectedDates[0];
+                        currentFilter.endDate = selectedDates[1];
+                        filterLabel.textContent = 'Custom Range';
+                        updateDashboardWithFilter();
+                    }
+                }
+            });
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Mobile menu toggle
+            mobileMenuToggle.addEventListener('click', function() {
+                sidebar.classList.toggle('sidebar-open');
+                mainContent.classList.toggle('main-content-expanded');
+            });
+            
+            // Tab navigation
+            document.querySelectorAll('.nav-link').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active tab
+                    document.querySelectorAll('.nav-link').forEach(item => {
+                        item.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    // Show corresponding tab content
+                    const tabId = this.getAttribute('data-tab');
+                    showTab(tabId);
+                    
+                    // Close mobile menu on selection
+                    if (window.innerWidth < 992) {
+                        sidebar.classList.remove('sidebar-open');
+                        mainContent.classList.remove('main-content-expanded');
+                    }
+                });
+            });
+            
+            // Filter dropdown items
+            document.querySelectorAll('.dropdown-item[data-period]').forEach(item => {
+                item.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    
+                    // Update active dropdown item
+                    document.querySelectorAll('.dropdown-item[data-period]').forEach(i => {
+                        i.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const period = this.getAttribute('data-period');
+                    filterLabel.textContent = this.textContent;
+                    
+                    // Clear date range picker
+                    if (flatpickrInstance) {
+                        flatpickrInstance.clear();
+                    }
+                    
+                    // Show/hide date range picker
+                    if (period === 'custom') {
+                        dateRangeContainer.classList.remove('d-none');
+                    } else {
+                        dateRangeContainer.classList.add('d-none');
+                    }
+                    
+                    // Set period filter
+                    currentFilter.period = period;
+                    currentFilter.startDate = null;
+                    currentFilter.endDate = null;
+                    
+                    updateDashboardWithFilter();
+                });
+            });
+            
+            // Refresh button
+            refreshBtn.addEventListener('click', function() {
+                this.classList.add('rotating');
+                setTimeout(() => {
+                    this.classList.remove('rotating');
+                }, 1000);
+                loadDashboardData();
+            });
+        }
+
+        // Show tab content
+        function showTab(tabId) {
+            // Hide all tabs
+            dashboardTab.classList.add('d-none');
+            paymentsTab.classList.add('d-none');
+            returnsTab.classList.add('d-none');
+            salesTab.classList.add('d-none');
+            pendingTab.classList.add('d-none');
+            analyticsTab.classList.add('d-none');
+            
+            // Update page title
+            const titles = {
+                'dashboard': 'Dashboard Overview',
+                'payments': 'Payment Transactions',
+                'returns': 'Returns Management',
+                'sales': 'Sales Orders',
+                'pending': 'Products On the Way',
+                'analytics': 'Advanced Analytics'
+            };
+            
+            const icons = {
+                'dashboard': 'fa-tachometer-alt',
+                'payments': 'fa-rupee-sign',
+                'returns': 'fa-undo-alt',
+                'sales': 'fa-shopping-bag',
+                'pending': 'fa-clock',
+                'analytics': 'fa-chart-bar'
+            };
+            
+            pageTitle.innerHTML = `<i class="fas ${icons[tabId]} text-primary"></i><span>${titles[tabId]}</span>`;
+            
+            // Show active tab
+            if (tabId === 'dashboard') {
+                dashboardTab.classList.remove('d-none');
+            } else if (tabId === 'payments') {
+                paymentsTab.classList.remove('d-none');
+            } else if (tabId === 'returns') {
+                returnsTab.classList.remove('d-none');
+            } else if (tabId === 'sales') {
+                salesTab.classList.remove('d-none');
+            } else if (tabId === 'pending') {
+                pendingTab.classList.remove('d-none');
+                updatePendingTable(dashboardData);
+            } else if (tabId === 'analytics') {
+                analyticsTab.classList.remove('d-none');
+                // Initialize analytics charts
+                if (dashboardData && dashboardData.summary) {
+                    updateAnalyticsCharts(dashboardData);
+                }
+            }
+        }
+
+        // Enhanced loading animation
+        function startLoadingAnimation() {
+            let orders = 0;
+            let payments = 0;
+            let returns = 0;
+            let ordersTarget = Math.floor(Math.random() * 100) + 50;
+            let paymentsTarget = Math.floor(Math.random() * 30) + 20;
+            let returnsTarget = Math.floor(Math.random() * 20) + 5;
+            
+            if (loadingInterval) clearInterval(loadingInterval);
+            
+            loadingInterval = setInterval(() => {
+                if (orders < ordersTarget) {
+                    orders += Math.floor(Math.random() * 5) + 1;
+                    if (orders > ordersTarget) orders = ordersTarget;
+                    loadingOrders.textContent = orders;
+                }
+                
+                if (payments < paymentsTarget) {
+                    payments += Math.floor(Math.random() * 3) + 1;
+                    if (payments > paymentsTarget) payments = paymentsTarget;
+                    loadingPayments.textContent = payments;
+                }
+                
+                if (returns < returnsTarget) {
+                    returns += Math.floor(Math.random() * 2) + 1;
+                    if (returns > returnsTarget) returns = returnsTarget;
+                    loadingReturns.textContent = returns;
+                }
+                
+                if (orders >= ordersTarget && payments >= paymentsTarget && returns >= returnsTarget) {
+                    clearInterval(loadingInterval);
+                }
+            }, 100);
+        }
+
+        // Load dashboard data from Google Apps Script
+        async function loadDashboardData() {
+            // Show loading with animation
+            loadingOverlay.classList.remove('hidden');
+            startLoadingAnimation();
+            
+            // Add fade-in class to main content when loading completes
+            setTimeout(() => {
+                mainContent.classList.add('content-fade-in');
+            }, 300);
+            
+            try {
+                const response = await fetch(APPS_SCRIPT_URL);
+                const data = await response.json();
+                
+                if (data.success) {
+                    dashboardData = data.data;
+                    
+                    // Simulate a slight delay for smooth transition
+                    await new Promise(resolve => setTimeout(resolve, 500));
+                    
+                    updateDashboardWithFilter();
+                    updateLastUpdated();
+                    
+                    // Hide loading overlay with smooth transition
+                    setTimeout(() => {
+                        loadingOverlay.classList.add('hidden');
+                    }, 300);
+                } else {
+                    throw new Error(data.message || 'Failed to load data');
+                }
+            } catch (error) {
+                console.error('Error loading dashboard data:', error);
+                showNotification('Failed to load dashboard data. Please check your connection and try again.', 'danger');
+                
+                // Still hide loading overlay on error
+                setTimeout(() => {
+                    loadingOverlay.classList.add('hidden');
+                }, 300);
+            } finally {
+                if (loadingInterval) {
+                    clearInterval(loadingInterval);
+                }
+            }
+        }
+
+        // Update dashboard with current filter
+        function updateDashboardWithFilter() {
+            const filteredData = filterDataByPeriod(dashboardData, currentFilter);
+            updatePeriodIndicator();
+            updateStats(filteredData);
+            updateTables(filteredData);
+            updatePendingBadge(filteredData);
+            
+            // Update analytics charts if on analytics tab
+            if (!analyticsTab.classList.contains('d-none')) {
+                updateAnalyticsCharts(filteredData);
+            }
+        }
+
+        // Filter data by period
+        function filterDataByPeriod(data, filter) {
+            let filteredSales = [...data.sales];
+            let filteredReturns = [...data.returns];
+            let filteredPayments = [...data.payments];
+            
+            // Apply date range filter if specified
+            if (filter.period === 'custom' && filter.startDate && filter.endDate) {
+                filteredSales = filteredSales.filter(sale => {
+                    const saleDate = new Date(sale.date);
+                    return saleDate >= filter.startDate && saleDate <= filter.endDate;
+                });
+                
+                filteredReturns = filteredReturns.filter(ret => {
+                    const returnDate = new Date(ret.date);
+                    return returnDate >= filter.startDate && returnDate <= filter.endDate;
+                });
+                
+                filteredPayments = filteredPayments.filter(payment => {
+                    const paymentDate = new Date(payment.date);
+                    return paymentDate >= filter.startDate && paymentDate <= filter.endDate;
+                });
+            } else if (filter.period === 'thisMonth') {
+                const now = new Date();
+                const startOfMonth = new Date(now.getFullYear(), now.getMonth(), 1);
+                const endOfMonth = new Date(now.getFullYear(), now.getMonth() + 1, 0);
+                
+                filteredSales = filteredSales.filter(sale => {
+                    const saleDate = new Date(sale.date);
+                    return saleDate >= startOfMonth && saleDate <= endOfMonth;
+                });
+                
+                filteredReturns = filteredReturns.filter(ret => {
+                    const returnDate = new Date(ret.date);
+                    return returnDate >= startOfMonth && returnDate <= endOfMonth;
+                });
+                
+                filteredPayments = filteredPayments.filter(payment => {
+                    const paymentDate = new Date(payment.date);
+                    return paymentDate >= startOfMonth && paymentDate <= endOfMonth;
+                });
+            } else if (filter.period === 'lastMonth') {
+                const now = new Date();
+                const startOfLastMonth = new Date(now.getFullYear(), now.getMonth() - 1, 1);
+                const endOfLastMonth = new Date(now.getFullYear(), now.getMonth(), 0);
+                
+                filteredSales = filteredSales.filter(sale => {
+                    const saleDate = new Date(sale.date);
+                    return saleDate >= startOfLastMonth && saleDate <= endOfLastMonth;
+                });
+                
+                filteredReturns = filteredReturns.filter(ret => {
+                    const returnDate = new Date(ret.date);
+                    return returnDate >= startOfLastMonth && returnDate <= endOfLastMonth;
+                });
+                
+                filteredPayments = filteredPayments.filter(payment => {
+                    const paymentDate = new Date(payment.date);
+                    return paymentDate >= startOfLastMonth && paymentDate <= endOfLastMonth;
+                });
+            }
+            
+            const filtered = {
+                sales: filteredSales,
+                returns: filteredReturns,
+                payments: filteredPayments,
+                summary: calculateFilteredSummary(filteredSales, filteredReturns, filteredPayments),
+                months: data.months,
+                monthlySummary: generateMonthlySummary(filteredSales, filteredReturns, filteredPayments)
+            };
+            
+            return filtered;
+        }
+
+        // Calculate summary for filtered data
+        function calculateFilteredSummary(sales, returns, payments) {
+            const summary = {
+                // Sales Metrics
+                totalPayments: 0,
+                paymentCount: 0,
+                totalSales: 0,
+                totalDelivered: 0,
+                totalShipped: 0,
+                totalReadyToShip: 0,
+                totalOnWay: 0,
+                totalDispatched: 0,
+                totalCancelled: 0,
+                
+                // Returns Metrics
+                totalReturns: 0,
+                totalRTO: 0,
+                totalCustomerReturns: 0,
+                
+                // For recent tables
+                recentPayments: [],
+                recentReturns: []
+            };
+            
+            // Create sets for quick lookups
+            const paymentOrderIds = new Set();
+            const returnOrderIds = new Set();
+            
+            // Calculate payments
+            payments.forEach(payment => {
+                summary.totalPayments += parseFloat(payment.amount) || 0;
+                summary.paymentCount++;
+                if (payment.orderId) {
+                    paymentOrderIds.add(payment.orderId);
+                }
+            });
+            
+            // Calculate returns
+            returns.forEach(ret => {
+                summary.totalReturns++;
+                if (ret.returnType === 'Courier Return (RTO)') {
+                    summary.totalRTO++;
+                } else {
+                    summary.totalCustomerReturns++;
+                }
+                if (ret.orderId) {
+                    returnOrderIds.add(ret.orderId);
+                }
+            });
+            
+            // Calculate sales metrics
+            sales.forEach(sale => {
+                summary.totalSales++;
+                
+                const status = (sale.status || '').toUpperCase();
+                const orderId = sale.orderId || '';
+                
+                // Check if product is on the way
+                const isCancelled = status.includes('CANCELLED');
+                const hasPayment = paymentOrderIds.has(orderId);
+                const hasReturn = returnOrderIds.has(orderId);
+                
+                if (!isCancelled && !hasPayment && !hasReturn) {
+                    summary.totalOnWay++;
+                }
+                
+                // Count dispatched products
+                if (!isCancelled) {
+                    summary.totalDispatched++;
+                }
+                
+                // Count by status
+                if (status.includes('DELIVERED')) {
+                    summary.totalDelivered++;
+                } else if (status.includes('SHIPPED')) {
+                    summary.totalShipped++;
+                } else if (status.includes('READY')) {
+                    summary.totalReadyToShip++;
+                } else if (status.includes('CANCELLED')) {
+                    summary.totalCancelled++;
+                }
+            });
+            
+            // Calculate return rate
+            summary.returnRate = summary.totalSales > 0 ? (summary.totalReturns / summary.totalSales) * 100 : 0;
+            
+            // Get recent payments
+            summary.recentPayments = [...payments]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+            
+            // Get recent returns
+            summary.recentReturns = [...returns]
+                .sort((a, b) => new Date(b.date) - new Date(a.date))
+                .slice(0, 5);
+            
+            return summary;
+        }
+
+        // Generate monthly summary
+        function generateMonthlySummary(sales, returns, payments) {
+            const monthlyData = {};
+            
+            // Initialize months
+            [...sales, ...returns, ...payments].forEach(item => {
+                const month = item.month;
+                if (!month) return;
+                
+                if (!monthlyData[month]) {
+                    monthlyData[month] = {
+                        month: month,
+                        totalOrders: 0,
+                        delivered: 0,
+                        shipped: 0,
+                        ready: 0,
+                        cancelled: 0,
+                        onWay: 0,
+                        totalPayments: 0,
+                        returns: 0,
+                        rtoReturns: 0,
+                        customerReturns: 0
+                    };
+                }
+            });
+            
+            // Process sales
+            sales.forEach(sale => {
+                const month = sale.month;
+                if (monthlyData[month]) {
+                    monthlyData[month].totalOrders++;
+                    
+                    const status = (sale.status || '').toUpperCase();
+                    if (status.includes('DELIVERED')) {
+                        monthlyData[month].delivered++;
+                    } else if (status.includes('SHIPPED')) {
+                        monthlyData[month].shipped++;
+                    } else if (status.includes('READY')) {
+                        monthlyData[month].ready++;
+                    } else if (status.includes('CANCELLED')) {
+                        monthlyData[month].cancelled++;
+                    } else {
+                        monthlyData[month].onWay++;
+                    }
+                }
+            });
+            
+            // Process payments
+            payments.forEach(payment => {
+                const month = payment.month;
+                if (monthlyData[month]) {
+                    monthlyData[month].totalPayments += parseFloat(payment.amount) || 0;
+                }
+            });
+            
+            // Process returns
+            returns.forEach(ret => {
+                const month = ret.month;
+                if (monthlyData[month]) {
+                    monthlyData[month].returns++;
+                    if (ret.returnType === 'Courier Return (RTO)') {
+                        monthlyData[month].rtoReturns++;
+                    } else {
+                        monthlyData[month].customerReturns++;
+                    }
+                }
+            });
+            
+            // Calculate success rates
+            return Object.values(monthlyData).map(monthData => {
+                monthData.successRate = monthData.totalOrders > 0 ? (monthData.delivered / monthData.totalOrders) * 100 : 0;
+                return monthData;
+            });
+        }
+
+        // Update period indicator
+        function updatePeriodIndicator() {
+            let periodTextStr = '';
+            
+            switch(currentFilter.period) {
+                case 'all':
+                    periodTextStr = 'Showing data for: All Time';
+                    periodIndicator.classList.add('d-none');
+                    break;
+                case 'thisMonth':
+                    const now = new Date();
+                    const monthName = now.toLocaleString('default', { month: 'long' });
+                    periodTextStr = `Showing data for: ${monthName} ${now.getFullYear()}`;
+                    periodIndicator.classList.remove('d-none');
+                    break;
+                case 'lastMonth':
+                    const lastMonth = new Date();
+                    lastMonth.setMonth(lastMonth.getMonth() - 1);
+                    const lastMonthName = lastMonth.toLocaleString('default', { month: 'long' });
+                    periodTextStr = `Showing data for: ${lastMonthName} ${lastMonth.getFullYear()}`;
+                    periodIndicator.classList.remove('d-none');
+                    break;
+                case 'custom':
+                    if (currentFilter.startDate && currentFilter.endDate) {
+                        const startStr = currentFilter.startDate.toLocaleDateString();
+                        const endStr = currentFilter.endDate.toLocaleDateString();
+                        periodTextStr = `Showing data for: ${startStr} to ${endStr}`;
+                        periodIndicator.classList.remove('d-none');
+                    }
+                    break;
+            }
+            
+            periodText.textContent = periodTextStr;
+        }
+
+        // Update statistics cards
+        function updateStats(data) {
+            const summary = data.summary;
+            
+            // Sales Metrics
+            totalPayments.textContent = `₹${summary.totalPayments.toFixed(2)}`;
+            paymentCount.textContent = `${summary.paymentCount} transactions`;
+            productsOnWay.textContent = summary.totalOnWay;
+            productsDispatched.textContent = summary.totalDispatched;
+            totalSales.textContent = summary.totalSales;
+            
+            // Returns Metrics
+            totalReturns.textContent = summary.totalReturns;
+            totalRTO.textContent = summary.totalRTO;
+            totalCustomerReturns.textContent = summary.totalCustomerReturns;
+            returnRate.textContent = `${summary.returnRate.toFixed(1)}%`;
+            
+            // Order Status Summary
+            deliveredCount.textContent = summary.totalDelivered;
+            shippedCount.textContent = summary.totalShipped + summary.totalReadyToShip;
+            onWayCount.textContent = summary.totalOnWay;
+            cancelledCount.textContent = summary.totalCancelled;
+        }
+
+        // Update pending badge
+        function updatePendingBadge(data) {
+            const pendingCount = data.summary.totalOnWay;
+            pendingBadge.textContent = pendingCount;
+            pendingCountBadge.textContent = `${pendingCount} Products`;
+        }
+
+        // Update analytics charts
+        function updateAnalyticsCharts(data) {
+            updateSalesChart(data);
+            updateOrderStatusChart(data);
+            updateReturnsChart(data);
+            updatePaymentAnalysisChart(data);
+            updateMonthlySummaryTable(data);
+        }
+
+        // Update sales chart
+        function updateSalesChart(data) {
+            const ctx = document.getElementById('salesChart').getContext('2d');
+            
+            // Group sales by month
+            const monthlySales = {};
+            data.sales.forEach(sale => {
+                if (!monthlySales[sale.month]) {
+                    monthlySales[sale.month] = { 
+                        delivered: 0, 
+                        shipped: 0, 
+                        ready: 0,
+                        cancelled: 0, 
+                        onWay: 0
+                    };
+                }
+                
+                const status = (sale.status || '').toUpperCase();
+                if (status.includes('DELIVERED')) {
+                    monthlySales[sale.month].delivered++;
+                } else if (status.includes('SHIPPED')) {
+                    monthlySales[sale.month].shipped++;
+                } else if (status.includes('READY')) {
+                    monthlySales[sale.month].ready++;
+                } else if (status.includes('CANCELLED')) {
+                    monthlySales[sale.month].cancelled++;
+                } else {
+                    monthlySales[sale.month].onWay++;
+                }
+            });
+            
+            // Sort months
+            const monthOrder = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            const months = Object.keys(monthlySales).sort((a, b) => {
+                return monthOrder.indexOf(a) - monthOrder.indexOf(b);
+            });
+            
+            const deliveredData = months.map(month => monthlySales[month].delivered);
+            const shippedData = months.map(month => monthlySales[month].shipped + monthlySales[month].ready);
+            const cancelledData = months.map(month => monthlySales[month].cancelled);
+            const onWayData = months.map(month => monthlySales[month].onWay);
+            
+            if (salesChartInstance) {
+                salesChartInstance.destroy();
+            }
+            
+            salesChartInstance = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: months,
+                    datasets: [
+                        {
+                            label: 'Delivered',
+                            data: deliveredData,
+                            borderColor: '#38a169',
+                            backgroundColor: 'rgba(56, 161, 105, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Shipped/Ready',
+                            data: shippedData,
+                            borderColor: '#4299e1',
+                            backgroundColor: 'rgba(66, 153, 225, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'On the Way',
+                            data: onWayData,
+                            borderColor: '#ed8936',
+                            backgroundColor: 'rgba(237, 137, 54, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        },
+                        {
+                            label: 'Cancelled',
+                            data: cancelledData,
+                            borderColor: '#e53e3e',
+                            backgroundColor: 'rgba(229, 62, 62, 0.1)',
+                            tension: 0.4,
+                            fill: true,
+                            borderWidth: 2
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        tooltip: {
+                            mode: 'index',
+                            intersect: false
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true,
+                            ticks: {
+                                precision: 0
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update order status chart
+        function updateOrderStatusChart(data) {
+            const ctx = document.getElementById('orderStatusChart').getContext('2d');
+            const summary = data.summary;
+            
+            const statusData = [
+                summary.totalDelivered,
+                summary.totalShipped + summary.totalReadyToShip,
+                summary.totalOnWay,
+                summary.totalCancelled
+            ];
+            
+            const statusLabels = ['Delivered', 'Shipped/Ready', 'On the Way', 'Cancelled'];
+            const statusColors = [
+                'rgba(56, 161, 105, 0.8)',
+                'rgba(66, 153, 225, 0.8)',
+                'rgba(237, 137, 54, 0.8)',
+                'rgba(229, 62, 62, 0.8)'
+            ];
+            
+            if (orderStatusChartInstance) {
+                orderStatusChartInstance.destroy();
+            }
+            
+            orderStatusChartInstance = new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: statusLabels,
+                    datasets: [{
+                        data: statusData,
+                        backgroundColor: statusColors,
+                        borderColor: 'white',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    },
+                    cutout: '65%'
+                }
+            });
+        }
+
+        // Update returns chart
+        function updateReturnsChart(data) {
+            const ctx = document.getElementById('returnsChart').getContext('2d');
+            
+            const returnTypes = {
+                'Courier Return (RTO)': data.summary.totalRTO,
+                'Customer Return': data.summary.totalCustomerReturns
+            };
+            
+            if (returnsChartInstance) {
+                returnsChartInstance.destroy();
+            }
+            
+            returnsChartInstance = new Chart(ctx, {
+                type: 'pie',
+                data: {
+                    labels: Object.keys(returnTypes),
+                    datasets: [{
+                        data: Object.values(returnTypes),
+                        backgroundColor: [
+                            'rgba(237, 137, 54, 0.8)',
+                            'rgba(160, 174, 192, 0.8)'
+                        ],
+                        borderColor: 'white',
+                        borderWidth: 2
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update payment analysis chart
+        function updatePaymentAnalysisChart(data) {
+            const ctx = document.getElementById('paymentAnalysisChart').getContext('2d');
+            
+            // Group payments by month
+            const monthlyPayments = {};
+            data.payments.forEach(payment => {
+                if (!monthlyPayments[payment.month]) {
+                    monthlyPayments[payment.month] = { total: 0, count: 0 };
+                }
+                monthlyPayments[payment.month].total += parseFloat(payment.amount) || 0;
+                monthlyPayments[payment.month].count++;
+            });
+            
+            // Sort months
+            const monthOrder = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            const months = Object.keys(monthlyPayments).sort((a, b) => {
+                return monthOrder.indexOf(a) - monthOrder.indexOf(b);
+            });
+            
+            const paymentAmounts = months.map(month => monthlyPayments[month].total);
+            const paymentCounts = months.map(month => monthlyPayments[month].count);
+            
+            if (paymentAnalysisChartInstance) {
+                paymentAnalysisChartInstance.destroy();
+            }
+            
+            paymentAnalysisChartInstance = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: months,
+                    datasets: [
+                        {
+                            label: 'Payment Amount (₹)',
+                            data: paymentAmounts,
+                            backgroundColor: 'rgba(90, 103, 216, 0.8)',
+                            borderRadius: 6,
+                            order: 2
+                        },
+                        {
+                            label: 'Payment Count',
+                            data: paymentCounts,
+                            type: 'line',
+                            borderColor: '#e53e3e',
+                            backgroundColor: 'transparent',
+                            order: 1,
+                            tension: 0.4,
+                            borderWidth: 3
+                        }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        }
+                    },
+                    scales: {
+                        x: {
+                            grid: {
+                                display: false
+                            }
+                        },
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        }
+
+        // Update monthly summary table
+        function updateMonthlySummaryTable(data) {
+            monthlySummaryTable.innerHTML = '';
+            
+            const monthlySummary = data.monthlySummary || [];
+            
+            // Sort months
+            const monthOrder = [
+                'January', 'February', 'March', 'April', 'May', 'June',
+                'July', 'August', 'September', 'October', 'November', 'December'
+            ];
+            
+            const sortedSummary = [...monthlySummary].sort((a, b) => {
+                return monthOrder.indexOf(a.month) - monthOrder.indexOf(b.month);
+            });
+            
+            // Add rows
+            sortedSummary.forEach(monthData => {
+                const row = document.createElement('tr');
+                
+                row.innerHTML = `
+                    <td><strong>${monthData.month}</strong></td>
+                    <td>${monthData.totalOrders}</td>
+                    <td class="text-success">${monthData.delivered}</td>
+                    <td class="text-info">${monthData.shipped + monthData.ready}</td>
+                    <td class="text-danger">${monthData.cancelled}</td>
+                    <td class="text-warning">${monthData.onWay}</td>
+                    <td class="text-primary">₹${monthData.totalPayments.toFixed(2)}</td>
+                    <td class="text-danger">${monthData.returns}</td>
+                    <td><span class="badge ${monthData.successRate >= 70 ? 'bg-success' : monthData.successRate >= 50 ? 'bg-warning' : 'bg-danger'}">${monthData.successRate.toFixed(1)}%</span></td>
+                `;
+                
+                monthlySummaryTable.appendChild(row);
+            });
+        }
+
+        // Update pending table
+        function updatePendingTable(data) {
+            pendingTable.innerHTML = '';
+            
+            const pendingOrders = data.sales.filter(sale => {
+                const status = (sale.status || '').toUpperCase();
+                const isCancelled = status.includes('CANCELLED');
+                const hasPayment = data.payments.some(p => p.orderId === sale.orderId);
+                const hasReturn = data.returns.some(r => r.orderId === sale.orderId);
+                
+                return !isCancelled && !hasPayment && !hasReturn;
+            });
+            
+            if (pendingOrders.length === 0) {
+                pendingTable.innerHTML = '<tr><td colspan="8" class="text-center py-4">No pending products found</td></tr>';
+                return;
+            }
+            
+            pendingOrders.forEach((order, index) => {
+                const row = document.createElement('tr');
+                const orderDate = new Date(order.date);
+                const daysPending = Math.floor((new Date() - orderDate) / (1000 * 60 * 60 * 24));
+                
+                row.innerHTML = `
+                    <td>${index + 1}</td>
+                    <td>${order.month || ''}</td>
+                    <td>${formatDate(order.date)}</td>
+                    <td><small class="text-muted">${formatOrderId(order.orderId)}</small></td>
+                    <td><small class="text-muted">${order.sku || ''}</small></td>
+                    <td><span class="status-badge badge-onway">On the Way</span></td>
+                    <td><span class="badge ${daysPending > 10 ? 'bg-danger' : daysPending > 5 ? 'bg-warning' : 'bg-info'}">${daysPending} days</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i>
+                        </button>
+                    </td>
+                `;
+                
+                pendingTable.appendChild(row);
+            });
+        }
+
+        // Update tables
+        function updateTables(data) {
+            updateRecentPaymentsTable(data.summary.recentPayments);
+            updateRecentReturnsTable(data.summary.recentReturns);
+            updatePaymentsTable(data.payments, data.sales);
+            updateReturnsTable(data.returns, data.sales);
+            updateSalesTable(data.sales);
+        }
+
+        // Update recent payments table
+        function updateRecentPaymentsTable(payments) {
+            recentPaymentsTable.innerHTML = '';
+            
+            if (payments.length === 0) {
+                recentPaymentsTable.innerHTML = '<tr><td colspan="4" class="text-center py-3">No payment data available</td></tr>';
+                return;
+            }
+            
+            payments.forEach(payment => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><small class="text-muted">${formatOrderId(payment.orderId)}</small></td>
+                    <td>${formatDate(payment.date)}</td>
+                    <td><span class="${payment.amount >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold'}">₹${parseFloat(payment.amount).toFixed(2)}</span></td>
+                    <td><span class="badge ${payment.amount >= 0 ? 'bg-success' : 'bg-danger'}">${payment.amount >= 0 ? 'Paid' : 'Refund'}</span></td>
+                `;
+                recentPaymentsTable.appendChild(row);
+            });
+        }
+
+        // Update recent returns table
+        function updateRecentReturnsTable(returns) {
+            recentReturnsTable.innerHTML = '';
+            
+            if (returns.length === 0) {
+                recentReturnsTable.innerHTML = '<tr><td colspan="4" class="text-center py-3">No return data available</td></tr>';
+                return;
+            }
+            
+            returns.forEach(returnItem => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td><small class="text-muted">${formatOrderId(returnItem.orderId)}</small></td>
+                    <td>${formatDate(returnItem.date)}</td>
+                    <td><span class="status-badge ${returnItem.returnType === 'Courier Return (RTO)' ? 'badge-rto' : 'badge-ready'}">${returnItem.returnType || 'N/A'}</span></td>
+                    <td><span class="badge ${returnItem.damage === 'YES' ? 'bg-danger' : 'bg-success'}">${returnItem.damage || 'NO'}</span></td>
+                `;
+                recentReturnsTable.appendChild(row);
+            });
+        }
+
+        // Update payments table
+        function updatePaymentsTable(payments, sales) {
+            paymentsTable.innerHTML = '';
+            
+            if (payments.length === 0) {
+                paymentsTable.innerHTML = '<tr><td colspan="6" class="text-center py-3">No payment data available</td></tr>';
+                return;
+            }
+            
+            // Create order status map
+            const orderStatusMap = {};
+            sales.forEach(sale => {
+                if (sale.orderId) {
+                    orderStatusMap[sale.orderId] = sale.status || '';
+                }
+            });
+            
+            payments.forEach(payment => {
+                const orderStatus = orderStatusMap[payment.orderId] || '';
+                const statusClass = getStatusClass(orderStatus);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${payment.sl || ''}</td>
+                    <td>${payment.month || ''}</td>
+                    <td>${formatDate(payment.date)}</td>
+                    <td><small class="text-muted">${formatOrderId(payment.orderId)}</small></td>
+                    <td><span class="${payment.amount >= 0 ? 'text-success fw-bold' : 'text-danger fw-bold'}">₹${parseFloat(payment.amount).toFixed(2)}</span></td>
+                    <td><span class="status-badge ${statusClass}">${orderStatus || 'N/A'}</span></td>
+                `;
+                paymentsTable.appendChild(row);
+            });
+        }
+
+        // Update returns table
+        function updateReturnsTable(returns, sales) {
+            returnsTable.innerHTML = '';
+            
+            if (returns.length === 0) {
+                returnsTable.innerHTML = '<tr><td colspan="8" class="text-center py-3">No return data available</td></tr>';
+                return;
+            }
+            
+            // Create order status map
+            const orderStatusMap = {};
+            sales.forEach(sale => {
+                if (sale.orderId) {
+                    orderStatusMap[sale.orderId] = sale.status || '';
+                }
+            });
+            
+            returns.forEach(returnItem => {
+                const orderStatus = orderStatusMap[returnItem.orderId] || '';
+                const statusClass = getStatusClass(orderStatus);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${returnItem.sl || ''}</td>
+                    <td>${returnItem.month || ''}</td>
+                    <td>${formatDate(returnItem.date)}</td>
+                    <td><small class="text-muted">${formatOrderId(returnItem.orderId)}</small></td>
+                    <td><span class="${returnItem.received === 'YES' ? 'text-success' : 'text-danger'}">${returnItem.received || ''}</span></td>
+                    <td><span class="status-badge ${returnItem.returnType === 'Courier Return (RTO)' ? 'badge-rto' : 'badge-ready'}">${returnItem.returnType || ''}</span></td>
+                    <td><span class="badge ${returnItem.damage === 'YES' ? 'bg-danger' : 'bg-success'}">${returnItem.damage || 'NO'}</span></td>
+                    <td><span class="status-badge ${statusClass}">${orderStatus || 'N/A'}</span></td>
+                `;
+                returnsTable.appendChild(row);
+            });
+        }
+
+        // Update sales table
+        function updateSalesTable(sales) {
+            salesTable.innerHTML = '';
+            
+            if (sales.length === 0) {
+                salesTable.innerHTML = '<tr><td colspan="9" class="text-center py-3">No sales data available</td></tr>';
+                return;
+            }
+            
+            sales.forEach(sale => {
+                const statusClass = getStatusClass(sale.status);
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${sale.sl || ''}</td>
+                    <td>${sale.month || ''}</td>
+                    <td>${formatDate(sale.date)}</td>
+                    <td>${sale.sNo || ''}</td>
+                    <td><small class="text-muted">${formatOrderId(sale.orderId)}</small></td>
+                    <td><small class="text-muted">${sale.sku || ''}</small></td>
+                    <td><span class="status-badge ${statusClass}">${sale.status || ''}</span></td>
+                    <td>${sale.payment ? `₹${parseFloat(sale.payment).toFixed(2)}` : ''}</td>
+                    <td>${sale.return || ''}</td>
+                `;
+                salesTable.appendChild(row);
+            });
+        }
+
+        // Helper functions
+        function formatDate(dateString) {
+            if (!dateString) return '';
+            
+            try {
+                const date = new Date(dateString);
+                return date.toLocaleDateString('en-IN', {
+                    day: '2-digit',
+                    month: 'short',
+                    year: 'numeric'
+                });
+            } catch (e) {
+                return dateString;
+            }
+        }
+
+        function formatOrderId(orderId) {
+            if (!orderId) return '';
+            return orderId.length > 15 ? orderId.substring(0, 12) + '...' : orderId;
+        }
+
+        function getStatusClass(status) {
+            if (!status) return 'badge-secondary';
+            
+            const statusUpper = status.toUpperCase();
+            
+            if (statusUpper.includes('DELIVERED')) {
+                return 'badge-delivered';
+            } else if (statusUpper.includes('SHIPPED')) {
+                return 'badge-shipped';
+            } else if (statusUpper.includes('READY')) {
+                return 'badge-ready';
+            } else if (statusUpper.includes('CANCELLED')) {
+                return 'badge-cancelled';
+            } else if (statusUpper.includes('RTO')) {
+                return 'badge-rto';
+            } else {
+                return 'badge-onway';
+            }
+        }
+
+        function updateLastUpdated() {
+            const now = new Date();
+            lastUpdated.textContent = `Last updated: ${now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })}`;
+        }
+
+        function showNotification(message, type = 'info') {
+            // Create notification element
+            const notification = document.createElement('div');
+            notification.className = `alert alert-${type} alert-dismissible fade show`;
+            notification.style.position = 'fixed';
+            notification.style.top = '20px';
+            notification.style.right = '20px';
+            notification.style.zIndex = '2000';
+            notification.style.minWidth = '300px';
+            notification.innerHTML = `
+                ${message}
+                <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+            `;
+            
+            document.body.appendChild(notification);
+            
+            // Auto remove after 5 seconds
+            setTimeout(() => {
+                if (notification.parentNode) {
+                    notification.parentNode.removeChild(notification);
+                }
+            }, 5000);
+        }
+
+        // Add CSS for refresh button animation
+        const style = document.createElement('style');
+        style.textContent = `
+            .rotating {
+                animation: rotate 1s linear;
+            }
+            
+            @keyframes rotate {
+                from { transform: rotate(0deg); }
+                to { transform: rotate(360deg); }
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

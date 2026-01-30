@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hey Boss Saheb</title>
+
+<link rel="manifest" href="manifest.json">
+
+<style>
+*{
+  margin:0;
+  padding:0;
+  box-sizing:border-box;
+  font-family:"Segoe UI",sans-serif;
+}
+
+/* ===== Splash Screen ===== */
+#splash{
+  position:fixed;
+  inset:0;
+  background:linear-gradient(135deg,#141e30,#243b55);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  z-index:100;
+  animation:splashOut 1s ease 2.5s forwards;
+}
+
+#splash h1{
+  font-size:32px;
+  letter-spacing:1px;
+  animation:pop 1.2s ease infinite alternate;
+}
+
+/* ===== Main App ===== */
+body{
+  min-height:100vh;
+  background:radial-gradient(circle at top,#1c92d2,#0f2027);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  color:#fff;
+}
+
+.app{
+  width:95%;
+  max-width:420px;
+  background:rgba(255,255,255,.08);
+  backdrop-filter:blur(16px);
+  border-radius:24px;
+  padding:25px;
+  box-shadow:0 25px 60px rgba(0,0,0,.5);
+  opacity:0;
+  transform:scale(.9);
+  animation:appIn .8s ease 3s forwards;
+}
+
+h2{text-align:center;font-size:26px;}
+p{text-align:center;font-size:14px;opacity:.85;margin:10px 0 20px;}
+
+.btn{
+  padding:16px;
+  margin-bottom:14px;
+  border-radius:18px;
+  background:linear-gradient(135deg,#00c6ff,#0072ff);
+  text-align:center;
+  font-size:18px;
+  font-weight:600;
+  cursor:pointer;
+  transition:.35s;
+}
+.btn:hover{
+  transform:scale(1.06);
+  box-shadow:0 12px 30px rgba(0,0,0,.45);
+}
+
+/* ===== Install Button ===== */
+#installBtn{
+  display:none;
+  background:linear-gradient(135deg,#ff512f,#dd2476);
+}
+
+/* ===== Modal ===== */
+.overlay{
+  position:fixed;
+  inset:0;
+  background:rgba(0,0,0,.6);
+  backdrop-filter:blur(6px);
+  display:none;
+  justify-content:center;
+  align-items:flex-end;
+  z-index:10;
+}
+
+.modal{
+  width:100%;
+  max-width:420px;
+  background:rgba(255,255,255,.12);
+  backdrop-filter:blur(18px);
+  border-radius:25px 25px 0 0;
+  padding:25px;
+  animation:slideUp .45s ease;
+}
+
+.modal h3{text-align:center;margin-bottom:18px;}
+
+.link{
+  display:block;
+  padding:14px;
+  margin-bottom:12px;
+  border-radius:14px;
+  background:rgba(0,0,0,.35);
+  text-decoration:none;
+  color:#fff;
+  text-align:center;
+  transition:.3s;
+}
+.link:hover{
+  background:rgba(0,0,0,.55);
+  transform:translateY(-3px);
+}
+
+.subBtn{
+  background:linear-gradient(135deg,#ff9966,#ff5e62);
+}
+
+/* ===== Animations ===== */
+@keyframes slideUp{
+  from{transform:translateY(100%);opacity:0;}
+  to{transform:translateY(0);opacity:1;}
+}
+@keyframes pop{
+  from{transform:scale(1);}
+  to{transform:scale(1.1);}
+}
+@keyframes splashOut{
+  to{opacity:0;visibility:hidden;}
+}
+@keyframes appIn{
+  to{opacity:1;transform:scale(1);}
+}
+</style>
+</head>
+
+<body>
+
+<!-- Splash Screen -->
+<div id="splash">
+  <h1>Boss Saheb</h1>
+</div>
+
+<!-- Main App -->
+<div class="app">
+  <h2>Hey Boss Saheb</h2>
+  <p>Your data record you may easily access from here</p>
+
+  <div class="btn" onclick="openModal('meeshoModal')">Meesho</div>
+  <div class="btn">Flipkart</div>
+  <div class="btn" onclick="openModal('businessModal')">Business Profiles</div>
+
+  <div class="btn" id="installBtn">📲 Install App</div>
+</div>
+
+<!-- Meesho Modal -->
+<div class="overlay" id="meeshoModal" onclick="closeModal(event)">
+  <div class="modal">
+    <h3>Meesho Dashboards</h3>
+    <a class="link" target="_blank"
+      href="../Meesho-Deshboards/SB.html">SBA Dashboard</a>
+    <a class="link" target="_blank"
+      href="../Meesho-Deshboards/STH.html">STH Dashboard</a>
+    <div class="link subBtn" onclick="openModal('oldModal')">Old Data</div>
+  </div>
+</div>
+
+<!-- Old Data Modal -->
+<div class="overlay" id="oldModal" onclick="closeModal(event)">
+  <div class="modal">
+    <h3>Old Dashboards</h3>
+    <a class="link" target="_blank"
+      href="../Meesho-Deshboards/old-data/SB-old.html">SBA Old</a>
+    <a class="link" target="_blank"
+      href="../Meesho-Deshboards/old-data/STH-old.html">STH Old</a>
+  </div>
+</div>
+
+<!-- Business Modal -->
+<div class="overlay" id="businessModal" onclick="closeModal(event)">
+  <div class="modal">
+    <h3>Business Profiles</h3>
+    <a class="link" target="_blank"
+      href="https://supplier.meesho.com/panel/v3/new/growth/8c7ex/home">
+      Meesho SBA Admin Panel</a>
+    <a class="link" target="_blank"
+      href="https://supplier.meesho.com/Saheb%20Trend%20House">
+      Meesho Public Profile</a>
+  </div>
+</div>
+
+<script>
+/* ===== Modal Control ===== */
+function openModal(id){
+  document.getElementById(id).style.display="flex";
+}
+function closeModal(e){
+  if(e.target.classList.contains("overlay")){
+    e.target.style.display="none";
+  }
+}
+
+/* ===== PWA INSTALLER ===== */
+let deferredPrompt;
+const installBtn = document.getElementById("installBtn");
+
+window.addEventListener("beforeinstallprompt", e=>{
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display="block";
+});
+
+installBtn.addEventListener("click", async ()=>{
+  installBtn.style.display="none";
+  if(deferredPrompt){
+    deferredPrompt.prompt();
+    await deferredPrompt.userChoice;
+    deferredPrompt = null;
+  }
+});
+</script>
+
+</body>
+</html>

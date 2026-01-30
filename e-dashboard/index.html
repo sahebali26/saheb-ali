@@ -174,6 +174,60 @@
             box-shadow: 0 0 0 3px rgba(74, 111, 165, 0.2);
         }
 
+        .price-breakdown {
+            background: linear-gradient(to right, #f8f9fa, #e9ecef);
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+            border-left: 5px solid var(--primary);
+        }
+
+        .price-breakdown h3 {
+            margin-bottom: 20px;
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breakdown-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 12px;
+            padding-bottom: 12px;
+            border-bottom: 1px dashed var(--light-gray);
+        }
+
+        .breakdown-item.total {
+            font-weight: 700;
+            font-size: 1.2rem;
+            color: var(--success);
+            border-bottom: 2px solid var(--primary);
+            padding-top: 10px;
+            margin-top: 10px;
+        }
+
+        .breakdown-item.final-price {
+            font-weight: 700;
+            font-size: 1.3rem;
+            color: var(--secondary);
+            background-color: rgba(107, 142, 35, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            border: 2px solid var(--secondary);
+        }
+
+        .breakdown-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .breakdown-value {
+            font-weight: 600;
+        }
+
         .profit-display {
             background: linear-gradient(to right, #f8f9fa, #e9ecef);
             padding: 25px;
@@ -352,6 +406,10 @@
             .tabs {
                 flex-direction: column;
             }
+            
+            .price-breakdown {
+                padding: 15px;
+            }
         }
 
         .sheet-info {
@@ -372,25 +430,42 @@
         .sheet-info a:hover {
             text-decoration: underline;
         }
+
+        .formula-explanation {
+            background-color: rgba(52, 152, 219, 0.1);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            border-left: 5px solid #3498db;
+            font-size: 0.9rem;
+        }
+
+        .formula-explanation h4 {
+            color: #2980b9;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
     </style>
 </head>
 <body>
     <div class="container">
         <header>
-            <h1><i class="fas fa-calculator"></i> Online Selling Profit Calculator</h1>
-            <p>Calculate your profit from online sales, track returns, and automatically sync data with Google Sheets</p>
+            <h1><i class="fas fa-calculator"></i> Meesho Pricing Calculator</h1>
+            <p>Calculate your Meesho pricing with detailed cost breakdown including margins, discounts, and prepaid amounts</p>
         </header>
 
         <div class="tabs">
-            <div class="tab active" data-tab="profit-calc">Profit Calculator</div>
+            <div class="tab active" data-tab="profit-calc">Pricing Calculator</div>
             <div class="tab" data-tab="return-tracker">Returns Tracker</div>
         </div>
 
         <div class="instructions">
             <h3><i class="fas fa-info-circle"></i> How to Use This Tool</h3>
             <ul>
-                <li>Enter product details and costs in the Profit Calculator tab</li>
-                <li>Click "Calculate Profit" to see your profit/loss</li>
+                <li>Enter all cost components in the Pricing Calculator tab</li>
+                <li>Click "Calculate Pricing" to see Meesho Price and Customer Price</li>
                 <li>Click "Save to Google Sheets" to store the data</li>
                 <li>Switch to Returns Tracker tab to record returned items</li>
                 <li>All data is automatically saved to your Google Sheets</li>
@@ -398,15 +473,22 @@
             <div class="sheet-info">
                 <i class="fas fa-link"></i> Connected to Google Sheets: 
                 <a href="https://docs.google.com/spreadsheets/d/1xsZWCz2UIGDB9-28mPMoZieqNitBbjUnnJI4EHAoxH0/edit?gid=0#gid=0" target="_blank">
-                    View Your Profit Sheet
+                    View Your Pricing Sheet
                 </a>
             </div>
         </div>
 
-        <!-- Profit Calculator Tab -->
+        <!-- Pricing Calculator Tab -->
         <div id="profit-calc" class="tab-content active">
             <div class="card">
-                <h2><i class="fas fa-shopping-cart"></i> Product Sales Information</h2>
+                <h2><i class="fas fa-calculator"></i> Pricing Calculation</h2>
+                
+                <div class="formula-explanation">
+                    <h4><i class="fas fa-calculator"></i> Pricing Formula</h4>
+                    <p><strong>Meesho Price = Product Cost + Packaging Cost + Return Cost + Margin + Prepaid Amount + Discount</strong></p>
+                    <p><strong>Customer Price = Meesho Price + Shipping Cost</strong></p>
+                </div>
+
                 <div class="form-row">
                     <div class="form-group">
                         <label for="product-id"><i class="fas fa-barcode"></i> Product ID</label>
@@ -416,57 +498,161 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="quantity"><i class="fas fa-boxes"></i> Quantity Sold</label>
+                        <label for="quantity"><i class="fas fa-boxes"></i> Quantity</label>
                         <div class="input-icon">
                             <i class="fas fa-hashtag"></i>
-                            <input type="number" id="quantity" min="1" value="1" placeholder="Quantity sold">
+                            <input type="number" id="quantity" min="1" value="1" placeholder="Quantity">
                         </div>
                     </div>
                 </div>
 
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="online-price"><i class="fas fa-tag"></i> Online Selling Price (₹)</label>
+                        <label for="product-cost"><i class="fas fa-shopping-bag"></i> Product Cost (₹)</label>
                         <div class="input-icon">
                             <i class="fas fa-rupee-sign"></i>
-                            <input type="number" id="online-price" min="0" step="0.01" placeholder="Price per unit">
+                            <input type="number" id="product-cost" min="0" step="0.01" placeholder="Product cost per unit">
                         </div>
                     </div>
-                    <div class="form-group">
-                        <label for="buying-price"><i class="fas fa-shopping-bag"></i> Original Buying Price (₹)</label>
-                        <div class="input-icon">
-                            <i class="fas fa-rupee-sign"></i>
-                            <input type="number" id="buying-price" min="0" step="0.01" placeholder="Cost per unit">
-                        </div>
-                    </div>
-                </div>
-
-                <div class="form-row">
                     <div class="form-group">
                         <label for="packaging-cost"><i class="fas fa-box-open"></i> Packaging Cost (₹)</label>
                         <div class="input-icon">
                             <i class="fas fa-rupee-sign"></i>
-                            <input type="number" id="packaging-cost" min="0" step="0.01" value="0" placeholder="Packaging cost">
+                            <input type="number" id="packaging-cost" min="0" step="0.01" value="0" placeholder="Packaging cost per unit">
                         </div>
                     </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="return-cost"><i class="fas fa-undo-alt"></i> Return Cost (₹)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                            <input type="number" id="return-cost" min="0" step="0.01" value="0" placeholder="Estimated return cost per unit">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="margin-percent"><i class="fas fa-chart-line"></i> Margin (%)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-percentage"></i>
+                            <input type="number" id="margin-percent" min="0" step="0.1" value="20" placeholder="Desired margin percentage">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="discount-percent"><i class="fas fa-tags"></i> Discount Program (%)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-percentage"></i>
+                            <input type="number" id="discount-percent" min="0" step="0.1" value="0" placeholder="Discount percentage">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="prepaid-amount"><i class="fas fa-wallet"></i> Prepaid Amount (₹)</label>
+                        <div class="input-icon">
+                            <i class="fas fa-rupee-sign"></i>
+                            <input type="number" id="prepaid-amount" min="0" step="0.01" value="0" placeholder="Prepaid amount per unit">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-row">
                     <div class="form-group">
                         <label for="shipping-cost"><i class="fas fa-shipping-fast"></i> Shipping Cost (₹)</label>
                         <div class="input-icon">
                             <i class="fas fa-rupee-sign"></i>
-                            <input type="number" id="shipping-cost" min="0" step="0.01" value="0" placeholder="Shipping cost">
+                            <input type="number" id="shipping-cost" min="0" step="0.01" value="0" placeholder="Shipping cost per unit">
                         </div>
                     </div>
                 </div>
 
+                <div class="price-breakdown">
+                    <h3><i class="fas fa-receipt"></i> Price Breakdown</h3>
+                    
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <i class="fas fa-shopping-bag"></i>
+                            <span>Product Cost</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-product-cost">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <i class="fas fa-box-open"></i>
+                            <span>Packaging Cost</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-packaging-cost">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <i class="fas fa-undo-alt"></i>
+                            <span>Return Cost</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-return-cost">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <i class="fas fa-chart-line"></i>
+                            <span>Margin Amount</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-margin">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <i class="fas fa-wallet"></i>
+                            <span>Prepaid Amount</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-prepaid">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <i class="fas fa-tags"></i>
+                            <span>Discount Amount</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-discount">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item total">
+                        <div class="breakdown-label">
+                            <i class="fas fa-store"></i>
+                            <span>Meesho Price (Before Shipping)</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-meesho-price">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item">
+                        <div class="breakdown-label">
+                            <i class="fas fa-shipping-fast"></i>
+                            <span>Shipping Cost</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-shipping">₹ 0.00</div>
+                    </div>
+                    
+                    <div class="breakdown-item final-price">
+                        <div class="breakdown-label">
+                            <i class="fas fa-user-check"></i>
+                            <span>Final Customer Price</span>
+                        </div>
+                        <div class="breakdown-value" id="breakdown-customer-price">₹ 0.00</div>
+                    </div>
+                </div>
+
                 <div class="profit-display">
-                    <h3>Calculated Profit/Loss</h3>
+                    <h3>Profit Summary</h3>
                     <div id="profit-result" class="profit-amount neutral">₹ 0.00</div>
                     <p id="profit-per-unit">Per unit profit: ₹ 0.00</p>
+                    <p id="profit-margin">Profit margin: 0%</p>
                 </div>
 
                 <div class="button-group">
                     <button id="calculate-btn" class="btn btn-calculate">
-                        <i class="fas fa-calculator"></i> Calculate Profit
+                        <i class="fas fa-calculator"></i> Calculate Pricing
                     </button>
                     <button id="save-btn" class="btn btn-primary">
                         <i class="fas fa-save"></i> Save to Google Sheets
@@ -527,7 +713,7 @@
         </div>
 
         <footer>
-            <p>Online Selling Profit Calculator &copy; 2023 | Data is saved to your Google Sheets automatically</p>
+            <p>Meesho Pricing Calculator &copy; 2023 | Data is saved to your Google Sheets automatically</p>
             <p>Connected to Google Sheets via Apps Script</p>
         </footer>
     </div>
@@ -540,19 +726,34 @@
         const tabs = document.querySelectorAll('.tab');
         const tabContents = document.querySelectorAll('.tab-content');
         
-        // Profit calculator elements
+        // Pricing calculator elements
         const productIdInput = document.getElementById('product-id');
         const quantityInput = document.getElementById('quantity');
-        const onlinePriceInput = document.getElementById('online-price');
-        const buyingPriceInput = document.getElementById('buying-price');
+        const productCostInput = document.getElementById('product-cost');
         const packagingCostInput = document.getElementById('packaging-cost');
+        const returnCostInput = document.getElementById('return-cost');
+        const marginPercentInput = document.getElementById('margin-percent');
+        const discountPercentInput = document.getElementById('discount-percent');
+        const prepaidAmountInput = document.getElementById('prepaid-amount');
         const shippingCostInput = document.getElementById('shipping-cost');
         const calculateBtn = document.getElementById('calculate-btn');
         const saveBtn = document.getElementById('save-btn');
         const resetBtn = document.getElementById('reset-btn');
         const profitResult = document.getElementById('profit-result');
         const profitPerUnit = document.getElementById('profit-per-unit');
+        const profitMargin = document.getElementById('profit-margin');
         const profitMessage = document.getElementById('profit-message');
+        
+        // Breakdown display elements
+        const breakdownProductCost = document.getElementById('breakdown-product-cost');
+        const breakdownPackagingCost = document.getElementById('breakdown-packaging-cost');
+        const breakdownReturnCost = document.getElementById('breakdown-return-cost');
+        const breakdownMargin = document.getElementById('breakdown-margin');
+        const breakdownPrepaid = document.getElementById('breakdown-prepaid');
+        const breakdownDiscount = document.getElementById('breakdown-discount');
+        const breakdownMeeshoPrice = document.getElementById('breakdown-meesho-price');
+        const breakdownShipping = document.getElementById('breakdown-shipping');
+        const breakdownCustomerPrice = document.getElementById('breakdown-customer-price');
         
         // Returns tracker elements
         const returnProductIdInput = document.getElementById('return-product-id');
@@ -581,26 +782,55 @@
             });
         });
         
-        // Calculate profit
-        calculateBtn.addEventListener('click', calculateProfit);
+        // Calculate pricing
+        calculateBtn.addEventListener('click', calculatePricing);
         
-        function calculateProfit() {
+        function calculatePricing() {
             // Get input values
             const quantity = parseFloat(quantityInput.value) || 0;
-            const onlinePrice = parseFloat(onlinePriceInput.value) || 0;
-            const buyingPrice = parseFloat(buyingPriceInput.value) || 0;
+            const productCost = parseFloat(productCostInput.value) || 0;
             const packagingCost = parseFloat(packagingCostInput.value) || 0;
+            const returnCost = parseFloat(returnCostInput.value) || 0;
+            const marginPercent = parseFloat(marginPercentInput.value) || 0;
+            const discountPercent = parseFloat(discountPercentInput.value) || 0;
+            const prepaidAmount = parseFloat(prepaidAmountInput.value) || 0;
             const shippingCost = parseFloat(shippingCostInput.value) || 0;
             
-            // Calculate profit
-            const totalRevenue = onlinePrice * quantity;
-            const totalCost = (buyingPrice * quantity) + packagingCost + shippingCost;
-            const profit = totalRevenue - totalCost;
-            const profitPerUnitValue = onlinePrice - buyingPrice;
+            // Calculate base cost (Product + Packaging + Return)
+            const baseCost = productCost + packagingCost + returnCost;
             
-            // Display result
+            // Calculate margin amount (percentage of base cost)
+            const marginAmount = (baseCost * marginPercent) / 100;
+            
+            // Calculate discount amount (percentage of base cost + margin)
+            const discountAmount = ((baseCost + marginAmount) * discountPercent) / 100;
+            
+            // Calculate Meesho Price according to new formula: Add discount instead of subtract
+            const meeshoPrice = baseCost + marginAmount + prepaidAmount + discountAmount;
+            
+            // Calculate Customer Price
+            const customerPrice = meeshoPrice + shippingCost;
+            
+            // Calculate profit
+            const totalCost = baseCost + shippingCost;
+            const profit = customerPrice - totalCost;
+            const profitPercent = totalCost > 0 ? (profit / totalCost) * 100 : 0;
+            
+            // Update breakdown display
+            breakdownProductCost.textContent = `₹ ${productCost.toFixed(2)}`;
+            breakdownPackagingCost.textContent = `₹ ${packagingCost.toFixed(2)}`;
+            breakdownReturnCost.textContent = `₹ ${returnCost.toFixed(2)}`;
+            breakdownMargin.textContent = `₹ ${marginAmount.toFixed(2)} (${marginPercent}%)`;
+            breakdownPrepaid.textContent = `₹ ${prepaidAmount.toFixed(2)}`;
+            breakdownDiscount.textContent = `₹ ${discountAmount.toFixed(2)} (${discountPercent}%)`;
+            breakdownMeeshoPrice.textContent = `₹ ${meeshoPrice.toFixed(2)}`;
+            breakdownShipping.textContent = `₹ ${shippingCost.toFixed(2)}`;
+            breakdownCustomerPrice.textContent = `₹ ${customerPrice.toFixed(2)}`;
+            
+            // Update profit display
             profitResult.textContent = `₹ ${profit.toFixed(2)}`;
-            profitPerUnit.textContent = `Per unit profit: ₹ ${profitPerUnitValue.toFixed(2)}`;
+            profitPerUnit.textContent = `Per unit profit: ₹ ${(profit/quantity).toFixed(2)}`;
+            profitMargin.textContent = `Profit margin: ${profitPercent.toFixed(1)}%`;
             
             // Set color based on profit
             if (profit > 0) {
@@ -612,19 +842,33 @@
             }
             
             // Show success message
-            showMessage(profitMessage, 'Profit calculated successfully!', 'success');
+            showMessage(profitMessage, 'Pricing calculated successfully!', 'success');
+            
+            // Return calculated values for saving
+            return {
+                meeshoPrice,
+                customerPrice,
+                profit,
+                profitPercent,
+                baseCost,
+                marginAmount,
+                discountAmount
+            };
         }
         
-        // Save profit data to Google Sheets
-        saveBtn.addEventListener('click', saveProfitData);
+        // Save pricing data to Google Sheets
+        saveBtn.addEventListener('click', savePricingData);
         
-        async function saveProfitData() {
+        async function savePricingData() {
             // Get input values
             const productId = productIdInput.value.trim();
             const quantity = parseFloat(quantityInput.value) || 0;
-            const onlinePrice = parseFloat(onlinePriceInput.value) || 0;
-            const buyingPrice = parseFloat(buyingPriceInput.value) || 0;
+            const productCost = parseFloat(productCostInput.value) || 0;
             const packagingCost = parseFloat(packagingCostInput.value) || 0;
+            const returnCost = parseFloat(returnCostInput.value) || 0;
+            const marginPercent = parseFloat(marginPercentInput.value) || 0;
+            const discountPercent = parseFloat(discountPercentInput.value) || 0;
+            const prepaidAmount = parseFloat(prepaidAmountInput.value) || 0;
             const shippingCost = parseFloat(shippingCostInput.value) || 0;
             
             // Validate required fields
@@ -633,26 +877,30 @@
                 return;
             }
             
-            if (!onlinePrice || !buyingPrice) {
-                showMessage(profitMessage, 'Please enter both online price and buying price', 'error');
+            if (!productCost) {
+                showMessage(profitMessage, 'Please enter the product cost', 'error');
                 return;
             }
             
-            // Calculate profit
-            const totalRevenue = onlinePrice * quantity;
-            const totalCost = (buyingPrice * quantity) + packagingCost + shippingCost;
-            const profit = totalRevenue - totalCost;
+            // Calculate pricing
+            const pricing = calculatePricing();
             
             // Prepare data to send
             const formData = new FormData();
-            formData.append('action', 'saveProfit');
+            formData.append('action', 'savePricing');
             formData.append('productId', productId);
             formData.append('quantity', quantity);
-            formData.append('onlinePrice', onlinePrice);
-            formData.append('buyingPrice', buyingPrice);
+            formData.append('productCost', productCost);
             formData.append('packagingCost', packagingCost);
+            formData.append('returnCost', returnCost);
+            formData.append('marginPercent', marginPercent);
+            formData.append('discountPercent', discountPercent);
+            formData.append('prepaidAmount', prepaidAmount);
             formData.append('shippingCost', shippingCost);
-            formData.append('profit', profit);
+            formData.append('meeshoPrice', pricing.meeshoPrice);
+            formData.append('customerPrice', pricing.customerPrice);
+            formData.append('profit', pricing.profit);
+            formData.append('profitPercent', pricing.profitPercent);
             formData.append('timestamp', new Date().toISOString());
             
             // Show loading state
@@ -669,10 +917,10 @@
                 const result = await response.json();
                 
                 if (result.status === 'success') {
-                    showMessage(profitMessage, 'Profit data saved successfully to Google Sheets!', 'success');
+                    showMessage(profitMessage, 'Pricing data saved successfully to Google Sheets!', 'success');
                     // Reset form after a delay
                     setTimeout(() => {
-                        resetProfitForm();
+                        resetPricingForm();
                     }, 1500);
                 } else {
                     showMessage(profitMessage, 'Error saving data: ' + result.message, 'error');
@@ -747,19 +995,36 @@
             }
         }
         
-        // Reset profit form
-        resetBtn.addEventListener('click', resetProfitForm);
+        // Reset pricing form
+        resetBtn.addEventListener('click', resetPricingForm);
         
-        function resetProfitForm() {
+        function resetPricingForm() {
             productIdInput.value = '';
             quantityInput.value = '1';
-            onlinePriceInput.value = '';
-            buyingPriceInput.value = '';
+            productCostInput.value = '';
             packagingCostInput.value = '0';
+            returnCostInput.value = '0';
+            marginPercentInput.value = '20';
+            discountPercentInput.value = '0';
+            prepaidAmountInput.value = '0';
             shippingCostInput.value = '0';
+            
+            // Reset breakdown display
+            breakdownProductCost.textContent = '₹ 0.00';
+            breakdownPackagingCost.textContent = '₹ 0.00';
+            breakdownReturnCost.textContent = '₹ 0.00';
+            breakdownMargin.textContent = '₹ 0.00 (0%)';
+            breakdownPrepaid.textContent = '₹ 0.00';
+            breakdownDiscount.textContent = '₹ 0.00 (0%)';
+            breakdownMeeshoPrice.textContent = '₹ 0.00';
+            breakdownShipping.textContent = '₹ 0.00';
+            breakdownCustomerPrice.textContent = '₹ 0.00';
+            
+            // Reset profit display
             profitResult.textContent = '₹ 0.00';
             profitResult.className = 'profit-amount neutral';
             profitPerUnit.textContent = 'Per unit profit: ₹ 0.00';
+            profitMargin.textContent = 'Profit margin: 0%';
             profitMessage.style.display = 'none';
         }
         
@@ -800,6 +1065,21 @@
             numberInputs.forEach(input => {
                 input.addEventListener('input', (e) => {
                     if (e.target.value < 0) e.target.value = 0;
+                });
+            });
+            
+            // Auto-calculate on input change
+            const autoCalcInputs = [
+                productCostInput, packagingCostInput, returnCostInput,
+                marginPercentInput, discountPercentInput, prepaidAmountInput,
+                shippingCostInput
+            ];
+            
+            autoCalcInputs.forEach(input => {
+                input.addEventListener('change', () => {
+                    if (productCostInput.value) {
+                        calculatePricing();
+                    }
                 });
             });
         });
