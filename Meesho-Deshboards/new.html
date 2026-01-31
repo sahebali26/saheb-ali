@@ -1,0 +1,710 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boss Saheb - Business Dashboard</title>
+<link rel="manifest" href="manifest.json">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<style>
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+:root {
+  --primary: #1c92d2;
+  --primary-dark: #0f2027;
+  --secondary: #ff512f;
+  --secondary-dark: #dd2476;
+  --accent: #00c6ff;
+  --accent-dark: #0072ff;
+  --meesho-color: #FB5607;
+  --flipkart-color: #1976D2;
+  --business-color: #4CAF50;
+  --card-bg: rgba(255, 255, 255, 0.08);
+  --card-border: rgba(255, 255, 255, 0.15);
+  --text: #fff;
+  --text-secondary: rgba(255, 255, 255, 0.75);
+  --shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  --hover-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
+}
+
+body {
+  min-height: 100vh;
+  background: radial-gradient(circle at top, var(--primary), var(--primary-dark));
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--text);
+  padding: 20px;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* Background Animation */
+.bg-animation {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+  opacity: 0.5;
+}
+
+.circle {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  animation: float 15s infinite linear;
+}
+
+.circle:nth-child(1) {
+  width: 80px;
+  height: 80px;
+  top: 10%;
+  left: 10%;
+  animation-delay: 0s;
+}
+
+.circle:nth-child(2) {
+  width: 120px;
+  height: 120px;
+  top: 60%;
+  left: 80%;
+  animation-delay: -5s;
+}
+
+.circle:nth-child(3) {
+  width: 60px;
+  height: 60px;
+  top: 80%;
+  left: 20%;
+  animation-delay: -10s;
+}
+
+/* Main App Container */
+.app {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 30px;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--card-border);
+  opacity: 1;
+  transform: scale(1);
+  animation: fadeIn 0.8s ease;
+  z-index: 1;
+}
+
+/* Header */
+.header {
+  text-align: center;
+  margin-bottom: 30px;
+  position: relative;
+}
+
+.header h1 {
+  font-size: 2.5rem;
+  background: linear-gradient(135deg, #fff, var(--accent));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.header p {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  max-width: 600px;
+  margin: 0 auto 20px;
+}
+
+/* Main Sections Grid */
+.sections-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 20px;
+  margin-bottom: 30px;
+}
+
+@media (min-width: 768px) {
+  .app {
+    max-width: 800px;
+  }
+  
+  .sections-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+  }
+}
+
+.section-card {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  padding: 25px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.4s ease;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+}
+
+.section-card:hover {
+  transform: translateY(-8px);
+  box-shadow: var(--hover-shadow);
+  background: rgba(255, 255, 255, 0.15);
+  border-color: rgba(255, 255, 255, 0.3);
+}
+
+.section-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 5px;
+}
+
+.section-card.meesho::before {
+  background: linear-gradient(90deg, var(--meesho-color), #FF9A3D);
+}
+
+.section-card.flipkart::before {
+  background: linear-gradient(90deg, var(--flipkart-color), #64B5F6);
+}
+
+.section-card.business::before {
+  background: linear-gradient(90deg, var(--business-color), #81C784);
+}
+
+.section-icon {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-size: 2rem;
+  transition: all 0.3s ease;
+}
+
+.section-card.meesho .section-icon {
+  background: rgba(251, 86, 7, 0.2);
+  color: var(--meesho-color);
+}
+
+.section-card.flipkart .section-icon {
+  background: rgba(25, 118, 210, 0.2);
+  color: var(--flipkart-color);
+}
+
+.section-card.business .section-icon {
+  background: rgba(76, 175, 80, 0.2);
+  color: var(--business-color);
+}
+
+.section-card:hover .section-icon {
+  transform: scale(1.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.section-content h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+.section-content p {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  margin-bottom: 15px;
+}
+
+.section-arrow {
+  font-size: 1.2rem;
+  color: var(--text-secondary);
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+.section-card:hover .section-arrow {
+  color: white;
+  transform: translateX(5px);
+}
+
+/* Install Button */
+.install-container {
+  text-align: center;
+  margin-top: 20px;
+}
+
+#installBtn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 16px 32px;
+  border-radius: 50px;
+  background: linear-gradient(135deg, var(--secondary), var(--secondary-dark));
+  text-align: center;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.4s ease;
+  border: none;
+  color: white;
+  margin: 0 auto;
+  box-shadow: var(--shadow);
+  display: none;
+}
+
+#installBtn:hover {
+  transform: scale(1.05);
+  box-shadow: var(--hover-shadow);
+}
+
+/* Footer */
+.footer {
+  text-align: center;
+  margin-top: 30px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+}
+
+/* Modal */
+.overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.7);
+  backdrop-filter: blur(6px);
+  display: none;
+  justify-content: center;
+  align-items: center;
+  z-index: 100;
+  padding: 20px;
+}
+
+.modal {
+  width: 100%;
+  max-width: 500px;
+  background: rgba(255, 255, 255, 0.12);
+  backdrop-filter: blur(18px);
+  border-radius: 25px;
+  padding: 30px;
+  animation: modalSlideIn 0.4s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  box-shadow: var(--hover-shadow);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.modal-header h3 {
+  font-size: 1.6rem;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.close-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.modal-links {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.modal-link {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 18px;
+  border-radius: 15px;
+  background: rgba(0, 0, 0, 0.35);
+  text-decoration: none;
+  color: var(--text);
+  transition: all 0.3s ease;
+}
+
+.modal-link:hover {
+  background: rgba(0, 0, 0, 0.55);
+  transform: translateY(-3px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.modal-link i {
+  font-size: 1.2rem;
+  width: 24px;
+}
+
+.modal-link span {
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+
+/* Sub-modal link style */
+.sub-modal-link {
+  cursor: pointer;
+  justify-content: space-between;
+}
+
+.sub-modal-link::after {
+  content: '\f054';
+  font-family: 'Font Awesome 5 Free';
+  font-weight: 900;
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+}
+
+.sub-modal-link:hover::after {
+  color: white;
+}
+
+/* Animations */
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-20px) rotate(90deg);
+  }
+  50% {
+    transform: translateY(0) rotate(180deg);
+  }
+  75% {
+    transform: translateY(20px) rotate(270deg);
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes modalSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* PWA Badge */
+.pwa-badge {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+  color: white;
+  padding: 10px 15px;
+  border-radius: 50px;
+  font-size: 0.8rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  box-shadow: var(--shadow);
+  z-index: 10;
+  animation: pulse 2s infinite;
+  display: none;
+}
+
+@keyframes pulse {
+  0% {
+    box-shadow: 0 0 0 0 rgba(28, 146, 210, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(28, 146, 210, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(28, 146, 210, 0);
+  }
+}
+</style>
+</head>
+
+<body>
+<!-- Background Animation -->
+<div class="bg-animation">
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+</div>
+
+<!-- Main App -->
+<div class="app">
+  <div class="header">
+    <h1><i class="fas fa-crown"></i> Boss Saheb</h1>
+    <p>Your complete business dashboard - Access all your data and profiles from one place</p>
+  </div>
+
+  <div class="sections-grid">
+    <!-- Meesho Section -->
+    <div class="section-card meesho" onclick="openModal('meeshoModal')">
+      <div class="section-icon">
+        <i class="fas fa-store"></i>
+      </div>
+      <div class="section-content">
+        <h3>Meesho</h3>
+        <p>Access your Meesho dashboards and data</p>
+        <div class="section-arrow">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Flipkart Section -->
+    <div class="section-card flipkart" onclick="openModal('flipkartModal')">
+      <div class="section-icon">
+        <i class="fab fa-flipkart"></i>
+      </div>
+      <div class="section-content">
+        <h3>Flipkart</h3>
+        <p>Access your Flipkart dashboards and profiles</p>
+        <div class="section-arrow">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+
+    <!-- Business Profiles Section -->
+    <div class="section-card business" onclick="openModal('businessModal')">
+      <div class="section-icon">
+        <i class="fas fa-briefcase"></i>
+      </div>
+      <div class="section-content">
+        <h3>Business Profiles</h3>
+        <p>View your public business profiles</p>
+        <div class="section-arrow">
+          <i class="fas fa-chevron-right"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="install-container">
+    <button id="installBtn">
+      <i class="fas fa-download"></i> Install App
+    </button>
+  </div>
+
+  <div class="footer">
+    <p>Boss Saheb Dashboard v2.0 • All your business data in one place</p>
+  </div>
+</div>
+
+<!-- PWA Badge -->
+<div class="pwa-badge">
+  <i class="fas fa-mobile-alt"></i> Install as App
+</div>
+
+<!-- Meesho Modal -->
+<div class="overlay" id="meeshoModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fas fa-store" style="color: var(--meesho-color);"></i> Meesho</h3>
+      <button class="close-btn" onclick="closeModal('meeshoModal')">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-links">
+      <a class="modal-link" target="_blank" href="https://sahebali26.github.io/saheb-ali/Meesho-Deshboards/SB.html">
+        <i class="fas fa-chart-line" style="color: var(--meesho-color);"></i>
+        <span>SBA Dashboard</span>
+      </a>
+      <a class="modal-link" target="_blank" href="https://sahebali26.github.io/saheb-ali/Meesho-Deshboards/STH.html">
+        <i class="fas fa-chart-bar" style="color: var(--meesho-color);"></i>
+        <span>STH Dashboard</span>
+      </a>
+      <div class="modal-link sub-modal-link" onclick="closeModal('meeshoModal'); openModal('oldDataModal');">
+        <div style="display: flex; align-items: center; gap: 15px;">
+          <i class="fas fa-history" style="color: #9C27B0;"></i>
+          <span>Old Data</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Old Data Modal -->
+<div class="overlay" id="oldDataModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fas fa-history" style="color: #9C27B0;"></i> Old Data</h3>
+      <button class="close-btn" onclick="closeModal('oldDataModal')">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-links">
+      <a class="modal-link" target="_blank" href="https://sahebali26.github.io/saheb-ali/Meesho-Deshboards/old-data/SB-old.html">
+        <i class="fas fa-archive" style="color: #9C27B0;"></i>
+        <span>SBA Old Dashboard</span>
+      </a>
+      <a class="modal-link" target="_blank" href="https://sahebali26.github.io/saheb-ali/Meesho-Deshboards/old-data/STH-old.html">
+        <i class="fas fa-archive" style="color: #9C27B0;"></i>
+        <span>STH Old Dashboard</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Business Modal -->
+<div class="overlay" id="businessModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fas fa-briefcase" style="color: var(--business-color);"></i> Business Profiles</h3>
+      <button class="close-btn" onclick="closeModal('businessModal')">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-links">
+      <a class="modal-link" target="_blank" href="https://www.meesho.com/SahebAli?ms=2">
+        <i class="fas fa-user-circle" style="color: var(--business-color);"></i>
+        <span>SBA Public Profile</span>
+      </a>
+      <a class="modal-link" target="_blank" href="https://www.meesho.com/SahebTrendHouse?ms=2">
+        <i class="fas fa-briefcase" style="color: var(--business-color);"></i>
+        <span>STH Public Profile</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- Flipkart Modal -->
+<div class="overlay" id="flipkartModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3><i class="fab fa-flipkart" style="color: var(--flipkart-color);"></i> Flipkart</h3>
+      <button class="close-btn" onclick="closeModal('flipkartModal')">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+    <div class="modal-links">
+      <a class="modal-link" target="_blank" href="#">
+        <i class="fas fa-chart-bar" style="color: var(--flipkart-color);"></i>
+        <span>Flipkart Dashboard</span>
+      </a>
+      <a class="modal-link" target="_blank" href="#">
+        <i class="fas fa-user-circle" style="color: var(--flipkart-color);"></i>
+        <span>Flipkart Public Profile</span>
+      </a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ===== Modal Control =====
+function openModal(id) {
+  document.getElementById(id).style.display = 'flex';
+}
+
+function closeModal(id) {
+  document.getElementById(id).style.display = 'none';
+}
+
+// Close modal when clicking outside
+window.onclick = function(event) {
+  if (event.target.classList.contains('overlay')) {
+    event.target.style.display = 'none';
+  }
+};
+
+// ===== PWA INSTALLER =====
+let deferredPrompt;
+const installBtn = document.getElementById('installBtn');
+const pwaBadge = document.querySelector('.pwa-badge');
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault();
+  deferredPrompt = e;
+  installBtn.style.display = 'inline-flex';
+  pwaBadge.style.display = 'flex';
+  
+  // Auto-hide badge after 10 seconds
+  setTimeout(() => {
+    pwaBadge.style.opacity = '0';
+    setTimeout(() => {
+      pwaBadge.style.display = 'none';
+    }, 500);
+  }, 10000);
+});
+
+installBtn.addEventListener('click', async () => {
+  installBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Installing...';
+  installBtn.style.opacity = '0.7';
+  installBtn.style.pointerEvents = 'none';
+  
+  if (deferredPrompt) {
+    deferredPrompt.prompt();
+    const { outcome } = await deferredPrompt.userChoice;
+    
+    if (outcome === 'accepted') {
+      installBtn.innerHTML = '<i class="fas fa-check"></i> Installed!';
+      pwaBadge.style.display = 'none';
+    } else {
+      installBtn.innerHTML = '<i class="fas fa-download"></i> Install App';
+      installBtn.style.opacity = '1';
+      installBtn.style.pointerEvents = 'auto';
+    }
+    
+    deferredPrompt = null;
+  }
+});
+
+// Add hover effects to cards
+document.querySelectorAll('.section-card').forEach(card => {
+  card.addEventListener('mouseenter', function() {
+    this.style.transform = 'translateY(-8px)';
+  });
+  
+  card.addEventListener('mouseleave', function() {
+    this.style.transform = 'translateY(0)';
+  });
+});
+</script>
+</body>
+</html>
