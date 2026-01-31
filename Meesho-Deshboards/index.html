@@ -23,7 +23,7 @@
   --accent: #00c6ff;
   --accent-dark: #0072ff;
   --meesho-color: #FB5607;
-  --records-color: #9C27B0; /* Changed from flipkart to records color */
+  --records-color: #9C27B0;
   --business-color: #4CAF50;
   --gold: #FFD700;
   --card-bg: rgba(255, 255, 255, 0.08);
@@ -46,18 +46,7 @@ body {
   overflow-x: hidden;
 }
 
-/* Particles Container */
-#particles-js {
-  position: fixed;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  opacity: 0.6;
-}
-
-/* Animated Background Elements */
+/* Simplified Background - removed floating circles */
 .bg-elements {
   position: fixed;
   width: 100%;
@@ -66,42 +55,8 @@ body {
   left: 0;
   z-index: -1;
   overflow: hidden;
-}
-
-.bg-circle {
-  position: absolute;
-  border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0) 70%);
-  animation: float 20s infinite linear;
-  filter: blur(20px);
-}
-
-.bg-circle:nth-child(1) {
-  width: 300px;
-  height: 300px;
-  top: -100px;
-  left: -100px;
-  animation-delay: 0s;
-  background: radial-gradient(circle, rgba(0,198,255,0.1) 0%, rgba(0,198,255,0) 70%);
-}
-
-.bg-circle:nth-child(2) {
-  width: 400px;
-  height: 400px;
-  bottom: -150px;
-  right: -150px;
-  animation-delay: -5s;
-  animation-direction: reverse;
-  background: radial-gradient(circle, rgba(255,81,47,0.1) 0%, rgba(255,81,47,0) 70%);
-}
-
-.bg-circle:nth-child(3) {
-  width: 200px;
-  height: 200px;
-  top: 50%;
-  right: 10%;
-  animation-delay: -10s;
-  background: radial-gradient(circle, rgba(255,215,0,0.1) 0%, rgba(255,215,0,0) 70%);
+  background: radial-gradient(circle at 20% 20%, rgba(0,198,255,0.1) 0%, transparent 40%),
+              radial-gradient(circle at 80% 80%, rgba(255,81,47,0.1) 0%, transparent 40%);
 }
 
 /* Main App Container */
@@ -163,7 +118,6 @@ body {
   margin-bottom: 10px;
   font-weight: 700;
   text-shadow: 0 2px 10px rgba(0, 198, 255, 0.3);
-  animation: titleGlow 3s ease-in-out infinite alternate;
 }
 
 .header h2 {
@@ -178,20 +132,6 @@ body {
 .header .name-highlight {
   color: var(--gold);
   font-weight: 600;
-  position: relative;
-  display: inline-block;
-}
-
-.header .name-highlight::after {
-  content: '';
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--gold);
-  transform: scaleX(0);
-  animation: nameUnderline 2s ease-in-out infinite;
 }
 
 .header p {
@@ -226,7 +166,7 @@ body {
   border-radius: 20px;
   padding: 25px;
   border: 1px solid rgba(255, 255, 255, 0.1);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
   cursor: pointer;
   position: relative;
   overflow: hidden;
@@ -239,25 +179,8 @@ body {
   z-index: 1;
 }
 
-.section-card::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
-  z-index: -1;
-  opacity: 0;
-  transition: opacity 0.4s ease;
-}
-
-.section-card:hover::before {
-  opacity: 1;
-}
-
 .section-card:hover {
-  transform: translateY(-10px) scale(1.02);
+  transform: translateY(-5px);
   box-shadow: var(--hover-shadow);
   border-color: rgba(255, 255, 255, 0.25);
 }
@@ -269,24 +192,23 @@ body {
   left: 0;
   width: 100%;
   height: 4px;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
 }
 
 .section-card.meesho::after {
-  background: linear-gradient(90deg, var(--meesho-color), #FF9A3D);
+  background: var(--meesho-color);
 }
 
 .section-card.records::after {
-  background: linear-gradient(90deg, var(--records-color), #CE93D8); /* Records color */
+  background: var(--records-color);
 }
 
 .section-card.business::after {
-  background: linear-gradient(90deg, var(--business-color), #81C784);
+  background: var(--business-color);
 }
 
 .section-card:hover::after {
   height: 6px;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
 }
 
 .section-icon {
@@ -298,22 +220,9 @@ body {
   justify-content: center;
   margin-bottom: 20px;
   font-size: 2rem;
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
   position: relative;
   z-index: 1;
-}
-
-.section-icon::before {
-  content: '';
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  border-radius: 50%;
-  background: inherit;
-  filter: blur(10px);
-  opacity: 0;
-  transition: opacity 0.4s ease;
-  z-index: -1;
 }
 
 .section-card.meesho .section-icon {
@@ -323,7 +232,7 @@ body {
 }
 
 .section-card.records .section-icon {
-  background: rgba(156, 39, 176, 0.15); /* Records color */
+  background: rgba(156, 39, 176, 0.15);
   color: var(--records-color);
   border: 2px solid rgba(156, 39, 176, 0.3);
 }
@@ -335,12 +244,7 @@ body {
 }
 
 .section-card:hover .section-icon {
-  transform: scale(1.15) rotate(5deg);
-  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.3);
-}
-
-.section-card:hover .section-icon::before {
-  opacity: 0.5;
+  transform: scale(1.1);
 }
 
 .section-content h3 {
@@ -365,7 +269,7 @@ body {
 
 .section-card:hover .section-arrow {
   color: white;
-  transform: translateX(8px);
+  transform: translateX(5px);
 }
 
 /* Install Button */
@@ -386,7 +290,7 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.4s ease;
+  transition: all 0.3s ease;
   border: none;
   color: white;
   margin: 0 auto;
@@ -395,22 +299,6 @@ body {
   position: relative;
   overflow: hidden;
   z-index: 1;
-}
-
-#installBtn::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transition: left 0.7s ease;
-  z-index: -1;
-}
-
-#installBtn:hover::before {
-  left: 100%;
 }
 
 #installBtn:hover {
@@ -456,7 +344,7 @@ body {
   backdrop-filter: blur(18px);
   border-radius: 25px;
   padding: 30px;
-  animation: modalSlideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  animation: modalSlideIn 0.4s ease;
   border: 1px solid rgba(255, 255, 255, 0.2);
   box-shadow: var(--hover-shadow);
   position: relative;
@@ -473,19 +361,19 @@ body {
 }
 
 .modal#meeshoModal::before {
-  background: linear-gradient(90deg, var(--meesho-color), #FF9A3D);
+  background: var(--meesho-color);
 }
 
 .modal#recordsModal::before {
-  background: linear-gradient(90deg, var(--records-color), #CE93D8); /* Records color */
+  background: var(--records-color);
 }
 
 .modal#businessModal::before {
-  background: linear-gradient(90deg, var(--business-color), #81C784);
+  background: var(--business-color);
 }
 
 .modal#oldDataModal::before {
-  background: linear-gradient(90deg, #9C27B0, #E1BEE7);
+  background: #9C27B0;
 }
 
 .modal-header {
@@ -538,30 +426,15 @@ body {
   background: rgba(0, 0, 0, 0.3);
   text-decoration: none;
   color: var(--text);
-  transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  transition: all 0.3s ease;
   position: relative;
   overflow: hidden;
   border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
-.modal-link::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: -100%;
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
-  transition: left 0.7s ease;
-}
-
-.modal-link:hover::before {
-  left: 100%;
-}
-
 .modal-link:hover {
   background: rgba(0, 0, 0, 0.45);
-  transform: translateY(-5px);
+  transform: translateY(-3px);
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
   border-color: rgba(255, 255, 255, 0.2);
 }
@@ -611,7 +484,7 @@ body {
   gap: 8px;
   box-shadow: var(--shadow);
   z-index: 10;
-  animation: pulse 2s infinite, slideInRight 0.5s ease;
+  animation: slideInRight 0.5s ease;
   display: none;
   cursor: pointer;
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -623,22 +496,7 @@ body {
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
 }
 
-/* Animations */
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-30px) rotate(90deg);
-  }
-  50% {
-    transform: translateY(0) rotate(180deg);
-  }
-  75% {
-    transform: translateY(30px) rotate(270deg);
-  }
-}
-
+/* Animations - Simplified */
 @keyframes fadeIn {
   from {
     opacity: 0;
@@ -670,59 +528,22 @@ body {
   }
 }
 
-@keyframes pulse {
-  0% {
-    box-shadow: 0 0 0 0 rgba(0, 198, 255, 0.7);
-  }
-  70% {
-    box-shadow: 0 0 0 15px rgba(0, 198, 255, 0);
-  }
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 198, 255, 0);
-  }
-}
-
 @keyframes slideInRight {
   from {
     transform: translateX(100px);
     opacity: 0;
   }
   to {
-    transform: translateX(0);
+    transform: translateY(0);
     opacity: 1;
-  }
-}
-
-@keyframes titleGlow {
-  0% {
-    text-shadow: 0 2px 10px rgba(0, 198, 255, 0.3);
-  }
-  100% {
-    text-shadow: 0 2px 20px rgba(0, 198, 255, 0.6), 0 0 30px rgba(255, 215, 0, 0.4);
-  }
-}
-
-@keyframes nameUnderline {
-  0%, 100% {
-    transform: scaleX(0);
-  }
-  50% {
-    transform: scaleX(1);
   }
 }
 </style>
 </head>
 
 <body>
-<!-- Particles Container -->
-<div id="particles-js"></div>
-
-<!-- Animated Background Elements -->
-<div class="bg-elements">
-  <div class="bg-circle"></div>
-  <div class="bg-circle"></div>
-  <div class="bg-circle"></div>
-</div>
+<!-- Simplified Background -->
+<div class="bg-elements"></div>
 
 <!-- Main App -->
 <div class="app">
@@ -747,7 +568,7 @@ body {
       </div>
     </div>
 
-    <!-- Records Section (Changed from Flipkart) -->
+    <!-- Records Section -->
     <div class="section-card records" onclick="openModal('recordsModal')">
       <div class="section-icon">
         <i class="fas fa-folder"></i>
@@ -865,7 +686,7 @@ body {
   </div>
 </div>
 
-<!-- Records Modal (Changed from Flipkart) -->
+<!-- Records Modal -->
 <div class="overlay" id="recordsModal">
   <div class="modal" id="recordsModal">
     <div class="modal-header">
@@ -915,105 +736,12 @@ body {
   </div>
 </div>
 
-<!-- Particles.js Library (Lightweight) -->
-<script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
-
 <script>
-// ===== Particles.js Configuration =====
-document.addEventListener('DOMContentLoaded', function() {
-  // Initialize particles.js with lightweight configuration
-  particlesJS('particles-js', {
-    particles: {
-      number: {
-        value: 40, // Reduced for performance
-        density: {
-          enable: true,
-          value_area: 800
-        }
-      },
-      color: {
-        value: "#ffffff"
-      },
-      shape: {
-        type: "circle"
-      },
-      opacity: {
-        value: 0.3,
-        random: true,
-        anim: {
-          enable: true,
-          speed: 1,
-          opacity_min: 0.1,
-          sync: false
-        }
-      },
-      size: {
-        value: 3,
-        random: true,
-        anim: {
-          enable: true,
-          speed: 2,
-          size_min: 0.1,
-          sync: false
-        }
-      },
-      line_linked: {
-        enable: true,
-        distance: 150,
-        color: "#00c6ff",
-        opacity: 0.2,
-        width: 1
-      },
-      move: {
-        enable: true,
-        speed: 1,
-        direction: "none",
-        random: true,
-        straight: false,
-        out_mode: "out",
-        bounce: false,
-        attract: {
-          enable: false,
-          rotateX: 600,
-          rotateY: 1200
-        }
-      }
-    },
-    interactivity: {
-      detect_on: "canvas",
-      events: {
-        onhover: {
-          enable: true,
-          mode: "grab"
-        },
-        onclick: {
-          enable: true,
-          mode: "push"
-        },
-        resize: true
-      },
-      modes: {
-        grab: {
-          distance: 200,
-          line_linked: {
-            opacity: 0.3
-          }
-        },
-        push: {
-          particles_nb: 4
-        }
-      }
-    },
-    retina_detect: true
-  });
-});
-
 // ===== Modal Control =====
 function openModal(id) {
   const modal = document.getElementById(id);
   modal.style.display = 'flex';
   
-  // Add subtle animation
   setTimeout(() => {
     modal.style.opacity = '1';
   }, 10);
@@ -1081,65 +809,16 @@ installBtn.addEventListener('click', async () => {
   }
 });
 
-// Add hover effects to cards with delay for performance
+// Simple hover effects
 document.querySelectorAll('.section-card').forEach(card => {
-  let hoverTimeout;
-  
   card.addEventListener('mouseenter', function() {
-    clearTimeout(hoverTimeout);
-    this.style.transform = 'translateY(-10px) scale(1.02)';
+    this.style.transform = 'translateY(-5px)';
   });
   
   card.addEventListener('mouseleave', function() {
-    hoverTimeout = setTimeout(() => {
-      this.style.transform = 'translateY(0) scale(1)';
-    }, 50);
+    this.style.transform = 'translateY(0)';
   });
 });
-
-// Add ripple effect to buttons
-document.querySelectorAll('button, .modal-link').forEach(button => {
-  button.addEventListener('click', function(e) {
-    // Create ripple element
-    const ripple = document.createElement('span');
-    const rect = this.getBoundingClientRect();
-    const size = Math.max(rect.width, rect.height);
-    const x = e.clientX - rect.left - size / 2;
-    const y = e.clientY - rect.top - size / 2;
-    
-    ripple.style.cssText = `
-      position: absolute;
-      border-radius: 50%;
-      background: rgba(255, 255, 255, 0.3);
-      transform: scale(0);
-      animation: ripple 0.6s linear;
-      width: ${size}px;
-      height: ${size}px;
-      top: ${y}px;
-      left: ${x}px;
-      pointer-events: none;
-    `;
-    
-    this.appendChild(ripple);
-    
-    // Remove ripple after animation
-    setTimeout(() => {
-      ripple.remove();
-    }, 600);
-  });
-});
-
-// Add CSS for ripple animation
-const style = document.createElement('style');
-style.textContent = `
-  @keyframes ripple {
-    to {
-      transform: scale(4);
-      opacity: 0;
-    }
-  }
-`;
-document.head.appendChild(style);
 </script>
 </body>
 </html>
