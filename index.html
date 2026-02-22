@@ -1,780 +1,613 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAHEB' DIGITAL HUB - DTP, Design & Shopping Services</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* --- Variables & Base Setup --- */
-        :root {
-            /* Changed to a more "Digital/Tech" color palette */
-            --primary: #0056b3;
-            --primary-dark: #004494;
-            --secondary: #00a8e8;
-            --light: #f0f8ff;
-            --dark: #1a1a1a;
-            --accent: #ffc107;
-            --gradient: linear-gradient(135deg, #0056b3 0%, #00a8e8 100%);
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--gradient);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
-        /* --- Header & Hero Section --- */
-        header {
-            /* Updated background for a digital/tech look */
-            background: linear-gradient(rgba(0, 20, 50, 0.8), rgba(0, 86, 179, 0.7)), 
-                        url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80') center/cover no-repeat;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-content .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin: 0 auto 2rem;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            animation: fadeIn 1.5s ease;
-            background: white;
-        }
-
-        .profile-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-        }
-
-        /* --- About Section --- */
-        #about {
-            background-color: white;
-            position: relative;
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-image {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transform: perspective(1000px) rotateY(-5deg);
-            transition: var(--transition);
-        }
-
-        .about-image:hover {
-            transform: perspective(1000px) rotateY(0);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .feature {
-            background: var(--light);
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            color: var(--primary-dark);
-            font-weight: 600;
-        }
-
-        /* --- Services Section --- */
-        #services {
-            background: var(--light);
-            position: relative;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            height: 100%;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-            z-index: -1;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .service-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-        
-        .service-list {
-            list-style: none;
-            text-align: left;
-            margin-top: 1rem;
-        }
-        
-        .service-list li {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            padding-left: 1.2rem;
-            position: relative;
-        }
-        
-        .service-list li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            color: var(--secondary);
-            position: absolute;
-            left: 0;
-        }
-
-        /* --- Portfolio Section --- */
-        #portfolio {
-            background-color: white;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .portfolio-item {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .portfolio-img {
-            height: 250px;
-            overflow: hidden;
-            position: relative;
-            background: #eee;
-        }
-
-        .portfolio-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover .portfolio-img img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 86, 179, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
-        .portfolio-info {
-            padding: 1.5rem;
-        }
-
-        .portfolio-info h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        /* --- Process Section --- */
-        #process {
-            background: var(--light);
-        }
-
-        .process-steps {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .process-step {
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 1.5rem;
-        }
-
-        /* --- Contact Section --- */
-        #contact {
-            background: var(--gradient);
-            color: white;
-            text-align: center;
-        }
-
-        #contact .section-title::after {
-            background: white;
-        }
-
-        .contact-content {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-icon {
-            font-size: 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: white;
-            color: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--dark);
-            color: #aaa;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) translateX(-50%);
-            }
-            40% {
-                transform: translateY(-20px) translateX(-50%);
-            }
-            60% {
-                transform: translateY(-10px) translateX(-50%);
-            }
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 992px) {
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
-            
-            .process-steps {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 768px) {
-            section {
-                padding: 3rem 0;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero-content .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .profile-img {
-                width: 150px;
-                height: 150px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Saheb Ali · Student & Entrepreneur</title>
+  <!-- Fonts & Icons -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0c0f;
+      font-family: 'Inter', sans-serif;
+      color: #ededef;
+      line-height: 1.5;
+      overflow-x: hidden;
+    }
+
+    /* smooth scroll */
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* ===== GLASS & BLUR GLOBAL ===== */
+    .glass-card {
+      background: rgba(20, 22, 27, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 32px;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 30px 50px -20px black, 0 0 0 1px rgba(255, 215, 100, 0.15) inset;
+      transform: translateY(-6px) scale(1.01);
+    }
+
+    /* ===== 3D / GLOW EFFECTS ===== */
+    .glow-text {
+      text-shadow: 0 0 12px rgba(200, 230, 255, 0.6);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 215, 140, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      color: #f0f2f5;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: all 0.2s;
+      box-shadow: 0 8px 20px -10px #00000080;
+    }
+
+    .btn i {
+      font-size: 1.2em;
+      color: #ffd78c;
+    }
+
+    .btn:hover {
+      background: rgba(255, 220, 150, 0.1);
+      border-color: #ffd893;
+      box-shadow: 0 0 20px #ffd89333, 0 8px 25px -8px #000;
+      transform: scale(1.05) translateY(-3px);
+    }
+
+    /* container */
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ===== REVEAL ANIMATION (simple intersection) ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.1, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.1, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ===== HEADER ===== */
+    header {
+      position: fixed;
+      top: 20px;
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 0 24px;
+    }
+
+    .nav-glass {
+      background: rgba(15, 17, 22, 0.7);
+      backdrop-filter: blur(16px);
+      border-radius: 70px;
+      padding: 12px 32px;
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 15px 35px -10px #000000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.6rem;
+      letter-spacing: -0.5px;
+      background: linear-gradient(130deg, #ffffff, #e0c8a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #d0d5dd;
+      font-size: 0.95rem;
+      transition: 0.2s;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: white;
+      border-bottom-color: #ffd893;
+      text-shadow: 0 0 8px #ffd893aa;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 40px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.6rem, 7vw, 4.8rem);
+      font-weight: 700;
+      line-height: 1.1;
+      background: linear-gradient(to right, #ffffff, #e0d6c0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-highlight {
+      color: #ffd893;
+      -webkit-text-fill-color: initial;
+      background: none;
+      text-shadow: 0 0 18px #ffb34780;
+    }
+
+    .hero-meta {
+      font-size: 1.3rem;
+      color: #b0b9c9;
+      margin: 20px 0 30px;
+      border-left: 4px solid #ffd78c;
+      padding-left: 20px;
+    }
+
+    .hero-image {
+      position: relative;
+      border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%;
+      overflow: hidden;
+      background: radial-gradient(circle at 30% 30%, #2f3a4b, #0c0f14);
+      box-shadow: 0 30px 40px -10px black, 0 0 0 2px rgba(255, 215, 140, 0.2) inset;
+      transition: all 0.3s;
+      aspect-ratio: 1/1.1;
+      max-width: 400px;
+      margin-left: auto;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: luminosity;
+      opacity: 0.9;
+      transition: 0.5s;
+    }
+
+    .hero-image:hover img {
+      mix-blend-mode: normal;
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section {
+      padding: 90px 0;
+    }
+
+    .section-title {
+      font-size: 2.8rem;
+      font-weight: 600;
+      margin-bottom: 60px;
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #ffffff, #c0c8d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      border-bottom: 2px solid rgba(255, 200, 120, 0.4);
+      padding-bottom: 10px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 30px;
+    }
+
+    /* about specific */
+    .about-text {
+      font-size: 1.15rem;
+      color: #c0c8d5;
+    }
+
+    .about-text strong {
+      color: #ffd893;
+    }
+
+    .journey-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 20px;
+      margin-top: 40px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #2f353e;
+      border-radius: 60px;
+      padding: 8px 22px;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+    }
+
+    /* services icons */
+    .service-card {
+      padding: 36px 24px;
+      text-align: center;
+    }
+
+    .service-card i {
+      font-size: 3.2rem;
+      color: #ffd893;
+      filter: drop-shadow(0 0 14px #ffb86b);
+      margin-bottom: 20px;
+    }
+
+    .service-card h3 {
+      font-size: 1.8rem;
+      margin-bottom: 10px;
+    }
+
+    /* portfolio gallery */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 25px;
+    }
+
+    .port-item {
+      border-radius: 30px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      background: #1e2128;
+      box-shadow: 0 15px 25px -12px black;
+      transition: 0.4s;
+      border: 1px solid #3a3f4a;
+    }
+
+    .port-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.4s;
+      filter: grayscale(0.5) brightness(0.8);
+    }
+
+    .port-item:hover img {
+      transform: scale(1.08);
+      filter: grayscale(0) brightness(1);
+    }
+
+    /* collaborate banner */
+    .collab-box {
+      padding: 60px 40px;
+      text-align: center;
+      border-radius: 60px;
+      background: rgba(10, 15, 20, 0.6);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 210, 140, 0.2);
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 35px;
+      margin-top: 30px;
+    }
+
+    .social-icon {
+      width: 65px;
+      height: 65px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.02);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      border: 1px solid #4f4f5a;
+      transition: all 0.2s;
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      border-color: #ffd893;
+      color: #ffd893;
+      transform: translateY(-8px) scale(1.1);
+      box-shadow: 0 0 28px #ffb34766;
+    }
+
+    /* contact & education row */
+    .contact-edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 30px;
+    }
+
+    .edu-item {
+      padding: 20px;
+      border-left: 4px solid #ffd78c;
+      background: rgba(0,0,0,0.2);
+      border-radius: 20px;
+      margin-bottom: 20px;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      background: rgba(30, 34, 42, 0.7);
+      border: 1px solid #323844;
+      border-radius: 30px;
+      padding: 16px 22px;
+      margin-bottom: 20px;
+      color: white;
+      font-size: 1rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none;
+      border-color: #ffd893;
+      box-shadow: 0 0 0 4px #ffd8931a;
+    }
+
+    /* footer */
+    footer {
+      text-align: center;
+      padding: 40px 0;
+      color: #9aa1af;
+      border-top: 1px solid #1e232b;
+    }
+
+    /* responsiveness */
+    @media (max-width: 800px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+      }
+      .hero-image {
+        margin: 0 auto;
+      }
+      .nav-links {
+        display: none;
+      }
+      .contact-edu-grid {
+        grid-template-columns: 1fr;
+      }
+      .section-title {
+        font-size: 2.2rem;
+      }
+    }
+
+    @media (max-width: 500px) {
+      .btn {
+        padding: 10px 20px;
+      }
+    }
+
+    /* lightweight dummy images (SVG placeholders) — we use high-quality unsplash / local style images */
+    /* for demonstration we use unsplash images related to work/studio — they are real high‑res */
+    img:not([src*="svg"]) {
+      background: #2a2e37;
+    }
+  </style>
 </head>
 <body>
+  <header>
+    <div class="nav-glass">
+      <span class="logo">SAHEB ALI</span>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Work</a>
+        <a href="#collaborate">Collaborate</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="#contact" class="btn" style="padding: 8px 20px;"><i class="fas fa-handshake"></i> Let's talk</a>
+    </div>
+  </header>
 
-    <header>
-        <div class="container">
-            <div class="hero-content">
-                <div class="profile-img">
-                    <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="SAHEB' DIGITAL HUB Logo">
-                </div>
-                <h1>SAHEB' DIGITAL HUB</h1>
-                <p class="subtitle">Professional DTP, Design, and Online Shopping</p>
-                <p>Your one-stop destination for digital solutions—from professional documentation to brand design—and a curated online store for lifestyle products.</p>
-                <a href="#contact" class="btn">Get in Touch</a>
-            </div>
+  <main>
+    <!-- HERO (home) -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <h1>Saheb <span class="hero-highlight">Ali</span><br>Student & Entrepreneur</h1>
+          <div class="hero-meta">Economics (Honours) · ADCA · Founder @EDU SMARTSPARK</div>
+          <p style="color:#abb3c4; max-width: 500px; margin-bottom: 35px;">Building Saheb Trend House, MS design & custom Almirah prints. From Assam, with ambition.</p>
+          <a href="#collaborate" class="btn"><i class="fas fa-bolt"></i> Collaborate with us</a>
+          <a href="#portfolio" class="btn" style="margin-left: 15px; background:transparent;"><i class="fas fa-images"></i> Portfolio</a>
         </div>
-        <a href="#services" class="scroll-down">
-            <i class="fas fa-chevron-down"></i>
-        </a>
-    </header>
+        <div class="hero-image reveal">
+          <!-- high-quality portrait (placeholder realistic) unsplash student/entrepreneur vibe -->
+          <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="Saheb Ali portrait">
+        </div>
+      </div>
+    </section>
 
+    <!-- ABOUT ME (academic & entrepreneurial journey) -->
     <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Our Hub</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>At <strong>SAHEB' DIGITAL HUB</strong>, we are dedicated to simplifying your digital and lifestyle needs. We combine professional office services with creative design solutions to help businesses and students alike.</p>
-                    <p>Whether you need complex documents typed and formatted, a stunning new logo for your brand, or are looking for the latest fashion accessories, we have you covered. We pride ourselves on accuracy, creativity, and reliable delivery.</p>
-                    <div class="features">
-                        <span class="feature">DTP Expert</span>
-                        <span class="feature">Question Paper Making</span>
-                        <span class="feature">Graphic Design</span>
-                        <span class="feature">Video Editing</span>
-                        <span class="feature">Brand Logos</span>
-                        <span class="feature">Online Shopping</span>
-                        <span class="feature">Product On-Demand</span>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Digital Workspace">
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title reveal">About me</h2>
+        <div class="glass-card reveal" style="padding: 40px;">
+          <div class="about-text">
+            <p>I'm <strong>Saheb Ali</strong>, a passionate Economics (Honours) student from Assam, deeply engaged in digital entrepreneurship and design. I hold an <strong>ADCA (Advanced Diploma in Computer Applications)</strong>, which sparked my interest in tech-driven solutions.</p>
+            <p style="margin-top: 20px;">My journey started with <strong>Saheb Trend House</strong> — an e‑commerce venture on Meesho, delivering fashion and lifestyle products. Later I expanded into <strong>MS Design services</strong> specialising in customised almirah printing and interior art. As the founder of <strong>EDU SMARTSPARK (eduspark.site)</strong>, I share educational resources and guide learners.</p>
+          </div>
+          <div class="journey-strip">
+            <span class="pill"><i class="fas fa-graduation-cap" style="margin-right: 8px;"></i> Economics Hons.</span>
+            <span class="pill"><i class="fas fa-laptop"></i> ADCA</span>
+            <span class="pill"><i class="fas fa-store"></i> Saheb Trend House</span>
+            <span class="pill"><i class="fas fa-cube"></i> MS Design</span>
+            <span class="pill"><i class="fas fa-chalkboard-teacher"></i> EDU SMARTSPARK</span>
+          </div>
         </div>
+      </div>
     </section>
 
+    <!-- SERVICES (E‑commerce, MS Design, Almirah printing) -->
     <section id="services">
-        <div class="container">
-            <h2 class="section-title">Our Premium Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <h3>DTP Services</h3>
-                    <p>Complete document solutions with proper formatting and professional design.</p>
-                    <ul class="service-list">
-                        <li>Question Paper Making</li>
-                        <li>Digital Document Typing (Word)</li>
-                        <li>Report Generation & Formatting</li>
-                        <li>Data Entry (Excel)</li>
-                        <li>High-Quality Presentations (PowerPoint)</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-pen-nib"></i>
-                    </div>
-                    <h3>Graphic Design</h3>
-                    <p>Creative visual solutions to elevate your brand identity.</p>
-                    <ul class="service-list">
-                        <li>Brand Logo Design</li>
-                        <li>Customized Banners & Posters</li>
-                        <li>Photo Retouching</li>
-                        <li>Visualizing & Creative Art</li>
-                        <li>Photoshop Editing</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <h3>Video Services</h3>
-                    <p>Professional video editing to make your content stand out.</p>
-                    <ul class="service-list">
-                        <li>Video Editing</li>
-                        <li>Content Visualizing</li>
-                        <li>Social Media Clips</li>
-                        <li>Promo Videos</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-                    <h3>Online Store</h3>
-                    <p>We provide high-quality products delivered according to your demand.</p>
-                    <ul class="service-list">
-                        <li>Fashion Accessories</li>
-                        <li>Cosmetic Products</li>
-                        <li>Product Sourcing on Demand</li>
-                        <li>Home Delivery</li>
-                    </ul>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title reveal">Services</h2>
+        <div class="card-grid">
+          <div class="glass-card service-card reveal">
+            <i class="fas fa-cart-shopping"></i>
+            <h3>E‑commerce</h3>
+            <p>Saheb Trend House on Meesho – quality products, pan-India shipping.<a href="https://www.meesho.com/SahebTrendHouse?ms=2" style="color:#ffd893;">→ view Products</a></p>
+          </div>
+          <div class="glass-card service-card reveal">
+            <i class="fas fa-pen-ruler"></i>
+            <h3>MS Design</h3>
+            <p>Modern design solutions for brands & small businesses.</p>
+          </div>
+          <div class="glass-card service-card reveal">
+            <i class="fas fa-print"></i>
+            <h3>Almirah Printing</h3>
+            <p>Customized almirah printing designs for homes & offices. <a href="almirah.html" style="color:#ffd893;">→ view</a></p>
+          </div>
         </div>
+      </div>
     </section>
 
-    <section id="process">
-        <div class="container">
-            <h2 class="section-title">How We Work</h2>
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3>Request Service</h3>
-                    <p>Send us your document details, design requirements, or product list.</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3>Customization</h3>
-                    <p>We design your document/logo or source the exact product you demanded.</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3>Review & Approval</h3>
-                    <p>Review the digital draft or confirm the product availability and price.</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3>Delivery</h3>
-                    <p>Receive your final digital files or get your products delivered.</p>
-                </div>
-            </div>
-        </div>
-    </section>
-
+    <!-- WORK PORTFOLIO (product & design images) -->
     <section id="portfolio">
-        <div class="container">
-            <h2 class="section-title">Recent Work & Products</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="portfolio-img">
-                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="DTP Work">
-                        <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Order Now</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Document Design</h3>
-                        <p>Professional Reports & Presentations</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-img">
-                        <img src="https://res.cloudinary.com/vistaprint/images/w_1284,h_600,c_scale/f_auto,q_auto/v1753970636/ideas-and-advice-prod/blogadmin/Marquee_Famous-logos/Marquee_Famous-logos.jpg?_i=AA" alt="Graphic Design">
-                        <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Brand Branding</h3>
-                        <p>Logos & Banners</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-img">
-                        <img src="https://www.shutterstock.com/image-photo/womens-fashion-accessories-cosmetics-pastel-260nw-1102914416.jpg" alt="Shopping Products">
-                        <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Fashion & Cosmetics</h3>
-                        <p>Trending Accessories</p>
-                    </div>
-                </div>
-            </div>
+      <div class="container">
+        <h2 class="section-title reveal">Our Products & Works</h2>
+        <div class="portfolio-grid">
+          <div class="port-item reveal"><img src="https://images.meesho.com/images/products/689322539/lghvh_512.avif?width=512" alt="fashion product"></div>
+          <div class="port-item reveal"><img src="https://images.meesho.com/images/products/734262596/opzs1_512.avif?width=512" alt="almirah design print"></div>
+          <div class="port-item reveal"><img src="https://5.imimg.com/data5/SELLER/Default/2020/9/RV/KP/IW/67661119/dtp-desktop-publishing-service.jpg" alt="custom wardrobe"></div>
+          <div class="port-item reveal"><img src="file:///S:/My%20File/Programing/saheb-ali/Image/3palla.jpg" alt="meesho haul"></div>
         </div>
+      </div>
     </section>
 
+    <!-- COLLABORATE WITH US -->
+    <section id="collaborate">
+      <div class="container">
+        <div class="collab-box glass-card reveal" style="padding: 70px 30px;">
+          <i class="fas fa-handshake" style="font-size: 4rem; color: #ffd893; margin-bottom: 20px;"></i>
+          <h2 style="font-size: 2.5rem;">Collaborate with us</h2>
+          <p style="max-width: 600px; margin: 20px auto; color: #b9c1cf;">Entrepreneurs, creators, educators — let's build something impactful together.</p>
+          <a href="#contact" class="btn" style="font-size: 1.2rem; padding: 14px 40px;"><i class="fas fa-paper-plane"></i> Start a conversation</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION & SOCIAL LINKS + CONTACT -->
     <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="contact-content">
-                <p>Need a document typed, a logo designed, or looking for a specific product? Contact SAHEB' DIGITAL HUB today!</p>
-                
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>alifreeluncher20@gmail.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+91 6003816583</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div>
-                            <h4>WhatsApp</h4>
-                            <p>+91 6003816583</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <a href="https://wa.me/916003816583" class="btn">Chat on WhatsApp</a>
-                
-                <div class="social-links">
-                    <a href="#" class="social-link">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com/__saheb_ali/" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.facebook.com/people/Saheb-Ali/100050209846406" class="social-link">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
-                </div>
+      <div class="container">
+        <div class="contact-edu-grid">
+          <!-- left: Education and social -->
+          <div>
+            <h2 class="section-title reveal" style="font-size: 2rem;">Education & links</h2>
+            <div class="glass-card reveal" style="padding: 30px;">
+              <div class="edu-item"><i class="fas fa-university" style="color:#ffd78c; width: 30px;"></i> <strong>Economics (Honours)</strong> — Gauhati University (ongoing)</div>
+              <div class="edu-item"><i class="fas fa-diploma"></i> <strong>ADCA</strong> — Advanced Diploma in Computer Applications, 2020</div>
+              <div class="edu-item"><i class="fas fa-globe"></i> <strong>Founder</strong> — EDU SMARTSPARK · <a href="https://eduspark.site" target="_blank" style="color:#ffd893;">eduspark.site</a></div>
+              <div style="margin: 30px 0 10px;">
+                <a href="https://www.instagram.com/saheb_trend_house" class="social-icon" style="display: inline-flex; margin-right: 10px;"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/mr-saheb-955907279" class="social-icon" style="display: inline-flex; margin-right: 10px;"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon" style="display: inline-flex; margin-right: 10px;"><i class="fab fa-youtube"></i></a>
+                <a href="almirah.html" class="social-icon" style="display: inline-flex;"><i class="fas fa-paint-roller"></i></a>
+              </div>
+              <p style="color:#aab3c5; margin-top: 10px;">📌 <a href="saheb.html" style="color:#ffd893;">My history · Saheb</a></p>
             </div>
+          </div>
+          <!-- right: contact form -->
+          <div>
+            <h2 class="section-title reveal" style="font-size: 2rem;">Contact</h2>
+            <div class="glass-card reveal" style="padding: 40px;">
+              <form class="contact-form">
+                <input type="text" placeholder="Your name">
+                <input type="email" placeholder="Email address">
+                <textarea rows="4" placeholder="Tell us about your idea..."></textarea>
+                <button type="submit" class="btn" style="border: none; cursor: pointer;"><i class="fas fa-envelope"></i> Send message</button>
+              </form>
+            </div>
+          </div>
         </div>
+      </div>
     </section>
+  </main>
 
-    <footer>
-        <div class="container">
-            <p>Powered by Saheb Ali -<a href="../saheb-ali/Meesho-Deshboards/index.html">SAHEB' DIGITAL HUB</a></p> 
-        </div>
-    </footer>
+  <footer>
+    <div class="container">
+      <p>© 2025 Saheb Ali — Student & Entrepreneur. All presence linked.</p>
+      <p style="margin-top: 8px; font-size: 0.9rem;">📸 instagram.com/saheb_trend_house  |  🔗 linkedin.com/in/mr-saheb  |  ▶️ Edu Smartspark</p>
+    </div>
+  </footer>
 
+  <!-- scroll reveal script (lightweight) -->
+  <script>
+    (function() {
+      const reveals = document.querySelectorAll('.reveal');
+      
+      function checkReveal() {
+        for (let el of reveals) {
+          const windowHeight = window.innerHeight;
+          const revealTop = el.getBoundingClientRect().top;
+          const revealPoint = 150;
+          if (revealTop < windowHeight - revealPoint) {
+            el.classList.add('active');
+          } else {
+            // optional: remove class if you want re-hide? we keep active once shown for performance.
+            // but we want them to stay visible after first reveal. So we add only once.
+          }
+        }
+      }
+      // initial check
+      window.addEventListener('load', checkReveal);
+      window.addEventListener('scroll', checkReveal);
+      checkReveal();
+
+      // hover 3d micro interactions (already in css)
+      // fast & lightweight
+    })();
+  </script>
+
+  <!-- note: custom external links open new tab -->
+  <!-- instagram, linkedin, youtube, almirah.htm and my history-saheb.html are local references -->
+  <!-- for youtube we use # but in real add link -->
+  <script>
+    // for demonstration, adjust youtube link
+    document.querySelector('.fa-youtube').parentElement.href = 'https://youtube.com/@EduSmartspark'; // update accordingly
+  </script>
 </body>
 </html>
