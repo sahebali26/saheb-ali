@@ -189,7 +189,6 @@
       text-shadow: 0 0 8px #ffd893aa;
     }
 
-    /* hide desktop nav links on very small, but keep Let's talk button. media query later */
     /* ===== HERO ===== */
     .hero {
       min-height: 100vh;
@@ -325,20 +324,51 @@
       margin-bottom: 8px;
     }
 
+    /* --- service open buttons (now exactly matching .btn style) --- */
+    .service-open-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 215, 140, 0.3);
+      border-radius: 50px;
+      color: #ffd893;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .service-open-btn i {
+      font-size: 1rem;
+      color: #ffd893;
+    }
+    .service-open-btn:hover {
+      background: rgba(255, 220, 150, 0.1);
+      border-color: #ffd893;
+      box-shadow: 0 0 20px #ffd89333, 0 8px 25px -8px #000;
+      transform: scale(1.05) translateY(-2px);
+    }
+
     .portfolio-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); /* smaller columns */
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
       gap: 18px;
     }
 
     .port-item {
-      border-radius: 26px;       /* a bit less */
+      border-radius: 26px;
       overflow: hidden;
       aspect-ratio: 1/1;
       background: #1e2128;
       box-shadow: 0 15px 25px -12px black;
       transition: 0.4s;
       border: 1px solid #3a3f4a;
+      position: relative;
+      cursor: pointer;
     }
 
     .port-item img {
@@ -347,6 +377,7 @@
       object-fit: cover;
       transition: 0.4s;
       filter: grayscale(0.5) brightness(0.8);
+      display: block;
     }
 
     .port-item:hover img {
@@ -354,8 +385,55 @@
       filter: grayscale(0) brightness(1);
     }
 
+    /* overlay button – hidden by default, appears on hover/tap */
+    .port-overlay-btn {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 215, 140, 0.6);
+      border-radius: 40px;
+      padding: 8px 20px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px black;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+      white-space: nowrap;
+    }
+    .port-item:hover .port-overlay-btn,
+    .port-item:focus-within .port-overlay-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .port-overlay-btn i {
+      color: #ffd893;
+      font-size: 0.9rem;
+    }
+    .port-overlay-btn:hover {
+      background: rgba(255, 215, 140, 0.3);
+      border-color: #ffd893;
+      transform: translateX(-50%) translateY(-3px);
+      box-shadow: 0 8px 20px #000000cc;
+    }
+
+    /* for mobile devices where hover is tricky: keep button visible if the item is tapped (using :focus-within) */
+    .port-item:focus-within .port-overlay-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
     .collab-box {
-      padding: 50px 24px;        /* less padding on sides */
+      padding: 50px 24px;
       text-align: center;
       border-radius: 50px;
       background: rgba(10, 15, 20, 0.6);
@@ -367,7 +445,7 @@
       display: flex;
       flex-wrap: wrap;
       justify-content: center;
-      gap: 25px;                /* adjusted */
+      gap: 25px;
       margin-top: 30px;
     }
 
@@ -414,7 +492,7 @@
       background: rgba(30, 34, 42, 0.7);
       border: 1px solid #323844;
       border-radius: 30px;
-      padding: 14px 20px;       /* slightly smaller */
+      padding: 14px 20px;
       margin-bottom: 16px;
       color: white;
       font-size: 0.95rem;
@@ -425,6 +503,20 @@
       outline: none;
       border-color: #ffd893;
       box-shadow: 0 0 0 4px #ffd8931a;
+    }
+
+    /* loading spinner animation */
+    .btn-loading {
+      pointer-events: none;
+      opacity: 0.8;
+      gap: 8px;
+    }
+    .btn-loading i.fa-spinner {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
 
     footer {
@@ -444,7 +536,7 @@
       }
       .hero-image {
         margin: 0 auto;
-        max-width: 300px;         /* more compact on phones */
+        max-width: 300px;
       }
       .hero-meta {
         border-left: none;
@@ -462,9 +554,8 @@
         padding: 10px 20px;
         font-size: 0.95rem;
       }
-      /* hide all nav links except menu (none available) – we keep only logo + talk button */
       .nav-links {
-        display: none;            /* already hidden in original media, but we force for all mobile */
+        display: none;
       }
       header {
         top: 8px;
@@ -486,7 +577,6 @@
       }
     }
 
-    /* tiny phones (<=480px) */
     @media (max-width: 480px) {
       .container {
         padding: 0 18px;
@@ -502,18 +592,18 @@
       }
       .btn {
         padding: 8px 18px;
-        margin: 5px 0;            /* stack nicely */
+        margin: 5px 0;
       }
       .btn + .btn {
-        margin-left: 0 !important;  /* remove inline margin */
+        margin-left: 0 !important;
         margin-top: 12px;
       }
       .card-grid {
-        grid-template-columns: 1fr;   /* single column */
+        grid-template-columns: 1fr;
         gap: 20px;
       }
       .portfolio-grid {
-        grid-template-columns: 1fr 1fr; /* keep 2 cols for images */
+        grid-template-columns: 1fr 1fr;
         gap: 12px;
       }
       .contact-edu-grid {
@@ -535,7 +625,7 @@
         padding: 40px 18px;
       }
       .collab-box h2 {
-        font-size: 2rem !important;   /* override inline */
+        font-size: 2rem !important;
       }
       .edu-item {
         font-size: 0.9rem;
@@ -546,7 +636,6 @@
       }
     }
 
-    /* for 350px and below (ultra compact) */
     @media (max-width: 360px) {
       .hero h1 {
         font-size: 1.9rem;
@@ -555,28 +644,24 @@
         font-size: 0.95rem;
       }
       .btn {
-        width: 100%;                /* full width buttons on very small */
+        width: 100%;
         justify-content: center;
       }
       .btn + .btn {
         margin-left: 0 !important;
       }
       .portfolio-grid {
-        grid-template-columns: 1fr;  /* single column images */
+        grid-template-columns: 1fr;
       }
     }
 
-    /* fix images missing alt / background (already there) */
     img {
       display: block;
     }
 
-    /* ensure no overflow */
     .nav-glass, .glass-card, .collab-box {
       width: 100%;
     }
-
-    /* make youtube link update script work */
   </style>
 </head>
 <body>
@@ -607,7 +692,6 @@
           <a href="#portfolio" class="btn" style="margin-left: 10px; background:transparent;"><i class="fas fa-images"></i> Portfolio</a>
         </div>
         <div class="hero-image reveal">
-          <!-- high-quality portrait (placeholder realistic) -->
           <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="Saheb Ali portrait">
         </div>
       </div>
@@ -617,7 +701,7 @@
     <section id="about">
       <div class="container">
         <h2 class="section-title reveal">About me</h2>
-        <div class="glass-card reveal" style="padding: 30px;">   <!-- reduced padding for mobile -->
+        <div class="glass-card reveal" style="padding: 30px;">
           <div class="about-text">
             <p>I'm <strong>Saheb Ali</strong>, a passionate Economics (Honours) student from Assam, deeply engaged in digital entrepreneurship and design. I hold an <strong>ADCA (Advanced Diploma in Computer Applications)</strong>, which sparked my interest in tech-driven solutions.</p>
             <p style="margin-top: 16px;">My journey started with <strong>Saheb Trend House</strong> — an e‑commerce venture on Meesho, delivering fashion and lifestyle products. Later I expanded into <strong>MS Design services</strong> specialising in customised almirah printing and interior art. As the founder of <strong>EDU SMARTSPARK (eduspark.site)</strong>, I share educational resources and guide learners.</p>
@@ -633,7 +717,7 @@
       </div>
     </section>
 
-    <!-- SERVICES -->
+    <!-- SERVICES (buttons now styled exactly like .btn) -->
     <section id="services">
       <div class="container">
         <h2 class="section-title reveal">Services</h2>
@@ -641,31 +725,46 @@
           <div class="glass-card service-card reveal">
             <i class="fas fa-cart-shopping"></i>
             <h3>E‑commerce</h3>
-            <p>Saheb Trend House on Meesho – quality products, pan-India shipping.<a href="https://www.meesho.com/SahebTrendHouse?ms=2" style="color:#ffd893; display:inline-block;">→ view Products</a></p>
+            <p>Saheb Trend House on Meesho – quality products, pan-India shipping.</p>
+            <a href="https://www.meesho.com/SahebTrendHouse?ms=2" class="service-open-btn" target="_blank">Open store</a>
           </div>
           <div class="glass-card service-card reveal">
             <i class="fas fa-pen-ruler"></i>
             <h3>MS Design</h3>
             <p>Modern design solutions for brands & small businesses.</p>
+            <a href="freelunch.html" class="service-open-btn">Open details</a>
           </div>
           <div class="glass-card service-card reveal">
             <i class="fas fa-print"></i>
             <h3>Almirah Printing</h3>
-            <p>Customized almirah printing designs for homes & offices. <a href="almirah.html" style="color:#ffd893;">→ view</a></p>
+            <p>Customized almirah printing designs for homes & offices.</p>
+            <a href="almirah.html" class="service-open-btn">Open details</a>
           </div>
         </div>
       </div>
     </section>
 
-    <!-- WORK PORTFOLIO -->
+    <!-- WORK PORTFOLIO (buttons appear only on hover/click) -->
     <section id="portfolio">
       <div class="container">
         <h2 class="section-title reveal">Our Products & Works</h2>
         <div class="portfolio-grid">
-          <div class="port-item reveal"><img src="https://images.meesho.com/images/products/689322539/lghvh_512.avif?width=512" alt="fashion product"></div>
-          <div class="port-item reveal"><img src="https://images.meesho.com/images/products/734262596/opzs1_512.avif?width=512" alt="almirah design print"></div>
-          <div class="port-item reveal"><img src="https://5.imimg.com/data5/SELLER/Default/2020/9/RV/KP/IW/67661119/dtp-desktop-publishing-service.jpg" alt="custom wardrobe"></div>
-          <div class="port-item reveal"><img src="Image/3palla.jpg" alt="meesho haul"></div>
+          <div class="port-item reveal" tabindex="0"> <!-- tabindex for focus -->
+            <img src="https://images.meesho.com/images/products/689322539/lghvh_512.avif?width=512" alt="fashion product">
+            <a href="https://www.meesho.com/assamese-traditional-jewellery-golpata-set-for-women-girls/p/beekob?ms=2&source=Meri+Shop" class="port-overlay-btn" target="_blank"><i class="fas fa-eye"></i> Open product</a>
+          </div>
+          <div class="port-item reveal" tabindex="0">
+            <img src="https://images.meesho.com/images/products/734262596/opzs1_512.avif?width=512" alt="products">
+            <a href="https://www.meesho.com/SahebTrendHouse?ms=2" class="port-overlay-btn"><i class="fas fa-eye"></i> Open products</a>
+          </div>
+          <div class="port-item reveal" tabindex="0">
+            <img src="https://5.imimg.com/data5/SELLER/Default/2020/9/RV/KP/IW/67661119/dtp-desktop-publishing-service.jpg" alt="custom wardrobe">
+            <a href="almirah.html" class="port-overlay-btn"><i class="fas fa-eye"></i> Open details</a>
+          </div>
+          <div class="port-item reveal" tabindex="0">
+            <img src="Image/3palla.jpg" alt="meesho haul">
+            <a href="https://www.meesho.com/SahebTrendHouse?ms=2" class="port-overlay-btn" target="_blank"><i class="fas fa-eye"></i> Open details</a>
+          </div>
         </div>
       </div>
     </section>
@@ -682,7 +781,7 @@
       </div>
     </section>
 
-    <!-- EDUCATION & SOCIAL + CONTACT -->
+    <!-- EDUCATION & SOCIAL + CONTACT (with loading animation) -->
     <section id="contact">
       <div class="container">
         <div class="contact-edu-grid">
@@ -696,21 +795,21 @@
               <div style="margin: 20px 0 8px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start;">
                 <a href="https://www.instagram.com/saheb_trend_house" class="social-icon" style="display: inline-flex;"><i class="fab fa-instagram"></i></a>
                 <a href="https://www.linkedin.com/in/mr-saheb-955907279" class="social-icon" style="display: inline-flex;"><i class="fab fa-linkedin-in"></i></a>
-                <a href="#" class="social-icon" style="display: inline-flex;"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon" style="display: inline-flex;" id="youtubeLink"><i class="fab fa-youtube"></i></a>
                 <a href="almirah.html" class="social-icon" style="display: inline-flex;"><i class="fas fa-paint-roller"></i></a>
               </div>
               <p style="color:#aab3c5; margin-top: 10px;">📌 <a href="saheb.html" style="color:#ffd893;">My history · Saheb</a></p>
             </div>
           </div>
-          <!-- right: contact form -->
+          <!-- right: contact form - redirect to Gmail with loading animation -->
           <div>
             <h2 class="section-title reveal" style="font-size: 2rem;">Contact</h2>
             <div class="glass-card reveal" style="padding: 30px;">
-              <form class="contact-form">
-                <input type="text" placeholder="Your name">
-                <input type="email" placeholder="Email address">
-                <textarea rows="3" placeholder="Tell us about your idea..."></textarea>
-                <button type="submit" class="btn" style="border: none; cursor: pointer; width: 100%; justify-content: center;"><i class="fas fa-envelope"></i> Send message</button>
+              <form class="contact-form" id="gmailContactForm">
+                <input type="text" id="nameInput" placeholder="Your name" required>
+                <input type="email" id="emailInput" placeholder="Email address" required>
+                <textarea rows="3" id="messageInput" placeholder="Tell us about your idea..." required></textarea>
+                <button type="submit" class="btn" id="sendBtn" style="border: none; cursor: pointer; width: 100%; justify-content: center;"><i class="fas fa-envelope"></i> <span>Send message</span></button>
               </form>
             </div>
           </div>
@@ -726,7 +825,7 @@
     </div>
   </footer>
 
-  <!-- scroll reveal script (same) -->
+  <!-- scripts -->
   <script>
     (function() {
       const reveals = document.querySelectorAll('.reveal');
@@ -744,9 +843,49 @@
       window.addEventListener('scroll', checkReveal);
       checkReveal();
     })();
-  </script>
-  <script>
-    document.querySelector('.fa-youtube').parentElement.href = 'https://youtube.com/@EduSmartspark';
+
+    // YouTube link update
+    document.getElementById('youtubeLink').href = 'https://youtube.com/@EduSmartspark';
+
+    // Gmail contact form with loading animation
+    const contactForm = document.getElementById('gmailContactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('nameInput').value.trim();
+        const email = document.getElementById('emailInput').value.trim();
+        const message = document.getElementById('messageInput').value.trim();
+        
+        if (!name || !email || !message) {
+          alert('Please fill in all fields');
+          return;
+        }
+
+        // Show loading state
+        const originalHTML = sendBtn.innerHTML;
+        sendBtn.classList.add('btn-loading');
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spinner"></i> <span>Sending...</span>';
+        sendBtn.disabled = true;
+
+        // Compose email body
+        const body = `Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+        const mailto = `mailto:sahebali8474@gmail.com?subject=Contact from Saheb Ali page&body=${body}`;
+
+        // Simulate slight delay for better UX, then redirect
+        setTimeout(() => {
+          window.location.href = mailto;
+          // Reset button after a moment (when user returns to page)
+          setTimeout(() => {
+            sendBtn.classList.remove('btn-loading');
+            sendBtn.innerHTML = originalHTML;
+            sendBtn.disabled = false;
+          }, 1000);
+        }, 600);
+      });
+    }
   </script>
 </body>
 </html>
