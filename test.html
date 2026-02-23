@@ -1,0 +1,891 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <!-- critical viewport for perfect mobile scaling -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  
+  <!-- ★★★ ENHANCED SEO & GOOGLE RESULT OPTIMIZATION ★★★ -->
+  <!-- Primary title with brand keywords -->
+  <title>Saheb Ali · Saheb Trend House | Student & Entrepreneur from Assam</title>
+  
+  <!-- Meta description – appears in Google search results -->
+  <meta name="description" content="Saheb Ali, founder of Saheb Trend House on Meesho, MS Design & EDU SMARTSPARK. Economics Honours student, ADCA certified. Custom almirah printing, e‑commerce & educational resources.">
+  
+  <!-- Meta keywords (helpful but not ranking heavy – kept for completeness) -->
+  <meta name="keywords" content="Saheb Trend House, Saheb Ali, EDU SMARTSPARK, Meesho seller Assam, MS Design, almirah printing, custom wardrobe design, student entrepreneur Assam, e‑commerce Meesho, ADCA, Gauhati University">
+  
+  <!-- Author & revisit -->
+  <meta name="author" content="Saheb Ali">
+  <meta name="revisit-after" content="7 days">
+  
+  <!-- Language & region (optional but good) -->
+  <meta name="language" content="English">
+  <meta name="geo.region" content="IN-AS">
+  <meta name="geo.placename" content="Assam">
+  
+  <!-- Open Graph / Facebook / LinkedIn (rich previews) -->
+  <meta property="og:title" content="Saheb Ali – Saheb Trend House | Student & Entrepreneur">
+  <meta property="og:description" content="Official page of Saheb Ali: e‑commerce (Saheb Trend House), MS Design, almirah printing & EDU SMARTSPARK. Economics Honours, ADCA.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.eduspark.site/saheb">
+  <meta property="og:image" content="https://www.eduspark.site/assets/images/profile/founder.jpg">
+  <meta property="og:site_name" content="Saheb Trend House & EDU SMARTSPARK">
+  
+  <!-- Twitter card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Saheb Ali – Saheb Trend House">
+  <meta name="twitter:description" content="Student entrepreneur from Assam: Meesho store, custom designs & education.">
+  <meta name="twitter:image" content="https://www.eduspark.site/assets/images/profile/founder.jpg">
+  
+  <!-- Canonical URL avoids duplicate content issues -->
+  <link rel="canonical" href="https://www.eduspark.site/saheb">
+  
+  <!-- Favicon (simple inline data-uri for demonstration – improves professionalism) -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext x='10' y='80' font-size='80' fill='%23ffd893'%3E👤%3C/text%3E%3C/svg%3E" type="image/svg+xml">
+
+  <!-- Fonts & Icons (same) -->
+  <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    /* === base unchanged, only additive mobile perfection === */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #0a0c0f;
+      font-family: 'Inter', sans-serif;
+      color: #ededef;
+      line-height: 1.5;
+      overflow-x: hidden;
+      width: 100%;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    /* glass etc unchanged (keep all existing styles exactly) */
+    .glass-card {
+      background: rgba(20, 22, 27, 0.7);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.05);
+      border-radius: 32px;
+      box-shadow: 0 20px 40px -12px rgba(0, 0, 0, 0.8), 0 0 0 1px rgba(255, 255, 255, 0.02) inset;
+      transition: transform 0.25s ease, box-shadow 0.3s ease;
+    }
+
+    .glass-card:hover {
+      box-shadow: 0 30px 50px -20px black, 0 0 0 1px rgba(255, 215, 100, 0.15) inset;
+      transform: translateY(-6px) scale(1.01);
+    }
+
+    .glow-text {
+      text-shadow: 0 0 12px rgba(200, 230, 255, 0.6);
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 215, 140, 0.2);
+      backdrop-filter: blur(8px);
+      padding: 12px 30px;
+      border-radius: 50px;
+      font-weight: 600;
+      color: #f0f2f5;
+      text-decoration: none;
+      letter-spacing: 0.3px;
+      transition: all 0.2s;
+      box-shadow: 0 8px 20px -10px #00000080;
+    }
+
+    .btn i {
+      font-size: 1.2em;
+      color: #ffd78c;
+    }
+
+    .btn:hover {
+      background: rgba(255, 220, 150, 0.1);
+      border-color: #ffd893;
+      box-shadow: 0 0 20px #ffd89333, 0 8px 25px -8px #000;
+      transform: scale(1.05) translateY(-3px);
+    }
+
+    .container {
+      max-width: 1300px;
+      margin: 0 auto;
+      padding: 0 24px;
+      width: 100%;
+    }
+
+    .reveal {
+      opacity: 0;
+      transform: translateY(40px);
+      transition: opacity 0.8s cubic-bezier(0.2, 0.9, 0.1, 1), transform 0.8s cubic-bezier(0.2, 0.9, 0.1, 1);
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* header — make more compact on mobile */
+    header {
+      position: fixed;
+      top: 12px;           /* slightly reduced from 20px */
+      left: 0;
+      width: 100%;
+      z-index: 100;
+      padding: 0 16px;      /* less side padding on mobile */
+    }
+
+    .nav-glass {
+      background: rgba(15, 17, 22, 0.7);
+      backdrop-filter: blur(16px);
+      border-radius: 60px;   /* a bit smaller for mobile */
+      padding: 10px 20px;    /* reduced padding */
+      border: 1px solid rgba(255, 255, 255, 0.04);
+      box-shadow: 0 15px 35px -10px #000000;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .logo {
+      font-weight: 700;
+      font-size: 1.4rem;    /* slightly smaller but still bold */
+      letter-spacing: -0.5px;
+      background: linear-gradient(130deg, #ffffff, #e0c8a0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      white-space: nowrap;
+    }
+
+    .nav-links {
+      display: flex;
+      gap: 16px;            /* reduced */
+      font-weight: 500;
+    }
+
+    .nav-links a {
+      text-decoration: none;
+      color: #d0d5dd;
+      font-size: 0.85rem;    /* smaller for mobile */
+      transition: 0.2s;
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav-links a:hover {
+      color: white;
+      border-bottom-color: #ffd893;
+      text-shadow: 0 0 8px #ffd893aa;
+    }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 100px;      /* less than 120 for mobile */
+      position: relative;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 30px;
+      align-items: center;
+    }
+
+    .hero h1 {
+      font-size: clamp(2.2rem, 10vw, 4.8rem);  /* more fluid down */
+      font-weight: 700;
+      line-height: 1.1;
+      background: linear-gradient(to right, #ffffff, #e0d6c0);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero-highlight {
+      color: #ffd893;
+      -webkit-text-fill-color: initial;
+      background: none;
+      text-shadow: 0 0 18px #ffb34780;
+    }
+
+    .hero-meta {
+      font-size: 1.2rem;        /* adaptive */
+      color: #b0b9c9;
+      margin: 16px 0 24px;
+      border-left: 4px solid #ffd78c;
+      padding-left: 18px;
+    }
+
+    .hero-image {
+      position: relative;
+      border-radius: 40% 60% 30% 70% / 50% 40% 60% 50%;
+      overflow: hidden;
+      background: radial-gradient(circle at 30% 30%, #2f3a4b, #0c0f14);
+      box-shadow: 0 30px 40px -10px black, 0 0 0 2px rgba(255, 215, 140, 0.2) inset;
+      transition: all 0.3s;
+      aspect-ratio: 1/1.1;
+      max-width: 380px;         /* slightly smaller */
+      margin-left: auto;
+      width: 100%;
+    }
+
+    .hero-image img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      mix-blend-mode: luminosity;
+      opacity: 0.9;
+      transition: 0.5s;
+    }
+
+    .hero-image:hover img {
+      mix-blend-mode: normal;
+      opacity: 1;
+      transform: scale(1.03);
+    }
+
+    /* ===== SECTION COMMON ===== */
+    section {
+      padding: 70px 0;          /* reduced from 90 for mobile */
+    }
+
+    .section-title {
+      font-size: 2.4rem;        /* fluid */
+      font-weight: 600;
+      margin-bottom: 40px;       /* less */
+      letter-spacing: -0.02em;
+      background: linear-gradient(145deg, #ffffff, #c0c8d4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      display: inline-block;
+      border-bottom: 2px solid rgba(255, 200, 120, 0.4);
+      padding-bottom: 8px;
+    }
+
+    .card-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 24px;               /* slightly tighter */
+    }
+
+    .about-text {
+      font-size: 1.05rem;       /* readable */
+      color: #c0c8d5;
+    }
+
+    .about-text strong {
+      color: #ffd893;
+    }
+
+    .journey-strip {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 30px;
+    }
+
+    .pill {
+      background: rgba(255, 255, 255, 0.02);
+      border: 1px solid #2f353e;
+      border-radius: 60px;
+      padding: 6px 16px;
+      font-weight: 500;
+      backdrop-filter: blur(4px);
+      font-size: 0.9rem;
+    }
+
+    .service-card {
+      padding: 30px 20px;
+      text-align: center;
+    }
+
+    .service-card i {
+      font-size: 2.8rem;
+      color: #ffd893;
+      filter: drop-shadow(0 0 14px #ffb86b);
+      margin-bottom: 16px;
+    }
+
+    .service-card h3 {
+      font-size: 1.6rem;
+      margin-bottom: 8px;
+    }
+
+    /* --- service open buttons (now exactly matching .btn style) --- */
+    .service-open-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 20px;
+      padding: 10px 24px;
+      background: rgba(255, 255, 255, 0.03);
+      border: 1px solid rgba(255, 215, 140, 0.3);
+      border-radius: 50px;
+      color: #ffd893;
+      font-weight: 600;
+      font-size: 0.95rem;
+      text-decoration: none;
+      backdrop-filter: blur(8px);
+      transition: all 0.2s;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    }
+    .service-open-btn i {
+      font-size: 1rem;
+      color: #ffd893;
+    }
+    .service-open-btn:hover {
+      background: rgba(255, 220, 150, 0.1);
+      border-color: #ffd893;
+      box-shadow: 0 0 20px #ffd89333, 0 8px 25px -8px #000;
+      transform: scale(1.05) translateY(-2px);
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 18px;
+    }
+
+    .port-item {
+      border-radius: 26px;
+      overflow: hidden;
+      aspect-ratio: 1/1;
+      background: #1e2128;
+      box-shadow: 0 15px 25px -12px black;
+      transition: 0.4s;
+      border: 1px solid #3a3f4a;
+      position: relative;
+      cursor: pointer;
+    }
+
+    .port-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: 0.4s;
+      filter: grayscale(0.5) brightness(0.8);
+      display: block;
+    }
+
+    .port-item:hover img {
+      transform: scale(1.08);
+      filter: grayscale(0) brightness(1);
+    }
+
+    /* overlay button – hidden by default, appears on hover/tap */
+    .port-overlay-btn {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: rgba(10, 10, 15, 0.85);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255, 215, 140, 0.6);
+      border-radius: 40px;
+      padding: 8px 20px;
+      color: white;
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: 0.2s;
+      box-shadow: 0 4px 12px black;
+      opacity: 0;
+      pointer-events: none;
+      z-index: 5;
+      white-space: nowrap;
+    }
+    .port-item:hover .port-overlay-btn,
+    .port-item:focus-within .port-overlay-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+    .port-overlay-btn i {
+      color: #ffd893;
+      font-size: 0.9rem;
+    }
+    .port-overlay-btn:hover {
+      background: rgba(255, 215, 140, 0.3);
+      border-color: #ffd893;
+      transform: translateX(-50%) translateY(-3px);
+      box-shadow: 0 8px 20px #000000cc;
+    }
+
+    /* for mobile devices where hover is tricky: keep button visible if the item is tapped (using :focus-within) */
+    .port-item:focus-within .port-overlay-btn {
+      opacity: 1;
+      pointer-events: auto;
+    }
+
+    .collab-box {
+      padding: 50px 24px;
+      text-align: center;
+      border-radius: 50px;
+      background: rgba(10, 15, 20, 0.6);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255, 210, 140, 0.2);
+    }
+
+    .social-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 25px;
+      margin-top: 30px;
+    }
+
+    .social-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.02);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border: 1px solid #4f4f5a;
+      transition: all 0.2s;
+      color: #ddd;
+      text-decoration: none;
+    }
+
+    .social-icon:hover {
+      border-color: #ffd893;
+      color: #ffd893;
+      transform: translateY(-6px) scale(1.08);
+      box-shadow: 0 0 24px #ffb34766;
+    }
+
+    .contact-edu-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 24px;
+    }
+
+    .edu-item {
+      padding: 16px 18px;
+      border-left: 4px solid #ffd78c;
+      background: rgba(0,0,0,0.2);
+      border-radius: 18px;
+      margin-bottom: 16px;
+      font-size: 0.95rem;
+      word-break: break-word;
+    }
+
+    .contact-form input, .contact-form textarea {
+      width: 100%;
+      background: rgba(30, 34, 42, 0.7);
+      border: 1px solid #323844;
+      border-radius: 30px;
+      padding: 14px 20px;
+      margin-bottom: 16px;
+      color: white;
+      font-size: 0.95rem;
+      backdrop-filter: blur(6px);
+    }
+
+    .contact-form input:focus, .contact-form textarea:focus {
+      outline: none;
+      border-color: #ffd893;
+      box-shadow: 0 0 0 4px #ffd8931a;
+    }
+
+    /* loading spinner animation */
+    .btn-loading {
+      pointer-events: none;
+      opacity: 0.8;
+      gap: 8px;
+    }
+    .btn-loading i.fa-spinner {
+      animation: spin 1s linear infinite;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    footer {
+      text-align: center;
+      padding: 30px 16px;
+      color: #9aa1af;
+      border-top: 1px solid #1e232b;
+      font-size: 0.9rem;
+    }
+
+    /* ★★★ MOBILE PERFECTION OVERRIDES ★★★ */
+    @media (max-width: 700px) {
+      .hero-grid {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 24px;
+      }
+      .hero-image {
+        margin: 0 auto;
+        max-width: 300px;
+      }
+      .hero-meta {
+        border-left: none;
+        border-top: 2px solid #ffd78c;
+        padding-left: 0;
+        padding-top: 12px;
+        max-width: 90%;
+        margin-left: auto;
+        margin-right: auto;
+      }
+      .hero h1 {
+        font-size: clamp(2.2rem, 12vw, 4rem);
+      }
+      .btn {
+        padding: 10px 20px;
+        font-size: 0.95rem;
+      }
+      .nav-links {
+        display: none;
+      }
+      header {
+        top: 8px;
+        padding: 0 12px;
+      }
+      .nav-glass {
+        padding: 8px 16px;
+        border-radius: 50px;
+      }
+      .logo {
+        font-size: 1.3rem;
+      }
+      .btn i {
+        font-size: 1rem;
+      }
+      .section-title {
+        font-size: 2rem;
+        margin-bottom: 30px;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 0 18px;
+      }
+      .hero-image {
+        max-width: 260px;
+      }
+      .hero h1 {
+        font-size: 2.2rem;
+      }
+      .hero-meta {
+        font-size: 1rem;
+      }
+      .btn {
+        padding: 8px 18px;
+        margin: 5px 0;
+      }
+      .btn + .btn {
+        margin-left: 0 !important;
+        margin-top: 12px;
+      }
+      .card-grid {
+        grid-template-columns: 1fr;
+        gap: 20px;
+      }
+      .portfolio-grid {
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+      }
+      .contact-edu-grid {
+        grid-template-columns: 1fr;
+        gap: 30px;
+      }
+      .section-title {
+        font-size: 1.8rem;
+      }
+      .service-card h3 {
+        font-size: 1.5rem;
+      }
+      .social-icon {
+        width: 48px;
+        height: 48px;
+        font-size: 1.8rem;
+      }
+      .collab-box {
+        padding: 40px 18px;
+      }
+      .collab-box h2 {
+        font-size: 2rem !important;
+      }
+      .edu-item {
+        font-size: 0.9rem;
+        padding: 14px;
+      }
+      footer p {
+        font-size: 0.8rem;
+      }
+    }
+
+    @media (max-width: 360px) {
+      .hero h1 {
+        font-size: 1.9rem;
+      }
+      .hero-meta {
+        font-size: 0.95rem;
+      }
+      .btn {
+        width: 100%;
+        justify-content: center;
+      }
+      .btn + .btn {
+        margin-left: 0 !important;
+      }
+      .portfolio-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    img {
+      display: block;
+    }
+
+    .nav-glass, .glass-card, .collab-box {
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="nav-glass">
+      <span class="logo">SAHEB ALI</span>
+      <div class="nav-links">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#services">Services</a>
+        <a href="#portfolio">Work</a>
+        <a href="#collaborate">Collaborate</a>
+        <a href="#contact">Contact</a>
+      </div>
+      <a href="#contact" class="btn" style="padding: 8px 18px;"><i class="fas fa-handshake"></i> Let's talk</a>
+    </div>
+  </header>
+
+  <main>
+    <!-- HERO (home) -->
+    <section id="home" class="hero">
+      <div class="container hero-grid">
+        <div class="reveal">
+          <h1>Saheb <span class="hero-highlight">Ali</span><br>Student & Entrepreneur</h1>
+          <div class="hero-meta">Economics (Honours) · ADCA · Founder @EDU SMARTSPARK</div>
+          <p style="color:#abb3c4; max-width: 500px; margin-bottom: 30px;">Building Saheb Trend House, MS design & custom Almirah prints. From Assam, with ambition.</p>
+          <a href="#collaborate" class="btn"><i class="fas fa-bolt"></i> Collaborate with us</a>
+          <a href="#portfolio" class="btn" style="margin-left: 10px; background:transparent;"><i class="fas fa-images"></i> Portfolio</a>
+        </div>
+        <div class="hero-image reveal">
+          <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="Saheb Ali portrait">
+        </div>
+      </div>
+    </section>
+
+    <!-- ABOUT ME -->
+    <section id="about">
+      <div class="container">
+        <h2 class="section-title reveal">About me</h2>
+        <div class="glass-card reveal" style="padding: 30px;">
+          <div class="about-text">
+            <p>I'm <strong>Saheb Ali</strong>, a passionate Economics (Honours) student from Assam, deeply engaged in digital entrepreneurship and design. I hold an <strong>ADCA (Advanced Diploma in Computer Applications)</strong>, which sparked my interest in tech-driven solutions.</p>
+            <p style="margin-top: 16px;">My journey started with <strong>Saheb Trend House</strong> — an e‑commerce venture on Meesho, delivering fashion and lifestyle products. Later I expanded into <strong>MS Design services</strong> specialising in customised almirah printing and interior art. As the founder of <strong>EDU SMARTSPARK (eduspark.site)</strong>, I share educational resources and guide learners.</p>
+          </div>
+          <div class="journey-strip">
+            <span class="pill"><i class="fas fa-graduation-cap" style="margin-right: 6px;"></i> Economics Hons.</span>
+            <span class="pill"><i class="fas fa-laptop"></i> ADCA</span>
+            <span class="pill"><i class="fas fa-store"></i> Saheb Trend House</span>
+            <span class="pill"><i class="fas fa-cube"></i> MS Design</span>
+            <span class="pill"><i class="fas fa-chalkboard-teacher"></i> EDU SMARTSPARK</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES (buttons now styled exactly like .btn) -->
+    <section id="services">
+      <div class="container">
+        <h2 class="section-title reveal">Services</h2>
+        <div class="card-grid">
+          <div class="glass-card service-card reveal">
+            <i class="fas fa-cart-shopping"></i>
+            <h3>E‑commerce</h3>
+            <p>Saheb Trend House on Meesho – quality products, pan-India shipping.</p>
+            <a href="https://www.meesho.com/SahebTrendHouse?ms=2" class="service-open-btn" target="_blank">Open store</a>
+          </div>
+          <div class="glass-card service-card reveal">
+            <i class="fas fa-pen-ruler"></i>
+            <h3>MS Design</h3>
+            <p>Modern design solutions for brands & small businesses.</p>
+            <a href="freelunch.html" class="service-open-btn">Open details</a>
+          </div>
+          <div class="glass-card service-card reveal">
+            <i class="fas fa-print"></i>
+            <h3>Almirah Printing</h3>
+            <p>Customized almirah printing designs for homes & offices.</p>
+            <a href="almirah.html" class="service-open-btn">Open details</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK PORTFOLIO (buttons appear only on hover/click) -->
+    <section id="portfolio">
+      <div class="container">
+        <h2 class="section-title reveal">Our Products & Works</h2>
+        <div class="portfolio-grid">
+          <div class="port-item reveal" tabindex="0"> <!-- tabindex for focus -->
+            <img src="https://images.meesho.com/images/products/689322539/lghvh_512.avif?width=512" alt="fashion product">
+            <a href="https://www.meesho.com/assamese-traditional-jewellery-golpata-set-for-women-girls/p/beekob?ms=2&source=Meri+Shop" class="port-overlay-btn" target="_blank"><i class="fas fa-eye"></i> Open product</a>
+          </div>
+          <div class="port-item reveal" tabindex="0">
+            <img src="https://images.meesho.com/images/products/734262596/opzs1_512.avif?width=512" alt="products">
+            <a href="https://www.meesho.com/SahebTrendHouse?ms=2" class="port-overlay-btn"><i class="fas fa-eye"></i> Open products</a>
+          </div>
+          <div class="port-item reveal" tabindex="0">
+            <img src="https://5.imimg.com/data5/SELLER/Default/2020/9/RV/KP/IW/67661119/dtp-desktop-publishing-service.jpg" alt="custom wardrobe">
+            <a href="freelunch.html" class="port-overlay-btn"><i class="fas fa-eye"></i> Open details</a>
+          </div>
+          <div class="port-item reveal" tabindex="0">
+            <img src="Image/3palla.jpg" alt="meesho haul">
+            <a href="almirah.html" class="port-overlay-btn" target="_blank"><i class="fas fa-eye"></i> Open details</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COLLABORATE -->
+    <section id="collaborate">
+      <div class="container">
+        <div class="collab-box glass-card reveal" style="padding: 50px 24px;">
+          <i class="fas fa-handshake" style="font-size: 3.5rem; color: #ffd893; margin-bottom: 16px;"></i>
+          <h2 style="font-size: 2.2rem;">Collaborate with us</h2>
+          <p style="max-width: 500px; margin: 16px auto; color: #b9c1cf;">Entrepreneurs, creators, educators — let's build something impactful together.</p>
+          <a href="#contact" class="btn" style="font-size: 1.1rem; padding: 12px 32px;"><i class="fas fa-paper-plane"></i> Start a conversation</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- EDUCATION & SOCIAL + CONTACT (with loading animation) -->
+    <section id="contact">
+      <div class="container">
+        <div class="contact-edu-grid">
+          <!-- left -->
+          <div>
+            <h2 class="section-title reveal" style="font-size: 2rem;">Education & links</h2>
+            <div class="glass-card reveal" style="padding: 24px;">
+              <div class="edu-item"><i class="fas fa-university" style="color:#ffd78c; width: 26px;"></i> <strong>Economics (Honours)</strong> — Gauhati University (ongoing)</div>
+              <div class="edu-item"><i class="fas fa-diploma"></i> <strong>ADCA</strong> — Advanced Diploma in Computer Applications, 2020</div>
+              <div class="edu-item"><i class="fas fa-globe"></i> <strong>Founder</strong> — EDU SMARTSPARK · <a href="https://eduspark.site" target="_blank" style="color:#ffd893;">eduspark.site</a></div>
+              <div style="margin: 20px 0 8px; display: flex; flex-wrap: wrap; gap: 12px; justify-content: flex-start;">
+                <a href="https://www.instagram.com/saheb_trend_house" class="social-icon" style="display: inline-flex;"><i class="fab fa-instagram"></i></a>
+                <a href="https://www.linkedin.com/in/mr-saheb-955907279" class="social-icon" style="display: inline-flex;"><i class="fab fa-linkedin-in"></i></a>
+                <a href="#" class="social-icon" style="display: inline-flex;" id="youtubeLink"><i class="fab fa-youtube"></i></a>
+                <a href="almirah.html" class="social-icon" style="display: inline-flex;"><i class="fas fa-paint-roller"></i></a>
+              </div>
+              <p style="color:#aab3c5; margin-top: 10px;">📌 <a href="saheb.html" style="color:#ffd893;">My history · Saheb</a></p>
+            </div>
+          </div>
+          <!-- right: contact form - redirect to Gmail with loading animation -->
+          <div>
+            <h2 class="section-title reveal" style="font-size: 2rem;">Contact</h2>
+            <div class="glass-card reveal" style="padding: 30px;">
+              <form class="contact-form" id="gmailContactForm">
+                <input type="text" id="nameInput" placeholder="Your name" required>
+                <input type="email" id="emailInput" placeholder="Email address" required>
+                <textarea rows="3" id="messageInput" placeholder="Tell us about your idea..." required></textarea>
+                <button type="submit" class="btn" id="sendBtn" style="border: none; cursor: pointer; width: 100%; justify-content: center;"><i class="fas fa-envelope"></i> <span>Send message</span></button>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <p>© 2025 Saheb Ali — Student & Entrepreneur. All presence linked.</p>
+      <p style="margin-top: 6px; font-size: 0.8rem;">📸 instagram.com/saheb_trend_house  |  🔗 linkedin.com/in/mr-saheb  |  ▶️ Edu Smartspark</p>
+    </div>
+  </footer>
+
+  <!-- scripts -->
+  <script>
+    (function() {
+      const reveals = document.querySelectorAll('.reveal');
+      function checkReveal() {
+        for (let el of reveals) {
+          const windowHeight = window.innerHeight;
+          const revealTop = el.getBoundingClientRect().top;
+          const revealPoint = 120;
+          if (revealTop < windowHeight - revealPoint) {
+            el.classList.add('active');
+          }
+        }
+      }
+      window.addEventListener('load', checkReveal);
+      window.addEventListener('scroll', checkReveal);
+      checkReveal();
+    })();
+
+    // YouTube link update
+    document.getElementById('youtubeLink').href = 'https://youtube.com/@EduSmartspark';
+
+    // Gmail contact form with loading animation
+    const contactForm = document.getElementById('gmailContactForm');
+    const sendBtn = document.getElementById('sendBtn');
+    if (contactForm) {
+      contactForm.addEventListener('submit', function(e) {
+        e.preventDefault();
+        
+        // Get form values
+        const name = document.getElementById('nameInput').value.trim();
+        const email = document.getElementById('emailInput').value.trim();
+        const message = document.getElementById('messageInput').value.trim();
+        
+        if (!name || !email || !message) {
+          alert('Please fill in all fields');
+          return;
+        }
+
+        // Show loading state
+        const originalHTML = sendBtn.innerHTML;
+        sendBtn.classList.add('btn-loading');
+        sendBtn.innerHTML = '<i class="fas fa-spinner fa-spinner"></i> <span>Sending...</span>';
+        sendBtn.disabled = true;
+
+        // Compose email body
+        const body = `Name: ${name}%0AEmail: ${email}%0AMessage: ${message}`;
+        const mailto = `mailto:sahebali8474@gmail.com?subject=Contact from Saheb Ali page&body=${body}`;
+
+        // Simulate slight delay for better UX, then redirect
+        setTimeout(() => {
+          window.location.href = mailto;
+          // Reset button after a moment (when user returns to page)
+          setTimeout(() => {
+            sendBtn.classList.remove('btn-loading');
+            sendBtn.innerHTML = originalHTML;
+            sendBtn.disabled = false;
+          }, 1000);
+        }, 600);
+      });
+    }
+  </script>
+</body>
+</html>
