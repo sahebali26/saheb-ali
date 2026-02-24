@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
     <title>Saheb ali · black label prints | final</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -31,8 +31,9 @@
             font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
             background-color: var(--bg-dark);
             color: var(--text-light);
-            line-height: 1.6;
+            line-height: 1.5;
             overflow-x: hidden;
+            width: 100%;
         }
 
         /* glassmorphism */
@@ -41,18 +42,18 @@
             backdrop-filter: blur(16px) saturate(180%);
             -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(212,163,115,0.15);
-            border-radius: 2.5rem;
+            border-radius: 2rem;
         }
 
         .container {
             width: 92%;
             max-width: 1300px;
             margin: 0 auto;
-            padding: 0 0.8rem;
+            padding: 0 0.4rem;
         }
 
         section {
-            padding: 5rem 0;
+            padding: 3.2rem 0;  /* reduced for compact mobile */
         }
 
         h1, h2, h3 {
@@ -62,8 +63,8 @@
 
         .section-title {
             text-align: center;
-            font-size: 2.8rem;
-            margin-bottom: 3.5rem;
+            font-size: 2.2rem;   /* scaled for mobile */
+            margin-bottom: 2.5rem;
             color: white;
             text-shadow: 0 0 12px rgba(212,163,115,0.3);
             position: relative;
@@ -71,10 +72,10 @@
         .section-title::after {
             content: '';
             position: absolute;
-            bottom: -18px;
+            bottom: -14px;
             left: 50%;
             transform: translateX(-50%);
-            width: 140px;
+            width: 110px;
             height: 4px;
             background: linear-gradient(90deg, transparent, var(--primary-glow), transparent);
             border-radius: 4px;
@@ -84,11 +85,11 @@
             display: inline-flex;
             align-items: center;
             justify-content: center;
-            gap: 10px;
+            gap: 8px;
             background: transparent;
             border: 1.5px solid var(--primary-glow);
             color: var(--primary-glow);
-            padding: 0.8rem 2.2rem;
+            padding: 0.7rem 1.8rem;
             border-radius: 4rem;
             font-weight: 600;
             text-decoration: none;
@@ -119,28 +120,28 @@
             position: absolute;
             inset: 0;
             background: url('https://wearebluegrass.com/wp-content/uploads/2024/05/Screen-Print-vs-Digital-Print-3-1.png') center/cover no-repeat;
-            opacity: 0.35; /* Increased visibility from 0.1 to 0.35 */
-            filter: blur(2px); /* reduced blur for clarity */
+            opacity: 0.35;
+            filter: blur(2px);
             z-index: 0;
         }
         .hero-content {
             position: relative;
             z-index: 5;
             text-align: center;
-            max-width: 950px;
+            width: 100%;
             margin: 0 auto;
-            padding: 2.8rem 2rem;
+            padding: 2rem 1.2rem;
             background: rgba(8, 8, 8, 0.336);
             backdrop-filter: blur(10px);
-            border-radius: 5rem;
+            border-radius: 3rem;
             border: 1px solid rgba(212, 163, 115, 0.178);
             animation: fadeIn 1s ease;
         }
         .profile-img {
-            width: 160px;
-            height: 160px;
+            width: 130px;           /* perfectly sized for mobile */
+            height: 130px;
             border-radius: 50%;
-            margin: 0 auto 1.8rem;
+            margin: 0 auto 1.2rem;
             border: 4px solid var(--primary-glow);
             overflow: hidden;
             box-shadow: 0 0 40px #d4a37380;
@@ -149,29 +150,44 @@
         .profile-img:hover { transform: scale(1.05); box-shadow: 0 0 70px #d4a373; }
         .profile-img img { width:100%; height:100%; object-fit:cover; filter: grayscale(0.3);}
         .hero-content h1 {
-            font-size: 4rem;
+            font-size: 3.2rem;        /* balanced */
             background: linear-gradient(145deg, #f0e2d0, #d4a373);
             -webkit-background-clip: text;
             background-clip: text;
             color: transparent;
+            line-height: 1.2;
+        }
+        .hero-content p {
+            font-size: 1.3rem;
+            color: #ccc;
         }
         .scroll-down {
-            position: absolute; bottom: 30px; left:50%; transform: translateX(-50%);
-            color: #d4a373; font-size: 2.4rem; opacity: 0.8;
+            position: absolute; bottom: 20px; left:50%; transform: translateX(-50%);
+            color: #d4a373; font-size: 2.2rem; opacity: 0.8;
             animation: bounce 2s infinite; z-index: 10;
         }
 
-        /* about - with fixed image */
+        /* about - perfect mobile stacking */
         .about-content {
-            display: flex; gap: 4rem; align-items: center; flex-wrap: wrap;
+            display: flex; 
+            flex-direction: column;   /* force column on mobile */
+            gap: 2rem; 
+            align-items: center;
         }
         .about-text {
-            flex: 2; background: rgba(20,20,20,0.6); backdrop-filter: blur(12px);
-            padding: 2.5rem; border-radius: 3rem; border:1px solid #3a3a3a;
+            width: 100%;
+            background: rgba(20,20,20,0.6); 
+            backdrop-filter: blur(12px);
+            padding: 1.8rem; 
+            border-radius: 2.5rem; 
+            border:1px solid #3a3a3a;
         }
         .about-image {
-            flex: 1.3; border-radius: 2rem; overflow: hidden;
-            border: 1px solid #444; transition: 0.3s;
+            width: 100%;
+            border-radius: 2rem; 
+            overflow: hidden;
+            border: 1px solid #444; 
+            transition: 0.3s;
             background: #1a1a1a;
         }
         .about-image img {
@@ -179,175 +195,240 @@
             height: auto;
             display: block;
             object-fit: cover;
-            min-height: 300px;
+            min-height: 240px;
             background: #2a2a2a;
         }
-        .about-image:hover { transform: perspective(1000px) rotateY(2deg) scale(1.02); box-shadow: 0 30px 40px #d4a37320; }
         .features {
-            display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 2rem;
+            display: flex; 
+            flex-wrap: wrap; 
+            gap: 0.6rem; 
+            margin-top: 1.8rem;
+            justify-content: center;
         }
         .feature {
-            background: #232323; padding: 0.5rem 1.5rem; border-radius: 4rem;
-            border: 1px solid #404040; backdrop-filter: blur(5px); transition: 0.2s;
+            background: #232323; 
+            padding: 0.4rem 1.2rem; 
+            border-radius: 4rem;
+            font-size: 0.95rem;
+            border: 1px solid #404040; 
+            backdrop-filter: blur(5px); 
+            transition: 0.2s;
         }
-        .feature:hover { border-color: var(--primary-glow); transform: scale(1.04);}
 
         /* services */
         #services { background: #0d0d0d; }
         .services-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(270px, 1fr)); gap: 2rem;
+            display: grid; 
+            grid-template-columns: 1fr;  /* single column for precision */
+            gap: 1.5rem;
         }
         .service-card {
-            background: #181818; backdrop-filter: blur(12px); padding: 2.8rem 2rem;
-            border-radius: 3rem; border: 1px solid #333; transition: 0.3s; text-align: center;
+            background: #181818; 
+            backdrop-filter: blur(12px); 
+            padding: 2rem 1.5rem;
+            border-radius: 2.5rem; 
+            border: 1px solid #333; 
+            transition: 0.3s; 
+            text-align: center;
         }
-        .service-card:hover {
-            transform: translateY(-12px) scale(1.02); border-color: #d4a37380;
-            box-shadow: 0 30px 45px -10px #d4a37330; background: #202020;
-        }
-        .service-icon { font-size: 3.5rem; color: var(--primary-glow); margin-bottom: 1.5rem; }
 
-        /* --- WORK SECTION (popup modal for drive links) --- */
+        /* --- WORK SECTION --- */
         #portfolio { background: #0a0a0a; }
         .portfolio-grid {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;
+            display: grid; 
+            grid-template-columns: 1fr;   /* one column perfect fit */
+            gap: 1.8rem;
         }
         .portfolio-item {
-            background: #161616; border-radius: 2.5rem; overflow: hidden;
-            border: 1px solid #2f2f2f; transition: 0.25s;
+            background: #161616; 
+            border-radius: 2.2rem; 
+            overflow: hidden;
+            border: 1px solid #2f2f2f; 
         }
-        .portfolio-item:hover { border-color: var(--primary-glow); transform: scale(1.01); box-shadow: 0 25px 35px -12px #d4a37340; }
         .portfolio-img {
-            height: 240px; overflow: hidden;
+            height: 210px;          /* adjusted for phone */
+            overflow: hidden;
         }
         .portfolio-img img {
-            width: 100%; height: 100%; object-fit: cover; transition: 0.5s;
-            filter: grayscale(0.3);
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transition: 0.5s;
         }
-        .portfolio-item:hover .portfolio-img img { transform: scale(1.12); filter: grayscale(0);}
-        .portfolio-info { padding: 1.8rem 1.8rem 2rem; }
-        .portfolio-info h3 { font-size: 2rem; margin-bottom: 0.6rem; }
-
+        .portfolio-info { 
+            padding: 1.5rem 1.5rem 1.8rem; 
+        }
+        .portfolio-info h3 { 
+            font-size: 1.9rem; 
+            margin-bottom: 0.5rem; 
+        }
         .open-btn {
-            background: transparent; border: 1px solid var(--primary-glow);
-            color: var(--primary-glow); padding: 0.6rem 2rem; border-radius: 3rem;
-            font-weight: 600; cursor: pointer; transition: 0.2s; margin: 0.5rem 0 1rem;
-            display: inline-flex; align-items: center; gap: 8px;
+            background: transparent; 
+            border: 1px solid var(--primary-glow);
+            color: var(--primary-glow); 
+            padding: 0.6rem 1.5rem; 
+            border-radius: 3rem;
+            font-weight: 600; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            margin: 0.5rem 0 0.8rem;
+            display: inline-flex; 
+            align-items: center; 
+            gap: 6px;
+            font-size: 0.95rem;
         }
-        .open-btn:hover { background: var(--primary-glow); color: black; }
 
-        /* --- MODAL (popup) --- */
+        /* --- MODAL (popup) fine tuned for mobile --- */
         .modal {
-            display: none; position: fixed; z-index: 999; left: 0; top: 0;
-            width: 100%; height: 100%; overflow-y: auto;
-            background: rgba(0,0,0,0.9); backdrop-filter: blur(12px);
-            align-items: center; justify-content: center;
+            display: none; 
+            position: fixed; 
+            z-index: 999; 
+            left: 0; 
+            top: 0;
+            width: 100%; 
+            height: 100%; 
+            overflow-y: auto;
+            background: rgba(0,0,0,0.95); 
+            backdrop-filter: blur(12px);
+            align-items: flex-start;    /* better top positioning */
+            justify-content: center;
         }
         .modal-card {
-            background: #1c1c1c; max-width: 600px; width: 90%; margin: 2rem auto;
-            border-radius: 3.5rem; padding: 2.2rem; border: 1px solid #d4a37360;
-            box-shadow: 0 30px 60px black; position: relative;
+            background: #1c1c1c; 
+            width: 92%;
+            margin: 2rem auto;
+            border-radius: 2.8rem; 
+            padding: 2rem 1.5rem; 
+            border: 1px solid #d4a37360;
+            box-shadow: 0 30px 60px black; 
+            position: relative;
             animation: modalPop 0.3s;
         }
-        @keyframes modalPop { 0%{opacity:0; transform:scale(0.9);} 100%{opacity:1; transform:scale(1);} }
         .modal-close {
-            position: absolute; top: 1.5rem; right: 2rem; font-size: 2.5rem;
-            color: #aaa; cursor: pointer; transition: 0.2s;
+            position: absolute; 
+            top: 1rem; 
+            right: 1.5rem; 
+            font-size: 2.5rem;
+            color: #aaa; 
+            cursor: pointer; 
         }
-        .modal-close:hover { color: #d4a373; transform: scale(1.1);}
-        .modal h2 { font-size: 2.3rem; margin-bottom: 1.8rem; color: var(--primary-glow);}
+        .modal h2 { 
+            font-size: 2rem; 
+            margin-bottom: 1.5rem; 
+            color: var(--primary-glow);
+            padding-right: 1rem;
+        }
         .drive-link {
-            display: flex; align-items: center; gap: 1.2rem; background: #2a2a2a;
-            padding: 1.2rem 1.8rem; border-radius: 3rem; margin: 1.2rem 0;
-            border: 1px solid #3f3f3f; transition: 0.2s; text-decoration: none; color: white;
+            display: flex; 
+            align-items: center; 
+            gap: 1rem; 
+            background: #2a2a2a;
+            padding: 1rem 1.2rem; 
+            border-radius: 3rem; 
+            margin: 1rem 0;
+            border: 1px solid #3f3f3f; 
+            transition: 0.2s; 
+            text-decoration: none; 
+            color: white;
+            font-size: 0.95rem;
         }
-        .drive-link:hover { border-color: var(--primary-glow); background: #333; transform: translateX(8px);}
-        .drive-link i { font-size: 2rem; color: var(--primary-glow); }
-
-        /* custom design specific message */
         .custom-message {
-            background: #232323; border-radius: 2.5rem; padding: 1.8rem;
-            border-left: 6px solid var(--primary-glow); margin: 2rem 0 1rem;
+            background: #232323; 
+            border-radius: 2rem; 
+            padding: 1.5rem;
+            border-left: 6px solid var(--primary-glow); 
+            margin: 1.5rem 0 1rem;
+            font-size: 0.95rem;
         }
 
-        /* process */
+        /* process steps stacked column */
         #process { background: #0c0c0c; }
-        .process-steps { display: flex; flex-wrap: wrap; gap: 2rem; }
+        .process-steps { 
+            display: flex; 
+            flex-direction: column;
+            gap: 1.2rem; 
+        }
         .process-step {
-            flex: 1 1 200px; background: #1b1b1b; backdrop-filter: blur(10px);
-            padding: 2.5rem 1.8rem; border-radius: 2.5rem; border: 1px solid #333; text-align: center;
+            width: 100%;
+            background: #1b1b1b; 
+            backdrop-filter: blur(10px);
+            padding: 1.8rem 1.5rem; 
+            border-radius: 2.2rem; 
+            border: 1px solid #333; 
+            text-align: center;
         }
         .step-number {
-            width: 70px; height: 70px; background: #2a2a2a; border: 2px solid var(--primary-glow);
-            color: var(--primary-glow); border-radius: 50%; margin: 0 auto 1.8rem;
-            font-size: 2rem; display: flex; align-items: center; justify-content: center;
+            width: 60px; 
+            height: 60px; 
+            background: #2a2a2a; 
+            border: 2px solid var(--primary-glow);
+            color: var(--primary-glow); 
+            border-radius: 50%; 
+            margin: 0 auto 1.2rem;
+            font-size: 1.8rem; 
+            display: flex; 
+            align-items: center; 
+            justify-content: center;
         }
 
-        /* --- CONTACT restructured: socials section above, form separate, both with glass --- */
+        /* --- CONTACT restructured: perfect mobile stacking --- */
         #contact {
             background: #070707;
         }
 
-        /* social cards - separate section */
+        /* social cards - full width */
         .social-section {
-            max-width: 800px;
-            margin: 0 auto 4rem auto;
+            width: 100%;
+            margin: 0 auto 2.5rem auto;
             background: rgba(20,20,20,0.7);
             backdrop-filter: blur(18px);
-            padding: 2.8rem 2rem;
-            border-radius: 4rem;
+            padding: 2rem 1.2rem;
+            border-radius: 2.8rem;
             border: 1px solid #3c3c3c;
             text-align: center;
         }
         .social-section h3 {
-            font-size: 2rem;
-            margin-bottom: 2rem;
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
             color: var(--primary-glow);
         }
         .social-links {
             display: flex;
-            gap: 1.5rem;
+            gap: 1rem;
             justify-content: center;
             flex-wrap: wrap;
         }
         .social-link {
             background: #262626;
-            width: 70px;
-            height: 70px;
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2.2rem;
+            font-size: 2rem;
             color: var(--primary-glow);
             border: 1px solid #4a4a4a;
             transition: 0.25s;
             text-decoration: none;
         }
-        .social-link:hover {
-            background: var(--primary-glow);
-            color: black;
-            transform: translateY(-8px) scale(1.1);
-            border-color: transparent;
-        }
 
-        /* form card - separate */
+        /* form card - full width */
         .form-section {
-            max-width: 750px;
+            width: 100%;
             margin: 0 auto;
             background: rgba(15,15,15,0.8);
             backdrop-filter: blur(18px);
-            padding: 3rem;
-            border-radius: 4rem;
+            padding: 2rem 1.5rem;
+            border-radius: 3rem;
             border: 1px solid #3c3c3c;
         }
         .contact-info {
             display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 2.5rem;
-            margin: 0 0 2.5rem 0;
-            padding-bottom: 2rem;
+            flex-direction: column;     /* stacked on mobile */
+            gap: 1.5rem;
+            margin: 0 0 2rem 0;
+            padding-bottom: 1.5rem;
             border-bottom: 1px solid #333;
         }
         .contact-item {
@@ -358,91 +439,84 @@
         .contact-item a {
             color: var(--primary-glow);
             text-decoration: none;
-        }
-        .contact-item a:hover {
-            text-decoration: underline;
+            word-break: break-all;
         }
         .contact-icon {
             background: #262626;
-            width: 60px;
-            height: 60px;
+            width: 55px;
+            height: 55px;
             border-radius: 2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 2rem;
+            font-size: 1.8rem;
             color: var(--primary-glow);
             border: 1px solid #555;
+            flex-shrink: 0;
+        }
+        .contact-item h4 {
+            font-size: 1.2rem;
         }
 
         .contact-form {
             display: flex;
             flex-direction: column;
-            gap: 1.5rem;
+            gap: 1.2rem;
         }
         .form-group input, .form-group textarea {
             width: 100%;
-            padding: 1.2rem 1.8rem;
+            padding: 1rem 1.5rem;
             background: #1e1e1e;
             border: 1px solid #404040;
             border-radius: 3rem;
             font-size: 1rem;
             color: white;
-            transition: 0.2s;
-        }
-        .form-group input:focus, .form-group textarea:focus {
-            border-color: var(--primary-glow);
-            outline: none;
-            background: #2a2a2a;
-            box-shadow: 0 0 20px #d4a37330;
         }
         .send-btn {
             background: transparent;
             border: 2px solid var(--primary-glow);
             color: var(--primary-glow);
-            padding: 1.2rem;
+            padding: 1rem;
             border-radius: 4rem;
             font-weight: 700;
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 1rem;
+            gap: 0.8rem;
             transition: 0.2s;
             cursor: pointer;
         }
-        .send-btn i { transition: 0.3s; }
-        .send-btn.loading i { animation: spin 1s linear infinite; }
-        .send-btn:hover:not(:disabled) { background: var(--primary-glow); color: black; }
-
         footer {
             background: #030303;
-            padding: 2rem;
+            padding: 1.5rem;
             text-align: center;
             color: #888;
             border-top: 1px solid #222;
+            font-size: 0.9rem;
         }
 
-        /* animations */
+        /* animations unchanged */
         @keyframes fadeIn {
             0%{opacity:0; transform:translateY(30px);}
             100%{opacity:1; transform:translateY(0);}
         }
         @keyframes bounce {
             0%,100%{ transform: translateY(0) translateX(-50%); }
-            50%{ transform: translateY(-15px) translateX(-50%); }
+            50%{ transform: translateY(-10px) translateX(-50%); }
         }
         @keyframes spin {
             0%{transform:rotate(0);}
             100%{transform:rotate(360deg);}
         }
 
-        /* mobile fine */
-        @media (max-width:700px){
-            .section-title{font-size:2.2rem;}
-            .hero-content h1{font-size:3rem;}
-            .modal-card{width:95%; padding:1.8rem;}
-            .social-link { width: 60px; height: 60px; font-size: 1.8rem; }
+        /* tiny screens extra care */
+        @media (max-width: 380px) {
+            .hero-content h1 { font-size: 2.8rem; }
+            .profile-img { width: 120px; height: 120px; }
+            .section-title { font-size: 2rem; }
+            .modal-card { padding: 1.5rem; }
+            .social-link { width: 50px; height: 50px; font-size: 1.7rem; }
         }
     </style>
 </head>
@@ -454,8 +528,8 @@
                     <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="Saheb ali">
                 </div>
                 <h1>Saheb ali</h1>
-                <p style="font-size:1.7rem;color:#ccc;">custom almirah printing · black label</p>
-                <p style="margin:1.2rem auto; max-width:600px;">two-palla, three-palla, your own image – we print on fabric with deep dark finish.</p>
+                <p style="font-size:1.4rem;color:#ccc;">custom almirah printing · black label</p>
+                <p style="margin:1rem auto; max-width:90%; font-size:1rem;">two-palla, three-palla, your own image – we print on fabric with deep dark finish.</p>
                 <a href="#portfolio" class="btn" id="startOrderBtn"><i class="fas fa-arrow-right"></i> start your order</a>
             </div>
         </div>
@@ -474,7 +548,6 @@
                     </div>
                 </div>
                 <div class="about-image">
-                    <!-- Fixed image: using a reliable dark-themed fabric print image -->
                     <img src="Image/3palla.jpg" alt="fabric printing detail" onerror="this.src='https://placekitten.com/600/400?grayscale'">
                 </div>
             </div>
@@ -492,12 +565,11 @@
         </div>
     </section>
 
-    <!-- WORK SECTION with popup modals for google drive PDF links (id="portfolio" for button target) -->
+    <!-- WORK SECTION -->
     <section id="portfolio">
         <div class="container">
             <h2 class="section-title">work · select your style</h2>
             <div class="portfolio-grid">
-                <!-- two-palla card -->
                 <div class="portfolio-item">
                     <div class="portfolio-img"><img src="Image/2palla.jpg" alt="two palla" onerror="this.src='https://picsum.photos/400/300?grayscale&random=1'"></div>
                     <div class="portfolio-info">
@@ -506,7 +578,6 @@
                         <button class="open-btn" onclick="openModal('modalTwoPalla')"><i class="fas fa-external-link-alt"></i> choose design (pdf)</button>
                     </div>
                 </div>
-                <!-- three-palla card -->
                 <div class="portfolio-item">
                     <div class="portfolio-img"><img src="Image/3palla.jpg" alt="three palla" onerror="this.src='https://picsum.photos/400/300?grayscale&random=2'"></div>
                     <div class="portfolio-info">
@@ -515,7 +586,6 @@
                         <button class="open-btn" onclick="openModal('modalThreePalla')"><i class="fas fa-external-link-alt"></i> browse pdf</button>
                     </div>
                 </div>
-                <!-- custom design card -->
                 <div class="portfolio-item">
                     <div class="portfolio-img"><img src="Image/choos.jpg" alt="custom" onerror="this.src='https://picsum.photos/400/300?grayscale&random=3'"></div>
                     <div class="portfolio-info">
@@ -528,20 +598,19 @@
         </div>
     </section>
 
-    <!-- MODAL two-palla -->
+    <!-- MODALS (unchanged content) -->
     <div id="modalTwoPalla" class="modal">
         <div class="modal-card">
             <span class="modal-close" onclick="closeModal('modalTwoPalla')">&times;</span>
             <h2>⚡ two-palla collections</h2>
-            <p style="margin-bottom: 2rem;">click any link to preview PDF (google drive)</p>
+            <p style="margin-bottom: 1.5rem;">click any link to preview PDF (google drive)</p>
             <a class="drive-link" href="https://drive.google.com/file/d/1HanRFRH0xlJztpqRKkmigqLEfPIUe1Cn/view?usp=drivesdk" target="_blank"><i class="fas fa-file-pdf"></i> metallic design catalog</a>
             <a class="drive-link" href="https://drive.google.com/file/d/1TwoPallaFlower/view?usp=sharing" target="_blank"><i class="fas fa-file-pdf"></i> flower design catalog (N/A)</a>
             <a class="drive-link" href="#" target="_blank"><i class="fas fa-file-pdf"></i> simple minimal catalog</a>
-            <p style="margin-top: 2rem; color: #aaa;">⬤ after selecting, contact us via form / whatsapp</p>
+            <p style="margin-top: 1.8rem; color: #aaa;">⬤ after selecting, contact us via form / whatsapp</p>
         </div>
     </div>
 
-    <!-- MODAL three-palla -->
     <div id="modalThreePalla" class="modal">
         <div class="modal-card">
             <span class="modal-close" onclick="closeModal('modalThreePalla')">&times;</span>
@@ -552,18 +621,17 @@
         </div>
     </div>
 
-    <!-- MODAL custom design (with explanation) -->
     <div id="modalCustom" class="modal">
         <div class="modal-card">
             <span class="modal-close" onclick="closeModal('modalCustom')">&times;</span>
             <h2>🖼️ custom image printing</h2>
             <div class="custom-message">
-                <p style="font-size:1.2rem; margin-bottom:0.8rem;"><i class="fas fa-camera" style="color:#d4a373;"></i> <strong>print your own photo, artwork, or design</strong></p>
-                <p>Simply send us your image via WhatsApp or email. We support any resolution, and we’ll adjust it for perfect fabric printing. You can also choose two-palla or three-palla layout with your image.</p>
+                <p style="font-size:1.1rem; margin-bottom:0.6rem;"><i class="fas fa-camera" style="color:#d4a373;"></i> <strong>print your own photo, artwork, or design</strong></p>
+                <p>Simply send us your image via WhatsApp or email. We support any resolution, and we’ll adjust it for perfect fabric printing.</p>
             </div>
             <a class="drive-link" href="https://wa.me/916003816583" target="_blank" style="background:#2b2b2b;"><i class="fab fa-whatsapp"></i> send image on whatsapp</a>
             <a class="drive-link" href="mailto:alifreeluncher20@gmail.com" style="background:#2b2b2b;"><i class="fas fa-envelope"></i> email your design</a>
-            <p style="margin-top:1.5rem;">⬤ no pdf needed – just contact us directly.</p>
+            <p style="margin-top:1.2rem;">⬤ no pdf needed – just contact us directly.</p>
         </div>
     </div>
 
@@ -579,12 +647,11 @@
         </div>
     </section>
 
-    <!-- CONTACT restructured: social buttons separate, form separate -->
+    <!-- CONTACT restructured: perfectly stacked for phone -->
     <section id="contact">
         <div class="container">
             <h2 class="section-title">connect & order</h2>
             
-            <!-- SOCIAL SECTION (separate) -->
             <div class="social-section">
                 <h3>⬇️ follow & direct message</h3>
                 <div class="social-links">
@@ -595,7 +662,6 @@
                 </div>
             </div>
 
-            <!-- FORM SECTION (separate) -->
             <div class="form-section">
                 <div class="contact-info">
                     <div class="contact-item">
@@ -611,7 +677,7 @@
                 <form id="contactForm" class="contact-form">
                     <div class="form-group"><input type="text" id="name" placeholder="your name" required></div>
                     <div class="form-group"><input type="text" id="subject" placeholder="subject (e.g. two-palla metallic)" required></div>
-                    <div class="form-group"><textarea id="description" rows="4" placeholder="tell us which design / pdf you liked, or describe your custom image idea ..." required></textarea></div>
+                    <div class="form-group"><textarea id="description" rows="3" placeholder="tell us which design / pdf you liked, or describe your custom image idea ..." required></textarea></div>
                     <button type="submit" class="send-btn" id="sendBtn"><i class="fas fa-paper-plane"></i> send message</button>
                 </form>
             </div>
@@ -621,21 +687,20 @@
     <footer>© 2025 Powered by Saheb ali ·</footer>
 
     <script>
-        // MODAL functions
+        // MODAL functions (unchanged)
         function openModal(id) {
             document.getElementById(id).style.display = 'flex';
         }
         function closeModal(id) {
             document.getElementById(id).style.display = 'none';
         }
-        // click outside to close
         window.onclick = function(event) {
             if (event.target.classList.contains('modal')) {
                 event.target.style.display = 'none';
             }
         };
 
-        // FORM loading + redirect mailto with fields
+        // FORM (unchanged)
         const form = document.getElementById('contactForm');
         const sendBtn = document.getElementById('sendBtn');
 
@@ -667,7 +732,6 @@
             }, 700);
         });
 
-        // smooth scroll enhancement for start order button (already smooth from css)
         document.getElementById('startOrderBtn').addEventListener('click', function(e) {
             e.preventDefault();
             document.querySelector('#portfolio').scrollIntoView({ behavior: 'smooth' });
