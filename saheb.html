@@ -1,780 +1,505 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SAHEB' DIGITAL HUB - DTP, Design & Shopping Services</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        /* --- Variables & Base Setup --- */
-        :root {
-            /* Changed to a more "Digital/Tech" color palette */
-            --primary: #0056b3;
-            --primary-dark: #004494;
-            --secondary: #00a8e8;
-            --light: #f0f8ff;
-            --dark: #1a1a1a;
-            --accent: #ffc107;
-            --gradient: linear-gradient(135deg, #0056b3 0%, #00a8e8 100%);
-            --shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            --transition: all 0.3s ease;
-        }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
-        body {
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            background-color: #f9f9f9;
-            overflow-x: hidden;
-        }
-
-        .container {
-            width: 90%;
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
-
-        section {
-            padding: 5rem 0;
-        }
-
-        h1, h2, h3, h4 {
-            font-weight: 700;
-            line-height: 1.2;
-            margin-bottom: 1rem;
-        }
-
-        p {
-            margin-bottom: 1rem;
-        }
-
-        img {
-            max-width: 100%;
-        }
-
-        .btn {
-            display: inline-block;
-            background: var(--gradient);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-weight: 600;
-            transition: var(--transition);
-            border: none;
-            cursor: pointer;
-            box-shadow: var(--shadow);
-        }
-
-        .btn:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        .section-title {
-            text-align: center;
-            margin-bottom: 3rem;
-            position: relative;
-        }
-
-        .section-title::after {
-            content: '';
-            position: absolute;
-            bottom: -10px;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80px;
-            height: 4px;
-            background: var(--gradient);
-            border-radius: 2px;
-        }
-
-        /* --- Header & Hero Section --- */
-        header {
-            /* Updated background for a digital/tech look */
-            background: linear-gradient(rgba(0, 20, 50, 0.8), rgba(0, 86, 179, 0.7)), 
-                        url('https://images.unsplash.com/photo-1519389950473-47ba0277781c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80') center/cover no-repeat;
-            color: white;
-            min-height: 100vh;
-            display: flex;
-            align-items: center;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .hero-content {
-            text-align: center;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 2rem;
-            animation: fadeInUp 1s ease;
-        }
-
-        .hero-content h1 {
-            font-size: 3.5rem;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
-        }
-
-        .hero-content .subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
-
-        .profile-img {
-            width: 200px;
-            height: 200px;
-            border-radius: 50%;
-            margin: 0 auto 2rem;
-            border: 5px solid rgba(255, 255, 255, 0.3);
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            animation: fadeIn 1.5s ease;
-            background: white;
-        }
-
-        .profile-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .scroll-down {
-            position: absolute;
-            bottom: 30px;
-            left: 50%;
-            transform: translateX(-50%);
-            color: white;
-            font-size: 2rem;
-            animation: bounce 2s infinite;
-        }
-
-        /* --- About Section --- */
-        #about {
-            background-color: white;
-            position: relative;
-        }
-
-        .about-content {
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-        }
-
-        .about-text {
-            flex: 1;
-        }
-
-        .about-image {
-            flex: 1;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            transform: perspective(1000px) rotateY(-5deg);
-            transition: var(--transition);
-        }
-
-        .about-image:hover {
-            transform: perspective(1000px) rotateY(0);
-        }
-
-        .about-image img {
-            width: 100%;
-            height: auto;
-            display: block;
-        }
-
-        .features {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .feature {
-            background: var(--light);
-            padding: 8px 15px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
-            color: var(--primary-dark);
-            font-weight: 600;
-        }
-
-        /* --- Services Section --- */
-        #services {
-            background: var(--light);
-            position: relative;
-        }
-
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .service-card {
-            background: white;
-            border-radius: 10px;
-            padding: 2rem;
-            box-shadow: var(--shadow);
-            transition: var(--transition);
-            text-align: center;
-            position: relative;
-            overflow: hidden;
-            z-index: 1;
-            height: 100%;
-        }
-
-        .service-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 5px;
-            background: var(--gradient);
-            transform: scaleX(0);
-            transform-origin: left;
-            transition: transform 0.5s ease;
-            z-index: -1;
-        }
-
-        .service-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .service-card:hover {
-            transform: translateY(-10px);
-        }
-
-        .service-icon {
-            font-size: 3rem;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-            display: inline-block;
-        }
-        
-        .service-list {
-            list-style: none;
-            text-align: left;
-            margin-top: 1rem;
-        }
-        
-        .service-list li {
-            margin-bottom: 0.5rem;
-            font-size: 0.9rem;
-            padding-left: 1.2rem;
-            position: relative;
-        }
-        
-        .service-list li::before {
-            content: '\f00c';
-            font-family: 'Font Awesome 5 Free';
-            font-weight: 900;
-            color: var(--secondary);
-            position: absolute;
-            left: 0;
-        }
-
-        /* --- Portfolio Section --- */
-        #portfolio {
-            background-color: white;
-        }
-
-        .portfolio-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-            gap: 2rem;
-        }
-
-        .portfolio-item {
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: var(--shadow);
-            position: relative;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover {
-            transform: translateY(-10px);
-        }
-
-        .portfolio-img {
-            height: 250px;
-            overflow: hidden;
-            position: relative;
-            background: #eee;
-        }
-
-        .portfolio-img img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover .portfolio-img img {
-            transform: scale(1.1);
-        }
-
-        .portfolio-overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 86, 179, 0.8);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: var(--transition);
-        }
-
-        .portfolio-item:hover .portfolio-overlay {
-            opacity: 1;
-        }
-
-        .portfolio-info {
-            padding: 1.5rem;
-        }
-
-        .portfolio-info h3 {
-            margin-bottom: 0.5rem;
-        }
-
-        /* --- Process Section --- */
-        #process {
-            background: var(--light);
-        }
-
-        .process-steps {
-            display: flex;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .process-step {
-            flex: 1;
-            min-width: 250px;
-            text-align: center;
-            padding: 2rem;
-            background: white;
-            border-radius: 10px;
-            box-shadow: var(--shadow);
-            position: relative;
-        }
-
-        .step-number {
-            width: 50px;
-            height: 50px;
-            background: var(--gradient);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.5rem;
-            font-weight: bold;
-            margin: 0 auto 1.5rem;
-        }
-
-        /* --- Contact Section --- */
-        #contact {
-            background: var(--gradient);
-            color: white;
-            text-align: center;
-        }
-
-        #contact .section-title::after {
-            background: white;
-        }
-
-        .contact-content {
-            max-width: 700px;
-            margin: 0 auto;
-        }
-
-        .contact-info {
-            display: flex;
-            justify-content: center;
-            flex-wrap: wrap;
-            gap: 2rem;
-            margin: 2rem 0;
-        }
-
-        .contact-item {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-        }
-
-        .contact-icon {
-            font-size: 1.5rem;
-            background: rgba(255, 255, 255, 0.2);
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-
-        .social-links {
-            display: flex;
-            justify-content: center;
-            gap: 1rem;
-            margin-top: 2rem;
-        }
-
-        .social-link {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            color: white;
-            font-size: 1.2rem;
-            transition: var(--transition);
-        }
-
-        .social-link:hover {
-            background: white;
-            color: var(--primary);
-            transform: translateY(-5px);
-        }
-
-        /* --- Footer --- */
-        footer {
-            background: var(--dark);
-            color: #aaa;
-            text-align: center;
-            padding: 2rem 0;
-        }
-
-        /* --- Animations --- */
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        @keyframes bounce {
-            0%, 20%, 50%, 80%, 100% {
-                transform: translateY(0) translateX(-50%);
-            }
-            40% {
-                transform: translateY(-20px) translateX(-50%);
-            }
-            60% {
-                transform: translateY(-10px) translateX(-50%);
-            }
-        }
-
-        /* --- Responsive Design --- */
-        @media (max-width: 992px) {
-            .about-content {
-                flex-direction: column;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.8rem;
-            }
-            
-            .process-steps {
-                flex-direction: column;
-            }
-        }
-
-        @media (max-width: 768px) {
-            section {
-                padding: 3rem 0;
-            }
-            
-            .hero-content h1 {
-                font-size: 2.2rem;
-            }
-            
-            .hero-content .subtitle {
-                font-size: 1.2rem;
-            }
-            
-            .profile-img {
-                width: 150px;
-                height: 150px;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My History · Saheb Ali | Timeline of a Brave Man</title>
+  
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    :root {
+      --neon-gold: #ffd893;
+      --neon-glow: 0 0 15px rgba(255, 216, 147, 0.4);
+      --glass: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* --- Scroll Progress Bar --- */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--neon-gold), #fff);
+      z-index: 1001;
+      width: 0%;
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Background Decor --- */
+    .bg-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 216, 147, 0.05) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- Hero Section --- */
+    header {
+      padding: 100px 0 50px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      color: var(--neon-gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 30px;
+      display: block;
+    }
+
+    .intro-card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--border);
+      padding: 30px;
+      border-radius: 24px;
+      margin-bottom: 60px;
+      text-align: left;
+    }
+
+    /* --- Search System --- */
+    .search-container {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      margin-bottom: 40px;
+    }
+
+    #historySearch {
+      width: 100%;
+      background: rgba(20, 20, 20, 0.8);
+      border: 1px solid var(--border);
+      padding: 15px 25px;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+      outline: none;
+    }
+
+    #historySearch:focus {
+      border-color: var(--neon-gold);
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Timeline Layout --- */
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--border), var(--neon-gold), var(--border), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 60px;
+      margin-bottom: 50px;
+      transition: 0.5s;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .timeline-item.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 11px;
+      top: 5px;
+      width: 20px;
+      height: 20px;
+      background: #000;
+      border: 2px solid var(--neon-gold);
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: var(--neon-glow);
+    }
+
+    .timeline-content {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      padding: 25px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .timeline-content:hover {
+      border-color: var(--neon-gold);
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .year-tag {
+      color: var(--neon-gold);
+      font-weight: 700;
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .timeline-content h3 {
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    /* --- Popup Modal --- */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: #111;
+      border: 1px solid var(--neon-gold);
+      padding: 40px;
+      border-radius: 30px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      text-align: center;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 40px;
+        color: var(--neon-gold);
+        text-decoration: none;
+        font-size: 0.9rem;
+        border-bottom: 1px solid transparent;
+        transition: 0.3s;
+    }
+
+    .back-btn:hover {
+        border-bottom-color: var(--neon-gold);
+    }
+
+    /* --- Social links (new) --- */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .social-icon {
+      color: var(--neon-gold);
+      font-size: 1.8rem;
+      transition: 0.2s;
+      opacity: 0.7;
+    }
+
+    .social-icon:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      text-shadow: var(--neon-glow);
+    }
+
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 50px 0 20px;
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--neon-gold), transparent);
+      margin: 40px 0 20px;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 600px) {
+      .timeline::before { left: 15px; }
+      .timeline-dot { left: 6px; }
+      .timeline-item { padding-left: 45px; }
+    }
+  </style>
 </head>
 <body>
 
+  <div id="scroll-progress"></div>
+  <div class="bg-glow"></div>
+
+  <div class="container">
+    
     <header>
-        <div class="container">
-            <div class="hero-content">
-                <div class="profile-img">
-                    <img src="https://www.eduspark.site/assets/images/profile/founder.jpg" alt="SAHEB' DIGITAL HUB Logo">
-                </div>
-                <h1>SAHEB' DIGITAL HUB</h1>
-                <p class="subtitle">Professional DTP, Design, and Online Shopping</p>
-                <p>Your one-stop destination for digital solutions—from professional documentation to brand design—and a curated online store for lifestyle products.</p>
-                <a href="#contact" class="btn">Get in Touch</a>
-            </div>
-        </div>
-        <a href="#services" class="scroll-down">
-            <i class="fas fa-chevron-down"></i>
-        </a>
+      <span class="hero-subtitle">The Journey of</span>
+      <h1 class="hero-title">Saheb Ali</h1>
+      <p style="color: #888;">Meaning: <strong style="color: var(--neon-gold);">Brave Man</strong></p>
     </header>
 
-    <section id="about">
-        <div class="container">
-            <h2 class="section-title">About Our Hub</h2>
-            <div class="about-content">
-                <div class="about-text">
-                    <p>At <strong>SAHEB' DIGITAL HUB</strong>, we are dedicated to simplifying your digital and lifestyle needs. We combine professional office services with creative design solutions to help businesses and students alike.</p>
-                    <p>Whether you need complex documents typed and formatted, a stunning new logo for your brand, or are looking for the latest fashion accessories, we have you covered. We pride ourselves on accuracy, creativity, and reliable delivery.</p>
-                    <div class="features">
-                        <span class="feature">DTP Expert</span>
-                        <span class="feature">Question Paper Making</span>
-                        <span class="feature">Graphic Design</span>
-                        <span class="feature">Video Editing</span>
-                        <span class="feature">Brand Logos</span>
-                        <span class="feature">Online Shopping</span>
-                        <span class="feature">Product On-Demand</span>
-                    </div>
-                </div>
-                <div class="about-image">
-                    <img src="https://images.unsplash.com/photo-1497215728101-856f4ea42174?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="Digital Workspace">
-                </div>
-            </div>
+    <div class="intro-card">
+      <p>I belong to a semi-village near <strong>Abhayapuri Town</strong>. My journey is a blend of traditional education and a relentless drive for digital excellence. From the quiet streets of Assam to building a pan-India e-commerce brand, this is my story.</p>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="historySearch" placeholder="Search my history (e.g. 2024, Meesho, Eduspark)...">
+    </div>
+
+    <div class="timeline" id="timelineList">
+      
+      <div class="timeline-item" data-text="HSLC 10th SEBA board 2021 school">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('HSLC Completion', 'Successfully completed my HSLC/10th from the SEBA board in 2021, marking the start of my academic journey.')">
+          <span class="year-tag">2021</span>
+          <h3>Academic Foundation</h3>
+          <p>Completed HSLC (10th Standard) under the SEBA Board.</p>
         </div>
-    </section>
+      </div>
 
-    <section id="services">
-        <div class="container">
-            <h2 class="section-title">Our Premium Services</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-file-alt"></i>
-                    </div>
-                    <h3>DTP Services</h3>
-                    <p>Complete document solutions with proper formatting and professional design.</p>
-                    <ul class="service-list">
-                        <li>Question Paper Making</li>
-                        <li>Digital Document Typing (Word)</li>
-                        <li>Report Generation & Formatting</li>
-                        <li>Data Entry (Excel)</li>
-                        <li>High-Quality Presentations (PowerPoint)</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-pen-nib"></i>
-                    </div>
-                    <h3>Graphic Design</h3>
-                    <p>Creative visual solutions to elevate your brand identity.</p>
-                    <ul class="service-list">
-                        <li>Brand Logo Design</li>
-                        <li>Customized Banners & Posters</li>
-                        <li>Photo Retouching</li>
-                        <li>Visualizing & Creative Art</li>
-                        <li>Photoshop Editing</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-video"></i>
-                    </div>
-                    <h3>Video Services</h3>
-                    <p>Professional video editing to make your content stand out.</p>
-                    <ul class="service-list">
-                        <li>Video Editing</li>
-                        <li>Content Visualizing</li>
-                        <li>Social Media Clips</li>
-                        <li>Promo Videos</li>
-                    </ul>
-                </div>
-
-                <div class="service-card">
-                    <div class="service-icon">
-                        <i class="fas fa-shopping-bag"></i>
-                    </div>
-                    <h3>Online Store</h3>
-                    <p>We provide high-quality products delivered according to your demand.</p>
-                    <ul class="service-list">
-                        <li>Fashion Accessories</li>
-                        <li>Cosmetic Products</li>
-                        <li>Product Sourcing on Demand</li>
-                        <li>Home Delivery</li>
-                    </ul>
-                </div>
-            </div>
+      <div class="timeline-item" data-text="ADCA computer diploma 2021 skills">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('ADCA Diploma', 'Earned an Advanced Diploma in Computer Applications. This sparked my love for tech and design.')">
+          <span class="year-tag">2021</span>
+          <h3>Digital Awakening</h3>
+          <p>Completed ADCA (Advanced Diploma in Computer Applications).</p>
         </div>
-    </section>
+      </div>
 
-    <section id="process">
-        <div class="container">
-            <h2 class="section-title">How We Work</h2>
-            <div class="process-steps">
-                <div class="process-step">
-                    <div class="step-number">1</div>
-                    <h3>Request Service</h3>
-                    <p>Send us your document details, design requirements, or product list.</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">2</div>
-                    <h3>Customization</h3>
-                    <p>We design your document/logo or source the exact product you demanded.</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">3</div>
-                    <h3>Review & Approval</h3>
-                    <p>Review the digital draft or confirm the product availability and price.</p>
-                </div>
-                <div class="process-step">
-                    <div class="step-number">4</div>
-                    <h3>Delivery</h3>
-                    <p>Receive your final digital files or get your products delivered.</p>
-                </div>
-            </div>
+      <div class="timeline-item" data-text="DTP services 2023 design publishing">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('DTP Services', 'Began providing professional Desktop Publishing services, handling layouts and print designs.')">
+          <span class="year-tag">2023</span>
+          <h3>Service Launch</h3>
+          <p>Started providing DTP services professionally.</p>
         </div>
-    </section>
+      </div>
 
-    <section id="portfolio">
-        <div class="container">
-            <h2 class="section-title">Recent Work & Products</h2>
-            <div class="portfolio-grid">
-                <div class="portfolio-item">
-                    <div class="portfolio-img">
-                        <img src="https://images.unsplash.com/photo-1586281380349-632531db7ed4?ixlib=rb-4.0.3&auto=format&fit=crop&w=1170&q=80" alt="DTP Work">
-                        <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Order Now</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Document Design</h3>
-                        <p>Professional Reports & Presentations</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-img">
-                        <img src="https://res.cloudinary.com/vistaprint/images/w_1284,h_600,c_scale/f_auto,q_auto/v1753970636/ideas-and-advice-prod/blogadmin/Marquee_Famous-logos/Marquee_Famous-logos.jpg?_i=AA" alt="Graphic Design">
-                        <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Contact Us</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Brand Branding</h3>
-                        <p>Logos & Banners</p>
-                    </div>
-                </div>
-
-                <div class="portfolio-item">
-                    <div class="portfolio-img">
-                        <img src="https://www.shutterstock.com/image-photo/womens-fashion-accessories-cosmetics-pastel-260nw-1102914416.jpg" alt="Shopping Products">
-                        <div class="portfolio-overlay">
-                            <a href="#contact" class="btn">Buy Now</a>
-                        </div>
-                    </div>
-                    <div class="portfolio-info">
-                        <h3>Fashion & Cosmetics</h3>
-                        <p>Trending Accessories</p>
-                    </div>
-                </div>
-            </div>
+      <div class="timeline-item" data-text="HS AHSEC 2024 school completion">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Higher Secondary', 'Finished my HS from AHSEC. A pivotal year for my personal growth.')">
+          <span class="year-tag">2024</span>
+          <h3>Higher Secondary</h3>
+          <p>Completed HS under the AHSEC Board.</p>
         </div>
-    </section>
+      </div>
 
-    <section id="contact">
-        <div class="container">
-            <h2 class="section-title">Contact Us</h2>
-            <div class="contact-content">
-                <p>Need a document typed, a logo designed, or looking for a specific product? Contact SAHEB' DIGITAL HUB today!</p>
-                
-                <div class="contact-info">
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-envelope"></i>
-                        </div>
-                        <div>
-                            <h4>Email</h4>
-                            <p>alifreeluncher20@gmail.com</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fas fa-phone"></i>
-                        </div>
-                        <div>
-                            <h4>Phone</h4>
-                            <p>+91 6003816583</p>
-                        </div>
-                    </div>
-                    
-                    <div class="contact-item">
-                        <div class="contact-icon">
-                            <i class="fab fa-whatsapp"></i>
-                        </div>
-                        <div>
-                            <h4>WhatsApp</h4>
-                            <p>+91 6003816583</p>
-                        </div>
-                    </div>
-                </div>
-                
-                <a href="https://wa.me/916003816583" class="btn">Chat on WhatsApp</a>
-                
-                <div class="social-links">
-                    <a href="#" class="social-link">
-                        <i class="fab fa-facebook-f"></i>
-                    </a>
-                    <a href="https://www.instagram.com/__saheb_ali/" class="social-link">
-                        <i class="fab fa-instagram"></i>
-                    </a>
-                    <a href="https://www.facebook.com/people/Saheb-Ali/100050209846406" class="social-link">
-                        <i class="fab fa-pinterest"></i>
-                    </a>
-                </div>
-            </div>
+      <div class="timeline-item" data-text="CRM DV NSQF level 4 IT-ITes NASSCOM 2024">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Professional Skill', 'Certified in CRM DV NSQF Level 4 under IT-ITes SSC NASSCOM, enhancing my technical expertise.')">
+          <span class="year-tag">2024</span>
+          <h3>NASSCOM Certification</h3>
+          <p>Achieved CRM DV NSQF Level 4 Certification.</p>
         </div>
-    </section>
+      </div>
+
+      <div class="timeline-item" data-text="Bongaigaon University BA Economics Honours BU 2024">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('University Life', 'Admitted to Bongaigaon University (BU) for BA in Economics (Honours).')">
+          <span class="year-tag">2024</span>
+          <h3>The Scholar</h3>
+          <p>Started BA Economics Honours at Bongaigaon University.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Eduspark site graduation students help 2024">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Eduspark.site', 'Launched eduspark.site to provide resources and guidance to graduation students.')">
+          <span class="year-tag">2024</span>
+          <h3>Eduspark.site Launch</h3>
+          <p>Developed a digital platform for student resources.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Tranfered Abhapuri college from BU">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('College transfer', 'Transferred to Abhayapuri college from BU (Bongaigaon University) for personal growth and starting business.')">
+          <span class="year-tag">2024</span>
+          <h3>Transfer College</h3>
+          <p>Transferred to Abhayapuri college from BU.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Graphic design Almirah printing furniture 2025">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Graphic Printing', 'Specialized in custom graphic designs for furniture like Almirahs, mixing art with interiors.')">
+          <span class="year-tag">2025</span>
+          <h3>Furniture Design</h3>
+          <p>Started Graphic Designs for furniture/Almirah printing.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="E-commerce artificial jewellery Assam business 2025">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Assam E-comm', 'Started selling artificial jewellery within Assam, testing the e-commerce waters.')">
+          <span class="year-tag">2025</span>
+          <h3>E-commerce Entry</h3>
+          <p>Launched Artificial Jewellery business in Assam.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Saheb Trend House 2026 Meesho GST All India">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Saheb Trend House', 'The official launch of Saheb Trend House. With GST and Pan-India shipping via Meesho.')">
+          <span class="year-tag">2026</span>
+          <h3>National Expansion</h3>
+          <p>Proper start of <strong>Saheb Trend House</strong> (All India Selling).</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Future Flipkart Amazon business expansion">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" style="border-style: dashed;">
+          <span class="year-tag">Future</span>
+          <h3>The Vision</h3>
+          <p>Expanding Saheb Trend House to Amazon and Flipkart.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- new: personal social links (exactly as requested) -->
+    <hr>
+    <div class="social-links">
+      <a href="https://www.facebook.com/share/14JU4kaxPeb/" target="_blank" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/__saheb_ali_/" target="_blank" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/mr-saheb-955907279" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <hr>
 
     <footer>
-        <div class="container">
-            <p>Powered by Saheb Ali -<a href="../saheb-ali/Meesho-Deshboards/index.html">SAHEB' DIGITAL HUB</a></p> 
-        </div>
+      <p>© 8/3/2025 Saheb Ali · Built for the Brave</p>
     </footer>
+  </div>
 
+  <div class="modal" id="infoModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closePopup()">&times;</span>
+      <h2 id="modalTitle" style="color: var(--neon-gold); margin-bottom: 15px;"></h2>
+      <p id="modalDesc" style="color: #ccc;"></p>
+    </div>
+  </div>
+
+  <script>
+    // --- Scroll Progress ---
+    window.onscroll = function() {
+      let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      let scrolled = (winScroll / height) * 100;
+      document.getElementById("scroll-progress").style.width = scrolled + "%";
+    };
+
+    // --- Search Logic ---
+    const searchInput = document.getElementById('historySearch');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    searchInput.addEventListener('input', (e) => {
+      const val = e.target.value.toLowerCase();
+      timelineItems.forEach(item => {
+        const text = item.getAttribute('data-text').toLowerCase();
+        if (text.includes(val)) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+
+    // --- Animation on Scroll ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    timelineItems.forEach(item => observer.observe(item));
+
+    // --- Modal Logic ---
+    function openPopup(title, desc) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalDesc').innerText = desc;
+      document.getElementById('infoModal').classList.add('active');
+    }
+
+    function closePopup() {
+      document.getElementById('infoModal').classList.remove('active');
+    }
+
+    // Close on click outside
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('infoModal')) {
+        closePopup();
+      }
+    }
+  </script>
 </body>
 </html>
