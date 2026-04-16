@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=yes">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <title>Saheb • Glass Tracker Pro</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: system-ui, -apple-system, sans-serif; }
+    body { background: #0b0b0a; min-height: 100vh; display: flex; align-items: center; justify-content: center; padding: 12px; color: #f0ede6; }
+    .app-glass { max-width: 1400px; width: 100%; background: rgba(18, 18, 16, 0.75); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.06); border-radius: 36px; box-shadow: 0 25px 40px -12px rgba(0, 0, 0, 0.8), inset 0 0 0 1px rgba(255, 255, 255, 0.02); padding: 20px 24px 28px; transition: all 0.2s ease; }
+    .nav-glass { display: flex; gap: 8px; margin-bottom: 20px; flex-wrap: wrap; border-bottom: 1px solid rgba(255, 255, 255, 0.05); padding-bottom: 14px; }
+    .nav-btn { background: transparent; border: none; padding: 10px 22px; font-size: 15px; font-weight: 500; color: #a6a59f; border-radius: 60px; backdrop-filter: blur(4px); cursor: pointer; transition: all 0.2s cubic-bezier(0.23, 1, 0.32, 1); border: 1px solid transparent; }
+    .nav-btn:hover { background: rgba(60, 60, 55, 0.4); color: #ece8dd; border-color: rgba(255, 255, 255, 0.1); transform: translateY(-1px); }
+    .nav-btn.active { background: rgba(255, 255, 255, 0.08); color: #b0e5c5; border: 1px solid rgba(180, 240, 200, 0.2); box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3); }
+    .day-selector-bar { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; background: rgba(20, 20, 18, 0.5); backdrop-filter: blur(8px); padding: 12px 18px; border-radius: 60px; border: 1px solid rgba(255, 255, 255, 0.04); }
+    .day-nav-btn { background: rgba(40, 40, 35, 0.6); border: 1px solid rgba(255, 255, 255, 0.08); color: #ddd8cc; padding: 8px 18px; border-radius: 40px; font-size: 14px; cursor: pointer; backdrop-filter: blur(4px); transition: all 0.15s; }
+    .day-nav-btn:hover { background: #3a4a3e; color: #fff; border-color: #6b9e7e; }
+    .current-day-indicator { font-weight: 600; font-size: 18px; color: #e2dfd2; }
+    .today-badge { background: #2a5a3a; color: #d4f0d4; padding: 4px 14px; border-radius: 40px; font-size: 13px; margin-left: 12px; }
+    .page { display: none; opacity: 0; transition: opacity 0.2s; }
+    .page.active { display: block; opacity: 1; }
+    .today-grid { display: grid; grid-template-columns: 1fr 340px; gap: 24px; }
+    @media (max-width: 800px) { .app-glass { padding: 16px; } .today-grid { grid-template-columns: 1fr; gap: 20px; } .day-selector-bar { flex-wrap: wrap; gap: 10px; } }
+    .header-flex { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
+    .date-block h2 { font-size: 24px; font-weight: 600; color: #f2efe7; }
+    .date-block .sub { font-size: 14px; color: #9d9b94; margin-top: 4px; }
+    .score-blur { background: rgba(20, 20, 18, 0.6); backdrop-filter: blur(8px); border-radius: 100px; padding: 10px 20px; border: 1px solid rgba(255, 255, 255, 0.05); text-align: center; }
+    .score-blur .big-score { font-size: 28px; font-weight: 700; color: #c5e0d4; }
+    .score-blur .pct { font-size: 14px; opacity: 0.8; }
+    .progress-blur { height: 8px; background: rgba(40, 40, 35, 0.7); border-radius: 20px; margin: 18px 0 22px; overflow: hidden; border: 1px solid rgba(255,255,255,0.03); }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, #6bb98b, #9dd6b2); border-radius: 20px; width: 0%; box-shadow: 0 0 8px #58a07355; transition: width 0.3s; }
+    .section-title { font-size: 12px; text-transform: uppercase; letter-spacing: 0.5px; color: #a9a89d; margin: 18px 0 8px 6px; }
+    .habit-item { display: flex; align-items: center; gap: 14px; padding: 12px 16px; margin-bottom: 6px; background: rgba(25, 25, 22, 0.45); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.04); border-radius: 24px; cursor: pointer; transition: all 0.18s ease; }
+    .habit-item:hover { background: rgba(40, 40, 35, 0.6); border-color: rgba(255, 255, 255, 0.12); transform: scale(1.002); }
+    .habit-item.done { background: rgba(30, 45, 35, 0.5); border-color: rgba(90, 160, 110, 0.25); }
+    .cb { width: 24px; height: 24px; border-radius: 30px; border: 2px solid rgba(220, 220, 200, 0.3); display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: 0.15s; }
+    .habit-item.done .cb { background: #5fa87a; border-color: #9ed6ae; }
+    .habit-item.done .cb::after { content: "✓"; color: #0a0f0c; font-weight: bold; font-size: 16px; }
+    .item-text { flex: 1; font-size: 15px; font-weight: 450; color: #e2dfd5; }
+    .habit-item.done .item-text { text-decoration: line-through; color: #8f9288; }
+    .tag { font-size: 11px; padding: 4px 12px; border-radius: 40px; background: rgba(60,60,55,0.5); color: #cfcdc2; border: 1px solid rgba(255,255,255,0.02); }
+    .motivation-card { background: rgba(30,30,28,0.5); padding: 18px 20px; border-radius: 28px; margin: 24px 0 16px; text-align: center; border: 1px solid rgba(255,255,240,0.05); font-style: italic; color: #cbc9be; }
+    
+    /* New Save Button Styles */
+    .save-btn { background: #3a5a4a; border: 1px solid #5fa87a; color: #ffffff; padding: 16px; border-radius: 40px; width: 100%; font-size: 16px; font-weight: 600; box-shadow: 0 4px 15px rgba(95, 168, 122, 0.3); cursor: pointer; transition: 0.2s; }
+    .save-btn:hover { background: #4a705b; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(95, 168, 122, 0.4); }
+    .save-btn:active { transform: translateY(0); }
+
+    .insight-panel { background: rgba(14, 14, 12, 0.45); backdrop-filter: blur(12px); border-radius: 30px; padding: 20px 18px; border: 1px solid rgba(255, 255, 255, 0.03); }
+    .panel-title { font-size: 16px; font-weight: 600; margin-bottom: 16px; color: #e6e3d7; }
+    .streak-mini { display: flex; justify-content: space-between; margin-bottom: 22px; }
+    .stat-badge { background: #1a1a17; padding: 10px 14px; border-radius: 24px; text-align: center; flex: 1; margin: 0 4px; border: 1px solid #2b2b26; }
+    .stat-num { font-size: 22px; font-weight: 700; color: #b8d9c4; }
+    .stat-label { font-size: 11px; opacity: 0.7; }
+    .sync-badge { font-size: 14px; font-weight: 500; margin-top: 16px; display: flex; gap: 12px; align-items: center; justify-content: center;}
+    .loading-spinner { display: inline-block; width: 16px; height: 16px; border: 2px solid rgba(255,255,255,0.3); border-top-color: #ffffff; border-radius: 50%; animation: spin 0.8s linear infinite; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+    button, .habit-item { user-select: none; }
+  </style>
+</head>
+<body>
+<div class="app-glass">
+  <div class="nav-glass">
+    <button class="nav-btn active" data-page="today">📋 Today</button>
+    <button class="nav-btn" data-page="week">📅 Week</button>
+  </div>
+
+  <div class="day-selector-bar">
+    <button class="day-nav-btn" id="prevDayBtn">← Previous</button>
+    <div class="current-day-indicator">
+      <span id="displayDateLabel">Today</span>
+      <span class="today-badge" id="todayBadge" style="display:none;">Today</span>
+    </div>
+    <button class="day-nav-btn" id="nextDayBtn">Next →</button>
+    <button class="day-nav-btn" id="goTodayBtn">📍 Go to Today</button>
+  </div>
+
+  <div id="page-today" class="page active">
+    <div class="today-grid">
+      <div class="left-habits">
+        <div class="header-flex">
+          <div class="date-block">
+            <h2 id="todayDateLabel">Loading...</h2>
+            <div class="sub" id="todaySubLabel">Abhayapuri College • 4th Sem</div>
+          </div>
+          <div class="score-blur">
+            <div class="big-score"><span id="doneCount">0</span>/<span id="totalCount">20</span></div>
+            <div class="pct" id="percentLabel">0%</div>
+          </div>
+        </div>
+        <div class="progress-blur"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+        
+        <div id="habitsContainer"></div>
+        
+        <div class="motivation-card" id="motivationMsg">✨ One step at a time.</div>
+        
+        <button class="save-btn" id="saveTodayBtn">💾 Save Records</button>
+        
+        <div class="sync-badge">
+          <span id="syncStatus">⚪ Checking status...</span>
+          <span id="lastSyncTime" style="font-size: 12px; opacity: 0.7;"></span>
+        </div>
+      </div>
+      
+      <div class="insight-panel">
+        <div class="panel-title">⚡ Current streaks</div>
+        <div class="streak-mini">
+          <div class="stat-badge"><div class="stat-num" id="streakClean">0</div><div class="stat-label">no bad‑graphic</div></div>
+          <div class="stat-badge"><div class="stat-num" id="streakStudy">0</div><div class="stat-label">study (PM)</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="page-week" class="page">
+    <h2 style="margin-bottom: 12px;">📅 Weekly overview (Requires active DB connection)</h2>
+    </div>
+</div>
+
+<script src="show.js"></script>
+<script src="save.js"></script>
+
+<script>
+  (function(){
+    "use strict";
+
+    // 🔴 IMPORTANT: Replace this with your newly deployed Web App URL
+    const DEPLOYED_WEB_APP_URL = "YOUR_GOOGLE_APPS_SCRIPT_URL_HERE";
+    
+    const HABITS = [
+      { id:'wake', section:'Morning', text:'Woke up on time (6:30/7:30)' },
+      { id:'study_am', section:'Study', text:'Morning study 30min' },
+      { id:'college', section:'Study', text:'Attended all classes' },
+      { id:'tuition', section:'Study', text:'Tuition 3–5 PM' },
+      { id:'study_pm', section:'Study', text:'Evening study ≥1h' },
+      { id:'screen_total', section:'Self-control', text:'Screen < 2h' },
+      { id:'no_bad-graphic', section:'Self-control', text:'No bad-graphic' }
+    ]; // Add back your full habit list here
+
+    const QUOTES = ["✨ Start with the first item.", "🌟 Momentum building.", "💪 You're showing up.", "💎 100% — you're unstoppable."];
+
+    let allData = {};
+    let currentDisplayDate = new Date().toISOString().slice(0,10);
+
+    const todayStr = () => new Date().toISOString().slice(0,10);
+    const dateFromKey = (k) => new Date(k + 'T12:00:00');
+    const offsetKey = (k, days) => { let d = dateFromKey(k); d.setDate(d.getDate()+days); return d.toISOString().slice(0,10); };
+
+    function renderToday() {
+      const key = currentDisplayDate;
+      if (!allData[key]) allData[key] = {};
+      const day = allData[key];
+      const isActualToday = (key === todayStr());
+      
+      const dt = dateFromKey(key);
+      const displayStr = dt.toLocaleDateString('en-US', {weekday:'long', month:'short', day:'numeric'});
+      document.getElementById('displayDateLabel').innerText = displayStr;
+      document.getElementById('todayBadge').style.display = isActualToday ? 'inline' : 'none';
+      document.getElementById('todayDateLabel').innerHTML = `${displayStr}`;
+      
+      const container = document.getElementById('habitsContainer');
+      const total = HABITS.length;
+      let done = 0;
+      let html = '';
+      
+      HABITS.forEach(h => {
+        const checked = day[h.id] === true;
+        if(checked) done++;
+        html += `<div class="habit-item ${checked?'done':''}" data-id="${h.id}">
+          <div class="cb"></div><div class="item-text">${h.text}</div><span class="tag">${h.section}</span>
+        </div>`;
+      });
+      container.innerHTML = html;
+      
+      // Update DOM listeners
+      document.querySelectorAll('.habit-item').forEach(el => {
+        el.addEventListener('click', () => {
+          const id = el.dataset.id;
+          allData[key][id] = !allData[key][id];
+          // Notice we removed the auto-sync here. It only renders locally.
+          renderToday();
+        });
+      });
+
+      const pct = total ? Math.round(done/total*100) : 0;
+      document.getElementById('doneCount').innerText = done;
+      document.getElementById('totalCount').innerText = total;
+      document.getElementById('percentLabel').innerText = pct+'%';
+      document.getElementById('progressFill').style.width = pct+'%';
+    }
+
+    // Connect Save Button to save.js
+    document.getElementById('saveTodayBtn').addEventListener('click', async () => {
+      const success = await window.saveRecords(DEPLOYED_WEB_APP_URL, currentDisplayDate, allData[currentDisplayDate]);
+      if(success) {
+         // Flash the button green briefly to indicate success
+         const btn = document.getElementById('saveTodayBtn');
+         const originalText = btn.innerText;
+         btn.innerText = "✅ Saved!";
+         btn.style.background = "#2a5a3a";
+         setTimeout(() => {
+             btn.innerText = originalText;
+             btn.style.background = "#3a5a4a";
+         }, 2000);
+      }
+    });
+
+    // Date Navigation
+    function shiftDay(offset) {
+      currentDisplayDate = offsetKey(currentDisplayDate, offset);
+      renderToday();
+    }
+    document.getElementById('prevDayBtn').addEventListener('click', () => shiftDay(-1));
+    document.getElementById('nextDayBtn').addEventListener('click', () => shiftDay(1));
+    document.getElementById('goTodayBtn').addEventListener('click', () => { currentDisplayDate = todayStr(); renderToday(); });
+
+    // Initialization (Connect to show.js)
+    (async function init(){
+      const fetchedData = await window.fetchRecords(DEPLOYED_WEB_APP_URL);
+      if (fetchedData) {
+         allData = fetchedData;
+      }
+      renderToday();
+    })();
+
+  })();
+</script>
+</body>
+</html>

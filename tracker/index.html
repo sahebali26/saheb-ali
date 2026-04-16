@@ -1,0 +1,964 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Saheb Tracker">
+<meta name="theme-color" content="#0a0a0a">
+<title>Saheb — Daily Tracker</title>
+<link rel="manifest" href="manifest.json">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface2: #1c1c1c;
+  --border: rgba(255,255,255,0.07);
+  --border2: rgba(255,255,255,0.13);
+  --text: #f0ede8;
+  --text2: #888580;
+  --text3: #504e4a;
+  --green: #4ade80;
+  --green-dim: rgba(74,222,128,0.12);
+  --green-mid: rgba(74,222,128,0.25);
+  --amber: #fbbf24;
+  --amber-dim: rgba(251,191,36,0.12);
+  --red: #f87171;
+  --red-dim: rgba(248,113,113,0.1);
+  --purple: #a78bfa;
+  --purple-dim: rgba(167,139,250,0.12);
+  --blue: #60a5fa;
+  --blue-dim: rgba(96,165,250,0.12);
+  --mono: 'Space Mono', monospace;
+  --sans: 'DM Sans', sans-serif;
+  --r: 12px;
+  --r-sm: 8px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+html{height:100%;overflow:hidden}
+body{
+  font-family:var(--sans);
+  background:var(--bg);
+  color:var(--text);
+  height:100%;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+
+/* ── HEADER ── */
+.app-header{
+  flex-shrink:0;
+  padding:14px 18px 12px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  border-bottom:1px solid var(--border);
+  background:var(--bg);
+}
+.app-logo{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--green);
+  letter-spacing:0.08em;
+}
+.header-date{
+  font-size:12px;
+  color:var(--text2);
+  font-family:var(--mono);
+}
+
+/* ── TAB BAR ── */
+.tab-bar{
+  flex-shrink:0;
+  display:flex;
+  background:var(--surface);
+  border-bottom:1px solid var(--border);
+}
+.tab{
+  flex:1;
+  padding:10px 4px;
+  text-align:center;
+  font-size:11px;
+  font-weight:500;
+  color:var(--text3);
+  cursor:pointer;
+  transition:color 0.2s;
+  letter-spacing:0.04em;
+  text-transform:uppercase;
+  border-bottom:2px solid transparent;
+}
+.tab.active{color:var(--green);border-bottom-color:var(--green)}
+
+/* ── SCROLL AREA ── */
+.scroll-area{
+  flex:1;
+  overflow-y:auto;
+  -webkit-overflow-scrolling:touch;
+}
+.scroll-area::-webkit-scrollbar{width:3px}
+.scroll-area::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
+
+/* ── PAGES ── */
+.page{display:none;padding:16px}
+.page.active{display:block}
+
+/* ── TODAY PAGE ── */
+.today-hero{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r);
+  padding:16px;
+  margin-bottom:14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.hero-left .day-name{
+  font-family:var(--mono);
+  font-size:22px;
+  font-weight:700;
+  color:var(--text);
+  line-height:1;
+}
+.hero-left .full-date{
+  font-size:12px;
+  color:var(--text2);
+  margin-top:4px;
+}
+.hero-score{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-end;
+  gap:6px;
+}
+.score-display{
+  font-family:var(--mono);
+  font-size:28px;
+  font-weight:700;
+  line-height:1;
+}
+.score-display.perfect{color:var(--green)}
+.score-display.good{color:var(--amber)}
+.score-display.low{color:var(--text2)}
+.score-label{font-size:11px;color:var(--text2);text-align:right}
+
+.prog-track{
+  height:4px;
+  background:var(--border2);
+  border-radius:2px;
+  margin-bottom:14px;
+  overflow:hidden;
+}
+.prog-fill{
+  height:100%;
+  border-radius:2px;
+  background:var(--green);
+  transition:width 0.4s cubic-bezier(.4,0,.2,1);
+}
+
+.section-label{
+  font-size:10px;
+  font-weight:600;
+  letter-spacing:0.1em;
+  text-transform:uppercase;
+  color:var(--text3);
+  margin:14px 0 7px 2px;
+}
+
+.habit-item{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:12px 14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-sm);
+  margin-bottom:6px;
+  cursor:pointer;
+  transition:background 0.15s, border-color 0.15s;
+  -webkit-user-select:none;user-select:none;
+}
+.habit-item:active{background:var(--surface2)}
+.habit-item.checked{background:var(--surface2);border-color:rgba(74,222,128,0.2)}
+
+.cb{
+  width:22px;height:22px;
+  border-radius:50%;
+  border:1.5px solid var(--border2);
+  flex-shrink:0;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.2s;
+  background:transparent;
+}
+.habit-item.checked .cb{
+  background:var(--green);
+  border-color:var(--green);
+}
+.cb-tick{
+  display:none;
+  width:0;height:0;
+  border-left:2px solid #000;
+  border-bottom:2px solid #000;
+  transform:rotate(-45deg) translate(1px,-1px);
+  width:8px;height:5px;
+}
+.habit-item.checked .cb-tick{display:block}
+
+.habit-text{
+  flex:1;
+  font-size:14px;
+  color:var(--text);
+  line-height:1.35;
+}
+.habit-item.checked .habit-text{color:var(--text2)}
+
+.habit-tag{
+  font-size:10px;
+  font-weight:500;
+  padding:3px 8px;
+  border-radius:20px;
+  flex-shrink:0;
+  letter-spacing:0.03em;
+}
+.t-morning{background:var(--amber-dim);color:var(--amber)}
+.t-business{background:var(--purple-dim);color:var(--purple)}
+.t-study{background:var(--blue-dim);color:var(--blue)}
+.t-health{background:var(--green-dim);color:var(--green)}
+.t-discipline{background:var(--red-dim);color:var(--red)}
+
+.motivation-bar{
+  margin-top:14px;
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-left:3px solid var(--green);
+  border-radius:var(--r-sm);
+  padding:10px 14px;
+  font-size:13px;
+  color:var(--text2);
+  line-height:1.5;
+  border-radius:0 var(--r-sm) var(--r-sm) 0;
+}
+
+/* ── HISTORY PAGE ── */
+.hist-controls{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.hist-controls .ctrl-label{
+  font-size:13px;
+  font-weight:500;
+  color:var(--text);
+}
+.nav-btn{
+  width:32px;height:32px;
+  border:1px solid var(--border2);
+  border-radius:var(--r-sm);
+  background:var(--surface);
+  color:var(--text2);
+  font-size:16px;
+  cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:background 0.15s;
+}
+.nav-btn:active{background:var(--surface2)}
+
+.hist-day-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-sm);
+  padding:12px 14px;
+  margin-bottom:8px;
+  cursor:pointer;
+  transition:border-color 0.15s;
+}
+.hist-day-card:active{border-color:var(--border2)}
+.hist-day-card.expanded{border-color:var(--border2)}
+
+.hist-day-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+}
+.hist-day-name{
+  font-family:var(--mono);
+  font-size:13px;
+  font-weight:700;
+  color:var(--text);
+}
+.hist-day-date{
+  font-size:11px;
+  color:var(--text2);
+  margin-top:2px;
+}
+.hist-score-badge{
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+.hist-pct{
+  font-family:var(--mono);
+  font-size:14px;
+  font-weight:700;
+}
+.hist-bar-mini{
+  width:60px;height:4px;
+  background:var(--border2);
+  border-radius:2px;
+  overflow:hidden;
+}
+.hist-bar-fill{height:100%;border-radius:2px;transition:width 0.3s}
+
+.hist-detail{
+  display:none;
+  margin-top:10px;
+  border-top:1px solid var(--border);
+  padding-top:10px;
+}
+.hist-day-card.expanded .hist-detail{display:block}
+.hist-habit-row{
+  display:flex;align-items:center;gap:8px;
+  padding:5px 0;
+  font-size:12px;
+  color:var(--text2);
+  border-bottom:1px solid var(--border);
+}
+.hist-habit-row:last-child{border-bottom:none}
+.hist-dot{
+  width:8px;height:8px;
+  border-radius:50%;
+  flex-shrink:0;
+}
+.dot-done{background:var(--green)}
+.dot-miss{background:var(--border2)}
+
+.empty-hist{
+  text-align:center;
+  padding:40px 20px;
+  color:var(--text3);
+  font-size:13px;
+  line-height:1.6;
+}
+
+/* ── WEEKLY PAGE ── */
+.week-nav{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:14px;
+}
+.week-label{
+  font-family:var(--mono);
+  font-size:13px;
+  color:var(--text);
+}
+
+.week-grid{
+  display:grid;
+  grid-template-columns:repeat(7,1fr);
+  gap:4px;
+  margin-bottom:16px;
+}
+.wg-cell{
+  aspect-ratio:1;
+  border-radius:6px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:2px;
+  border:1px solid var(--border);
+  background:var(--surface);
+  cursor:pointer;
+}
+.wg-cell.today-cell{border-color:rgba(74,222,128,0.4)}
+.wg-cell.no-data{opacity:0.4}
+.wg-day-label{font-size:9px;color:var(--text3);font-family:var(--mono);font-weight:700;letter-spacing:0.05em}
+.wg-pct-text{font-size:11px;font-weight:700;font-family:var(--mono)}
+
+.week-stat-row{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:8px;
+  margin-bottom:14px;
+}
+.wstat{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-sm);
+  padding:12px;
+}
+.wstat-label{font-size:10px;color:var(--text3);letter-spacing:0.06em;text-transform:uppercase;font-weight:600;margin-bottom:5px}
+.wstat-val{font-family:var(--mono);font-size:20px;font-weight:700;color:var(--text)}
+.wstat-sub{font-size:11px;color:var(--text2);margin-top:2px}
+
+.habit-perf-row{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 0;
+  border-bottom:1px solid var(--border);
+}
+.habit-perf-row:last-child{border-bottom:none}
+.hpr-name{flex:1;font-size:13px;color:var(--text2)}
+.hpr-track{
+  display:flex;gap:3px;
+}
+.hpr-dot{
+  width:9px;height:9px;
+  border-radius:50%;
+}
+.hpr-pct{
+  font-family:var(--mono);
+  font-size:11px;
+  color:var(--text2);
+  min-width:32px;
+  text-align:right;
+}
+
+.week-perf-card{
+  background:var(--surface);
+  border:1px solid var(--border);
+  border-radius:var(--r-sm);
+  padding:14px;
+  margin-top:8px;
+}
+.wpc-title{font-size:11px;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:10px}
+
+/* ── TOAST ── */
+.toast{
+  position:fixed;
+  bottom:80px;left:50%;
+  transform:translateX(-50%) translateY(20px);
+  background:var(--surface2);
+  border:1px solid var(--border2);
+  border-radius:30px;
+  padding:8px 18px;
+  font-size:13px;
+  color:var(--text);
+  opacity:0;
+  transition:all 0.3s;
+  pointer-events:none;
+  white-space:nowrap;
+  z-index:99;
+}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+
+/* ── INSTALL BANNER ── */
+.install-banner{
+  margin:0 0 14px;
+  background:var(--green-dim);
+  border:1px solid rgba(74,222,128,0.25);
+  border-radius:var(--r-sm);
+  padding:12px 14px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.ib-text{font-size:12px;color:var(--text2);line-height:1.4;flex:1}
+.ib-text strong{color:var(--green);font-weight:500}
+.ib-close{
+  font-size:16px;
+  color:var(--text3);
+  cursor:pointer;
+  flex-shrink:0;
+  padding:2px 6px;
+}
+.install-btn{
+  display:inline-block;
+  margin-top:6px;
+  background:var(--green);
+  color:#000;
+  font-size:11px;
+  font-weight:600;
+  padding:4px 12px;
+  border-radius:20px;
+  cursor:pointer;
+  border:none;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:380px){
+  .habit-text{font-size:13px}
+  .habit-tag{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo">SAHEB TRACKER</div>
+  <div class="header-date" id="header-date"></div>
+</div>
+
+<div class="tab-bar">
+  <div class="tab active" data-tab="today">Today</div>
+  <div class="tab" data-tab="history">History</div>
+  <div class="tab" data-tab="weekly">Weekly</div>
+</div>
+
+<div class="scroll-area">
+
+  <!-- TODAY PAGE -->
+  <div class="page active" id="page-today">
+    <div id="install-banner" class="install-banner" style="display:none">
+      <div class="ib-text">
+        <strong>Save to Home Screen</strong><br>
+        Tap <strong>Share → Add to Home Screen</strong> (iOS) or the install icon in your browser (Android) to use this as an app.
+      </div>
+      <div class="ib-close" id="ib-close">×</div>
+    </div>
+
+    <div class="today-hero">
+      <div class="hero-left">
+        <div class="day-name" id="today-day"></div>
+        <div class="full-date" id="today-full-date"></div>
+      </div>
+      <div class="hero-score">
+        <div class="score-display low" id="score-display">0/13</div>
+        <div class="score-label" id="score-pct">0% complete</div>
+      </div>
+    </div>
+
+    <div class="prog-track"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+
+    <div class="section-label">Morning</div>
+    <div class="habit-item" data-id="wake">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Woke up on time</div>
+      <span class="habit-tag t-morning">morning</span>
+    </div>
+    <div class="habit-item" data-id="no-phone-am">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">No phone for first 30 min after waking</div>
+      <span class="habit-tag t-discipline">discipline</span>
+    </div>
+    <div class="habit-item" data-id="breakfast">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Had proper breakfast</div>
+      <span class="habit-tag t-health">health</span>
+    </div>
+
+    <div class="section-label">Business — Saheb Trend House</div>
+    <div class="habit-item" data-id="listing">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Checked orders / updated listing or SEO title</div>
+      <span class="habit-tag t-business">business</span>
+    </div>
+    <div class="habit-item" data-id="pack">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Packed & prepared all deliveries</div>
+      <span class="habit-tag t-business">business</span>
+    </div>
+
+    <div class="section-label">Study</div>
+    <div class="habit-item" data-id="study">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Studied Economics for at least 30 min (no phone)</div>
+      <span class="habit-tag t-study">study</span>
+    </div>
+    <div class="habit-item" data-id="notes">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Reviewed or wrote college notes</div>
+      <span class="habit-tag t-study">study</span>
+    </div>
+
+    <div class="section-label">Screen time & discipline</div>
+    <div class="habit-item" data-id="fb-limit">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Facebook under 30 min today</div>
+      <span class="habit-tag t-discipline">discipline</span>
+    </div>
+    <div class="habit-item" data-id="insta-limit">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Instagram under 20 min today</div>
+      <span class="habit-tag t-discipline">discipline</span>
+    </div>
+    <div class="habit-item" data-id="no-porn">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">No porn today</div>
+      <span class="habit-tag t-discipline">discipline</span>
+    </div>
+
+    <div class="section-label">Night routine</div>
+    <div class="habit-item" data-id="phone-outside">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Phone charging outside bedroom at night</div>
+      <span class="habit-tag t-health">health</span>
+    </div>
+    <div class="habit-item" data-id="sleep-midnight">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">In bed before midnight</div>
+      <span class="habit-tag t-health">health</span>
+    </div>
+    <div class="habit-item" data-id="reflect">
+      <div class="cb"><div class="cb-tick"></div></div>
+      <div class="habit-text">Thought about one thing I did well today</div>
+      <span class="habit-tag t-health">health</span>
+    </div>
+
+    <div class="motivation-bar" id="motivation-bar">
+      Start your day — tap each habit as you complete it.
+    </div>
+
+    <div style="height:20px"></div>
+  </div>
+
+  <!-- HISTORY PAGE -->
+  <div class="page" id="page-history">
+    <div class="hist-controls">
+      <button class="nav-btn" id="hist-prev">&#8249;</button>
+      <div class="ctrl-label" id="hist-month-label"></div>
+      <button class="nav-btn" id="hist-next">&#8250;</button>
+    </div>
+    <div id="hist-list"></div>
+    <div style="height:20px"></div>
+  </div>
+
+  <!-- WEEKLY PAGE -->
+  <div class="page" id="page-weekly">
+    <div class="week-nav">
+      <button class="nav-btn" id="week-prev">&#8249;</button>
+      <div class="week-label" id="week-label"></div>
+      <button class="nav-btn" id="week-next">&#8250;</button>
+    </div>
+
+    <div class="week-grid" id="week-grid"></div>
+
+    <div class="week-stat-row" id="week-stats"></div>
+
+    <div class="week-perf-card">
+      <div class="wpc-title">Habit performance this week</div>
+      <div id="habit-perf-list"></div>
+    </div>
+    <div style="height:20px"></div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+const HABITS = [
+  {id:'wake',       label:'Woke up on time',                          tag:'morning'},
+  {id:'no-phone-am',label:'No phone first 30 min',                   tag:'discipline'},
+  {id:'breakfast',  label:'Proper breakfast',                         tag:'health'},
+  {id:'listing',    label:'Updated listing / checked orders',         tag:'business'},
+  {id:'pack',       label:'Packed all deliveries',                    tag:'business'},
+  {id:'study',      label:'Studied 30+ min',                         tag:'study'},
+  {id:'notes',      label:'Reviewed college notes',                   tag:'study'},
+  {id:'fb-limit',   label:'Facebook under 30 min',                   tag:'discipline'},
+  {id:'insta-limit',label:'Instagram under 20 min',                  tag:'discipline'},
+  {id:'no-porn',    label:'No porn today',                            tag:'discipline'},
+  {id:'phone-outside',label:'Phone outside bedroom',                 tag:'health'},
+  {id:'sleep-midnight',label:'In bed before midnight',               tag:'health'},
+  {id:'reflect',    label:'One positive reflection',                  tag:'health'},
+];
+const TOTAL = HABITS.length;
+
+const MSGS = [
+  'Start your day — tap each habit as you complete it.',
+  'Good first step. Build on it.',
+  'Momentum starting. Keep going.',
+  'Nearly a quarter done. You\'re doing this.',
+  'Halfway, Saheb. This is where character shows.',
+  'More than half. Strong day happening.',
+  'Almost there. Don\'t let up now.',
+  'One or two left. Finish what you started.',
+  'Nearly perfect. One more push.',
+  'Everything done! This is who you\'re becoming.',
+  'Perfect day. Remember this feeling.',
+  'Perfect day. Your future self thanks you.',
+  '100% — full day complete. Exceptional.',
+  'PERFECT DAY! Every single habit done. ',
+];
+
+const days7 = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+const months12 = ['January','February','March','April','May','June','July','August','September','October','November','December'];
+const months3 = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+
+function todayKey(){
+  const d = new Date();
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+function dateKey(d){
+  return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0');
+}
+
+function loadData(){
+  try{return JSON.parse(localStorage.getItem('saheb_v2')||'{}');}catch(e){return {};}
+}
+function saveData(data){
+  localStorage.setItem('saheb_v2',JSON.stringify(data));
+}
+
+function getDay(key){
+  const data = loadData();
+  return data[key] || {};
+}
+function setDay(key,checked){
+  const data = loadData();
+  data[key] = checked;
+  saveData(data);
+}
+
+let todayChecked = getDay(todayKey());
+
+function scoreFor(checked){
+  return HABITS.filter(h=>checked[h.id]).length;
+}
+function pctFor(checked){
+  return Math.round((scoreFor(checked)/TOTAL)*100);
+}
+
+// ─── TODAY ───────────────────────────────
+function initToday(){
+  const now = new Date();
+  document.getElementById('header-date').textContent = String(now.getDate()).padStart(2,'0')+'/'+String(now.getMonth()+1).padStart(2,'0')+'/'+now.getFullYear();
+  document.getElementById('today-day').textContent = days7[now.getDay()];
+  document.getElementById('today-full-date').textContent = now.getDate()+' '+months12[now.getMonth()]+' '+now.getFullYear();
+
+  document.querySelectorAll('.habit-item').forEach(item=>{
+    item.addEventListener('click',()=>{
+      const id = item.dataset.id;
+      todayChecked[id] = !todayChecked[id];
+      setDay(todayKey(), todayChecked);
+      renderToday();
+      showToast(todayChecked[id] ? '✓ Done!' : 'Unmarked');
+    });
+  });
+
+  renderToday();
+}
+
+function renderToday(){
+  const score = scoreFor(todayChecked);
+  const pct = Math.round((score/TOTAL)*100);
+
+  document.querySelectorAll('.habit-item').forEach(item=>{
+    const id = item.dataset.id;
+    item.classList.toggle('checked', !!todayChecked[id]);
+  });
+
+  const sd = document.getElementById('score-display');
+  sd.textContent = score+'/'+TOTAL;
+  sd.className = 'score-display '+(pct===100?'perfect':pct>=60?'good':'low');
+
+  document.getElementById('score-pct').textContent = pct+'% complete';
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('motivation-bar').textContent = MSGS[Math.min(score, MSGS.length-1)];
+}
+
+// ─── HISTORY ─────────────────────────────
+let histOffset = 0;
+
+function initHistory(){
+  document.getElementById('hist-prev').addEventListener('click',()=>{histOffset++;renderHistory();});
+  document.getElementById('hist-next').addEventListener('click',()=>{if(histOffset>0){histOffset--;renderHistory();}});
+  renderHistory();
+}
+
+function renderHistory(){
+  const now = new Date();
+  const d = new Date(now.getFullYear(), now.getMonth()-histOffset, 1);
+  const yr = d.getFullYear(), mo = d.getMonth();
+  document.getElementById('hist-month-label').textContent = months12[mo]+' '+yr;
+  document.getElementById('hist-next').style.opacity = histOffset===0?'0.3':'1';
+
+  const data = loadData();
+  const daysInMonth = new Date(yr, mo+1, 0).getDate();
+  const list = document.getElementById('hist-list');
+  list.innerHTML = '';
+
+  let hasAny = false;
+  for(let day=daysInMonth; day>=1; day--){
+    const k = yr+'-'+String(mo+1).padStart(2,'0')+'-'+String(day).padStart(2,'0');
+    if(!data[k]) continue;
+    hasAny = true;
+    const checked = data[k];
+    const score = scoreFor(checked);
+    const pct = Math.round((score/TOTAL)*100);
+    const dayObj = new Date(yr, mo, day);
+    const color = pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+
+    const card = document.createElement('div');
+    card.className = 'hist-day-card';
+    card.innerHTML = `
+      <div class="hist-day-header">
+        <div>
+          <div class="hist-day-name">${days7[dayObj.getDay()]}</div>
+          <div class="hist-day-date">${day} ${months3[mo]} ${yr}</div>
+        </div>
+        <div class="hist-score-badge">
+          <div class="hist-bar-mini"><div class="hist-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+          <div class="hist-pct" style="color:${color}">${pct}%</div>
+        </div>
+      </div>
+      <div class="hist-detail">
+        ${HABITS.map(h=>`
+          <div class="hist-habit-row">
+            <div class="hist-dot ${checked[h.id]?'dot-done':'dot-miss'}"></div>
+            <span>${h.label}</span>
+            <span style="margin-left:auto;font-size:11px;color:${checked[h.id]?'var(--green)':'var(--text3)'}">${checked[h.id]?'done':'missed'}</span>
+          </div>
+        `).join('')}
+      </div>`;
+    card.addEventListener('click',()=>card.classList.toggle('expanded'));
+    list.appendChild(card);
+  }
+
+  if(!hasAny){
+    list.innerHTML = '<div class="empty-hist">No data recorded for this month yet.<br>Complete habits today to start building your history.</div>';
+  }
+}
+
+// ─── WEEKLY ──────────────────────────────
+let weekOffset = 0;
+
+function getWeekDates(offset){
+  const now = new Date();
+  const dow = now.getDay();
+  const start = new Date(now);
+  start.setDate(now.getDate() - dow - offset*7);
+  start.setHours(0,0,0,0);
+  const dates = [];
+  for(let i=0;i<7;i++){
+    const d = new Date(start);
+    d.setDate(start.getDate()+i);
+    dates.push(d);
+  }
+  return dates;
+}
+
+function initWeekly(){
+  document.getElementById('week-prev').addEventListener('click',()=>{weekOffset++;renderWeekly();});
+  document.getElementById('week-next').addEventListener('click',()=>{if(weekOffset>0){weekOffset--;renderWeekly();}});
+  renderWeekly();
+}
+
+function renderWeekly(){
+  const dates = getWeekDates(weekOffset);
+  const data = loadData();
+  const tk = todayKey();
+
+  document.getElementById('week-next').style.opacity = weekOffset===0?'0.3':'1';
+
+  const start = dates[0], end = dates[6];
+  document.getElementById('week-label').textContent =
+    start.getDate()+' '+months3[start.getMonth()]+' – '+end.getDate()+' '+months3[end.getMonth()];
+
+  // grid
+  const grid = document.getElementById('week-grid');
+  grid.innerHTML = '';
+  let totalScore=0, daysWithData=0;
+
+  dates.forEach(d=>{
+    const k = dateKey(d);
+    const checked = data[k]||null;
+    const isToday = k===tk;
+    const pct = checked ? pctFor(checked) : null;
+    const color = pct===null?'var(--text3)':pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+
+    if(checked){totalScore+=pct;daysWithData++;}
+
+    const cell = document.createElement('div');
+    cell.className = 'wg-cell'+(isToday?' today-cell':'')+(checked===null?' no-data':'');
+    cell.innerHTML = `
+      <div class="wg-day-label">${days7[d.getDay()].slice(0,1)}</div>
+      <div class="wg-pct-text" style="color:${color}">${pct!==null?pct+'%':'–'}</div>`;
+    grid.appendChild(cell);
+  });
+
+  // stats
+  const avgPct = daysWithData>0 ? Math.round(totalScore/daysWithData) : 0;
+  const perfectDays = dates.filter(d=>{const k=dateKey(d);const c=data[k];return c&&pctFor(c)===100;}).length;
+  const statsEl = document.getElementById('week-stats');
+  statsEl.innerHTML = `
+    <div class="wstat">
+      <div class="wstat-label">Weekly avg</div>
+      <div class="wstat-val" style="color:${avgPct>=80?'var(--green)':avgPct>=50?'var(--amber)':'var(--text)'}">${avgPct}%</div>
+      <div class="wstat-sub">${daysWithData} of 7 days tracked</div>
+    </div>
+    <div class="wstat">
+      <div class="wstat-label">Perfect days</div>
+      <div class="wstat-val" style="color:${perfectDays>0?'var(--green)':'var(--text)'}">${perfectDays}</div>
+      <div class="wstat-sub">100% completion</div>
+    </div>`;
+
+  // habit performance
+  const perfList = document.getElementById('habit-perf-list');
+  perfList.innerHTML = '';
+  HABITS.forEach(h=>{
+    let done=0, total=0;
+    const dots = dates.map(d=>{
+      const k=dateKey(d);
+      const c=data[k];
+      if(!c) return null;
+      total++;
+      if(c[h.id]){done++;return true;}
+      return false;
+    });
+    const pct = total>0?Math.round((done/total)*100):null;
+    const color = pct===null?'var(--text3)':pct>=80?'var(--green)':pct>=50?'var(--amber)':'var(--red)';
+
+    const row = document.createElement('div');
+    row.className = 'habit-perf-row';
+    row.innerHTML = `
+      <div class="hpr-name">${h.label}</div>
+      <div class="hpr-track">
+        ${dots.map(v=>`<div class="hpr-dot" style="background:${v===null?'var(--border2)':v?'var(--green)':'var(--red)'}"></div>`).join('')}
+      </div>
+      <div class="hpr-pct" style="color:${color}">${pct!==null?pct+'%':'–'}</div>`;
+    perfList.appendChild(row);
+  });
+}
+
+// ─── TABS ─────────────────────────────────
+function initTabs(){
+  document.querySelectorAll('.tab').forEach(tab=>{
+    tab.addEventListener('click',()=>{
+      document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+      document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('page-'+tab.dataset.tab).classList.add('active');
+      if(tab.dataset.tab==='history') renderHistory();
+      if(tab.dataset.tab==='weekly') renderWeekly();
+    });
+  });
+}
+
+// ─── TOAST ────────────────────────────────
+let toastTimer;
+function showToast(msg){
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'),1500);
+}
+
+// ─── INSTALL BANNER ──────────────────────
+function initInstall(){
+  const dismissed = localStorage.getItem('saheb_install_dismissed');
+  if(!dismissed){
+    document.getElementById('install-banner').style.display='flex';
+  }
+  document.getElementById('ib-close').addEventListener('click',()=>{
+    document.getElementById('install-banner').style.display='none';
+    localStorage.setItem('saheb_install_dismissed','1');
+  });
+}
+
+// ─── INIT ─────────────────────────────────
+initTabs();
+initToday();
+initHistory();
+initWeekly();
+initInstall();
+</script>
+</body>
+</html>
