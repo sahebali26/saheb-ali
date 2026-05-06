@@ -161,12 +161,13 @@
     .nav-founder:hover { background: rgba(200,151,59,.1); }
     .social-icons { display: flex; gap: 8px; align-items: center; margin-left: 8px; }
     .social-icon {
-      width: 32px; height: 32px; border-radius: 8px;
+      width: 32px; height: 32px; border-radius: 50%;
       background: rgba(200,151,59,.1); border: 1px solid rgba(200,151,59,.2);
       display: flex; align-items: center; justify-content: center;
-      font-size: 16px; transition: .2s; cursor: pointer;
+      transition: .2s; cursor: pointer;
     }
     .social-icon:hover { background: rgba(200,151,59,.2); transform: translateY(-2px); }
+    .social-icon svg { width: 16px; height: 16px; fill: var(--gold2); }
   
     .hero {
       min-height: 100vh; display: flex; flex-direction: column;
@@ -300,12 +301,22 @@
       border-color: rgba(201,151,59,.4);
       box-shadow: 0 16px 48px rgba(0,0,0,.4);
     }
-    .platform-logo {
+    .platform-logo-wrap {
       width: 100px;
       height: 100px;
-      object-fit: contain;
       margin: 0 auto 20px;
+      border-radius: 50%;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #fff;
       filter: drop-shadow(0 0 20px rgba(201,151,59,.3));
+    }
+    .platform-logo-wrap img {
+      width: 70%;
+      height: 70%;
+      object-fit: contain;
     }
     .platform-name {
       font-family: 'Cormorant Garamond', serif;
@@ -346,42 +357,17 @@
     .btn-meesho:hover { background: #e04d1a; }
     .btn-flipkart { background: #2874f0; color: #fff; }
     .btn-flipkart:hover { background: #1a5dc7; }
-    .btn-amazon { background: #232f3e; color: #ff9900; }
+    .btn-amazon { background: #232f3e; color: #ff9900; border: 1px solid #ff9900; }
     .btn-amazon:hover { background: #1a232e; }
-    .btn-coming { background: rgba(245,158,11,.15); color: #f59e0b; border: 1px solid rgba(245,158,11,.3); cursor: not-allowed; }
-  
-    /* Bulk Order Card */
-    .bulk-card {
-      background: linear-gradient(135deg, rgba(201,151,59,.15), rgba(201,151,59,.05));
-      border: 1px solid rgba(201,151,59,.4);
-      border-radius: var(--rr);
-      padding: 32px 24px;
-      text-align: center;
-      transition: .3s;
-      cursor: pointer;
-    }
-    .bulk-card:hover {
-      transform: translateY(-4px);
-      border-color: var(--gold);
-      box-shadow: 0 16px 48px rgba(0,0,0,.4);
-    }
-    .bulk-icon { font-size: 48px; margin-bottom: 16px; }
-    .bulk-title {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 24px; font-weight: 600; color: #fff; margin-bottom: 8px;
-    }
-    .bulk-desc { font-size: 13px; color: var(--text2); line-height: 1.7; margin-bottom: 20px; }
-    .btn-wa {
-      display: inline-flex; align-items: center; gap: 8px;
-      padding: 12px 24px; background: var(--wa); color: #fff;
-      font-size: 14px; font-weight: 700; border-radius: 10px;
-      border: none; cursor: pointer; font-family: 'Outfit', sans-serif;
-      transition: .2s;
-    }
-    .btn-wa:hover { background: #1db954; transform: translateY(-2px); }
+    .btn-coming { background: rgba(245,158,11,.15); color: #f59e0b; border: 1px solid rgba(245,158,11,.3); cursor: pointer; }
   
     #collection { background: var(--bg2); }
-    .product-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:16px; margin-top:36px; }
+    .product-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 16px;
+      margin-top: 36px;
+    }
     .prod-card { background:var(--panel); border:1px solid var(--border); border-radius:var(--r); overflow:hidden; transition:.3s; cursor:pointer; }
     .prod-card:hover { transform:translateY(-3px); border-color:rgba(201,151,59,.35); }
     .prod-img-wrap { background:#1a1e28; aspect-ratio:1; overflow:hidden; position:relative; }
@@ -389,7 +375,7 @@
     .prod-card:hover .prod-img-wrap img { transform:scale(1.06); }
     .prod-off { position:absolute; top:10px; left:10px; background:#c0392b; color:#fff; font-size:10px; font-weight:700; padding:3px 8px; border-radius:5px; }
     .prod-body { padding:14px; }
-    .prod-name { font-size:13px; font-weight:600; color:var(--text); margin-bottom:8px; }
+    .prod-name { font-size:13px; font-weight:600; color:var(--text); margin-bottom:8px; display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
     .prod-price { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:700; color:var(--gold2); }
     .prod-mrp { font-size:12px; color:var(--text3); text-decoration:line-through; margin-left:6px; }
     .prod-cta { display:block; width:100%; margin-top:10px; padding:8px; background:var(--gold); color:var(--bg); font-size:12px; font-weight:700; border:none; border-radius:8px; cursor:pointer; }
@@ -411,21 +397,41 @@
     .footer-name { font-family:'Cormorant Garamond',serif; font-size:22px; font-weight:600; color:var(--gold2); }
     .footer-social { display: flex; justify-content: center; gap: 12px; margin: 20px 0; }
     .footer-social a {
-      width: 44px; height: 44px; border-radius: 12px;
+      width: 44px; height: 44px; border-radius: 50%;
       background: rgba(200,151,59,.1); border: 1px solid rgba(200,151,59,.25);
       display: flex; align-items: center; justify-content: center;
-      font-size: 20px; transition: .2s;
+      transition: .2s;
     }
+    .footer-social a svg { width: 20px; height: 20px; fill: var(--gold2); }
     .footer-social a:hover { background: rgba(200,151,59,.2); transform: translateY(-3px); }
   
     @keyframes fadeUp { from{opacity:0;transform:translateY(20px);} to{opacity:1;transform:translateY(0);} }
     .reveal { opacity:0; transform:translateY(24px); transition:opacity .65s ease, transform .65s ease; }
     .reveal.in { opacity:1; transform:translateY(0); }
   
-    @media (max-width:768px) {
+    /* Mobile: 2 products per row */
+    @media (max-width: 768px) {
       nav.desktop-nav { display:none; }
       .about-grid, .contact-grid { grid-template-columns:1fr; }
       .social-icons { display: none; }
+      .product-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      section { padding: 50px 16px; }
+      .hero { padding: 90px 16px 60px; }
+      .platforms-grid {
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+    }
+    @media (max-width: 480px) {
+      .hero-logo { width: 90px; height: 90px; }
+      .stat-num { font-size: 22px; }
+      .product-grid {
+        gap: 10px;
+      }
+      .prod-body { padding: 10px; }
+      .prod-name { font-size: 12px; }
+      .prod-price { font-size: 16px; }
     }
   </style>
 </head>
@@ -442,9 +448,8 @@
       <a href="#contact">Contact</a>
       <a href="sth-store.html" class="nav-cta">View All Products →</a>
       <a href="https://sahebali.site" target="_blank" class="nav-founder">👤 About Founder</a>
-      <div class="social-icons">
-        <a href="https://www.instagram.com/saheb_trend_house" target="_blank" class="social-icon" title="Instagram">📷</a>
-        <a href="https://www.youtube.com/@sahebtrendhouse" target="_blank" class="social-icon" title="YouTube">▶️</a>
+      
+        </a>
       </div>
     </nav>
   </header>
@@ -510,7 +515,9 @@
       <div class="platforms-grid">
         <!-- Meesho -->
         <div class="platform-card reveal" onclick="window.open('https://www.meesho.com/SahebTrendHouse?ms=2','_blank')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTLbB0eRF6uQJaA0gdSZ6nVk2Tzg7JbAyQA&s" alt="Meesho" class="platform-logo">
+          <div class="platform-logo-wrap">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRpTLbB0eRF6uQJaA0gdSZ6nVk2Tzg7JbAyQA&s" alt="Meesho">
+          </div>
           <div class="platform-name">Meesho</div>
           <div class="platform-status status-active">● Active</div>
           <div class="platform-desc">Shop our complete catalogue with buyer protection, easy returns, and all-India delivery at the best prices.</div>
@@ -518,27 +525,23 @@
         </div>
         <!-- Flipkart -->
         <div class="platform-card reveal" onclick="window.open('https://www.flipkart.com/saheb-trend-house-copper-gold-plated-bangle/p/itmaf95980314414?pid=BBAHNYFVXSNSNRFF&lid=LSTBBAHNYFVXSNSNRFFWC9EXP&marketplace=FLIPKART','_blank')">
-          <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIygUTsIdSAR0MwbnUyNloj8ZCCWVZylTBBQ&s" alt="Flipkart" class="platform-logo">
+          <div class="platform-logo-wrap">
+            <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTIygUTsIdSAR0MwbnUyNloj8ZCCWVZylTBBQ&s" alt="Flipkart">
+          </div>
           <div class="platform-name">Flipkart</div>
           <div class="platform-status status-active">● Active</div>
           <div class="platform-desc">Now live on Flipkart! Order with Flipkart Assured delivery, secure payments, and superfast shipping.</div>
           <button class="platform-btn btn-flipkart">🛒 Shop on Flipkart →</button>
         </div>
         <!-- Amazon -->
-        <div class="platform-card reveal">
-          <img src="https://www.flipkart.com/saheb-trend-house-brass-silver-bangle/p/itm33acc99fe8c0f" alt="Amazon" class="platform-logo" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect fill=%22%23232f3e%22 width=%22100%22 height=%22100%22 rx=%2210%22/%3E%3Ctext fill=%22%23ff9900%22 x=%2250%22 y=%2260%22 text-anchor=%22middle%22 font-size=%2240%22 font-weight=%22bold%22%3Eamazon%3C/text%3E%3C/svg%3E'">
+        <div class="platform-card reveal" onclick="window.open('https://www.amazon.com/sahebtrendhouse','_blank')">
+          <div class="platform-logo-wrap" style="background:#232f3e;">
+            <span style="font-size:28px;font-weight:700;color:#ff9900;font-family:Arial,sans-serif;">amazon</span>
+          </div>
           <div class="platform-name">Amazon</div>
           <div class="platform-status status-coming">● Coming Soon</div>
           <div class="platform-desc">We're launching on Amazon soon! Follow our seller profile to get notified when we go live.</div>
-          <button class="platform-btn btn-coming" onclick="window.open('https://www.amazon.com/sahebtrendhouse','_blank')">🔔 View Amazon Profile →</button>
-        </div>
-        <!-- Bulk Orders -->
-        <div class="platform-card bulk-card reveal" onclick="window.open('https://wa.me/918668216271?text=Hi%20Saheb%20Trend%20House!%20I%20am%20interested%20in%20bulk%20%2F%20wholesale%20orders.%20Please%20share%20details.','_blank')">
-          <div class="bulk-icon">📦</div>
-          <div class="platform-name">Bulk & Wholesale</div>
-          <div class="platform-status status-active">● Available</div>
-          <div class="platform-desc">Need jewellery in bulk for your shop, event, or reselling? Get special wholesale pricing. Contact us directly.</div>
-          <button class="btn-wa">💬 Enquire on WhatsApp →</button>
+          <button class="platform-btn btn-coming">🔔 View Amazon Profile →</button>
         </div>
       </div>
     </div>
@@ -596,15 +599,19 @@
           <div style="display:flex; gap:14px; margin-bottom:16px;"><span>📞</span><div><div style="color:var(--text3);font-size:11px;">Phone / WhatsApp</div><div>+91 8668216271</div></div></div>
           <div style="display:flex; gap:14px; margin-bottom:16px;"><span>📍</span><div><div style="color:var(--text3);font-size:11px;">Address</div><div>Abhayapuri, Bongaigaon, Assam 783384</div></div></div>
           <div style="display:flex; gap:14px; margin-bottom:16px;"><span>🌐</span><div><div style="color:var(--text3);font-size:11px;">Founder's Website</div><div><a href="https://sahebali.site" target="_blank" style="color:var(--gold2);">sahebali.site</a></div></div></div>
-          <div style="display:flex; gap:14px; margin-top:20px;">
-            <a href="https://www.instagram.com/saheb_trend_house" target="_blank" style="width:40px;height:40px;background:rgba(200,151,59,.1);border:1px solid rgba(200,151,59,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">📷</a>
-            <a href="https://www.youtube.com/@sahebtrendhouse" target="_blank" style="width:40px;height:40px;background:rgba(200,151,59,.1);border:1px solid rgba(200,151,59,.25);border-radius:10px;display:flex;align-items:center;justify-content:center;font-size:18px;">▶️</a>
+          <div style="display:flex; gap:12px; margin-top:20px;">
+            <a href="https://www.instagram.com/saheb_trend_house" target="_blank" style="width:40px;height:40px;background:rgba(200,151,59,.1);border:1px solid rgba(200,151,59,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--gold2)"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@sahebtrendhouse" target="_blank" style="width:40px;height:40px;background:rgba(200,151,59,.1);border:1px solid rgba(200,151,59,.25);border-radius:50%;display:flex;align-items:center;justify-content:center;">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="var(--gold2)"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
           </div>
         </div>
         <div class="reveal">
           <div style="background:var(--panel); border:1px solid var(--border); border-radius:24px; padding:32px;">
             <h3 style="color:#fff; font-family:'Cormorant Garamond',serif; margin-bottom:20px;">Quick Actions</h3>
-            <button class="wa-btn" onclick="window.open('https://wa.me/918668216271?text=Hi%20Saheb%20Trend%20House!%20I%20want%20to%20know%20more.','_blank')">💬 Chat on WhatsApp</button>
+            <button class="wa-btn" onclick="window.open('https://wa.me/918668216271?text=Hi%20Saheb%20Trend%20House!%20I%20am%20interested%20in%20bulk%20%2F%20wholesale%20orders.%20Please%20share%20details.','_blank')">📦 Enquire for Bulk or Wholesale</button>
             <button class="meesho-btn" onclick="window.open('https://www.meesho.com/SahebTrendHouse?ms=2','_blank')">🛍 Visit Meesho Store</button>
             <a href="sth-store.html" style="display:block; margin-top:12px;"><button class="btn-primary" style="width:100%;">🪬 Browse Full Store →</button></a>
           </div>
@@ -619,10 +626,12 @@
     <p style="color:var(--text3); font-size:13px;">Authentic Assamese Jewellery · Abhayapuri, Assam</p>
     <p style="color:var(--text2); font-size:12px; margin-top:8px;">Founded by <a href="https://sahebali.site" target="_blank" style="color:var(--gold2);">Saheb Ali</a></p>
     <div class="footer-social">
-      <a href="https://www.instagram.com/saheb_trend_house" target="_blank" title="Instagram">📷</a>
-      <a href="https://www.youtube.com/@sahebtrendhouse" target="_blank" title="YouTube">▶️</a>
-      <a href="https://www.meesho.com/SahebTrendHouse?ms=2" target="_blank" title="Meesho">🛍</a>
-      <a href="https://www.flipkart.com/saheb-trend-house-copper-gold-plated-bangle/p/itmaf95980314414" target="_blank" title="Flipkart">🛒</a>
+      <a href="https://www.instagram.com/saheb_trend_house" target="_blank" title="Instagram">
+        <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+      </a>
+      <a href="https://www.youtube.com/@sahebtrendhouse" target="_blank" title="YouTube">
+        <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+      </a>
     </div>
     <div style="margin:16px 0; display:flex; justify-content:center; gap:16px; flex-wrap:wrap;">
       <a href="sth-store.html" style="color:var(--gold2);">Store</a>
