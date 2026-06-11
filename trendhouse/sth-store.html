@@ -119,7 +119,7 @@
    RESET
 ══════════════════════════════════════════════ */
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'DM Sans',sans-serif;background:var(--page);color:var(--text);-webkit-font-smoothing:antialiased}
+body{font-family:'DM Sans',sans-serif;background:var(--page);color:var(--text);-webkit-font-smoothing:antialiased;overflow-x:hidden}
 img{display:block;max-width:100%}
 a{text-decoration:none;color:inherit}
 button{font-family:'DM Sans',sans-serif}
@@ -134,7 +134,6 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 .logo-img-fb{width:38px;height:38px;background:linear-gradient(135deg,var(--gold),var(--gold3));border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;display:none}
 .lt{font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--gold2);line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .ls{font-size:9px;color:var(--text3);letter-spacing:.6px;text-transform:uppercase}
-/* desktop inline search – hidden on mobile */
 .hsi-wrap{display:none;flex:1;max-width:580px;order:10}
 .hsi-wrap input{flex:1;background:#fff;border:none;padding:9px 14px;font-size:13px;color:var(--dark);font-family:'DM Sans',sans-serif;outline:none;border-radius:6px 0 0 6px}
 .hsi-wrap button{background:var(--gold);border:none;padding:9px 16px;font-size:13px;font-weight:700;color:var(--dark);cursor:pointer;border-radius:0 6px 6px 0;white-space:nowrap;transition:.2s}
@@ -144,14 +143,12 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 .hb:hover{background:#2a1a08;color:var(--gold2)}
 .hb .ic{font-size:19px;display:block}
 .bdg{position:absolute;top:1px;right:1px;background:var(--gold);color:var(--dark);font-size:8px;font-weight:700;width:15px;height:15px;border-radius:50%;display:flex;align-items:center;justify-content:center}
-/* mobile standalone search row */
 .hsr{padding:6px 12px;background:#140e04;border-top:1px solid #2a1a08;display:flex;gap:8px;align-items:center}
 .hsi{flex:1;background:#1f1408;border:1px solid #3a2510;border-radius:7px;padding:7px 12px;font-size:13px;color:var(--cream2);outline:none;font-family:'DM Sans',sans-serif}
 .hsi::placeholder{color:#5a3a18}
 .hsi:focus{border-color:var(--gold)}
 .hsb{background:var(--gold);border:none;border-radius:7px;padding:7px 13px;font-size:12px;font-weight:700;color:var(--dark);cursor:pointer;white-space:nowrap;transition:.2s}
 .hsb:hover{background:var(--gold3);color:#fff}
-/* location bar */
 .lb{background:#1a0e04;padding:5px 12px;display:flex;align-items:center;gap:6px;border-top:1px solid #2a1a08;font-size:11px;color:var(--gold2);font-weight:500}
 
 /* ══════════════════════════════════════════════
@@ -214,11 +211,23 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 .tb-i{font-size:15px}
 
 /* ══════════════════════════════════════════════
-   NEW ARRIVALS STRIP
+   NEW ARRIVALS STRIP (FIXED: perfect fit on phone)
 ══════════════════════════════════════════════ */
-.na-strip{display:flex;overflow-x:auto;gap:10px;padding:0 14px 14px;scrollbar-width:none}
+.na-strip{display:flex;overflow-x:auto;gap:10px;padding:0 14px 14px;scrollbar-width:none;scroll-snap-type:x mandatory;}
 .na-strip::-webkit-scrollbar{display:none}
-.na-strip .pc{min-width:160px;flex-shrink:0;scroll-snap-align:start}
+.na-strip .pc{min-width:145px;width:145px;flex-shrink:0;scroll-snap-align:start;transition:transform 0.2s, box-shadow 0.2s;}
+/* for very compact phones (<=380px) make cards slightly smaller to show better scroll hint */
+@media (max-width: 420px){
+  .na-strip .pc{min-width:135px;width:135px;}
+  .na-strip .pn{font-size:11px;}
+  .na-strip .ppr .pp{font-size:13px;}
+  .na-strip .pcta{font-size:10px;padding:5px 6px;}
+}
+@media (max-width: 360px){
+  .na-strip .pc{min-width:128px;width:128px;}
+  .na-strip .pbr{font-size:8px;}
+  .na-strip .pn{font-size:10px;}
+}
 
 /* ══════════════════════════════════════════════
    SECTION HEADINGS
@@ -266,7 +275,6 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 .sort-sel{appearance:none;background:#fff url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M0 0l5 6 5-6z' fill='%238a6220'/%3E%3C/svg%3E") no-repeat right 8px center;border:1.5px solid var(--cream3);border-radius:7px;padding:5px 28px 5px 10px;font-size:12px;color:var(--dark);cursor:pointer;font-family:'DM Sans',sans-serif;outline:none}
 .sort-sel:focus{border-color:var(--gold)}
 .prod-layout{display:block}
-/* sidebar hidden mobile */
 .sidebar{display:none}
 .desk-sortbar{display:none}
 
@@ -448,43 +456,35 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 ══════════════════════════════════════════════ */
 @media (min-width:1024px){
   body{background:#e8ddc8}
-  /* header */
   .hi{padding:10px 24px;flex-wrap:nowrap;max-width:1280px;margin:0 auto}
   .hsr{display:none}
   .hsi-wrap{display:flex;align-items:center;background:#fff;border-radius:7px;overflow:hidden;flex:1;max-width:560px}
   .logo .ls{display:block}
-  /* category nav */
   .cat-nav{padding:8px 0}
   .cat-nav-inner{max-width:1280px;margin:0 auto;padding:0 24px;display:flex;gap:6px}
-  /* main container */
   .mw{max-width:1280px;margin:0 auto;padding-bottom:0}
-  /* hero */
   .hero{padding:0}
   .hero-inner{max-width:1280px;margin:0 auto;padding:0 24px}
   .hc{padding:30px 0;gap:30px}
   .htitle{font-size:30px}
   .him{width:200px}.him img{width:185px;height:185px}
-  /* sections + grids */
   .sec{padding:20px 24px 0}
   .pgrid{grid-template-columns:repeat(4,1fr);gap:14px;padding:0 24px 24px}
-  .na-strip{display:grid;grid-template-columns:repeat(3,1fr);overflow-x:visible;padding:0 24px 24px}
-  .na-strip .pc{min-width:unset}
+  .na-strip{display:grid;grid-template-columns:repeat(3,1fr);overflow-x:visible;padding:0 24px 24px;gap:16px}
+  .na-strip .pc{min-width:auto;width:100%}
   .cat-tiles{grid-template-columns:repeat(4,1fr);gap:12px;padding:16px 24px}
   .cat-tile{padding:14px 8px}
   .cat-tile-i{font-size:34px}
   .trust-bar{padding:0 24px 16px}
   .an{margin:0 24px 16px}
   .abt-card{margin:0 24px 16px}
-  /* products page */
   .mob-fbar{max-width:1280px;margin:0 auto;padding:10px 24px}
   .prod-layout{display:flex;align-items:flex-start;max-width:1280px;margin:0 auto}
   .sidebar{display:block;position:sticky;top:144px;max-height:calc(100vh - 160px);overflow-y:auto}
   .prod-main{flex:1;min-width:0}
   .prod-main .pgrid{grid-template-columns:repeat(4,1fr);gap:12px;padding:12px 16px}
   .desk-sortbar{display:flex;align-items:center;justify-content:space-between;padding:10px 16px;background:#fff;border-bottom:1px solid var(--cream3)}
-  /* cart/checkout max width */
   .cow{max-width:720px;margin:0 auto}
-  /* bottom nav hidden */
   .bnav{display:none}
   .toast{bottom:20px}
 }
@@ -979,6 +979,39 @@ const PRODS = [
     desc:'Celebrate Assamese heritage with this premium gold-tone bangle set. Features rich engraved designs, elegant craftsmanship, and timeless beauty. Perfect for Assamese weddings, Bihu, ethnic parties and cultural functions. Handcrafted with care, each piece reflects the rich artistry of Assam.',
     imgs:['https://images.meesho.com/images/products/913333530/wwcxa_512.avif?width=512','https://images.meesho.com/images/products/913333530/2yefm_512.avif?width=512','https://images.meesho.com/images/products/916529278/w51xg_512.avif?width=512'],
     sizes:['2.4','2.6 cm'], vis:true
+  },
+  {
+    id:'P10 NECKLACE Peacoc Green Red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
+    sn:'Junbiri Necklace Set', price:317, mrp:570, rat:4.0, rev:6,
+    cat:'Jewellery Set', occ:'Bihu, Cultural Programs, Weddings', type:'Necklace and Earrings',
+    metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
+    sizing:'Adjustable', trend:'Junbiri', color:'Multicolor', origin:'India', newArrival:false,
+    murl:'https://www.meesho.com/assamese-traditional-jewellery-set-for-women-girls/p/erj0rw?ms=2&source=Meri+Shop',
+    desc:'Inspired by rich Assamese heritage, this Junbiri necklace set features a beautifully crafted gold-tone chain with artistic pendant and hanging elements. Matching earrings complete the set. Ideal for Bihu celebrations, cultural programs and traditional occasions.',
+    imgs:['https://images.meesho.com/images/products/892763564/chykn_512.avif?width=512','https://images.meesho.com/images/products/892763564/jo5lz_512.avif?width=512','https://images.meesho.com/images/products/892763564/igjth_512.avif?width=512'],
+    sizes:['Free Size'], vis:true
+  },
+  {
+    id:'P11 NECKLACE square red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
+    sn:'Junbiri Necklace Set', price:250, mrp:399, rat:4.0, rev:6,
+    cat:'Jewellery Set', occ:'Bihu, Cultural Programs, Weddings', type:'Necklace and Earrings',
+    metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
+    sizing:'Adjustable', trend:'Junbiri', color:'Multicolor', origin:'India', newArrival:false,
+    murl:'https://www.meesho.com/assamese-traditional-jewellery-set-for-women-girls/p/ccbjsy?ms=2&source=Meri+Shop',
+    desc:'Inspired by rich Assamese heritage, this Junbiri necklace set features a beautifully crafted gold-tone chain with artistic pendant and hanging elements. Matching earrings complete the set. Ideal for Bihu celebrations, cultural programs and traditional occasions.',
+    imgs:['https://images.meesho.com/images/products/746288386/89a7y_512.avif?width=512','https://images.meesho.com/images/products/746288386/yljee_512.avif?width=512','https://images.meesho.com/images/products/746288386/ijq4n_512.avif?width=512'],
+    sizes:['Free Size'], vis:true
+  },
+  {
+    id:'P12 NECKLACE01 junibiri red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
+    sn:'Junbiri Necklace Set', price:250, mrp:399, rat:4.0, rev:6,
+    cat:'Jewellery Set', occ:'Bihu, Cultural Programs, Weddings', type:'Necklace and Earrings',
+    metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
+    sizing:'Adjustable', trend:'Junbiri', color:'Red', origin:'India', newArrival:false,
+    murl:'https://www.meesho.com/assamese-traditional-jewellery-set-for-women-girls-bihu-speacial/p/bezfjy?ms=2&source=Meri+Shop',
+    desc:'Inspired by rich Assamese heritage, this Junbiri necklace set features a beautifully crafted gold-tone chain with artistic pendant and hanging elements. Matching earrings complete the set. Ideal for Bihu celebrations, cultural programs and traditional occasions.',
+    imgs:['https://images.meesho.com/images/products/690295678/fak8g_512.avif?width=512','https://images.meesho.com/images/products/690295678/wcs02_512.avif?width=512','https://images.meesho.com/images/products/690295678/tbq64_512.avif?width=512'],
+    sizes:['Free Size'], vis:true
   }
 
 
