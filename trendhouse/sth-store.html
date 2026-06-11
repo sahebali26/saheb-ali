@@ -12,7 +12,6 @@
 <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1">
 <link rel="canonical" href="https://sahebali.site/trendhouse/store">
 
-
    <!-- ── FAVICON & ICONS ──────────────────────────────────────── -->
   <link rel="icon" type="image/png" sizes="32x32" href="image/STH-logo.png">
   <link rel="icon" type="image/png" sizes="16x16" href="image/STH-logo.png">
@@ -493,7 +492,6 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 }
 </style>
 </head>
-
 <body>
 
 <!-- ══════════════ HEADER ══════════════ -->
@@ -546,11 +544,11 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 <!-- ══════════════ CATEGORY NAV ══════════════ -->
 <div class="cat-nav" role="navigation" aria-label="Product categories">
   <div class="cat-nav-inner" id="cat-chip-row">
-    <button class="cat-chip on" onclick="navToFilter('all')" data-cat="all">🏠 All</button>
-    <button class="cat-chip" onclick="navToFilter('Bangles')" data-cat="Bangles">📿 Bangles</button>
-    <button class="cat-chip" onclick="navToFilter('Jewellery Set')" data-cat="Jewellery Set">💎 Necklace Sets</button>
-    <button class="cat-chip" onclick="navToFilter('Handbags')" data-cat="Handbags">👜 Handbags</button>
-    <button class="cat-chip" onclick="navToFilter('new')" data-cat="new">✨ New Arrivals</button>
+    <button class="cat-chip on" onclick="navToFilter('all')" data-cat="all">All</button>
+    <button class="cat-chip" onclick="navToFilter('Bangles')" data-cat="Bangles">Bangles</button>
+    <button class="cat-chip" onclick="navToFilter('Jewellery Set')" data-cat="Jewellery Set">Necklace Sets</button>
+    <button class="cat-chip" onclick="navToFilter('Handbags')" data-cat="Handbags">Handbags</button>
+    <button class="cat-chip" onclick="navToFilter('new')" data-cat="new">✨New Arrivals</button>
   </div>
 </div>
 
@@ -599,11 +597,11 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
   <!-- Category Tiles -->
   <div class="cat-tiles" role="list" aria-label="Shop by category">
     <div class="cat-tile" onclick="navToFilter('Bangles')" role="listitem">
-      <span class="cat-tile-i">📿</span>
+      <span class="cat-tile-i"> 💎 </span>
       <div class="cat-tile-n">Bangles</div>
     </div>
     <div class="cat-tile" onclick="navToFilter('Jewellery Set')" role="listitem">
-      <span class="cat-tile-i">💎</span>
+      <span class="cat-tile-i"> 📿 </span>
       <div class="cat-tile-n">Necklace Sets</div>
     </div>
     <div class="cat-tile" onclick="navToFilter('Handbags')" role="listitem">
@@ -618,8 +616,8 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 
   <!-- Trust Bar -->
   <div class="trust-bar" role="list" aria-label="Trust signals">
-    <div class="tb" role="listitem"><span class="tb-i">🪬</span>100% Authentic Assamese</div>
-    <div class="tb" role="listitem"><span class="tb-i">⭐</span>3.8 Seller Rating</div>
+    <div class="tb" role="listitem"><span class="tb-i">📿</span>100% Authentic Assamese</div>
+    <div class="tb" role="listitem"><span class="tb-i">⭐</span>4.1 Seller Rating</div>
     <div class="tb" role="listitem"><span class="tb-i">📦</span>Same-Day Local Delivery</div>
     <div class="tb" role="listitem"><span class="tb-i">🛍</span>Available on Meesho</div>
     <div class="tb" role="listitem"><span class="tb-i">🔒</span>Secure WhatsApp Orders</div>
@@ -659,12 +657,12 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
       <div class="abt-logo-fb" style="display:none">🏪</div>
       <div>
         <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--dark)">Saheb Trend House</div>
-        <div style="font-size:11px;color:var(--text3)">⭐ 3.8 · 40 Ratings · Abhayapuri, Assam</div>
+        <div style="font-size:11px;color:var(--text3)">⭐ 4.1 · 100+ Ratings · Abhayapuri, Assam</div>
       </div>
     </div>
     <div class="abt-grid">
       <div class="abt-stat"><div class="abt-val">25+</div><div class="abt-lbl">Products</div></div>
-      <div class="abt-stat"><div class="abt-val">3.8★</div><div class="abt-lbl">Rating</div></div>
+      <div class="abt-stat"><div class="abt-val">4.1★</div><div class="abt-lbl">Rating</div></div>
       <div class="abt-stat"><div class="abt-val">COD</div><div class="abt-lbl">Available</div></div>
     </div>
     <button class="btn bsm bfw" style="background:rgba(200,151,58,.1);color:var(--gold3);border:1px solid var(--gold3)"
@@ -1015,7 +1013,6 @@ const PRODS = [
   }
 
 
-
 ];
 
 // ── FILTER STATE ─────────────────────────────────
@@ -1033,20 +1030,102 @@ function saveSt(){
   localStorage.setItem('sth_w',JSON.stringify(wish));
 }
 
-// ── NAVIGATION ───────────────────────────────────
-function nav(p){
+// ═══════════════════ HISTORY API (BACK BUTTON FIX) ═══════════════════
+let isHandlingPop = false;
+
+function updateHistoryState(page, productId = null) {
+  if (isHandlingPop) return;
+  let url = `#${page}`;
+  if (page === 'product' && productId) url = `#product/${productId}`;
+  const state = { page, productId };
+  history.pushState(state, '', url);
+}
+
+function navigateToState(state) {
+  if (!state || !state.page) return;
+  const { page, productId } = state;
+  if (page === 'product' && productId) {
+    const prod = PRODS.find(p => p.id === productId);
+    if (prod) {
+      const idx = PRODS.indexOf(prod);
+      if (idx !== -1) openProdDirect(idx, false);
+      else nav('home');
+    } else nav('home');
+  } else {
+    nav(page, true);
+  }
+}
+
+function handlePopState(event) {
+  isHandlingPop = true;
+  if (event.state && event.state.page) {
+    navigateToState(event.state);
+  } else {
+    // fallback: parse hash or default home
+    const hash = window.location.hash.slice(1);
+    if (hash.startsWith('product/')) {
+      const pid = hash.split('/')[1];
+      const prod = PRODS.find(p => p.id === pid);
+      if (prod) {
+        const idx = PRODS.indexOf(prod);
+        if (idx !== -1) openProdDirect(idx, false);
+        else nav('home');
+      } else nav('home');
+    } else if (hash === 'products' || hash === 'cart' || hash === 'wishlist' || hash === 'checkout' || hash === 'success') {
+      nav(hash, true);
+    } else {
+      nav('home', true);
+    }
+  }
+  isHandlingPop = false;
+}
+
+window.addEventListener('popstate', handlePopState);
+// initial replace state to avoid duplicate history entry
+const initHash = window.location.hash.slice(1);
+if (initHash.startsWith('product/')) {
+  const pid = initHash.split('/')[1];
+  const prod = PRODS.find(p => p.id === pid);
+  if (prod) {
+    const idx = PRODS.indexOf(prod);
+    if (idx !== -1) {
+      history.replaceState({ page: 'product', productId: pid }, '', `#product/${pid}`);
+      openProdDirect(idx, false);
+    } else { history.replaceState({ page: 'home' }, '', '#home'); nav('home'); }
+  } else { history.replaceState({ page: 'home' }, '', '#home'); nav('home'); }
+} else if (['products','cart','wishlist','checkout','success'].includes(initHash)) {
+  history.replaceState({ page: initHash }, '', `#${initHash}`);
+  nav(initHash, true);
+} else {
+  history.replaceState({ page: 'home' }, '', '#home');
+  // already on home, but ensure correct display
+  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pg-home').classList.add('on');
+  curPg = 'home';
+}
+
+// ── NAVIGATION (enhanced with history) ───────────────────────────────────
+function nav(p, fromPop = false) {
+  // if same page and not pop, avoid re-push
+  if (curPg === p && !fromPop) return;
+  
   document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
   const el=document.getElementById('pg-'+p);
   if(el) el.classList.add('on');
   document.querySelectorAll('.bn').forEach(x=>x.classList.remove('on'));
   const bn=document.getElementById('bn-'+p);
   if(bn) bn.classList.add('on');
-  curPg=p; window.scrollTo(0,0);
+  curPg=p; 
+  if(!fromPop) window.scrollTo(0,0);
   if(p==='cart') renderCart();
   if(p==='checkout') renderCO();
   if(p==='wishlist') renderWish();
   if(p==='products') renderAllP();
   if(p==='home'){ renderHGrid(); renderNewArrivals(); }
+  
+  if (!fromPop && p !== 'product') {
+    updateHistoryState(p, null);
+  }
 }
 
 function navToFilter(cat){
@@ -1176,9 +1255,14 @@ function renderAllP(){
        </div>`;
 }
 
-// ── PRODUCT DETAIL ───────────────────────────────
+// ── PRODUCT DETAIL (history aware) ───────────────────────────────
 function openProd(idx){
+  openProdDirect(idx, true);
+}
+
+function openProdDirect(idx, pushHistory = true){
   curProd=PRODS[idx]; const p=curProd;
+  if(pushHistory) updateHistoryState('product', p.id);
   const o=off(p.price,p.mrp), sv=p.mrp-p.price;
   const emoji=p.cat==='Handbags'?'👜':'🪬';
   const validImgs=p.imgs.filter(i=>i&&i.length);
@@ -1248,8 +1332,12 @@ function openProd(idx){
       <button class="ctadd" onclick="addCart('${p.id}');toast('✓ Added!');nav('cart')">🛒 Add to Cart</button>
       <button class="ctbuy" onclick="addCart('${p.id}');nav('checkout')">⚡ Buy Now</button>
     </div>`;
-  document.getElementById('pd-back').onclick=()=>nav(curPg==='product'?'home':'home');
-  nav('product');
+  document.getElementById('pd-back').onclick=()=> window.history.back();
+  // switch to product page but don't push again
+  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+  document.getElementById('pg-product').classList.add('on');
+  document.querySelectorAll('.bn').forEach(x=>x.classList.remove('on'));
+  curPg = 'product';
 }
 
 function chImg(th,src){
@@ -1463,7 +1551,6 @@ renderBdg();
 renderHGrid();
 renderNewArrivals();
 
-// Load remote products from Google Sheets if sth-db.js is configured
 if(window.STH_DB && STH_DB.isConfigured()){
   STH_DB.load().then(remote=>{
     if(remote && remote.length) mergeProducts(remote);
