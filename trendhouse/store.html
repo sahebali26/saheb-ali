@@ -1439,6 +1439,7 @@ function spay(m){
   document.getElementById('upibox').style.display=m==='upi'?'block':'none';
 }
 
+// ── MODIFIED: ADDED PRODUCT ID AND COLOR IN WHATSAPP ORDER MESSAGE ──
 function placeOrder(){
   const nm=document.getElementById('fn').value.trim();
   const ph=document.getElementById('fp').value.trim();
@@ -1456,8 +1457,15 @@ function placeOrder(){
   const oid='STH'+Date.now().toString().slice(-7);
   const ds=new Date().toLocaleDateString('en-IN',{day:'2-digit',month:'short',year:'numeric'});
   const ts=new Date().toLocaleTimeString('en-IN',{hour:'2-digit',minute:'2-digit'});
-  const itms=cart.map(it=>{ const p=PRODS.find(x=>x.id===it.pid);
-    return `  • ${p?p.sn:it.pid} (Size: ${it.sz}) × ${it.qty} = ₹${p?(p.price*it.qty).toLocaleString('en-IN'):0}`;}).join('\n');
+  
+  // Modified item string: Added Product ID and Color
+  const itms=cart.map(it=>{ 
+    const p=PRODS.find(x=>x.id===it.pid);
+    if(!p) return '';
+    const colorVal = p.color ? p.color : 'N/A';
+    return `  • ${p.sn} (ID: ${p.id} | Color: ${colorVal} | Size: ${it.sz}) × ${it.qty} = ₹${(p.price*it.qty).toLocaleString('en-IN')}`;
+  }).join('\n');
+  
   const msg=`🛍️ *NEW ORDER – Saheb Trend House*\n━━━━━━━━━━━━━━━━\n📦 *Order ID:* ${oid}\n📅 *Date:* ${ds}, ${ts}\n\n👤 *CUSTOMER*\n━━━━━━━━━━━━━━━━\n• Name: ${nm}\n• Phone: ${ph}${em?'\n• Email: '+em:''}\n\n📍 *DELIVERY ADDRESS*\n━━━━━━━━━━━━━━━━\n• ${a1}\n• ${a2}${ld?'\n• Near: '+ld:''}\n• ${cy}, ${dt} – ${pn}\n\n🛒 *ITEMS ORDERED*\n━━━━━━━━━━━━━━━━\n${itms}\n\n💰 *PRICE SUMMARY*\n━━━━━━━━━━━━━━━━\n• Subtotal: ₹${sub.toLocaleString('en-IN')}\n• Discount: -₹${disc.toLocaleString('en-IN')}\n• Delivery: FREE 🎉\n• *TOTAL: ₹${tot.toLocaleString('en-IN')}*\n\n💳 *Payment:* ${payMode==='cod'?'Cash on Delivery':'UPI / Online'}\n\n━━━━━━━━━━━━━━━━\n✨ *Saheb Trend House*\n📍 Abhayapuri, Assam\nAuthentic Jewellery & Trendy Bags\n🌐 sahebali.site/trendhouse`;
   window.open('https://wa.me/'+WA+'?text='+encodeURIComponent(msg),'_blank');
   document.getElementById('swdet').innerHTML=`<b>Order ID:</b> ${oid}<br><b>Customer:</b> ${nm}<br><b>Phone:</b> ${ph}<br><b>Delivery:</b> ${cy}, ${dt}<br><b>Items:</b> ${cart.reduce((s,i)=>s+i.qty,0)} item(s)<br><b>Total:</b> ₹${tot.toLocaleString('en-IN')}<br><b>Payment:</b> ${payMode==='cod'?'Cash on Delivery':'UPI'}`;
