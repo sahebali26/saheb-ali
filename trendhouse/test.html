@@ -544,13 +544,15 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 <!-- ══════════════ CATEGORY NAV ══════════════ -->
 <div class="cat-nav" role="navigation" aria-label="Product categories">
   <div class="cat-nav-inner" id="cat-chip-row">
-    <button class="cat-chip on" onclick="navToFilter('all')" data-cat="all">🏠 All</button>
-    <button class="cat-chip" onclick="navToFilter('Bangles')" data-cat="Bangles">📿 Bangles</button>
-    <button class="cat-chip" onclick="navToFilter('Jewellery Set')" data-cat="Jewellery Set">💎 Necklace Sets</button>
-    <button class="cat-chip" onclick="navToFilter('Handbags')" data-cat="Handbags">👜 Handbags</button>
-    <button class="cat-chip" onclick="navToFilter('new')" data-cat="new">✨ New Arrivals</button>
+    <button class="cat-chip on" onclick="navToFilter('all')" data-cat="all">All</button>
+    <button class="cat-chip" onclick="navToFilter('Bangles')" data-cat="Bangles">Bangles</button>
+    <button class="cat-chip" onclick="navToFilter('Jewellery Set')" data-cat="Jewellery Set">Necklace Sets</button>
+    <button class="cat-chip" onclick="navToFilter('Handbags')" data-cat="Handbags">Handbags</button>
+    <button class="cat-chip" onclick="navToFilter('new')" data-cat="new">✨New Arrivals</button>
   </div>
 </div>
+
+
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -597,11 +599,11 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
   <!-- Category Tiles -->
   <div class="cat-tiles" role="list" aria-label="Shop by category">
     <div class="cat-tile" onclick="navToFilter('Bangles')" role="listitem">
-      <span class="cat-tile-i">📿</span>
+      <span class="cat-tile-i"> 💎 </span>
       <div class="cat-tile-n">Bangles</div>
     </div>
     <div class="cat-tile" onclick="navToFilter('Jewellery Set')" role="listitem">
-      <span class="cat-tile-i">💎</span>
+      <span class="cat-tile-i"> 📿 </span>
       <div class="cat-tile-n">Necklace Sets</div>
     </div>
     <div class="cat-tile" onclick="navToFilter('Handbags')" role="listitem">
@@ -616,8 +618,8 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
 
   <!-- Trust Bar -->
   <div class="trust-bar" role="list" aria-label="Trust signals">
-    <div class="tb" role="listitem"><span class="tb-i">🪬</span>100% Authentic Assamese</div>
-    <div class="tb" role="listitem"><span class="tb-i">⭐</span>3.8 Seller Rating</div>
+    <div class="tb" role="listitem"><span class="tb-i">📿</span>100% Authentic Assamese</div>
+    <div class="tb" role="listitem"><span class="tb-i">⭐</span>4.1 Seller Rating</div>
     <div class="tb" role="listitem"><span class="tb-i">📦</span>Same-Day Local Delivery</div>
     <div class="tb" role="listitem"><span class="tb-i">🛍</span>Available on Meesho</div>
     <div class="tb" role="listitem"><span class="tb-i">🔒</span>Secure WhatsApp Orders</div>
@@ -657,12 +659,12 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
       <div class="abt-logo-fb" style="display:none">🏪</div>
       <div>
         <div style="font-family:'Playfair Display',serif;font-size:15px;font-weight:700;color:var(--dark)">Saheb Trend House</div>
-        <div style="font-size:11px;color:var(--text3)">⭐ 3.8 · 40 Ratings · Abhayapuri, Assam</div>
+        <div style="font-size:11px;color:var(--text3)">⭐ 4.1 · 100+ Ratings · Abhayapuri, Assam</div>
       </div>
     </div>
     <div class="abt-grid">
       <div class="abt-stat"><div class="abt-val">25+</div><div class="abt-lbl">Products</div></div>
-      <div class="abt-stat"><div class="abt-val">3.8★</div><div class="abt-lbl">Rating</div></div>
+      <div class="abt-stat"><div class="abt-val">4.1★</div><div class="abt-lbl">Rating</div></div>
       <div class="abt-stat"><div class="abt-val">COD</div><div class="abt-lbl">Available</div></div>
     </div>
     <button class="btn bsm bfw" style="background:rgba(200,151,58,.1);color:var(--gold3);border:1px solid var(--gold3)"
@@ -1104,26 +1106,29 @@ if (initHash.startsWith('product/')) {
   curPg = 'home';
 }
 
-// ── NAVIGATION (enhanced with history) ───────────────────────────────────
+// ── NAVIGATION (enhanced with history & FIXED for category re-use) ──
 function nav(p, fromPop = false) {
-  // if same page and not pop, avoid re-push
-  if (curPg === p && !fromPop) return;
+  const pageChanged = (curPg !== p);
   
-  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
-  const el=document.getElementById('pg-'+p);
-  if(el) el.classList.add('on');
-  document.querySelectorAll('.bn').forEach(x=>x.classList.remove('on'));
-  const bn=document.getElementById('bn-'+p);
-  if(bn) bn.classList.add('on');
-  curPg=p; 
-  if(!fromPop) window.scrollTo(0,0);
+  if (pageChanged) {
+    document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+    const el=document.getElementById('pg-'+p);
+    if(el) el.classList.add('on');
+    document.querySelectorAll('.bn').forEach(x=>x.classList.remove('on'));
+    const bn=document.getElementById('bn-'+p);
+    if(bn) bn.classList.add('on');
+    curPg=p; 
+    if(!fromPop) window.scrollTo(0,0);
+  }
+  
+  // Render logic always runs if needed (fixes category filter not re-rendering)
   if(p==='cart') renderCart();
-  if(p==='checkout') renderCO();
-  if(p==='wishlist') renderWish();
-  if(p==='products') renderAllP();
-  if(p==='home'){ renderHGrid(); renderNewArrivals(); }
+  else if(p==='checkout') renderCO();
+  else if(p==='wishlist') renderWish();
+  else if(p==='products') renderAllP();
+  else if(p==='home'){ renderHGrid(); renderNewArrivals(); }
   
-  if (!fromPop && p !== 'product') {
+  if (!fromPop && pageChanged) {
     updateHistoryState(p, null);
   }
 }

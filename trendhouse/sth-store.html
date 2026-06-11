@@ -533,12 +533,6 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
     <button class="hsb" onclick="doSearch(document.getElementById('srchM').value)">Search</button>
   </div>
 
-  <div class="lb">
-    <span aria-hidden="true">📍</span>
-    <span>Local: <strong>Abhayapuri &amp; nearby</strong> &nbsp;·&nbsp; 
-      All-India: <a href="https://www.meesho.com/SahebTrendHouse?ms=2" target="_blank" rel="noopener" 
-         style="color:var(--gold);text-decoration:underline">Meesho ↗</a></span>
-  </div>
 </header>
 
 <!-- ══════════════ CATEGORY NAV ══════════════ -->
@@ -551,6 +545,8 @@ header{background:var(--dark);position:sticky;top:0;z-index:200;box-shadow:0 2px
     <button class="cat-chip" onclick="navToFilter('new')" data-cat="new">✨New Arrivals</button>
   </div>
 </div>
+
+
 
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
@@ -1104,26 +1100,29 @@ if (initHash.startsWith('product/')) {
   curPg = 'home';
 }
 
-// ── NAVIGATION (enhanced with history) ───────────────────────────────────
+// ── NAVIGATION (enhanced with history & FIXED for category re-use) ──
 function nav(p, fromPop = false) {
-  // if same page and not pop, avoid re-push
-  if (curPg === p && !fromPop) return;
+  const pageChanged = (curPg !== p);
   
-  document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
-  const el=document.getElementById('pg-'+p);
-  if(el) el.classList.add('on');
-  document.querySelectorAll('.bn').forEach(x=>x.classList.remove('on'));
-  const bn=document.getElementById('bn-'+p);
-  if(bn) bn.classList.add('on');
-  curPg=p; 
-  if(!fromPop) window.scrollTo(0,0);
+  if (pageChanged) {
+    document.querySelectorAll('.pg').forEach(x=>x.classList.remove('on'));
+    const el=document.getElementById('pg-'+p);
+    if(el) el.classList.add('on');
+    document.querySelectorAll('.bn').forEach(x=>x.classList.remove('on'));
+    const bn=document.getElementById('bn-'+p);
+    if(bn) bn.classList.add('on');
+    curPg=p; 
+    if(!fromPop) window.scrollTo(0,0);
+  }
+  
+  // Render logic always runs if needed (fixes category filter not re-rendering)
   if(p==='cart') renderCart();
-  if(p==='checkout') renderCO();
-  if(p==='wishlist') renderWish();
-  if(p==='products') renderAllP();
-  if(p==='home'){ renderHGrid(); renderNewArrivals(); }
+  else if(p==='checkout') renderCO();
+  else if(p==='wishlist') renderWish();
+  else if(p==='products') renderAllP();
+  else if(p==='home'){ renderHGrid(); renderNewArrivals(); }
   
-  if (!fromPop && p !== 'product') {
+  if (!fromPop && pageChanged) {
     updateHistoryState(p, null);
   }
 }
