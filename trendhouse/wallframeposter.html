@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+  <meta name="description" content="Saheb Trend House – Premium 13×8 inch Wall Frame Posters. Islamic, Motivational & Custom Frames. All India Delivery, COD. Order via WhatsApp, Meesho or Flipkart.">
+  <meta name="keywords" content="wall frame, motivational frame, Islamic wall frame, custom photo frame, 13x8 inch frame, Saheb Trend House, Assam, home decor, wall decor India">
+  <meta name="author" content="Saheb Trend House">
+  <meta name="geo.region" content="IN-AS">
+  <meta name="geo.placename" content="Abhayapuri, Assam, India">
+  <meta property="og:title" content="Wall Frame Posters | Saheb Trend House">
+  <meta property="og:description" content="Premium 13×8 inch Wall Frames – Islamic, Motivational & Custom. All India Delivery. Order via WhatsApp, Meesho or Flipkart.">
+  <meta property="og:image" content="https://www.sahebali.site/trendhouse/image/STH-logo.png">
+  <meta property="og:url" content="https://www.sahebali.site/trendhouse/wallframeposter.html">
+  <meta property="og:type" content="website">
+  <title>Wall Frame Posters | Saheb Trend House</title>
+  <link rel="icon" href="https://www.sahebali.site/trendhouse/image/STH-logo.png">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    /* ========== VARIABLES ========== */
+    :root {
+      --bg:           #09090f;
+      --surface:      #121219;
+      --card:         #1b1b26;
+      --card-hover:   #222232;
+      --gold:         #c9a45a;
+      --gold-light:   #e8c97a;
+      --gold-dim:     rgba(201,164,90,.12);
+      --border:       rgba(201,164,90,.18);
+      --border-s:     rgba(201,164,90,.38);
+      --text:         #f0ede8;
+      --text-s:       #c8c0b8;
+      --text-m:       #8e8479;
+      --meesho:       #f43262;
+      --flipkart:     #2874f0;
+      --wa:           #25d366;
+      --r:            12px;
+      --rl:           20px;
+      --sh:           0 8px 40px rgba(0,0,0,.5);
+      --sg:           0 8px 32px rgba(201,164,90,.18);
+      --ease:         .3s ease;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+    img { max-width: 100%; height: auto; display: block; }
+    a { text-decoration: none; color: inherit; }
+
+    /* ========== LAYOUT ========== */
+    .wrap { max-width: 1160px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 88px 0; }
+
+    /* ========== NAVBAR ========== */
+    .nav {
+      position: sticky; top: 0; z-index: 200;
+      background: rgba(9,9,15,.94);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 20px;
+      display: flex; align-items: center; justify-content: space-between;
+      height: 66px;
+    }
+    .nav-brand { display: flex; align-items: center; gap: 11px; }
+    .nav-brand img {
+      width: 40px; height: 40px;
+      border-radius: 50%; object-fit: contain;
+      border: 1.5px solid var(--border-s);
+    }
+    .nav-brand-text { display: flex; flex-direction: column; }
+    .nav-brand-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; font-weight: 600;
+      color: var(--gold); letter-spacing: .4px;
+    }
+    .nav-brand-sub {
+      font-size: 9.5px; color: var(--text-m);
+      letter-spacing: 1.6px; text-transform: uppercase;
+    }
+    .nav-links {
+      display: flex; align-items: center;
+      gap: 26px; list-style: none;
+    }
+    .nav-links a {
+      font-size: 13.5px; color: var(--text-s);
+      transition: color var(--ease); font-weight: 400;
+    }
+    .nav-links a:hover { color: var(--gold); }
+    .nav-wa {
+      display: flex; align-items: center; gap: 7px;
+      background: var(--wa); color: #fff !important;
+      padding: 8px 16px; border-radius: 50px;
+      font-size: 13px; font-weight: 600;
+      transition: all var(--ease);
+    }
+    .nav-wa:hover { background: #1aad52; transform: translateY(-1px); box-shadow: 0 4px 16px rgba(37,211,102,.35); }
+
+    /* Hamburger */
+    .ham { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 6px; }
+    .ham span { display: block; width: 24px; height: 2px; background: var(--gold); border-radius: 2px; transition: all .3s; }
+    .ham.open span:nth-child(1) { transform: rotate(45deg) translate(5px,5px); }
+    .ham.open span:nth-child(2) { opacity: 0; }
+    .ham.open span:nth-child(3) { transform: rotate(-45deg) translate(5px,-5px); }
+
+    /* Mobile Menu */
+    .mob-menu {
+      display: none;
+      position: fixed; top: 66px; left: 0; right: 0;
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 20px; z-index: 190;
+      flex-direction: column; gap: 4px;
+    }
+    .mob-menu.open { display: flex; }
+    .mob-menu a {
+      padding: 12px 8px;
+      border-bottom: 1px solid var(--border);
+      font-size: 15px; color: var(--text-s);
+      display: flex; align-items: center; gap: 10px;
+      transition: color var(--ease);
+    }
+    .mob-menu a:hover { color: var(--gold); }
+    .mob-menu a:last-child { border: none; margin-top: 8px; }
+    .mob-wa-btn {
+      background: var(--wa) !important;
+      color: #fff !important; text-align: center !important;
+      justify-content: center !important; border-radius: 10px !important;
+      font-weight: 600 !important; border: none !important;
+    }
+
+    /* ========== HERO ========== */
+    .hero {
+      min-height: 88vh; display: flex; align-items: center;
+      background: linear-gradient(140deg, #09090f 0%, #1a1408 45%, #09090f 100%);
+      position: relative; overflow: hidden;
+      padding: 80px 20px;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; top: -180px; right: -180px;
+      width: 640px; height: 640px;
+      background: radial-gradient(circle, rgba(201,164,90,.1) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero::after {
+      content: '';
+      position: absolute; bottom: -100px; left: -80px;
+      width: 460px; height: 460px;
+      background: radial-gradient(circle, rgba(201,164,90,.06) 0%, transparent 68%);
+      pointer-events: none;
+    }
+    .hero-content { max-width: 680px; animation: fadeUp .8s ease; position: relative; z-index: 1; }
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: var(--gold-dim); border: 1px solid var(--border-s);
+      color: var(--gold); padding: 6px 16px; border-radius: 50px;
+      font-size: 11px; font-weight: 600; letter-spacing: 1.4px;
+      text-transform: uppercase; margin-bottom: 26px;
+    }
+    .hero h1 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(42px,6vw,72px);
+      font-weight: 300; color: var(--text);
+      line-height: 1.08; margin-bottom: 14px;
+    }
+    .hero h1 em { color: var(--gold); font-style: italic; font-weight: 400; }
+    .hero-size {
+      display: inline-block; background: var(--gold);
+      color: var(--bg); font-size: 11.5px; font-weight: 700;
+      padding: 5px 14px; border-radius: 4px;
+      margin-bottom: 18px; letter-spacing: 1.2px;
+    }
+    .hero-sub {
+      font-size: 17px; color: var(--text-s);
+      margin-bottom: 30px; font-weight: 300;
+      max-width: 510px; line-height: 1.7;
+    }
+    .hero-cats { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 36px; }
+    .hero-cat {
+      background: rgba(255,255,255,.04); border: 1px solid var(--border);
+      color: var(--text-s); padding: 6px 15px; border-radius: 50px; font-size: 13px;
+    }
+    .hero-btns { display: flex; gap: 14px; flex-wrap: wrap; }
+
+    /* Buttons */
+    .btn-gold {
+      background: var(--gold); color: var(--bg);
+      padding: 13px 30px; border-radius: 50px;
+      font-weight: 600; font-size: 14.5px;
+      transition: all var(--ease);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-gold:hover { background: var(--gold-light); transform: translateY(-2px); box-shadow: var(--sg); }
+    .btn-ghost {
+      background: transparent; color: var(--text);
+      padding: 13px 30px; border-radius: 50px;
+      font-weight: 500; font-size: 14.5px;
+      border: 1px solid var(--border-s);
+      transition: all var(--ease);
+      display: inline-flex; align-items: center; gap: 8px;
+    }
+    .btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-2px); }
+
+    /* ========== TRUST BAR ========== */
+    .trust {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      padding: 22px 20px;
+    }
+    .trust-inner {
+      display: flex; justify-content: center;
+      align-items: center; gap: 44px; flex-wrap: wrap;
+    }
+    .trust-item { display: flex; align-items: center; gap: 10px; }
+    .trust-ico { font-size: 24px; line-height: 1; }
+    .trust-label strong { display: block; font-size: 13.5px; font-weight: 600; color: var(--text); }
+    .trust-label span { font-size: 11.5px; color: var(--text-m); }
+
+    /* ========== SECTION HEADER ========== */
+    .sec-head { text-align: center; margin-bottom: 56px; }
+    .sec-tag {
+      display: inline-block; color: var(--gold);
+      font-size: 11px; font-weight: 600;
+      letter-spacing: 3px; text-transform: uppercase; margin-bottom: 10px;
+    }
+    .sec-head h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(36px,5vw,54px);
+      font-weight: 300; color: var(--text);
+    }
+    .sec-head h2 em { color: var(--gold); font-style: italic; }
+    .sec-head p { font-size: 15.5px; color: var(--text-m); margin-top: 10px; max-width: 500px; margin-left: auto; margin-right: auto; }
+
+    /* ========== PRODUCTS ========== */
+    .products-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(310px,1fr));
+      gap: 26px;
+    }
+    .p-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--rl); overflow: hidden;
+      transition: all var(--ease); position: relative;
+    }
+    .p-card:hover {
+      border-color: var(--border-s);
+      transform: translateY(-5px);
+      box-shadow: var(--sg);
+    }
+    .p-img-wrap {
+      position: relative; overflow: hidden;
+      aspect-ratio: 13/8; background: #141420;
+    }
+    .p-img-wrap img {
+      width: 100%; height: 100%; object-fit: cover;
+      transition: transform .5s ease;
+    }
+    .p-card:hover .p-img-wrap img { transform: scale(1.06); }
+    .p-badge {
+      position: absolute; top: 13px; left: 13px;
+      background: var(--gold); color: var(--bg);
+      font-size: 10px; font-weight: 700;
+      padding: 4px 10px; border-radius: 4px;
+      letter-spacing: .9px; text-transform: uppercase; z-index: 1;
+    }
+    .p-badge.bs  { background: var(--meesho); color: #fff; }
+    .p-badge.mot { background: #0d9488; color: #fff; }
+    .p-badge.cus { background: #7c3aed; color: #fff; }
+
+    .p-body { padding: 22px; }
+    .p-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px; font-weight: 600;
+      color: var(--text); margin-bottom: 7px; line-height: 1.3;
+    }
+    .p-desc { font-size: 13px; color: var(--text-m); line-height: 1.65; margin-bottom: 14px; }
+    .p-specs { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 16px; }
+    .spec {
+      background: var(--gold-dim); border: 1px solid var(--border);
+      color: var(--gold); font-size: 11px; padding: 3px 10px; border-radius: 4px;
+    }
+    .p-price { display: flex; align-items: baseline; gap: 9px; margin-bottom: 18px; }
+    .p-now {
+      font-size: 28px; font-weight: 700; color: var(--gold);
+      font-family: 'Cormorant Garamond', serif;
+    }
+    .p-mrp { font-size: 15px; color: var(--text-m); text-decoration: line-through; }
+    .p-off {
+      background: rgba(37,211,102,.15); color: var(--wa);
+      font-size: 11px; font-weight: 600; padding: 2px 8px; border-radius: 4px;
+    }
+    .p-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .p-btns .span2 { grid-column: 1/-1; }
+    .btn-o {
+      display: flex; align-items: center; justify-content: center;
+      gap: 6px; padding: 11px 10px;
+      border-radius: 8px; font-size: 13px; font-weight: 600;
+      cursor: pointer; transition: all var(--ease);
+      border: none; text-decoration: none;
+    }
+    .btn-o:hover { transform: translateY(-1px); box-shadow: var(--sh); }
+    .btn-mee {
+      background: rgba(244,50,98,.1); border: 1px solid rgba(244,50,98,.3);
+      color: var(--meesho);
+    }
+    .btn-mee:hover { background: rgba(244,50,98,.18); }
+    .btn-flip {
+      background: rgba(40,116,240,.1); border: 1px solid rgba(40,116,240,.3);
+      color: var(--flipkart);
+    }
+    .btn-flip:hover { background: rgba(40,116,240,.18); }
+    .btn-wa-g { background: var(--wa); color: #fff; }
+    .btn-wa-g:hover { background: #1aad52; box-shadow: 0 4px 20px rgba(37,211,102,.32); }
+
+    /* Frame preview cards (CSS art frames) */
+    .frame-preview {
+      width: 100%; height: 100%;
+      display: flex; align-items: center; justify-content: center;
+      flex-direction: column; gap: 10px;
+      padding: 20px; text-align: center;
+    }
+    .fp-mot {
+      background: linear-gradient(135deg, #0a1628 0%, #0d2240 50%, #0a1628 100%);
+    }
+    .fp-spi {
+      background: linear-gradient(135deg, #1a0f2e 0%, #2d1b5e 50%, #1a0f2e 100%);
+    }
+    .fp-cus {
+      background: linear-gradient(135deg, #0f1a0a 0%, #1a2e14 50%, #0f1a0a 100%);
+    }
+    .fp-icon { font-size: 48px; }
+    .fp-title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 17px; color: var(--gold); font-style: italic;
+    }
+    .fp-hint { font-size: 12px; color: var(--text-m); }
+
+    /* ========== CUSTOM ORDER ========== */
+    .custom-sec {
+      background: linear-gradient(135deg, #09090f 0%, #180f03 50%, #09090f 100%);
+      position: relative; overflow: hidden;
+    }
+    .custom-sec::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23c9a45a' fill-opacity='0.03'%3E%3Crect x='26' y='26' width='8' height='8'/%3E%3C/g%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .custom-grid {
+      display: grid; grid-template-columns: 1fr 1fr;
+      gap: 60px; align-items: start; position: relative; z-index: 1;
+    }
+    .cust-info h2 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(34px,4.5vw,52px);
+      font-weight: 300; line-height: 1.15; margin-bottom: 18px;
+    }
+    .cust-info h2 em { color: var(--gold); font-style: italic; }
+    .cust-info p { font-size: 15.5px; color: var(--text-m); line-height: 1.8; margin-bottom: 26px; }
+    .cust-feats { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+    .cust-feats li {
+      display: flex; align-items: center; gap: 12px;
+      font-size: 14px; color: var(--text-s);
+    }
+    .check {
+      width: 22px; height: 22px; flex-shrink: 0;
+      background: rgba(37,211,102,.14); color: var(--wa);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 11.5px; font-weight: 700;
+    }
+
+    /* Upload Form */
+    .up-form {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--rl); padding: 30px;
+    }
+    .up-form h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; margin-bottom: 22px; color: var(--text);
+    }
+    .up-area {
+      border: 2px dashed var(--border-s); border-radius: var(--r);
+      padding: 28px 20px; text-align: center; cursor: pointer;
+      transition: all var(--ease); position: relative; margin-bottom: 18px;
+      background: transparent;
+    }
+    .up-area:hover, .up-area.drag { border-color: var(--gold); background: var(--gold-dim); }
+    .up-area input[type="file"] {
+      position: absolute; inset: 0; opacity: 0;
+      cursor: pointer; width: 100%; height: 100%;
+    }
+    .up-ico { font-size: 44px; margin-bottom: 10px; }
+    .up-txt { font-size: 14.5px; color: var(--text-s); margin-bottom: 6px; }
+    .up-hint { font-size: 12px; color: var(--text-m); }
+
+    #preview-wrap { display: none; margin-bottom: 18px; }
+    #preview-img {
+      width: 100%; max-height: 190px; object-fit: cover;
+      border-radius: var(--r); border: 1px solid var(--border);
+    }
+    #preview-name { font-size: 11.5px; color: var(--wa); margin-top: 7px; text-align: center; }
+
+    .fg { margin-bottom: 14px; }
+    .fg label {
+      display: block; font-size: 11px; font-weight: 600;
+      color: var(--text-m); letter-spacing: .5px;
+      text-transform: uppercase; margin-bottom: 6px;
+    }
+    .fg input, .fg select, .fg textarea {
+      width: 100%; background: var(--surface); border: 1px solid var(--border);
+      color: var(--text); padding: 11px 14px;
+      border-radius: var(--r); font-family: 'DM Sans', sans-serif;
+      font-size: 13.5px; transition: border-color var(--ease); outline: none;
+    }
+    .fg input:focus, .fg select:focus, .fg textarea:focus { border-color: var(--gold); }
+    .fg select option { background: var(--surface); }
+    .fg-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+
+    /* ========== STEPS ========== */
+    .steps-sec { background: var(--surface); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(3,1fr);
+      gap: 32px; position: relative;
+    }
+    .steps-grid::before {
+      content: '';
+      position: absolute; top: 43px;
+      left: calc(16.67% + 20px); right: calc(16.67% + 20px);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .step { text-align: center; position: relative; z-index: 1; }
+    .step-num {
+      width: 86px; height: 86px;
+      background: var(--card); border: 2px solid var(--gold);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-size: 34px; margin: 0 auto 20px;
+      transition: all var(--ease);
+      box-shadow: 0 0 0 7px var(--surface);
+    }
+    .step:hover .step-num { background: var(--gold-dim); transform: scale(1.06); }
+    .step h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 21px; margin-bottom: 8px;
+    }
+    .step p { font-size: 13.5px; color: var(--text-m); line-height: 1.65; }
+
+    /* ========== PLATFORMS ========== */
+    .plat-sec { background: var(--bg); }
+    .plat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; }
+    .plat-card {
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--rl); padding: 36px; text-align: center;
+      transition: all var(--ease);
+    }
+    .plat-card:hover { transform: translateY(-4px); border-color: var(--border-s); box-shadow: var(--sg); }
+    .plat-ico { font-size: 44px; margin-bottom: 12px; }
+    .plat-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; margin-bottom: 6px;
+    }
+    .plat-live {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 12px; color: var(--wa); margin-bottom: 14px;
+    }
+    .plat-live::before {
+      content: ''; width: 7px; height: 7px;
+      background: var(--wa); border-radius: 50%;
+      animation: blink 2s infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1}50%{opacity:.3} }
+    .plat-desc { font-size: 13.5px; color: var(--text-m); margin-bottom: 22px; line-height: 1.65; }
+
+    /* ========== FOOTER ========== */
+    .footer {
+      background: var(--surface);
+      border-top: 1px solid var(--border);
+      padding: 64px 20px 28px;
+    }
+    .foot-grid {
+      display: grid; grid-template-columns: 2fr 1fr 1.2fr;
+      gap: 48px; margin-bottom: 48px;
+    }
+    .foot-brand img {
+      width: 54px; height: 54px; object-fit: contain;
+      border-radius: 50%; border: 2px solid var(--border-s); margin-bottom: 14px;
+    }
+    .foot-bname {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 22px; color: var(--gold); margin-bottom: 8px;
+    }
+    .foot-bdesc { font-size: 13px; color: var(--text-m); line-height: 1.75; margin-bottom: 18px; }
+    .socials { display: flex; gap: 10px; }
+    .soc {
+      width: 38px; height: 38px; background: var(--card);
+      border: 1px solid var(--border); border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 17px; transition: all var(--ease);
+    }
+    .soc:hover { border-color: var(--gold); transform: translateY(-2px); }
+    .foot-col h4 {
+      font-size: 13.5px; font-weight: 600; color: var(--text);
+      letter-spacing: .4px; margin-bottom: 16px;
+    }
+    .foot-col ul { list-style: none; display: flex; flex-direction: column; gap: 9px; }
+    .foot-col a { font-size: 13px; color: var(--text-m); transition: color var(--ease); }
+    .foot-col a:hover { color: var(--gold); }
+    .ci { display: flex; align-items: flex-start; gap: 10px; margin-bottom: 12px; }
+    .ci-ico {
+      width: 30px; height: 30px; flex-shrink: 0;
+      background: var(--gold-dim); border-radius: 6px;
+      display: flex; align-items: center; justify-content: center; font-size: 13px;
+    }
+    .ci-txt { font-size: 12.5px; color: var(--text-m); line-height: 1.55; }
+    .ci-txt strong { display: block; font-size: 13px; color: var(--text-s); }
+    .foot-bottom {
+      border-top: 1px solid var(--border); padding-top: 22px;
+      display: flex; justify-content: space-between; align-items: center;
+      flex-wrap: wrap; gap: 10px;
+      font-size: 12px; color: var(--text-m);
+    }
+    .foot-bottom a { color: var(--gold); }
+
+    /* ========== FLOATING WA ========== */
+    .wa-float {
+      position: fixed; bottom: 26px; right: 26px; z-index: 300;
+      width: 58px; height: 58px; border-radius: 50%;
+      background: var(--wa); color: #fff;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 28px;
+      box-shadow: 0 4px 22px rgba(37,211,102,.45);
+      transition: all var(--ease);
+      animation: floatBounce 3s ease-in-out infinite;
+    }
+    .wa-float:hover { transform: scale(1.12); box-shadow: 0 6px 30px rgba(37,211,102,.6); }
+    @keyframes floatBounce {
+      0%,100%{transform:translateY(0)}50%{transform:translateY(-7px)}
+    }
+    .wa-tooltip {
+      position: absolute; right: 68px; top: 50%; transform: translateY(-50%);
+      background: var(--wa); color: #fff;
+      font-size: 12px; font-weight: 600; white-space: nowrap;
+      padding: 6px 12px; border-radius: 50px;
+      opacity: 0; transition: opacity .3s;
+      pointer-events: none;
+    }
+    .wa-float:hover .wa-tooltip { opacity: 1; }
+
+    /* ========== MODAL ========== */
+    .modal-bg {
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,.75); z-index: 500;
+      align-items: center; justify-content: center; padding: 20px;
+    }
+    .modal-bg.open { display: flex; }
+    .modal {
+      background: var(--card); border: 1px solid var(--border-s);
+      border-radius: var(--rl); padding: 34px;
+      max-width: 460px; width: 100%;
+      animation: fadeUp .3s ease; position: relative;
+    }
+    .modal-close {
+      position: absolute; top: 14px; right: 16px;
+      background: none; border: none; color: var(--text-m);
+      font-size: 22px; cursor: pointer; line-height: 1;
+      transition: color var(--ease);
+    }
+    .modal-close:hover { color: var(--text); }
+    .modal h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 26px; margin-bottom: 10px;
+    }
+    .modal p { font-size: 14px; color: var(--text-m); line-height: 1.65; margin-bottom: 22px; }
+    .modal-note {
+      background: rgba(37,211,102,.08); border: 1px solid rgba(37,211,102,.25);
+      border-radius: 8px; padding: 12px 14px;
+      font-size: 12.5px; color: var(--wa); margin-bottom: 20px; line-height: 1.6;
+    }
+    .modal-btns { display: flex; gap: 12px; }
+    .btn-cancel {
+      background: transparent; border: 1px solid var(--border);
+      color: var(--text-m); padding: 12px 22px;
+      border-radius: 8px; cursor: pointer;
+      font-family: 'DM Sans', sans-serif; font-size: 14px;
+      transition: all var(--ease);
+    }
+    .btn-cancel:hover { border-color: var(--gold); color: var(--text); }
+    .btn-wa-modal {
+      flex: 1; background: var(--wa); color: #fff;
+      padding: 12px 22px; border-radius: 8px;
+      cursor: pointer; font-family: 'DM Sans', sans-serif;
+      font-size: 14px; font-weight: 600; border: none;
+      display: flex; align-items: center; justify-content: center;
+      gap: 8px; transition: all var(--ease);
+      text-decoration: none;
+    }
+    .btn-wa-modal:hover { background: #1aad52; }
+
+    /* ========== ANIMATIONS ========== */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(22px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .fi { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .fi.vis { opacity: 1; transform: translateY(0); }
+    .fi-d1 { transition-delay: .1s; }
+    .fi-d2 { transition-delay: .2s; }
+    .fi-d3 { transition-delay: .3s; }
+
+    /* ========== RESPONSIVE ========== */
+    @media (max-width: 920px) {
+      .nav-links { display: none; }
+      .ham { display: flex; }
+      .custom-grid { grid-template-columns: 1fr; }
+      .steps-grid { grid-template-columns: 1fr; }
+      .steps-grid::before { display: none; }
+      .plat-grid { grid-template-columns: 1fr; }
+      .foot-grid { grid-template-columns: 1fr; gap: 32px; }
+      .foot-bottom { flex-direction: column; text-align: center; }
+    }
+    @media (max-width: 620px) {
+      section { padding: 60px 0; }
+      .hero { min-height: 80vh; padding: 60px 20px; }
+      .hero h1 { font-size: 38px; }
+      .products-grid { grid-template-columns: 1fr; }
+      .trust-inner { gap: 20px; }
+      .fg-row { grid-template-columns: 1fr; }
+      .hero-btns { flex-direction: column; }
+      .hero-btns > a { text-align: center; justify-content: center; }
+    }
+    @media (max-width: 380px) {
+      .nav-brand-name { font-size: 15px; }
+      .nav-brand-sub { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== NAVBAR ===== -->
+<nav class="nav">
+  <a href="#home" class="nav-brand">
+    <img src="https://www.sahebali.site/trendhouse/image/STH-logo.png" alt="Saheb Trend House" 
+         onerror="this.style.display='none'">
+    <div class="nav-brand-text">
+      <span class="nav-brand-name">Saheb Trend House</span>
+      <span class="nav-brand-sub">Wall Frame Posters</span>
+    </div>
+  </a>
+
+  <ul class="nav-links">
+    <li><a href="#home">Home</a></li>
+    <li><a href="#products">Products</a></li>
+    <li><a href="#custom">Custom Frame</a></li>
+    <li><a href="#contact">Contact</a></li>
+    <li>
+      <a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House%21+%F0%9F%96%BC%0AI+want+to+enquire+about+Wall+Frame+Posters.+Please+share+latest+collection+and+prices." 
+         target="_blank" class="nav-wa">
+        💬 WhatsApp
+      </a>
+    </li>
+  </ul>
+
+  <div class="ham" id="ham" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
+  </div>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mob-menu" id="mobMenu">
+  <a href="#home"     onclick="closeMenu()">🏠 Home</a>
+  <a href="#products" onclick="closeMenu()">🖼️ Products</a>
+  <a href="#custom"   onclick="closeMenu()">🎨 Custom Frame</a>
+  <a href="#contact"  onclick="closeMenu()">📞 Contact</a>
+  <a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House!" 
+     target="_blank" class="mob-wa-btn">💬 Order on WhatsApp</a>
+</div>
+
+<!-- ===== HERO ===== -->
+<section class="hero" id="home">
+  <div class="wrap">
+    <div class="hero-content">
+      <div class="hero-eyebrow">
+        <span>🖼️</span>SAHEB TREND HOUSE — OFFICIAL WALL FRAME STORE
+      </div>
+      <h1>Premium<br><em>Wall Frames</em><br>for Every Space</h1>
+      <div class="hero-size">📏 13 × 8 INCH STANDARD SIZE</div>
+      <p class="hero-sub">
+        Elevate your home, office or prayer room with handpicked Islamic art, 
+        motivational quotes, and fully custom photo frames — delivered all across India.
+      </p>
+      <div class="hero-cats">
+        <span class="hero-cat">🕌 Islamic</span>
+        <span class="hero-cat">💪 Motivational</span>
+        <span class="hero-cat">📸 Custom Photo</span>
+        <span class="hero-cat">🌸 Aesthetic</span>
+      </div>
+      <div class="hero-btns">
+        <a href="#products" class="btn-gold">🛍️ Browse Collection</a>
+        <a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House!+%F0%9F%96%BC%0A%0AI+want+to+enquire+about+your+Wall+Frame+Posters.+Please+share+available+designs%2C+prices+and+delivery+details.+Thank+you!" 
+           target="_blank" class="btn-ghost">💬 Chat with Us</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST BAR ===== -->
+<div class="trust">
+  <div class="trust-inner">
+    <div class="trust-item">
+      <div class="trust-ico">🚚</div>
+      <div class="trust-label">
+        <strong>All India Delivery</strong>
+        <span>Fast &amp; Reliable</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-ico">💵</div>
+      <div class="trust-label">
+        <strong>Cash on Delivery</strong>
+        <span>Pay on Receipt</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-ico">↩️</div>
+      <div class="trust-label">
+        <strong>7-Day Returns</strong>
+        <span>Easy Policy</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-ico">⭐</div>
+      <div class="trust-label">
+        <strong>4.1★ Rated</strong>
+        <span>Verified Seller</span>
+      </div>
+    </div>
+    <div class="trust-item">
+      <div class="trust-ico">📦</div>
+      <div class="trust-label">
+        <strong>30+ Designs</strong>
+        <span>Always New Arrivals</span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRODUCTS ===== -->
+<section id="products">
+  <div class="wrap">
+    <div class="sec-head fi">
+      <div class="sec-tag">Our Collection</div>
+      <h2>Featured <em>Wall Frames</em></h2>
+      <p>Premium 13×8 inch framed art — order via Meesho, Flipkart or WhatsApp</p>
+    </div>
+
+    <div class="products-grid">
+
+      <!-- Product 1: Makkah Islamic Frame -->
+      <div class="p-card fi fi-d1">
+        <div class="p-img-wrap">
+          <img src="https://images.meesho.com/images/products/944157977/cposw_512.webp"
+               alt="Makkah Holy Kaaba Wall Frame Islamic Wall Decor"
+               onerror="this.parentElement.innerHTML=`<div class='frame-preview fp-spi'><div class='fp-icon'>🕌</div><div class='fp-title'>Holy Kaaba Wall Frame</div><div class='fp-hint'>Premium Islamic Art</div></div>`">
+          <div class="p-badge">Religious</div>
+        </div>
+        <div class="p-body">
+          <h3 class="p-name">Makkah Holy Kaaba Wall Frame</h3>
+          <p class="p-desc">Premium Islamic wall decor featuring Holy Kaaba & Masjid Al Haram. Perfect for homes, offices, prayer rooms & gifting on Eid and Ramadan.</p>
+          <div class="p-specs">
+            <span class="spec">13×8 Inch</span>
+            <span class="spec">Wooden Frame</span>
+            <span class="spec">Watercolor Art</span>
+            <span class="spec">Ready to Hang</span>
+          </div>
+          <div class="p-price">
+            <span class="p-now">₹255</span>
+            <span class="p-mrp">₹499</span>
+            <span class="p-off">49% OFF</span>
+          </div>
+          <div class="p-btns">
+            <a href="https://www.meesho.com/makkah-wall-frame-holy-kaaba-makka-photo-frame-premium-islamic-wall-decor-islamic-frame-for-wall-decoration/p/fm4kyh?ms=2&source=Meri+Shop"
+               target="_blank" class="btn-o btn-mee">🛍 Meesho</a>
+            <a href="https://www.flipkart.com/saheb-trend-house-1-religious-frame/p/itm69dfebef6805e?pid=RFMHNP7TSG2PZAYT"
+               target="_blank" class="btn-o btn-flip">🛒 Flipkart</a>
+            <a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House!+%F0%9F%96%BC%0A%0AI+want+to+order%3A%0A%E2%97%BE+Product%3A+Makkah+Holy+Kaaba+Wall+Frame%0A%E2%97%BE+Size%3A+13+%C3%97+8+inch%0A%E2%97%BE+Frame%3A+Wooden+Black+Frame%0A%E2%97%BE+Price%3A+%E2%82%B9255%0A%E2%97%BE+Quantity%3A+1%0A%0APlease+confirm+availability+%26+delivery+details.%0A%0A%F0%9F%91%A4+Name%3A+%0A%F0%9F%93%9E+Phone%3A+%0A%F0%9F%93%8D+Address+%26+Pincode%3A+%0A%0AThank+you!"
+               target="_blank" class="btn-o btn-wa-g span2">💬 Direct Order — WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 2: Motivational Quote Frame -->
+      <div class="p-card fi fi-d2">
+        <div class="p-img-wrap">
+          <img src="https://images.meesho.com/images/products/944157977/omrl5_512.webp"
+               alt="Motivational Quote Wall Frame"
+               onerror="this.parentElement.innerHTML=`<div class='frame-preview fp-mot'><div class='fp-icon'>💪</div><div class='fp-title'>Be the Change. Dream Big.</div><div class='fp-hint'>Aesthetic Motivational Art</div></div>`">
+          <div class="p-badge mot">Motivational</div>
+        </div>
+        <div class="p-body">
+          <h3 class="p-name">Inspirational Quote Wall Frame</h3>
+          <p class="p-desc">Aesthetic motivational quote frame for girls, students &amp; professionals. Ideal for bedroom, study room &amp; office décor. Printed in high-definition.</p>
+          <div class="p-specs">
+            <span class="spec">13×8 Inch</span>
+            <span class="spec">HD Print</span>
+            <span class="spec">Black Frame</span>
+            <span class="spec">Self-Motivation</span>
+          </div>
+          <div class="p-price">
+            <span class="p-now">₹299</span>
+            <span class="p-mrp">₹549</span>
+            <span class="p-off">46% OFF</span>
+          </div>
+          <div class="p-btns">
+            <a href="https://www.meesho.com/SahebTrendHouse?ms=2"
+               target="_blank" class="btn-o btn-mee">🛍 Meesho</a>
+            <a href="https://www.flipkart.com/aesthetic-motivational-quote-wall-frame-girls-14x10-inch-inspirational-photo-self-motivation-decor-bedroom-students-home-decoration-paper-print/p/itmcd01676bc06af?pid=POSHNTHCVWSEABZH"
+               target="_blank" class="btn-o btn-flip">🛒 Flipkart</a>
+            <a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House!+%F0%9F%96%BC%0A%0AI+want+to+order%3A%0A%E2%97%BE+Product%3A+Inspirational+Motivational+Quote+Wall+Frame%0A%E2%97%BE+Size%3A+13+%C3%97+8+inch%0A%E2%97%BE+Style%3A+Aesthetic+HD+Print%0A%E2%97%BE+Price%3A+%E2%82%B9299%0A%E2%97%BE+Quantity%3A+1%0A%0APlease+confirm+availability+%26+delivery+details.%0A%0A%F0%9F%91%A4+Name%3A+%0A%F0%9F%93%9E+Phone%3A+%0A%F0%9F%93%8D+Address+%26+Pincode%3A+%0A%0AThank+you!"
+               target="_blank" class="btn-o btn-wa-g span2">💬 Direct Order — WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 3: Premium Spiritual Frame -->
+      <div class="p-card fi fi-d1">
+        <div class="p-img-wrap">
+          <img src="https://images.meesho.com/images/products/944157977/v3q4m_512.webp"
+               alt="Premium Spiritual Wall Art Frame"
+               onerror="this.parentElement.innerHTML=`<div class='frame-preview fp-spi'><div class='fp-icon'>🪬</div><div class='fp-title'>Premium Spiritual Wall Art</div><div class='fp-hint'>Gift-Ready Framed Print</div></div>`">
+          <div class="p-badge bs">Bestseller</div>
+        </div>
+        <div class="p-body">
+          <h3 class="p-name">Premium Spiritual Wall Art Frame</h3>
+          <p class="p-desc">A beautiful spiritual wall art piece — meaningful décor for living rooms, prayer spaces &amp; as heartfelt gifts for weddings, birthdays &amp; special occasions.</p>
+          <div class="p-specs">
+            <span class="spec">13×8 Inch</span>
+            <span class="spec">Premium Print</span>
+            <span class="spec">Framed</span>
+            <span class="spec">Gift-Ready</span>
+          </div>
+          <div class="p-price">
+            <span class="p-now">₹279</span>
+            <span class="p-mrp">₹520</span>
+            <span class="p-off">46% OFF</span>
+          </div>
+          <div class="p-btns">
+            <a href="https://www.meesho.com/SahebTrendHouse?ms=2"
+               target="_blank" class="btn-o btn-mee">🛍 Meesho</a>
+            <a href="https://www.flipkart.com/saheb-trend-house-1-religious-frame/p/itm69dfebef6805e?pid=RFMHNP7TSG2PZAYT"
+               target="_blank" class="btn-o btn-flip">🛒 Flipkart</a>
+            <a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House!+%F0%9F%96%BC%0A%0AI+want+to+order%3A%0A%E2%97%BE+Product%3A+Premium+Spiritual+Wall+Art+Frame%0A%E2%97%BE+Size%3A+13+%C3%97+8+inch%0A%E2%97%BE+Price%3A+%E2%82%B9279%0A%E2%97%BE+Quantity%3A+1%0A%0APlease+confirm+availability+%26+delivery+details.%0A%0A%F0%9F%91%A4+Name%3A+%0A%F0%9F%93%9E+Phone%3A+%0A%F0%9F%93%8D+Address+%26+Pincode%3A+%0A%0AThank+you!"
+               target="_blank" class="btn-o btn-wa-g span2">💬 Direct Order — WhatsApp</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Product 4: Custom Photo Frame CTA Card -->
+      <div class="p-card fi fi-d2">
+        <div class="p-img-wrap">
+          <div class="frame-preview fp-cus">
+            <div class="fp-icon">📸</div>
+            <div class="fp-title">Your Photo. Your Frame.</div>
+            <div class="fp-hint">Upload any image — we'll frame it beautifully</div>
+          </div>
+          <div class="p-badge cus">Custom</div>
+        </div>
+        <div class="p-body">
+          <h3 class="p-name">Custom Photo Frame — Upload Your Image</h3>
+          <p class="p-desc">Send your personal photo, couple portrait, family memory or favourite artwork — we'll print &amp; frame it in premium 13×8 inch. Perfect for gifting.</p>
+          <div class="p-specs">
+            <span class="spec">13×8 Inch</span>
+            <span class="spec">Any Image</span>
+            <span class="spec">Premium Print</span>
+            <span class="spec">Gift Wrap ✓</span>
+          </div>
+          <div class="p-price">
+            <span class="p-now">₹249</span>
+            <span class="p-mrp">₹499</span>
+            <span class="p-off">50% OFF</span>
+          </div>
+          <div class="p-btns">
+            <a href="#custom" class="btn-o btn-wa-g span2"
+               style="background:linear-gradient(135deg,#7c3aed,#5b21b6);">
+              🎨 Upload &amp; Order Custom Frame
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ===== CUSTOM ORDER ===== -->
+<section class="custom-sec" id="custom">
+  <div class="wrap">
+    <div class="custom-grid">
+
+      <div class="cust-info fi">
+        <div class="sec-tag" style="text-align:left;">Personalised Frames</div>
+        <h2>Create Your<br><em>Custom</em><br>Wall Frame</h2>
+        <p>
+          Want to frame your own photo, couple portrait, baby memory, family photo 
+          or artwork? Upload your image, fill in your details, and we'll craft a 
+          premium 13×8 inch framed print — delivered to your door, all across India.
+        </p>
+        <ul class="cust-feats">
+          <li><span class="check">✓</span> Upload any image — family, couple, spiritual, nature</li>
+          <li><span class="check">✓</span> Premium quality HD print with glass protection</li>
+          <li><span class="check">✓</span> Durable wooden frame, 13×8 inch standard size</li>
+          <li><span class="check">✓</span> Gift wrapping available on request</li>
+          <li><span class="check">✓</span> All India delivery, Cash on Delivery available</li>
+          <li><span class="check">✓</span> WhatsApp confirmation &amp; delivery tracking</li>
+        </ul>
+      </div>
+
+      <div class="up-form fi fi-d2">
+        <h3>📸 Order Your Custom Frame</h3>
+
+        <!-- Upload Area -->
+        <div class="up-area" id="upArea">
+          <input type="file" id="imgInput" accept="image/*" onchange="previewImg(this)">
+          <div class="up-ico">📁</div>
+          <div class="up-txt">Click or drag &amp; drop your image here</div>
+          <div class="up-hint">JPG, PNG, WEBP — up to 10 MB</div>
+        </div>
+
+        <!-- Image Preview -->
+        <div id="preview-wrap">
+          <img id="preview-img" src="" alt="Your uploaded image">
+          <div id="preview-name"></div>
+        </div>
+
+        <!-- Form -->
+        <div class="fg-row">
+          <div class="fg">
+            <label>Your Name *</label>
+            <input type="text" id="cName" placeholder="Full name">
+          </div>
+          <div class="fg">
+            <label>Phone Number *</label>
+            <input type="tel" id="cPhone" placeholder="+91 XXXXX XXXXX">
+          </div>
+        </div>
+
+        <div class="fg">
+          <label>Delivery Address *</label>
+          <input type="text" id="cAddr" placeholder="House/Street, City, State, Pincode">
+        </div>
+
+        <div class="fg-row">
+          <div class="fg">
+            <label>Frame Style</label>
+            <select id="fStyle">
+              <option>Black Wooden Frame</option>
+              <option>Brown Wooden Frame</option>
+              <option>White Frame</option>
+              <option>Gold Frame</option>
+            </select>
+          </div>
+          <div class="fg">
+            <label>Quantity</label>
+            <select id="fQty">
+              <option>1 Frame — ₹249</option>
+              <option>2 Frames — ₹450</option>
+              <option>3 Frames — ₹660</option>
+              <option>4+ Frames — Ask Price</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="fg">
+          <label>Special Instructions (Optional)</label>
+          <textarea id="cNote" placeholder="Caption text, colour preference, occasion, gift message…" style="height:76px;resize:vertical;"></textarea>
+        </div>
+
+        <button onclick="placeCustom()" class="btn-o btn-wa-g"
+                style="width:100%;padding:14px;font-size:15px;border-radius:10px;cursor:pointer;">
+          💬 Send Order via WhatsApp
+        </button>
+        <p style="font-size:11.5px;color:var(--text-m);text-align:center;margin-top:11px;">
+          After WhatsApp opens — send the message, then attach your photo in the chat.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== HOW TO ORDER ===== -->
+<section class="steps-sec">
+  <div class="wrap">
+    <div class="sec-head fi">
+      <div class="sec-tag">Simple Process</div>
+      <h2>How to <em>Order</em></h2>
+      <p>Get your framed wall art in 3 easy steps — nationwide delivery</p>
+    </div>
+    <div class="steps-grid">
+      <div class="step fi fi-d1">
+        <div class="step-num">🛒</div>
+        <h3>Choose Your Frame</h3>
+        <p>Browse the collection above, pick your favourite design, or prepare your own image for a custom frame order.</p>
+      </div>
+      <div class="step fi fi-d2">
+        <div class="step-num">💬</div>
+        <h3>Place Your Order</h3>
+        <p>Order directly via WhatsApp with one tap (pre-filled details), or purchase securely on Meesho &amp; Flipkart using your account.</p>
+      </div>
+      <div class="step fi fi-d3">
+        <div class="step-num">📦</div>
+        <h3>Receive &amp; Enjoy</h3>
+        <p>Your frame is packed carefully and delivered to your door. COD available — pay only when you receive your order.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== PLATFORMS ===== -->
+<section class="plat-sec">
+  <div class="wrap">
+    <div class="sec-head fi">
+      <div class="sec-tag">Available On</div>
+      <h2>Shop on Your <em>Favourite</em> Platform</h2>
+      <p>Buy with full buyer protection on India's top e-commerce platforms</p>
+    </div>
+    <div class="plat-grid">
+      <div class="plat-card fi fi-d1">
+        <div class="plat-ico">🛍️</div>
+        <div class="plat-name">Meesho</div>
+        <div class="plat-live">Active — Verified Seller</div>
+        <p class="plat-desc">Complete catalogue at the best prices. Buyer protection, easy 7-day returns &amp; all-India delivery with COD option.</p>
+        <a href="https://www.meesho.com/SahebTrendHouse?ms=2" target="_blank"
+           class="btn-o btn-mee" style="max-width:220px;margin:0 auto;display:flex;">
+          🛍 Visit Meesho Store
+        </a>
+      </div>
+      <div class="plat-card fi fi-d2">
+        <div class="plat-ico">🛒</div>
+        <div class="plat-name">Flipkart</div>
+        <div class="plat-live">Active — Verified Seller</div>
+        <p class="plat-desc">Live on Flipkart with secure payment, Flipkart Assured delivery &amp; fast shipping to every corner of India.</p>
+        <a href="https://www.flipkart.com/saheb-trend-house-1-religious-frame/p/itm69dfebef6805e"
+           target="_blank" class="btn-o btn-flip" style="max-width:220px;margin:0 auto;display:flex;">
+          🛒 Visit Flipkart Store
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== FOOTER / CONTACT ===== -->
+<footer class="footer" id="contact">
+  <div class="wrap">
+    <div class="foot-grid">
+
+      <div class="foot-brand">
+        <img src="https://www.sahebali.site/trendhouse/image/STH-logo.png" alt="Saheb Trend House"
+             onerror="this.style.display='none'">
+        <div class="foot-bname">Saheb Trend House</div>
+        <p class="foot-bdesc">
+          Premium Wall Frame Posters — Islamic, Motivational &amp; Custom. 
+          Founded by <strong>Saheb Ali</strong>, shipped from Abhayapuri, Assam 
+          to every corner of India. Available on Meesho, Flipkart &amp; WhatsApp Direct.
+        </p>
+        <div class="socials">
+          <a href="https://www.instagram.com/saheb_trend_house" target="_blank" class="soc" title="Instagram">📸</a>
+          <a href="https://wa.me/916003816583" target="_blank" class="soc" title="WhatsApp">💬</a>
+          <a href="https://www.youtube.com/@sahebtrendhouse" target="_blank" class="soc" title="YouTube">▶️</a>
+          <a href="https://sahebali.site" target="_blank" class="soc" title="Website">🌐</a>
+        </div>
+      </div>
+
+      <div class="foot-col">
+        <h4>Quick Links</h4>
+        <ul>
+          <li><a href="#products">🖼️ Our Products</a></li>
+          <li><a href="#custom">🎨 Custom Frame Order</a></li>
+          <li><a href="https://www.sahebali.site/trendhouse/index.html">🏠 STH Main Store</a></li>
+          <li><a href="https://www.meesho.com/SahebTrendHouse?ms=2" target="_blank">🛍️ Meesho Store</a></li>
+          <li><a href="https://www.flipkart.com/saheb-trend-house-1-religious-frame/p/itm69dfebef6805e" target="_blank">🛒 Flipkart Store</a></li>
+          <li><a href="https://sahebali.site" target="_blank">👤 About Founder</a></li>
+        </ul>
+      </div>
+
+      <div class="foot-col">
+        <h4>Contact Us</h4>
+        <div class="ci">
+          <div class="ci-ico">💬</div>
+          <div class="ci-txt">
+            <strong>WhatsApp / Phone</strong>
+            +91 6003816583
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">📍</div>
+          <div class="ci-txt">
+            <strong>Address</strong>
+            Abhayapuri, Bongaigaon<br>Assam, India — 783384
+          </div>
+        </div>
+        <div class="ci">
+          <div class="ci-ico">🌐</div>
+          <div class="ci-txt">
+            <strong>Main Website</strong>
+            <a href="https://sahebali.site" style="color:var(--gold);">sahebali.site</a>
+          </div>
+        </div>
+        <a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House!+I+want+to+enquire+about+Wall+Frame+Posters."
+           target="_blank" class="btn-o btn-wa-g" style="margin-top:14px;display:flex;">
+          💬 Chat on WhatsApp
+        </a>
+      </div>
+    </div>
+
+    <div class="foot-bottom">
+      <span>© 2025 <strong>Saheb Trend House</strong> · Founded by 
+        <a href="https://sahebali.site" target="_blank">Saheb Ali</a> · Abhayapuri, Assam</span>
+      <span>Meesho &nbsp;·&nbsp; Flipkart &nbsp;·&nbsp; WhatsApp Direct</span>
+    </div>
+  </div>
+</footer>
+
+<!-- ===== FLOATING WHATSAPP ===== -->
+<a href="https://wa.me/916003816583?text=Hello+Saheb+Trend+House!+%F0%9F%96%BC+I+want+to+enquire+about+Wall+Frame+Posters."
+   target="_blank" class="wa-float" title="Chat on WhatsApp">
+  💬
+  <span class="wa-tooltip">Order on WhatsApp</span>
+</a>
+
+<!-- ===== CUSTOM ORDER MODAL ===== -->
+<div class="modal-bg" id="orderModal">
+  <div class="modal">
+    <button class="modal-close" onclick="closeModal()">✕</button>
+    <h3>📸 Custom Frame Order</h3>
+    <p id="modalMsg">Your order details are ready! Click "Open WhatsApp" below to send the message.</p>
+    <div class="modal-note" id="modalNote">
+      📎 After WhatsApp opens: send the message first, then tap the 📎 attachment icon and share your image from your phone gallery.
+    </div>
+    <div class="modal-btns">
+      <button class="btn-cancel" onclick="closeModal()">Cancel</button>
+      <a id="modalLink" href="#" target="_blank" class="btn-wa-modal" onclick="closeModal()">
+        💬 Open WhatsApp
+      </a>
+    </div>
+  </div>
+</div>
+
+<!-- ===== JAVASCRIPT ===== -->
+<script>
+  /* ---- Mobile nav ---- */
+  function toggleMenu() {
+    const m = document.getElementById('mobMenu');
+    const h = document.getElementById('ham');
+    m.classList.toggle('open');
+    h.classList.toggle('open');
+  }
+  function closeMenu() {
+    document.getElementById('mobMenu').classList.remove('open');
+    document.getElementById('ham').classList.remove('open');
+  }
+
+  /* ---- Image upload preview ---- */
+  function previewImg(input) {
+    if (!input.files || !input.files[0]) return;
+    const file = input.files[0];
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      const wrap = document.getElementById('preview-wrap');
+      const img  = document.getElementById('preview-img');
+      const nm   = document.getElementById('preview-name');
+      img.src = e.target.result;
+      nm.innerHTML = '✅ <strong>' + file.name + '</strong> (' + (file.size/1024).toFixed(0) + ' KB)';
+      nm.style.color = 'var(--wa)';
+      wrap.style.display = 'block';
+      const area = document.getElementById('upArea');
+      area.style.borderColor = 'var(--wa)';
+      area.style.background  = 'rgba(37,211,102,.05)';
+    };
+    reader.readAsDataURL(file);
+  }
+
+  /* ---- Drag & drop ---- */
+  const upArea = document.getElementById('upArea');
+  upArea.addEventListener('dragover',  e => { e.preventDefault(); upArea.classList.add('drag'); });
+  upArea.addEventListener('dragleave', ()  => upArea.classList.remove('drag'));
+  upArea.addEventListener('drop', e => {
+    e.preventDefault(); upArea.classList.remove('drag');
+    const dt = e.dataTransfer;
+    if (dt.files[0]) {
+      document.getElementById('imgInput').files = dt.files;
+      previewImg(document.getElementById('imgInput'));
+    }
+  });
+
+  /* ---- Custom order via WhatsApp ---- */
+  function placeCustom() {
+    const name  = document.getElementById('cName').value.trim();
+    const phone = document.getElementById('cPhone').value.trim();
+    const addr  = document.getElementById('cAddr').value.trim();
+    const style = document.getElementById('fStyle').value;
+    const qty   = document.getElementById('fQty').value;
+    const note  = document.getElementById('cNote').value.trim();
+    const fi    = document.getElementById('imgInput');
+    const hasImg = fi.files && fi.files[0];
+
+    if (!name || !phone || !addr) {
+      alert('⚠️ Please fill in your Name, Phone Number, and Delivery Address to continue.');
+      return;
+    }
+
+    let m  = `Hello Saheb Trend House! 🎨\n\n`;
+    m += `I want to order a CUSTOM PHOTO FRAME:\n`;
+    m += `━━━━━━━━━━━━━━━━━━━━\n`;
+    m += `📏 Size: 13 × 8 inch\n`;
+    m += `🖼️ Frame Style: ${style}\n`;
+    m += `📦 Quantity: ${qty}\n`;
+    m += `💰 Starting Price: ₹249\n`;
+    m += `━━━━━━━━━━━━━━━━━━━━\n`;
+    m += `👤 Name: ${name}\n`;
+    m += `📞 Phone: ${phone}\n`;
+    m += `📍 Address: ${addr}\n`;
+    if (note) m += `📝 Note: ${note}\n`;
+    m += `━━━━━━━━━━━━━━━━━━━━\n`;
+    m += hasImg
+      ? `📸 Image: I will attach my photo in this chat.\n`
+      : `📸 Image: I will share my photo here shortly.\n`;
+    m += `\nPlease confirm the price and delivery. Thank you!`;
+
+    document.getElementById('modalLink').href =
+      `https://wa.me/916003816583?text=${encodeURIComponent(m)}`;
+    document.getElementById('modalMsg').textContent =
+      hasImg
+        ? 'Order details ready! Open WhatsApp, send the message, then attach your image using the 📎 icon.'
+        : 'Order details ready! Open WhatsApp, send the message, then share your image in the chat.';
+    document.getElementById('orderModal').classList.add('open');
+  }
+
+  function closeModal() {
+    document.getElementById('orderModal').classList.remove('open');
+  }
+  document.getElementById('orderModal').addEventListener('click', e => {
+    if (e.target === document.getElementById('orderModal')) closeModal();
+  });
+
+  /* ---- Scroll fade-in ---- */
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('vis');
+        obs.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.fi').forEach(el => obs.observe(el));
+
+  /* ---- Sticky nav scroll shadow ---- */
+  window.addEventListener('scroll', () => {
+    document.querySelector('.nav').style.boxShadow =
+      window.scrollY > 10 ? '0 4px 30px rgba(0,0,0,.5)' : '';
+  });
+</script>
+
+</body>
+</html>
