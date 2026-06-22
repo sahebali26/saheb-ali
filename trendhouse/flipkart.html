@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes" />
+
+    <title>Flipkart Products · Saheb Trend House</title>
+    <meta name="description" content="Shop Saheb Trend House products on Flipkart. Authentic Assamese traditional jewellery, handbags & accessories. Best prices & fast delivery." />
+
+    <link rel="icon" type="image/png" sizes="32x32" href="image/STH-logo.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="image/STH-logo.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="image/STH-logo.png" />
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <style>
+        /* ── RESET & BASE ──────────────────────────────────────── */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        :root {
+            --bg: #0d0b0a;
+            --bg2: #161211;
+            --panel: #1e1816;
+            --border: #2f2622;
+            --text: #f0ebe6;
+            --text2: #b8aca4;
+            --text3: #7f7168;
+            --gold: #c8973b;
+            --gold2: #d9aa5a;
+            --gold-dim: rgba(200, 151, 59, .12);
+            --gold-border: rgba(200, 151, 59, .25);
+            --radius: 16px;
+            --shadow: 0 8px 32px rgba(0, 0, 0, .55);
+            --transition: 0.3s cubic-bezier(.4, 0, .2, 1);
+        }
+        html {
+            scroll-behavior: smooth;
+        }
+        body {
+            font-family: 'Outfit', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding-top: 72px;
+            min-height: 100vh;
+        }
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+        img {
+            max-width: 100%;
+            display: block;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ── SCROLLBAR ────────────────────────────────────────── */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg2);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--gold);
+            border-radius: 8px;
+        }
+
+        /* ── HEADER ───────────────────────────────────────────── */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: rgba(13, 11, 10, .92);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 24px;
+            height: 72px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo-wrap {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .logo-wrap img {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            border: 1px solid var(--gold-border);
+        }
+        .logo-text {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--gold2);
+            letter-spacing: .5px;
+        }
+        .logo-text span {
+            color: var(--text);
+            font-weight: 300;
+        }
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .header-actions a {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text2);
+            transition: var(--transition);
+            padding: 6px 14px;
+            border-radius: 40px;
+            border: 1px solid transparent;
+        }
+        .header-actions a:hover {
+            color: var(--gold2);
+            border-color: var(--gold-border);
+        }
+        .header-actions .back-link {
+            border-color: var(--gold-border);
+            color: var(--gold2);
+        }
+        .header-actions .back-link:hover {
+            background: var(--gold-dim);
+        }
+
+        /* ── PAGE HEADER ──────────────────────────────────────── */
+        .page-head {
+            padding: 32px 0 20px;
+            border-bottom: 1px solid var(--border);
+            margin-bottom: 28px;
+        }
+        .page-head h1 {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 36px;
+            font-weight: 600;
+            color: var(--gold2);
+            letter-spacing: .5px;
+        }
+        .page-head h1 em {
+            font-style: italic;
+            color: var(--text);
+        }
+        .page-head .sub {
+            color: var(--text2);
+            font-size: 15px;
+            margin-top: 4px;
+        }
+        .page-head .sub strong {
+            color: var(--gold2);
+        }
+
+        /* ── FILTER BAR ───────────────────────────────────────── */
+        .filter-bar {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 12px 20px;
+            margin-bottom: 28px;
+            padding: 16px 20px;
+            background: var(--panel);
+            border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+        .filter-bar .label {
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--text3);
+            letter-spacing: .3px;
+            text-transform: uppercase;
+        }
+        .filter-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+        .filter-btn {
+            background: transparent;
+            border: 1px solid var(--border);
+            color: var(--text2);
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 400;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Outfit', sans-serif;
+        }
+        .filter-btn:hover {
+            border-color: var(--gold-border);
+            color: var(--text);
+        }
+        .filter-btn.active {
+            background: var(--gold-dim);
+            border-color: var(--gold);
+            color: var(--gold2);
+        }
+        .filter-sort {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .filter-sort select {
+            background: var(--bg2);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            padding: 6px 12px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-family: 'Outfit', sans-serif;
+            cursor: pointer;
+            outline: none;
+            transition: var(--transition);
+        }
+        .filter-sort select:hover,
+        .filter-sort select:focus {
+            border-color: var(--gold-border);
+        }
+        .filter-sort select option {
+            background: var(--bg2);
+            color: var(--text);
+        }
+        .results-count {
+            font-size: 13px;
+            color: var(--text3);
+            margin-left: 4px;
+        }
+
+        /* ── PRODUCT GRID ──────────────────────────────────────── */
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 24px;
+            margin-bottom: 40px;
+        }
+
+        /* ── PRODUCT CARD ─────────────────────────────────────── */
+        .prod-card {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+        .prod-card:hover {
+            border-color: var(--gold-border);
+            transform: translateY(-4px);
+            box-shadow: var(--shadow);
+        }
+        .prod-img-wrap {
+            position: relative;
+            padding-top: 100%;
+            background: var(--bg2);
+            overflow: hidden;
+        }
+        .prod-img-wrap img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: var(--transition);
+        }
+        .prod-card:hover .prod-img-wrap img {
+            transform: scale(1.03);
+        }
+        .prod-badge {
+            position: absolute;
+            top: 12px;
+            left: 12px;
+            background: var(--gold);
+            color: #0d0b0a;
+            font-size: 11px;
+            font-weight: 700;
+            padding: 3px 12px;
+            border-radius: 40px;
+            text-transform: uppercase;
+            letter-spacing: .4px;
+        }
+        .prod-badge.new {
+            background: #2d8a4e;
+            color: #fff;
+        }
+        .prod-badge.hot {
+            background: #c0392b;
+            color: #fff;
+        }
+        .prod-off {
+            position: absolute;
+            bottom: 12px;
+            right: 12px;
+            background: rgba(192, 57, 43, .92);
+            color: #fff;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 4px 12px;
+            border-radius: 40px;
+            backdrop-filter: blur(4px);
+        }
+        .prod-body {
+            padding: 16px 18px 18px;
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        .prod-cat {
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: .5px;
+            color: var(--text3);
+            margin-bottom: 4px;
+        }
+        .prod-name {
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--text);
+            line-height: 1.4;
+            margin-bottom: 4px;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+        .prod-sn {
+            font-size: 12px;
+            color: var(--text3);
+            margin-bottom: 8px;
+        }
+        .prod-price-row {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 6px;
+            flex-wrap: wrap;
+        }
+        .prod-price {
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--gold2);
+        }
+        .prod-price .rupee {
+            font-size: 16px;
+        }
+        .prod-mrp {
+            font-size: 14px;
+            color: var(--text3);
+            text-decoration: line-through;
+        }
+        .prod-discount {
+            font-size: 13px;
+            font-weight: 600;
+            color: #2d8a4e;
+        }
+        .prod-rating {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            color: var(--text2);
+            margin-bottom: 10px;
+        }
+        .prod-rating .stars {
+            color: #f5b342;
+            letter-spacing: 1px;
+        }
+        .prod-rating .rev {
+            color: var(--text3);
+            font-size: 12px;
+        }
+        .prod-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px 12px;
+            font-size: 12px;
+            color: var(--text3);
+            margin-bottom: 12px;
+            padding-top: 8px;
+            border-top: 1px solid var(--border);
+        }
+        .prod-meta span {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .prod-meta .tag {
+            background: var(--gold-dim);
+            color: var(--gold2);
+            padding: 2px 10px;
+            border-radius: 40px;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: .3px;
+        }
+        .prod-actions {
+            display: flex;
+            gap: 8px;
+            margin-top: auto;
+            flex-wrap: wrap;
+        }
+        .prod-actions .btn-flipkart {
+            flex: 1;
+            background: #2874f0;
+            border: none;
+            color: #fff;
+            padding: 10px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Outfit', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            min-width: 120px;
+        }
+        .prod-actions .btn-flipkart:hover {
+            background: #1a5fc7;
+            transform: scale(1.02);
+        }
+        .prod-actions .btn-detail {
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            color: var(--gold2);
+            padding: 10px 14px;
+            border-radius: 40px;
+            font-size: 13px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Outfit', sans-serif;
+        }
+        .prod-actions .btn-detail:hover {
+            background: var(--gold-border);
+        }
+
+        /* ── PAGINATION ────────────────────────────────────────── */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+            padding: 20px 0 40px;
+            flex-wrap: wrap;
+        }
+        .pagination button {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            color: var(--text2);
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: var(--transition);
+            font-family: 'Outfit', sans-serif;
+            min-width: 40px;
+        }
+        .pagination button:hover {
+            border-color: var(--gold-border);
+            color: var(--text);
+        }
+        .pagination button.active {
+            background: var(--gold);
+            border-color: var(--gold);
+            color: #0d0b0a;
+        }
+        .pagination button:disabled {
+            opacity: .3;
+            cursor: not-allowed;
+        }
+
+        /* ── FOOTER ────────────────────────────────────────────── */
+        footer {
+            border-top: 1px solid var(--border);
+            padding: 40px 20px 30px;
+            text-align: center;
+            background: var(--bg2);
+        }
+        footer .footer-logo img {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            border: 1px solid var(--gold-border);
+            margin: 0 auto 10px;
+        }
+        footer .footer-name {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 22px;
+            font-weight: 600;
+            color: var(--gold2);
+        }
+        footer p {
+            color: var(--text3);
+            font-size: 13px;
+            margin-top: 4px;
+        }
+        footer .footer-social {
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            margin: 16px 0;
+        }
+        footer .footer-social a {
+            width: 38px;
+            height: 38px;
+            border-radius: 50%;
+            background: var(--gold-dim);
+            border: 1px solid var(--gold-border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+        footer .footer-social a:hover {
+            background: var(--gold-border);
+            transform: translateY(-2px);
+        }
+        footer .footer-social svg {
+            width: 18px;
+            height: 18px;
+            fill: var(--gold2);
+        }
+        footer .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin: 12px 0 16px;
+        }
+        footer .footer-links a {
+            color: var(--gold2);
+            font-size: 14px;
+            transition: var(--transition);
+        }
+        footer .footer-links a:hover {
+            color: var(--text);
+        }
+        footer .copy {
+            color: var(--text3);
+            font-size: 12px;
+        }
+
+        /* ── RESPONSIVE ────────────────────────────────────────── */
+        @media (max-width: 768px) {
+            body {
+                padding-top: 64px;
+            }
+            header {
+                padding: 0 16px;
+                height: 64px;
+            }
+            .logo-text {
+                font-size: 17px;
+            }
+            .header-actions a {
+                font-size: 12px;
+                padding: 4px 10px;
+            }
+            .page-head h1 {
+                font-size: 28px;
+            }
+            .filter-bar {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 10px;
+                padding: 14px 16px;
+            }
+            .filter-sort {
+                margin-left: 0;
+                justify-content: flex-start;
+            }
+            .filter-group {
+                gap: 6px;
+            }
+            .filter-btn {
+                font-size: 12px;
+                padding: 4px 12px;
+            }
+            .product-grid {
+                grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
+                gap: 14px;
+            }
+            .prod-body {
+                padding: 12px 14px 14px;
+            }
+            .prod-name {
+                font-size: 13px;
+            }
+            .prod-price {
+                font-size: 17px;
+            }
+            .prod-actions .btn-flipkart,
+            .prod-actions .btn-detail {
+                font-size: 12px;
+                padding: 8px 10px;
+            }
+            .prod-meta {
+                font-size: 11px;
+                gap: 2px 8px;
+            }
+            .pagination button {
+                padding: 6px 12px;
+                font-size: 13px;
+                min-width: 34px;
+            }
+            .results-count {
+                font-size: 12px;
+            }
+        }
+        @media (max-width: 480px) {
+            .product-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 10px;
+            }
+            .prod-body {
+                padding: 10px 10px 12px;
+            }
+            .prod-name {
+                font-size: 12px;
+                -webkit-line-clamp: 2;
+            }
+            .prod-price {
+                font-size: 15px;
+            }
+            .prod-mrp {
+                font-size: 12px;
+            }
+            .prod-off {
+                font-size: 11px;
+                padding: 2px 10px;
+                bottom: 8px;
+                right: 8px;
+            }
+            .prod-badge {
+                font-size: 9px;
+                padding: 2px 8px;
+                top: 8px;
+                left: 8px;
+            }
+            .prod-actions {
+                flex-direction: column;
+                gap: 6px;
+            }
+            .prod-actions .btn-flipkart,
+            .prod-actions .btn-detail {
+                width: 100%;
+                font-size: 11px;
+                padding: 8px 6px;
+            }
+            .prod-rating {
+                font-size: 11px;
+            }
+        }
+
+        /* ── UTILITY ───────────────────────────────────────────── */
+        .text-gold {
+            color: var(--gold2);
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+        .mb-8 {
+            margin-bottom: 8px;
+        }
+        .flex-center {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .gap-8 {
+            gap: 8px;
+        }
+
+        /* ── EMPTY STATE ───────────────────────────────────────── */
+        .empty-state {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--text3);
+        }
+        .empty-state .icon {
+            font-size: 48px;
+            margin-bottom: 16px;
+            opacity: .4;
+        }
+        .empty-state h3 {
+            color: var(--text2);
+            font-size: 20px;
+            font-weight: 500;
+        }
+
+        /* ── LOADING SKELETON ──────────────────────────────────── */
+        .skeleton {
+            background: var(--panel);
+            border: 1px solid var(--border);
+            border-radius: var(--radius);
+            overflow: hidden;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        .skeleton .sk-img {
+            padding-top: 100%;
+            background: var(--bg2);
+        }
+        .skeleton .sk-body {
+            padding: 16px;
+        }
+        .skeleton .sk-line {
+            height: 12px;
+            background: var(--bg2);
+            border-radius: 8px;
+            margin-bottom: 8px;
+        }
+        .skeleton .sk-line.short {
+            width: 60%;
+        }
+        .skeleton .sk-line.med {
+            width: 80%;
+        }
+        @keyframes pulse {
+            0%,
+            100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: .5;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ═══════ HEADER ═══════ -->
+    <header>
+        <a href="index.html" class="logo-wrap">
+            <img src="/trendhouse/image/STH-logo.png" alt="Saheb Trend House" />
+            <span class="logo-text">Saheb <span>Trend House</span></span>
+        </a>
+        <div class="header-actions">
+            <a href="index.html" class="back-link">← Home</a>
+            <a href="store.html">Store</a>
+            <a href="https://sahebali.site" target="_blank">Founder</a>
+        </div>
+    </header>
+
+    <!-- ═══════ MAIN ═══════ -->
+    <main>
+        <div class="container">
+
+            <!-- PAGE HEADER -->
+            <div class="page-head">
+                <h1>🛒 Flipkart <em>Collection</em></h1>
+                <p class="sub">Authentic Assamese jewellery &amp; accessories — now available on <strong>Flipkart</strong>. Shop with trust, fast delivery &amp; easy returns.</p>
+            </div>
+
+            <!-- FILTER BAR -->
+            <div class="filter-bar" id="filterBar">
+                <span class="label">Category</span>
+                <div class="filter-group" id="categoryFilters">
+                    <button class="filter-btn active" data-cat="all">All</button>
+                    <button class="filter-btn" data-cat="Handbags">Handbags</button>
+                    <button class="filter-btn" data-cat="Jewellery">Jewellery</button>
+                    <button class="filter-btn" data-cat="Accessories">Accessories</button>
+                </div>
+                <div class="filter-sort">
+                    <span class="label" style="text-transform:none;font-size:12px;">Sort</span>
+                    <select id="sortSelect">
+                        <option value="popular">Popular</option>
+                        <option value="price-low">Price: Low → High</option>
+                        <option value="price-high">Price: High → Low</option>
+                        <option value="rating">Top Rated</option>
+                        <option value="new">Newest First</option>
+                    </select>
+                    <span class="results-count" id="resultsCount">12 products</span>
+                </div>
+            </div>
+
+            <!-- PRODUCT GRID -->
+            <div class="product-grid" id="productGrid">
+                <!-- Rendered by JS -->
+            </div>
+
+            <!-- PAGINATION -->
+            <div class="pagination" id="pagination">
+                <!-- Rendered by JS -->
+            </div>
+
+        </div>
+    </main>
+
+    <!-- ═══════ FOOTER ═══════ -->
+    <footer>
+        <div class="footer-logo">
+            <img src="/trendhouse/image/STH-logo.png" alt="Saheb Trend House" />
+        </div>
+        <div class="footer-name">Saheb Trend House</div>
+        <p>Authentic Assamese Jewellery · Abhayapuri, Assam</p>
+        <div class="footer-social">
+            <a href="https://www.instagram.com/saheb_trend_house" target="_blank" title="Instagram">
+                <svg viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </a>
+            <a href="https://www.youtube.com/@sahebtrendhouse" target="_blank" title="YouTube">
+                <svg viewBox="0 0 24 24"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+            </a>
+        </div>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="store.html">Store</a>
+            <a href="https://sahebali.site" target="_blank">Founder</a>
+            <a href="index.html#contact">Contact</a>
+        </div>
+        <div class="copy">© 2025 Saheb Trend House. All rights reserved. | Available on Meesho, Flipkart &amp; Amazon</div>
+    </footer>
+
+    <!-- ═══════ JAVASCRIPT ═══════ -->
+    <script>
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  PRODUCT DATA  (as requested, manually defined)
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        const products = [{
+            id: 'P1-BANGLE-SET',
+            name: 'Assamese Traditional Bangle Set – Gold Plated, Wedding & Bihu Collection, 2 Bangles',
+            sn: 'Traditional Bangle Set',
+            price: 399,
+            mrp: 899,
+            rat: 4.7,
+            rev: 53,
+            cat: 'Jewellery',
+            occ: 'Wedding, Bihu, Festivals, Grand Events',
+            type: 'Bangle Set',
+            metal: 'Copper Alloy',
+            plating: 'Gold Plated',
+            stone: 'No Stone',
+            qty: '1 Set (2 Bangles)',
+            sizing: 'Adjustable (Free Size)',
+            trend: 'Traditional Assamese',
+            color: 'Gold',
+            material: 'Copper Alloy with Gold Plating',
+            origin: 'India',
+            newArrival: true,
+            murl: 'https://dl.flipkart.com/dl/saheb-trend-house-copper-gold-plated-bangle/p/itmaf95980314414?pid=BBAHNYFVXSNSNRFF&lid=LSTBBAHNYFVXSNSNRFFWC9EXP&marketplace=FLIPKART&_refId=&_appId=CL',
+            desc: 'A stunning set of 6 traditional Assamese bangles, crafted with intricate designs and finished with a brilliant gold plating. These bangles feature detailed engravings that reflect the artistry of Assamese craftsmanship. Perfect for weddings, Bihu celebrations, and festive occasions. A cherished addition to any traditional jewellery collection.',
+            imgs: [
+                'https://images.meesho.com/images/products/689322539/lghvh_512.webp',
+                'https://images.meesho.com/images/products/689322539/g8vdl_512.avif?width=512'
+            ],
+            sizes: ['Free Size (Adjustable)'],
+            vis: true
+        },{
+            id: 'P2-FLORAL-NECK',
+            name: 'Floral Necklace & Earrings Set – Traditional Assamese Jewellery, Gold Plated, Party Wear',
+            sn: 'Floral Necklace Set',
+            price: 278,
+            mrp: 500,
+            rat: 4.3,
+            rev: 24,
+            cat: 'Jewellery',
+            occ: 'Party, Wedding, Festivals, Bihu, Gifting',
+            type: 'Necklace Set',
+            metal: 'Copper Alloy',
+            plating: 'Gold Plated',
+            stone: 'No Stone',
+            qty: '1 Set (Necklace + Earrings)',
+            sizing: 'Adjustable Chain (Necklace), Push-back (Earrings)',
+            trend: 'Traditional Floral',
+            color: 'Gold',
+            material: 'Copper Alloy with Gold Plating',
+            origin: 'India',
+            newArrival: true,
+            murl: 'https://www.flipkart.com/saheb-trend-house-alloy-gold-plated-red-gold-jewellery-set/p/itm20e730e9ee392?pid=JWSHNYG9JD4NQAVU',
+            desc: 'Elegant floral-designed necklace and earrings set, perfect for festive occasions and weddings. The intricate floral motifs are inspired by Assamese traditional art, crafted with a brilliant gold finish. Lightweight and comfortable for all-day wear. A versatile addition to any jewellery collection.',
+            imgs: [
+                'https://images.meesho.com/images/products/746136894/6f6qt_512.webp',
+                'https://images.meesho.com/images/products/746136894/2_512.webp'
+            ],
+            sizes: ['Adjustable Chain', 'One Size Earrings'],
+            vis: true
+        }, {
+            id: 'P3-BAG-HELLO',
+            name: "Hello Beautiful Women's Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Olive Green",
+            sn: 'Nylon Tote Bag (Olive Green)',
+            price: 249,
+            mrp: 499,
+            rat: 4.2,
+            rev: 18,
+            cat: 'Handbags',
+            occ: 'Daily Use, Office, College, Travel',
+            type: 'Tote Bag',
+            metal: 'N/A',
+            plating: 'N/A',
+            stone: 'N/A',
+            qty: '1 Piece',
+            sizing: 'Large (L 38 × W 10 × H 30 cm approx)',
+            trend: 'Casual Modern',
+            color: 'Olive Green',
+            material: 'Nylon',
+            origin: 'India',
+            newArrival: true,
+            murl: 'https://www.flipkart.com/saheb-trend-house-women-green-handbag/p/itm099d82f49bb13?pid=HMBHZJFXBTPNHVBY',
+            desc: 'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+            imgs: [
+                'https://images.meesho.com/images/products/979823986/p49xw_512.avif?width=512',
+                
+                'https://images.meesho.com/images/products/979823986/z3cks_512.avif?width=512'
+            ],
+            sizes: ['One Size'],
+            vis: true
+        }, {
+            id: 'P4-BAG-HELLO Black',
+            name: "Hello Beautiful Women's Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Black",
+            sn: 'Nylon Tote Bag (Olive Green)',
+            price: 249,
+            mrp: 499,
+            rat: 4.2,
+            rev: 18,
+            cat: 'Handbags',
+            occ: 'Daily Use, Office, College, Travel',
+            type: 'Tote Bag',
+            metal: 'N/A',
+            plating: 'N/A',
+            stone: 'N/A',
+            qty: '1 Piece',
+            sizing: 'Large (L 38 × W 10 × H 30 cm approx)',
+            trend: 'Casual Modern',
+            color: 'Black',
+            material: 'Nylon',
+            origin: 'India',
+            newArrival: true,
+            murl: 'https://www.flipkart.com/saheb-trend-house-girls-black-handbag/p/itm55834631fee6c?pid=HMBHZFKJAV7MQ7FK',
+            desc: 'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+            imgs: [
+                'https://images.meesho.com/images/products/979823985/lpmwb_512.avif?width=512',
+                
+                'https://images.meesho.com/images/products/979823986/z3cks_512.avif?width=512'
+            ],
+            sizes: ['One Size'],
+            vis: true
+        }, {
+            id: 'P5-PEACKOCK-NECK',
+            name: 'Peackock Necklace & Earrings Set – Traditional Assamese Jewellery, Gold Plated, Party Wear',
+            sn: 'Floral Necklace Set',
+            price: 278,
+            mrp: 500,
+            rat: 4.3,
+            rev: 24,
+            cat: 'Jewellery',
+            occ: 'Party, Wedding, Festivals, Bihu, Gifting',
+            type: 'Necklace Set',
+            metal: 'Copper Alloy',
+            plating: 'Gold Plated',
+            stone: 'No Stone',
+            qty: '1 Set (Necklace + Earrings)',
+            sizing: 'Adjustable Chain (Necklace), Push-back (Earrings)',
+            trend: 'Traditional Floral',
+            color: 'Gold',
+            material: 'Copper Alloy with Gold Plating',
+            origin: 'India',
+            newArrival: true,
+            murl: 'https://www.flipkart.com/saheb-trend-house-brass-alloy-gold-plated-red-gold-jewellery-set/p/itmb3866b6f6eb10?pid=JWSHN2JDZR4NAEGA',
+            desc: 'Elegant floral-designed necklace and earrings set, perfect for festive occasions and weddings. The intricate floral motifs are inspired by Assamese traditional art, crafted with a brilliant gold finish. Lightweight and comfortable for all-day wear. A versatile addition to any jewellery collection.',
+            imgs: [
+                'https://images.meesho.com/images/products/746243554/3lwjv_512.webp',
+                'https://images.meesho.com/images/products/746243554/forqo_512.webp'
+            ],
+            sizes: ['Adjustable Chain', 'One Size Earrings'],
+            vis: true
+        }
+            
+        
+        
+        
+        
+        
+        
+        
+        
+        ];
+
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+        //  RENDER LOGIC
+        // ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+        let currentCategory = 'all';
+        let currentSort = 'popular';
+        let currentPage = 1;
+        const perPage = 9;
+
+        function getFilteredProducts() {
+            let list = products.filter(p => p.vis !== false);
+            if (currentCategory !== 'all') {
+                list = list.filter(p => p.cat === currentCategory);
+            }
+            return list;
+        }
+
+        function getSortedProducts(list) {
+            const sorted = [...list];
+            switch (currentSort) {
+                case 'price-low':
+                    sorted.sort((a, b) => a.price - b.price);
+                    break;
+                case 'price-high':
+                    sorted.sort((a, b) => b.price - a.price);
+                    break;
+                case 'rating':
+                    sorted.sort((a, b) => b.rat - a.rat);
+                    break;
+                case 'new':
+                    sorted.sort((a, b) => (a.newArrival ? 1 : 0) - (b.newArrival ? 1 : 0));
+                    break;
+                default: // 'popular'
+                    sorted.sort((a, b) => b.rev - a.rev);
+                    break;
+            }
+            return sorted;
+        }
+
+        function getPaginated(list) {
+            const start = (currentPage - 1) * perPage;
+            const end = start + perPage;
+            return list.slice(start, end);
+        }
+
+        function renderStars(rating) {
+            const full = Math.floor(rating);
+            const half = rating - full >= 0.5 ? 1 : 0;
+            const empty = 5 - full - half;
+            return '★'.repeat(full) + (half ? '½' : '') + '☆'.repeat(empty);
+        }
+
+        function renderProductCard(p) {
+            const firstImg = p.imgs && p.imgs.length ? p.imgs[0] : 'https://via.placeholder.com/400x400/1e1816/7f7168?text=STH';
+            const off = Math.round((1 - p.price / p.mrp) * 100);
+            const badge = p.newArrival ? '<span class="prod-badge new">New</span>' : '';
+            return `
+            <div class="prod-card" data-id="${p.id}">
+              <div class="prod-img-wrap">
+                <img src="${firstImg}" alt="${p.sn || p.name}" loading="lazy" />
+                ${badge}
+                ${off > 0 ? `<span class="prod-off">${off}% OFF</span>` : ''}
+              </div>
+              <div class="prod-body">
+                <div class="prod-cat">${p.cat}</div>
+                <div class="prod-name">${p.name}</div>
+                <div class="prod-sn">${p.sn}</div>
+                <div class="prod-price-row">
+                  <span class="prod-price">₹${p.price}</span>
+                  <span class="prod-mrp">₹${p.mrp}</span>
+                  ${off > 0 ? `<span class="prod-discount">${off}% off</span>` : ''}
+                </div>
+                <div class="prod-rating">
+                  <span class="stars">${renderStars(p.rat)}</span>
+                  <span>${p.rat}</span>
+                  <span class="rev">(${p.rev} reviews)</span>
+                </div>
+                <div class="prod-meta">
+                  <span>🎨 ${p.color}</span>
+                  <span>📦 ${p.material}</span>
+                  ${p.trend ? `<span class="tag">${p.trend}</span>` : ''}
+                </div>
+                <div class="prod-actions">
+                  <a href="${p.murl}" target="_blank" class="btn-flipkart">🛒 View on Flipkart</a>
+                  <button class="btn-detail" onclick="alert('${p.desc.replace(/'/g, "\\'")}')">ℹ️ Details</button>
+                </div>
+              </div>
+            </div>
+          `;
+        }
+
+        function render() {
+            const filtered = getFilteredProducts();
+            const sorted = getSortedProducts(filtered);
+            const total = sorted.length;
+            const totalPages = Math.ceil(total / perPage) || 1;
+            if (currentPage > totalPages) currentPage = totalPages;
+            const pageItems = getPaginated(sorted);
+
+            const grid = document.getElementById('productGrid');
+            const count = document.getElementById('resultsCount');
+
+            if (pageItems.length === 0) {
+                grid.innerHTML = `
+              <div class="empty-state" style="grid-column:1/-1;">
+                <div class="icon">🔍</div>
+                <h3>No products found</h3>
+                <p style="color:var(--text3);">Try adjusting your filters.</p>
+              </div>
+            `;
+                count.textContent = '0 products';
+            } else {
+                grid.innerHTML = pageItems.map(p => renderProductCard(p)).join('');
+                count.textContent = `${total} product${total > 1 ? 's' : ''}`;
+            }
+
+            // Pagination
+            const pag = document.getElementById('pagination');
+            let pagHtml = '';
+            pagHtml +=
+                `<button onclick="goPage(${currentPage - 1})" ${currentPage <= 1 ? 'disabled' : ''}>‹ Prev</button>`;
+            for (let i = 1; i <= totalPages; i++) {
+                pagHtml +=
+                    `<button onclick="goPage(${i})" class="${i === currentPage ? 'active' : ''}">${i}</button>`;
+            }
+            pagHtml +=
+                `<button onclick="goPage(${currentPage + 1})" ${currentPage >= totalPages ? 'disabled' : ''}>Next ›</button>`;
+            pag.innerHTML = pagHtml;
+        }
+
+        function goPage(p) {
+            const filtered = getFilteredProducts();
+            const total = getSortedProducts(filtered).length;
+            const totalPages = Math.ceil(total / perPage) || 1;
+            if (p < 1 || p > totalPages) return;
+            currentPage = p;
+            render();
+            document.getElementById('productGrid').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        // ── Event Listeners ──
+
+        document.querySelectorAll('#categoryFilters .filter-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('#categoryFilters .filter-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                currentCategory = this.dataset.cat;
+                currentPage = 1;
+                render();
+            });
+        });
+
+        document.getElementById('sortSelect').addEventListener('change', function() {
+            currentSort = this.value;
+            currentPage = 1;
+            render();
+        });
+
+        // ── Init ──
+        render();
+    </script>
+</body>
+</html>
