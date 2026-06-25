@@ -7,19 +7,27 @@
     <meta name="description" content="Free Meesho shipping label cropper, PDF merger, and A4 label tools. Premium tools for sellers." />
     <meta name="keywords" content="Meesho label cropper, PDF merger, shipping label, A4 label, Meesho tools, SAHEB Digital Hub" />
     <meta name="robots" content="index, follow" />
-    <link rel="canonical" href="https://www.sahebali.site/meesho-tools.html" />
+    <link rel="canonical" href="https://www.sahebali.site/meesho-tools/index.html" />
 
     <!-- Open Graph -->
     <meta property="og:title" content="SAHEB Digital Hub – Premium Meesho Tools" />
     <meta property="og:description" content="Free Meesho shipping label cropper, PDF merger, and A4 label tools." />
-    <meta property="og:url" content="https://www.sahebali.site/meesho-tools.html" />
+    <meta property="og:url" content="https://www.sahebali.site/meesho-tools/index.html" />
     <meta property="og:type" content="website" />
 
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="style/index.css" /         >
+    <link rel="stylesheet" href="style/index.css" />
+
+  <!-- Favicon (using your SDH logo) -->
+   <!-- ── FAVICON & ICONS ──────────────────────────────────────── -->
+  <link rel="icon" type="image/png" sizes="32x32" href="image/SDH.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="image/SDH.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="image/SDH.png">
+  <link rel="shortcut icon" href="image/SDH.png" type="image/x-icon">
+
 
 </head>
 <body>
@@ -126,9 +134,9 @@
                     <h3>Meesho Label Cropper</h3>
                     <p>Upload your PDF and automatically crop shipping labels. Supports <strong>8‑label</strong> and <strong>4‑label</strong>A4 layout.</p>
                     <div class="tool-features">
-                        <span>8 per page</span>
+                        <span>8 per A4 page</span>
+                        <span>4 per A4 page</span>
                         <span>Auto-crop</span>
-                        <span>Partner filter</span>
                     </div>
                     <a href="A4-4-8-label-croper.html" class="btn-tool">
                         Launch Tool <span class="arrow">→</span>
@@ -223,69 +231,7 @@
     <!-- ════════════════════════════════════════════ -->
     <!--  SCRIPTS                                   -->
     <!-- ════════════════════════════════════════════ -->
-    <script>
-        (function() {
-            'use strict';
-
-            // ─── Console ───
-            console.log('🚀 SAHEB Digital Hub — Premium Meesho Tools');
-            console.log('📦 Free, private, browser-based tools for shipping label management.');
-
-            // ─── Header scroll effect ───
-            const header = document.getElementById('header');
-            let lastScroll = 0;
-
-            window.addEventListener('scroll', function() {
-                const current = window.pageYOffset;
-                if (current > 20) {
-                    header.classList.add('scrolled');
-                } else {
-                    header.classList.remove('scrolled');
-                }
-                lastScroll = current;
-            }, { passive: true });
-
-            // ─── Smooth scroll for anchor links ───
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    const href = this.getAttribute('href');
-                    if (href === '#') return;
-                    const target = document.querySelector(href);
-                    if (target) {
-                        e.preventDefault();
-                        const offset = 80;
-                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
-                        window.scrollTo({ top, behavior: 'smooth' });
-                    }
-                });
-            });
-
-            // ─── Intersection Observer for reveal animations ───
-            const revealElements = document.querySelectorAll('.reveal');
-
-            if (revealElements.length > 0) {
-                const observer = new IntersectionObserver((entries) => {
-                    entries.forEach(entry => {
-                        if (entry.isIntersecting) {
-                            entry.target.classList.add('visible');
-                        }
-                    });
-                }, {
-                    threshold: 0.15,
-                    rootMargin: '0px 0px -40px 0px'
-                });
-
-                revealElements.forEach(el => observer.observe(el));
-            }
-
-            // ─── Tool card stagger ───
-            const cards = document.querySelectorAll('.tool-card');
-            cards.forEach((card, i) => {
-                card.style.transitionDelay = (i * 0.08) + 's';
-            });
-
-        })();
-    </script>
+    <script src="js/index.js"></script>
 
 </body>
 </html>
