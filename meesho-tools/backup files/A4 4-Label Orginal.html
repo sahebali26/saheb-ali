@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Meesho label crop – 4 labels per A4</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.min.js">
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js">
+    </script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, sans-serif;
+            background: #f5f6fa;
+            color: #1a1a2e;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .tool-card {
+            max-width: 640px;
+            width: 100%;
+            background: #fff;
+            border-radius: 28px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            padding: 32px 30px 40px;
+        }
+        .free-badge {
+            float: right;
+            background: #16a34a;
+            color: #fff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 16px;
+            border-radius: 20px;
+            border: 2px solid #16a34a;
+        }
+        .tool-icon {
+            width: 48px;
+            height: 48px;
+            margin-bottom: 8px;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        .sub-heading {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+        .layout-badge {
+            background: #f0edf8;
+            border-radius: 12px;
+            padding: 12px 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            border: 2px solid #6c2bd9;
+            background: #f5f0ff;
+        }
+        .layout-badge .label {
+            font-weight: 600;
+            font-size: 0.95rem;
+        }
+        .layout-badge .detail {
+            font-size: 0.85rem;
+            color: #4b5563;
+        }
+        .layout-badge .grid-icon {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4px;
+            width: 48px;
+            height: 36px;
+            flex-shrink: 0;
+        }
+        .layout-badge .grid-icon span {
+            background: #6c2bd9;
+            border-radius: 3px;
+            display: block;
+            opacity: 0.6;
+        }
+        .layout-badge .grid-icon span:nth-child(1),
+        .layout-badge .grid-icon span:nth-child(2),
+        .layout-badge .grid-icon span:nth-child(3),
+        .layout-badge .grid-icon span:nth-child(4) {
+            opacity: 1;
+        }
+
+        .upload-area {
+            border: 2px dashed #a78bfa;
+            border-radius: 16px;
+            padding: 28px 20px;
+            text-align: center;
+            background: #faf8ff;
+            margin: 8px 0 16px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+        .upload-area:hover {
+            background: #f3efff;
+            border-color: #6c2bd9;
+        }
+        .upload-area input[type="file"] {
+            display: none;
+        }
+        .upload-label {
+            font-weight: 500;
+            color: #4b2b8a;
+            font-size: 1.05rem;
+        }
+        .upload-label small {
+            font-weight: 400;
+            color: #6b7280;
+            font-size: 0.8rem;
+        }
+        .upload-icon {
+            font-size: 2rem;
+            display: block;
+            margin-bottom: 6px;
+        }
+        .file-list {
+            margin-top: 12px;
+            font-size: 0.9rem;
+            color: #2d3748;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 12px;
+            justify-content: center;
+        }
+        .file-item {
+            background: #ede9fe;
+            padding: 4px 14px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .file-item .remove {
+            cursor: pointer;
+            color: #b91c1c;
+            font-weight: 700;
+            margin-left: 4px;
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+
+        .btn {
+            display: inline-block;
+            font-weight: 600;
+            padding: 12px 36px;
+            border-radius: 40px;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: 0.2s;
+            text-align: center;
+        }
+        .btn-primary {
+            background: #6c2bd9;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(108, 43, 217, 0.35);
+        }
+        .btn-primary:hover {
+            background: #5a1fb8;
+            transform: translateY(-2px);
+        }
+        .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-success {
+            background: #16a34a;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.3);
+        }
+        .btn-success:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+        }
+        .btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 6px;
+        }
+
+        .status {
+            margin-top: 16px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            font-size: 0.95rem;
+            display: none;
+        }
+        .status.show {
+            display: block;
+        }
+        .status.info {
+            background: #e0f2fe;
+            color: #0369a1;
+        }
+        .status.success {
+            background: #dcfce7;
+            color: #15803d;
+        }
+        .status.error {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: #e5e7eb;
+            border-radius: 10px;
+            margin-top: 10px;
+            overflow: hidden;
+        }
+        .progress-fill {
+            height: 100%;
+            background: #6c2bd9;
+            width: 0%;
+            transition: width 0.3s;
+            border-radius: 10px;
+        }
+        .download-area {
+            margin-top: 16px;
+            text-align: center;
+        }
+        .spinner {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border: 3px solid rgba(108, 43, 217, 0.2);
+            border-top-color: #6c2bd9;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        .info-text {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 0.85rem;
+            color: #6b7280;
+            border-top: 1px solid #e9edf4;
+            padding-top: 18px;
+        }
+        .info-text strong {
+            color: #1a1a2e;
+        }
+
+        .file-count {
+            font-size: 0.8rem;
+            color: #6b7280;
+            margin-top: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="tool-card">
+        <span class="free-badge">Free</span>
+
+        <svg class="tool-icon" viewBox="0 0 48 48" fill="none">
+            <rect width="48" height="48" rx="12" fill="#EDE9FE" />
+            <path d="M18 18L30 18V30L18 30V18Z" stroke="#6C2BD9" stroke-width="2.5" />
+            <path d="M22 24L26 28L30 24" stroke="#6C2BD9" stroke-width="2.5" stroke-linecap="round" />
+        </svg>
+
+        <h2>Meesho label crop</h2>
+        <p class="sub-heading">Convert shipping label PDFs to A4 sheets – 4 labels per page</p>
+
+        <!-- Layout indicator -->
+        <div class="layout-badge">
+            <div class="grid-icon">
+                <span></span><span></span>
+                <span></span><span></span>
+            </div>
+            <div>
+                <div class="label">📄 A4 Layout</div>
+                <div class="detail">4 labels per page (2 × 2 grid)</div>
+            </div>
+        </div>
+
+        <!-- Upload area -->
+        <div class="upload-area" id="uploadArea">
+            <span class="upload-icon">📎</span>
+            <div class="upload-label">Upload PDF <small>— multiple files supported</small></div>
+            <input type="file" id="fileInput" accept=".pdf" multiple />
+            <div class="file-list" id="fileList"></div>
+            <div class="file-count" id="fileCount"></div>
+        </div>
+
+        <!-- Action -->
+        <div class="btn-group">
+            <button class="btn btn-primary" id="processBtn">🚀 Start crop</button>
+        </div>
+
+        <!-- Status -->
+        <div class="status" id="status">
+            <div id="statusMessage">Processing…</div>
+            <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+        </div>
+
+        <!-- Download -->
+        <div class="download-area" id="downloadArea" style="display:none;">
+            <button class="btn btn-success" id="downloadBtn">⬇️ Download PDF</button>
+        </div>
+
+        <div class="info-text">
+            <strong>Meesho label crop</strong> — each page of your PDF becomes one label, arranged 4‑per‑A4
+        </div>
+    </div>
+
+    <script>
+        (function() {
+            // ----- state -----
+            let uploadedFiles = [];
+            let processedBlob = null;
+            let isProcessing = false;
+
+            // DOM refs
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            const fileCount = document.getElementById('fileCount');
+            const uploadArea = document.getElementById('uploadArea');
+            const processBtn = document.getElementById('processBtn');
+            const statusEl = document.getElementById('status');
+            const statusMsg = document.getElementById('statusMessage');
+            const progressFill = document.getElementById('progressFill');
+            const downloadArea = document.getElementById('downloadArea');
+            const downloadBtn = document.getElementById('downloadBtn');
+
+            // ----- file handling -----
+            uploadArea.addEventListener('click', () => fileInput.click());
+            uploadArea.addEventListener('dragover', (e) => { e.preventDefault();
+                uploadArea.style.borderColor = '#6C2BD9'; });
+            uploadArea.addEventListener('dragleave', () => { uploadArea.style.borderColor = '#a78bfa'; });
+            uploadArea.addEventListener('drop', (e) => {
+                e.preventDefault();
+                uploadArea.style.borderColor = '#a78bfa';
+                if (e.dataTransfer.files.length) handleFiles(e.dataTransfer.files);
+            });
+            fileInput.addEventListener('change', () => {
+                if (fileInput.files.length) handleFiles(fileInput.files);
+                fileInput.value = '';
+            });
+
+            function handleFiles(files) {
+                for (const f of files) {
+                    if (f.type === 'application/pdf' || f.name.toLowerCase().endsWith('.pdf')) {
+                        uploadedFiles.push(f);
+                    }
+                }
+                renderFileList();
+                statusEl.classList.remove('show', 'success', 'error', 'info');
+                downloadArea.style.display = 'none';
+                processedBlob = null;
+            }
+
+            function renderFileList() {
+                if (!uploadedFiles.length) {
+                    fileList.innerHTML = '';
+                    fileCount.textContent = '';
+                    return;
+                }
+                fileList.innerHTML = uploadedFiles.map((f, i) =>
+                    `<span class="file-item">📄 ${f.name} <span class="remove" data-idx="${i}">✕</span></span>`
+                ).join('');
+                fileList.querySelectorAll('.remove').forEach(el => {
+                    el.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        const idx = parseInt(el.dataset.idx);
+                        uploadedFiles.splice(idx, 1);
+                        renderFileList();
+                        processedBlob = null;
+                        downloadArea.style.display = 'none';
+                    });
+                });
+                fileCount.textContent = `${uploadedFiles.length} file(s) uploaded`;
+            }
+
+            // ----- processing -----
+            processBtn.addEventListener('click', async () => {
+                if (isProcessing) return;
+                if (!uploadedFiles.length) {
+                    showStatus('Please upload at least one PDF file.', 'error');
+                    return;
+                }
+                isProcessing = true;
+                processBtn.disabled = true;
+                processBtn.innerHTML = '<span class="spinner"></span> Processing…';
+                downloadArea.style.display = 'none';
+                processedBlob = null;
+                showStatus('Loading PDF pages…', 'info');
+                progressFill.style.width = '0%';
+
+                try {
+                    const allLabels = [];
+                    let totalPages = 0;
+
+                    for (const file of uploadedFiles) {
+                        const arrayBuffer = await file.arrayBuffer();
+                        const pdf = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+                        const pageCount = pdf.numPages;
+                        totalPages += pageCount;
+
+                        for (let i = 1; i <= pageCount; i++) {
+                            const page = await pdf.getPage(i);
+                            const viewport = page.getViewport({ scale: 1.5 });
+                            const canvas = document.createElement('canvas');
+                            const ctx = canvas.getContext('2d');
+                            canvas.width = viewport.width;
+                            canvas.height = viewport.height;
+                            await page.render({ canvasContext: ctx, viewport }).promise;
+                            const dataUrl = canvas.toDataURL('image/png');
+                            allLabels.push(dataUrl);
+                            const pct = Math.min(50, Math.round((allLabels.length / totalPages) * 50));
+                            progressFill.style.width = pct + '%';
+                        }
+                    }
+
+                    if (!allLabels.length) throw new Error('No pages found in the uploaded PDFs.');
+
+                    showStatus(`Processing ${allLabels.length} labels into 4‑label A4 layout…`, 'info');
+                    progressFill.style.width = '55%';
+
+                    const perPage = 4;
+                    const totalA4Pages = Math.ceil(allLabels.length / perPage);
+
+                    const { PDFDocument, PageSizes } = PDFLib;
+                    const newPdf = await PDFDocument.create();
+                    const [a4w, a4h] = PageSizes.A4;
+
+                    const margin = 28;
+                    const gap = 12;
+                    const cols = 2,
+                        rows = 2;
+                    const availableW = a4w - margin * 2;
+                    const availableH = a4h - margin * 2;
+                    const cellW = (availableW - gap * (cols - 1)) / cols;
+                    const cellH = (availableH - gap * (rows - 1)) / rows;
+
+                    for (let p = 0; p < totalA4Pages; p++) {
+                        const page = newPdf.addPage(PageSizes.A4);
+                        const startIdx = p * perPage;
+                        const endIdx = Math.min(startIdx + perPage, allLabels.length);
+
+                        for (let i = startIdx; i < endIdx; i++) {
+                            const idx = i - startIdx;
+                            const col = idx % cols;
+                            const row = Math.floor(idx / cols);
+                            const x = margin + col * (cellW + gap);
+                            const y = a4h - margin - (row + 1) * cellH - row * gap;
+
+                            const imgData = allLabels[i];
+                            const response = await fetch(imgData);
+                            const blob = await response.blob();
+                            const imgBytes = await blob.arrayBuffer();
+                            let img;
+                            try {
+                                img = await newPdf.embedPng(imgBytes);
+                            } catch (_) {
+                                img = await newPdf.embedJpg(imgBytes);
+                            }
+                            const scale = Math.min(cellW / img.width, cellH / img.height, 1.2);
+                            const dw = img.width * scale;
+                            const dh = img.height * scale;
+                            const dx = x + (cellW - dw) / 2;
+                            const dy = y + (cellH - dh) / 2;
+                            page.drawImage(img, { x: dx, y: dy, width: dw, height: dh });
+                        }
+
+                        const pct2 = 55 + Math.round(((p + 1) / totalA4Pages) * 40);
+                        progressFill.style.width = Math.min(95, pct2) + '%';
+                    }
+
+                    progressFill.style.width = '100%';
+                    const pdfBytes = await newPdf.save();
+                    processedBlob = new Blob([pdfBytes], { type: 'application/pdf' });
+
+                    showStatus(`✅ Done! ${allLabels.length} labels arranged on ${totalA4Pages} A4 page(s).`, 'success');
+                    downloadArea.style.display = 'block';
+
+                } catch (err) {
+                    console.error(err);
+                    showStatus('❌ Error: ' + (err.message || 'Processing failed.'), 'error');
+                } finally {
+                    isProcessing = false;
+                    processBtn.disabled = false;
+                    processBtn.innerHTML = '🚀 Start crop';
+                }
+            });
+
+            // ----- download -----
+            downloadBtn.addEventListener('click', () => {
+                if (!processedBlob) return;
+                const url = URL.createObjectURL(processedBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = 'meesho-labels-4-per-page.pdf';
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                setTimeout(() => URL.revokeObjectURL(url), 5000);
+            });
+
+            // ----- helpers -----
+            function showStatus(msg, type) {
+                statusEl.className = 'status show ' + (type || 'info');
+                statusMsg.innerHTML = msg;
+                if (type === 'error') progressFill.style.width = '0%';
+            }
+
+            // pdf.js worker
+            pdfjsLib.GlobalWorkerOptions.workerSrc =
+                'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/3.11.174/pdf.worker.min.js';
+        })();
+    </script>
+</body>
+</html>

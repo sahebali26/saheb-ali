@@ -1,0 +1,1424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- ─── SEO & Meta ─── -->
+    <title>PDF Merger – Combine PDFs | SAHEB Digital Hub</title>
+    <meta name="description" content="Free PDF merger tool: combine multiple PDF files into one document. Drag & drop, reorder, and merge instantly — private and fast." />
+    <meta name="keywords" content="PDF merger, combine PDF, merge PDF, free PDF tool, SAHEB Digital Hub, SDH" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.sahebali.site/pdfmarg.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="PDF Merger – Combine PDFs | SAHEB Digital Hub" />
+    <meta property="og:description" content="Free PDF merger tool: combine multiple PDFs into one document. Fast, private, and easy to use." />
+    <meta property="og:url" content="https://www.sahebali.site/pdfmarg.html" />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="SAHEB Digital Hub" />
+
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="PDF Merger – Combine PDFs" />
+    <meta name="twitter:description" content="Free PDF merger tool: combine multiple PDFs into one document." />
+
+    <!-- pdf-lib from CDN -->
+    <script src="https://unpkg.com/pdf-lib@1.17.1/dist/pdf-lib.min.js">
+    </script>
+
+    <style>
+        /* ─────────── Reset & Variables ─────────── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --sdh-orange: #f4333b;
+            --sdh-red: #d32f2f;
+            --sdh-dark: #1a1a2e;
+            --sdh-light: #f8f6ff;
+            --bg: #f4f7fc;
+            --text: #1e293b;
+            --subtext: #64748b;
+            --border: #e9edf4;
+            --shadow: rgba(0, 0, 0, 0.08);
+            --radius: 12px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 0;
+        }
+
+        /* ─────────── SDH HEADER ─────────── */
+        .sdh-header {
+            width: 100%;
+            background: #fff;
+            border-bottom: 2px solid var(--sdh-orange);
+            padding: 12px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+            position: sticky;
+            top: 0;
+            z-index: 200;
+        }
+
+        .sdh-header .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .sdh-brand {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            color: var(--sdh-dark);
+        }
+
+        .sdh-brand .brand-icon {
+            width: 38px;
+            height: 38px;
+            background: linear-gradient(135deg, var(--sdh-orange), var(--sdh-red));
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 0.95rem;
+            flex-shrink: 0;
+        }
+
+        .sdh-brand .brand-name {
+            font-weight: 700;
+            font-size: 1.1rem;
+            letter-spacing: -0.3px;
+        }
+
+        .sdh-brand .brand-name span {
+            color: var(--sdh-orange);
+        }
+
+        .sdh-brand .brand-tag {
+            font-size: 0.6rem;
+            color: #888;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.4px;
+        }
+
+        .sdh-nav {
+            display: flex;
+            align-items: center;
+            gap: 4px;
+            flex-wrap: wrap;
+        }
+
+        .sdh-nav a {
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: 0.25s ease;
+            color: var(--text);
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .sdh-nav a:hover {
+            background: #f1f5f9;
+        }
+
+        .sdh-nav a.btn-sdh {
+            background: var(--sdh-orange);
+            color: #fff;
+            box-shadow: 0 4px 12px rgba(244, 51, 59, 0.22);
+        }
+
+        .sdh-nav a.btn-sdh:hover {
+            background: var(--sdh-red);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(244, 51, 59, 0.32);
+        }
+
+        /* ─── Dropdown ─── */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+
+        .dropdown .dropbtn {
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.82rem;
+            font-weight: 600;
+            transition: 0.25s ease;
+            color: var(--text);
+            text-decoration: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            display: inline-flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .dropdown .dropbtn:hover {
+            background: #f1f5f9;
+        }
+
+        .dropdown .dropbtn .arrow {
+            font-size: 0.6rem;
+            transition: transform 0.25s;
+        }
+
+        .dropdown:hover .dropbtn .arrow {
+            transform: rotate(180deg);
+        }
+
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            top: 100%;
+            left: 0;
+            min-width: 180px;
+            background: #fff;
+            border-radius: 12px;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+            border: 1px solid #e9edf4;
+            padding: 6px 0;
+            z-index: 300;
+            margin-top: 4px;
+        }
+
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        .dropdown-content a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 18px;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text);
+            text-decoration: none;
+            transition: 0.15s;
+            border-radius: 0;
+        }
+
+        .dropdown-content a:hover {
+            background: #f5f7fb;
+            color: var(--sdh-orange);
+        }
+
+        .dropdown-content a .icon {
+            font-size: 1.1rem;
+        }
+
+        /* ─────────── MAIN WRAPPER ─────────── */
+        .app-wrapper {
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            flex: 1;
+        }
+
+        .app {
+            max-width: 820px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        /* ─── Original app styles (kept mostly unchanged) ─── */
+        .app .app-inner {
+            max-width: 820px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 2rem;
+            box-shadow: 0 20px 60px rgba(0, 20, 50, 0.12);
+            padding: 2.5rem 2.8rem 2.8rem;
+            transition: 0.3s;
+            margin-bottom: 24px;
+        }
+
+        @media (max-width: 600px) {
+            .app .app-inner {
+                padding: 1.5rem 1.2rem;
+                border-radius: 1.2rem;
+            }
+        }
+
+        .app .header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .app .header .icon {
+            font-size: 2.2rem;
+            line-height: 1;
+        }
+
+        .app .header h1 {
+            font-weight: 700;
+            font-size: 1.9rem;
+            letter-spacing: -0.5px;
+            background: linear-gradient(135deg, #0f2b5b, #2563eb);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .app .subhead {
+            color: #64748b;
+            font-size: 0.98rem;
+            margin-bottom: 2rem;
+            border-left: 3px solid #2563eb;
+            padding-left: 1rem;
+        }
+
+        .app .drop-zone {
+            border: 2.5px dashed #cbd5e1;
+            border-radius: 1.4rem;
+            padding: 2.8rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.25s ease;
+            background: #fafcff;
+            position: relative;
+        }
+
+        .app .drop-zone:hover {
+            border-color: #94a3b8;
+            background: #f8faff;
+        }
+
+        .app .drop-zone.dragover {
+            border-color: #2563eb;
+            background: #eef4ff;
+            box-shadow: 0 0 0 4px rgba(37, 99, 235, 0.12);
+        }
+
+        .app .drop-zone .icon-big {
+            font-size: 3.2rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .app .drop-zone p {
+            font-size: 1.05rem;
+            font-weight: 500;
+            color: #1e293b;
+        }
+
+        .app .drop-zone .hint {
+            font-size: 0.9rem;
+            color: #94a3b8;
+            margin-top: 0.3rem;
+        }
+
+        .app .drop-zone input[type="file"] {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            cursor: pointer;
+        }
+
+        .app .file-section {
+            margin-top: 2rem;
+        }
+
+        .app .file-section .section-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+        }
+
+        .app .file-section .section-head h2 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #0f2b5b;
+        }
+
+        .app .file-section .section-head .count-badge {
+            background: #e2e8f0;
+            border-radius: 40px;
+            padding: 0.15rem 0.8rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: #334155;
+        }
+
+        .app .file-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+            max-height: 320px;
+            overflow-y: auto;
+            padding-right: 4px;
+        }
+
+        .app .file-list::-webkit-scrollbar {
+            width: 5px;
+        }
+        .app .file-list::-webkit-scrollbar-track {
+            background: #f1f5f9;
+            border-radius: 8px;
+        }
+        .app .file-list::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 8px;
+        }
+
+        .app .file-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            background: #f8fafc;
+            padding: 0.65rem 1rem 0.65rem 1.2rem;
+            border-radius: 0.9rem;
+            border: 1px solid #e9edf2;
+            transition: 0.2s;
+            animation: slideIn 0.25s ease;
+        }
+
+        .app .file-item:hover {
+            background: #f1f5f9;
+            border-color: #d1d9e6;
+        }
+
+        .app .file-item .file-icon {
+            font-size: 1.5rem;
+            flex-shrink: 0;
+        }
+
+        .app .file-item .file-info {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .app .file-item .file-name {
+            font-weight: 500;
+            font-size: 0.95rem;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .app .file-item .file-size {
+            font-size: 0.75rem;
+            color: #94a3b8;
+        }
+
+        .app .file-item .file-actions {
+            display: flex;
+            gap: 0.3rem;
+            flex-shrink: 0;
+        }
+
+        .app .file-item .file-actions button {
+            background: transparent;
+            border: none;
+            width: 30px;
+            height: 30px;
+            border-radius: 8px;
+            font-size: 1rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: 0.15s;
+            color: #64748b;
+        }
+
+        .app .file-item .file-actions button:hover {
+            background: #e2e8f0;
+            color: #0f172a;
+        }
+
+        .app .file-item .file-actions .remove-btn:hover {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .app .file-item .file-actions button:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .app .actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin-top: 1.6rem;
+            align-items: center;
+        }
+
+        .app .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.7rem 1.6rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border: none;
+            cursor: pointer;
+            transition: 0.2s;
+            background: #e2e8f0;
+            color: #1e293b;
+        }
+
+        .app .btn-primary {
+            background: #2563eb;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(37, 99, 235, 0.28);
+        }
+
+        .app .btn-primary:hover:not(:disabled) {
+            background: #1d4ed8;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.34);
+        }
+
+        .app .btn-primary:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .app .btn-success {
+            background: #16a34a;
+            color: #fff;
+            box-shadow: 0 4px 14px rgba(22, 163, 74, 0.28);
+        }
+
+        .app .btn-success:hover {
+            background: #15803d;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(22, 163, 74, 0.34);
+        }
+
+        .app .btn-outline {
+            background: transparent;
+            border: 1.5px solid #cbd5e1;
+        }
+
+        .app .btn-outline:hover {
+            background: #f1f5f9;
+            border-color: #94a3b8;
+        }
+
+        .app .btn-danger-outline {
+            background: transparent;
+            border: 1.5px solid #fca5a5;
+            color: #b91c1c;
+        }
+
+        .app .btn-danger-outline:hover {
+            background: #fef2f2;
+            border-color: #ef4444;
+        }
+
+        .app .status-area {
+            margin-top: 1.8rem;
+            padding-top: 1.2rem;
+            border-top: 1.5px solid #edf2f7;
+        }
+
+        .app .status-message {
+            display: flex;
+            align-items: center;
+            gap: 0.6rem;
+            font-size: 0.95rem;
+            color: #475569;
+            min-height: 2.6rem;
+        }
+
+        .app .status-message .spinner {
+            display: inline-block;
+            width: 22px;
+            height: 22px;
+            border: 3px solid #e2e8f0;
+            border-top: 3px solid #2563eb;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        .app .status-message .success-icon {
+            color: #16a34a;
+            font-size: 1.4rem;
+        }
+
+        .app .status-message .error-icon {
+            color: #dc2626;
+            font-size: 1.4rem;
+        }
+
+        .app .result-actions {
+            margin-top: 0.8rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .app .empty-state {
+            text-align: center;
+            padding: 1.2rem 0 0.4rem;
+            color: #94a3b8;
+            font-size: 0.95rem;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .app .hidden {
+            display: none !important;
+        }
+
+        .app .mt-1 {
+            margin-top: 0.6rem;
+        }
+
+        .app .text-sm {
+            font-size: 0.85rem;
+        }
+
+        .app .text-muted {
+            color: #94a3b8;
+        }
+
+        @media (max-width: 480px) {
+            .app .app-inner {
+                padding: 1.5rem 1.2rem;
+            }
+            .app .header h1 {
+                font-size: 1.5rem;
+            }
+            .app .drop-zone {
+                padding: 2rem 1rem;
+            }
+            .app .drop-zone .icon-big {
+                font-size: 2.4rem;
+            }
+            .app .btn {
+                padding: 0.6rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .app .file-item {
+                padding: 0.5rem 0.7rem;
+                flex-wrap: wrap;
+            }
+            .app .file-item .file-actions {
+                margin-left: auto;
+            }
+            .app .actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .app .actions .btn {
+                justify-content: center;
+            }
+        }
+
+        /* ─────────── TOOLS SECTION ─────────── */
+        .tools-grid-section {
+            background: #fff;
+            border-radius: 2rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+        }
+
+        .tools-grid-section h2 {
+            font-size: 1.3rem;
+            margin-bottom: 6px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .tools-grid-section .sub {
+            color: var(--subtext);
+            font-size: 0.95rem;
+            margin-bottom: 18px;
+        }
+
+        .tools-grid-section .tool-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .tools-grid-section .tool-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 14px 28px;
+            border-radius: var(--radius);
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-decoration: none;
+            transition: 0.25s ease;
+            border: 2px solid transparent;
+            background: #f8fafc;
+            color: var(--text);
+            border-color: #e9edf4;
+        }
+
+        .tools-grid-section .tool-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+            border-color: var(--sdh-orange);
+        }
+
+        .tools-grid-section .tool-btn.primary-btn {
+            background: var(--sdh-orange);
+            color: #fff;
+            border-color: var(--sdh-orange);
+            box-shadow: 0 4px 14px rgba(244, 51, 59, 0.22);
+        }
+
+        .tools-grid-section .tool-btn.primary-btn:hover {
+            background: var(--sdh-red);
+            border-color: var(--sdh-red);
+            box-shadow: 0 6px 24px rgba(244, 51, 59, 0.32);
+        }
+
+        .tools-grid-section .tool-btn .icon {
+            font-size: 1.3rem;
+        }
+
+        /* ─────────── INSTRUCTIONS ─────────── */
+        .instructions {
+            background: #fff;
+            border-radius: 2rem;
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.08);
+            padding: 28px 32px;
+            margin-bottom: 24px;
+            scroll-margin-top: 80px;
+        }
+
+        .instructions h2 {
+            font-size: 1.3rem;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .instructions .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .instructions .step {
+            background: #f8fafc;
+            padding: 16px 18px;
+            border-radius: var(--radius);
+            border-left: 3px solid var(--sdh-orange);
+        }
+
+        .instructions .step .num {
+            font-weight: 700;
+            color: var(--sdh-orange);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .instructions .step p {
+            font-size: 0.92rem;
+            color: var(--subtext);
+            margin-top: 2px;
+        }
+
+        /* ─────────── FOOTER ─────────── */
+        .sdh-footer {
+            width: 100%;
+            background: var(--sdh-dark);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 32px 20px 20px;
+            margin-top: 20px;
+            border-top: 3px solid var(--sdh-orange);
+            scroll-margin-top: 80px;
+        }
+
+        .sdh-footer .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 28px;
+        }
+
+        .sdh-footer .brand-name {
+            color: #fff;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+
+        .sdh-footer .brand-name span {
+            color: var(--sdh-orange);
+        }
+
+        .sdh-footer .brand-desc {
+            font-size: 0.9rem;
+            color: rgba(255, 255, 255, 0.6);
+            margin-top: 6px;
+            max-width: 300px;
+        }
+
+        .sdh-footer h4 {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .sdh-footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .sdh-footer ul li {
+            margin-bottom: 6px;
+        }
+
+        .sdh-footer ul li a {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.88rem;
+            text-decoration: none;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .sdh-footer ul li a:hover {
+            color: var(--sdh-orange);
+            transform: translateX(4px);
+        }
+
+        .sdh-footer .footer-bottom {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(255, 255, 255, 0.06);
+            padding-top: 16px;
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.78rem;
+            color: rgba(255, 255, 255, 0.35);
+        }
+
+        .sdh-footer .footer-bottom a {
+            color: rgba(255, 255, 255, 0.4);
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .sdh-footer .footer-bottom a:hover {
+            color: var(--sdh-orange);
+        }
+
+        /* ─────────── Responsive ─────────── */
+        @media (max-width: 700px) {
+            .sdh-footer .container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .sdh-footer .brand-col {
+                grid-column: 1 / -1;
+            }
+            .sdh-footer .brand-desc {
+                max-width: 100%;
+            }
+            .sdh-header .container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+            }
+            .sdh-brand {
+                justify-content: center;
+            }
+            .sdh-nav {
+                justify-content: center;
+            }
+            .tools-grid-section .tool-buttons {
+                flex-direction: column;
+            }
+            .tools-grid-section .tool-btn {
+                justify-content: center;
+            }
+            .instructions .steps {
+                grid-template-columns: 1fr;
+            }
+            .dropdown-content {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .tools-grid-section,
+            .instructions {
+                padding: 20px 18px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .sdh-footer .container {
+                grid-template-columns: 1fr;
+                gap: 18px;
+            }
+            .sdh-footer .brand-col {
+                grid-column: 1;
+            }
+            .app-wrapper {
+                padding: 12px;
+            }
+            .tools-grid-section,
+            .instructions {
+                padding: 16px 14px;
+            }
+            .sdh-nav a,
+            .dropdown .dropbtn {
+                padding: 4px 10px;
+                font-size: 0.72rem;
+            }
+            .dropdown-content {
+                min-width: 160px;
+            }
+            .dropdown-content a {
+                padding: 6px 14px;
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  SDH HEADER                                -->
+    <!-- ════════════════════════════════════════════ -->
+    <header class="sdh-header">
+        <div class="container">
+            <a href="https://www.sahebali.site/meesho-tools.html" class="sdh-brand">
+                <span class="brand-icon">SDH</span>
+                <span class="brand-name">SAHEB <span>Digital</span> Hub</span>
+                <span class="brand-tag">⚡ Meesho Tools</span>
+            </a>
+            <nav class="sdh-nav">
+                <a href="https://www.sahebali.site/meesho-tools.html">🏠 Tools</a>
+                <a href="#instructions" class="nav-scroll">📖 How‑to</a>
+
+                <!-- ─── Dropdown: Tools ─── -->
+                <div class="dropdown">
+                    <button class="dropbtn">
+                        🛠️ Tools <span class="arrow">▾</span>
+                    </button>
+                    <div class="dropdown-content">
+                        <a href="https://www.sahebali.site/A4-4-8-label-croper.html">
+                            <span class="icon">✂️</span> 8‑Label Cropper
+                        </a>
+                        <a href="https://www.sahebali.site/A4-4-8-label-croper.html?invoice=with">
+                            <span class="icon">🧾</span> Crop with Invoice
+                        </a>
+                    </div>
+                </div>
+
+                <a href="#footer" class="btn-sdh nav-scroll">About</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  MAIN APP                                  -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="app-wrapper">
+        <div class="app">
+
+            <!-- ─── ORIGINAL PDF MERGER APP (unchanged) ─── -->
+            <div class="app-inner">
+                <div class="header">
+                    <span class="icon">📄</span>
+                    <h1>PDF Merger</h1>
+                </div>
+                <div class="subhead">
+                    Combine multiple PDFs into one document &mdash; free, private, and fast.
+                </div>
+
+                <!-- Drop Zone -->
+                <div class="drop-zone" id="dropZone">
+                    <span class="icon-big">📂</span>
+                    <p>Drag &amp; drop PDF files here</p>
+                    <span class="hint">or click to browse &middot; multiple files allowed</span>
+                    <input type="file" id="fileInput" accept=".pdf,application/pdf" multiple />
+                </div>
+
+                <!-- File list -->
+                <div class="file-section" id="fileSection">
+                    <div class="section-head">
+                        <h2>Uploaded files</h2>
+                        <span class="count-badge" id="fileCount">0</span>
+                    </div>
+                    <div class="file-list" id="fileList">
+                        <div class="empty-state">No files added yet</div>
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="actions">
+                    <button class="btn btn-primary" id="mergeBtn" disabled>
+                        <span>🔄</span> Merge PDFs
+                    </button>
+                    <button class="btn btn-danger-outline" id="clearBtn" disabled>
+                        <span>🗑</span> Clear All
+                    </button>
+                    <span style="margin-left:auto;font-size:0.8rem;color:#94a3b8;" id="totalSize"></span>
+                </div>
+
+                <!-- Status / result -->
+                <div class="status-area" id="statusArea">
+                    <div class="status-message" id="statusMsg">
+                        <span>💡</span> Add PDFs to get started
+                    </div>
+                    <div class="result-actions hidden" id="resultActions">
+                        <button class="btn btn-success" id="downloadBtn">
+                            <span>⬇️</span> Download Merged PDF
+                        </button>
+                        <button class="btn btn-outline" id="resetAfterDownloadBtn">➕ Merge more</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!--  TOOLS SECTION                              -->
+            <!-- ════════════════════════════════════════════ -->
+            <section class="tools-grid-section" id="toolsSection">
+                <h2>🛠️ All Meesho Tools</h2>
+                <p class="sub">Quickly access all our free shipping label tools from one place.</p>
+                <div class="tool-buttons">
+                    <a href="https://www.sahebali.site/A4-4-8-label-croper.html" class="tool-btn primary-btn">
+                        <span class="icon">✂️</span> 8‑Label Cropper
+                    </a>
+                   
+                    <a href="https://www.sahebali.site/A4-4-8-label-croper.html?invoice=with" class="tool-btn">
+                        <span class="icon">🧾</span> Crop with Invoice
+                    </a>
+                </div>
+            </section>
+
+            <!-- ════════════════════════════════════════════ -->
+            <!--  INSTRUCTIONS                               -->
+            <!-- ════════════════════════════════════════════ -->
+            <section class="instructions" id="instructions">
+                <h2>📖 How to use PDF Merger</h2>
+                <div class="steps">
+                    <div class="step">
+                        <div class="num">Step 1</div>
+                        <p>Drag &amp; drop PDF files into the upload area or click to browse.</p>
+                    </div>
+                    <div class="step">
+                        <div class="num">Step 2</div>
+                        <p>Reorder files using the ↑ and ↓ buttons if needed.</p>
+                    </div>
+                    <div class="step">
+                        <div class="num">Step 3</div>
+                        <p>Click <strong>Merge PDFs</strong> — the tool combines them in order.</p>
+                    </div>
+                    <div class="step">
+                        <div class="num">Step 4</div>
+                        <p>Download your merged PDF instantly. All processing is local and private.</p>
+                    </div>
+                </div>
+                <p style="margin-top:14px;font-size:0.9rem;color:var(--subtext);">
+                    💡 <strong>Tip:</strong> You can upload multiple PDFs at once and reorder them before merging.
+                </p>
+            </section>
+
+        </div>
+    </div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  SDH FOOTER                                -->
+    <!-- ════════════════════════════════════════════ -->
+    <footer class="sdh-footer" id="footer">
+        <div class="container">
+
+            <div class="brand-col">
+                <div class="brand-name">SAHEB <span>Digital</span> Hub</div>
+                <p class="brand-desc">
+                    Free Meesho tools for shipping label cropping, PDF merging, and A4 formatting.
+                    Built for sellers who need quick, reliable solutions — right in your browser.
+                </p>
+            </div>
+
+            <div>
+                <h4>🔗 Quick Links</h4>
+                <ul>
+                    <li><a href="https://www.sahebali.site/meesho-tools.html">🏠 All Tools</a></li>
+                    <li><a href="https://www.sahebali.site/A4-4-8-label-croper.html">✂️ 8‑Label Cropper</a></li>
+                    <li><a href="https://www.sahebali.site/A4%204-Label%20Orginal.html">📋 4‑Label Cropper</a></li>
+                    <li><a href="#instructions" class="nav-scroll">📖 How‑to</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>🛟 Support</h4>
+                <ul>
+                    <li><a href="#" onclick="alert('📧 Email: support@sahebali.site'); return false;">📧 Help Centre</a></li>
+                    <li><a href="#" onclick="alert('ℹ️ SAHEB Digital Hub provides free, privacy-first Meesho tools. All processing happens locally in your browser — no data is uploaded to any server.'); return false;">ℹ️ About SDH</a></li>
+                    <li><a href="#" onclick="alert('🔒 Your files stay on your device. We do not store or share any data.'); return false;">🔒 Privacy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 <a href="https://www.sahebali.site/meesho-tools.html">SAHEB Digital Hub</a>. All rights reserved.</span>
+                <span>
+                    <a href="#" onclick="alert('📧 support@sahebali.site'); return false;">Help Centre</a>
+                    &middot;
+                    <a href="#" onclick="alert('ℹ️ SAHEB Digital Hub — Meesho Tools'); return false;">About SDH</a>
+                </span>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  JAVASCRIPT (original + smooth scroll)     -->
+    <!-- ════════════════════════════════════════════ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ----- DOM refs -----
+            const dropZone = document.getElementById('dropZone');
+            const fileInput = document.getElementById('fileInput');
+            const fileList = document.getElementById('fileList');
+            const fileCount = document.getElementById('fileCount');
+            const totalSizeEl = document.getElementById('totalSize');
+            const mergeBtn = document.getElementById('mergeBtn');
+            const clearBtn = document.getElementById('clearBtn');
+            const statusMsg = document.getElementById('statusMsg');
+            const resultActions = document.getElementById('resultActions');
+            const downloadBtn = document.getElementById('downloadBtn');
+            const resetAfterDownloadBtn = document.getElementById('resetAfterDownloadBtn');
+
+            // ----- State -----
+            let files = [];
+            let mergedBlob = null;
+            let idCounter = 0;
+
+            // ----- Helpers -----
+            function formatSize(bytes) {
+                if (bytes < 1024) return bytes + ' B';
+                if (bytes < 1048576) return (bytes / 1024).toFixed(1) + ' KB';
+                return (bytes / 1048576).toFixed(1) + ' MB';
+            }
+
+            function getTotalSize() {
+                return files.reduce((sum, f) => sum + f.size, 0);
+            }
+
+            function updateUI() {
+                fileCount.textContent = files.length;
+                if (files.length === 0) {
+                    totalSizeEl.textContent = '';
+                } else {
+                    totalSizeEl.textContent = `Total: ${formatSize(getTotalSize())}`;
+                }
+                mergeBtn.disabled = files.length < 2;
+                clearBtn.disabled = files.length === 0;
+                renderFileList();
+                if (mergedBlob) {
+                    mergedBlob = null;
+                    resultActions.classList.add('hidden');
+                    const msg = files.length > 0 ? '📋 Ready to merge' : '💡 Add PDFs to get started';
+                    setStatus(msg, 'info');
+                }
+            }
+
+            function renderFileList() {
+                if (files.length === 0) {
+                    fileList.innerHTML = `<div class="empty-state">No files added yet</div>`;
+                    return;
+                }
+                let html = '';
+                files.forEach((f, index) => {
+                    const isFirst = index === 0;
+                    const isLast = index === files.length - 1;
+                    html += `
+                        <div class="file-item" data-id="${f.id}">
+                            <span class="file-icon">📄</span>
+                            <div class="file-info">
+                                <div class="file-name" title="${escapeHtml(f.name)}">${escapeHtml(f.name)}</div>
+                                <div class="file-size">${formatSize(f.size)}</div>
+                            </div>
+                            <div class="file-actions">
+                                <button class="move-up" ${isFirst ? 'disabled' : ''} title="Move up">↑</button>
+                                <button class="move-down" ${isLast ? 'disabled' : ''} title="Move down">↓</button>
+                                <button class="remove-btn" title="Remove">✕</button>
+                            </div>
+                        </div>
+                    `;
+                });
+                fileList.innerHTML = html;
+
+                fileList.querySelectorAll('.file-item').forEach((item) => {
+                    const id = parseInt(item.dataset.id, 10);
+                    const idx = files.findIndex(f => f.id === id);
+                    item.querySelector('.move-up')?.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (idx > 0) moveFile(idx, -1);
+                    });
+                    item.querySelector('.move-down')?.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        if (idx < files.length - 1) moveFile(idx, 1);
+                    });
+                    item.querySelector('.remove-btn')?.addEventListener('click', (e) => {
+                        e.stopPropagation();
+                        removeFile(id);
+                    });
+                });
+            }
+
+            function escapeHtml(text) {
+                const div = document.createElement('div');
+                div.textContent = text;
+                return div.innerHTML;
+            }
+
+            function addFiles(newFiles) {
+                let added = 0;
+                for (const file of newFiles) {
+                    if (file.type !== 'application/pdf' && !file.name.toLowerCase().endsWith('.pdf')) {
+                        setStatus(`⚠️ "${file.name}" is not a PDF. Skipped.`, 'error');
+                        continue;
+                    }
+                    if (files.some(f => f.name === file.name && f.size === file.size)) {
+                        setStatus(`⚠️ "${file.name}" is already added. Skipped.`, 'error');
+                        continue;
+                    }
+                    files.push({
+                        id: ++idCounter,
+                        file: file,
+                        name: file.name,
+                        size: file.size,
+                    });
+                    added++;
+                }
+                if (added > 0) {
+                    setStatus(`✅ Added ${added} file${added > 1 ? 's' : ''}`, 'success');
+                }
+                updateUI();
+            }
+
+            function removeFile(id) {
+                const idx = files.findIndex(f => f.id === id);
+                if (idx === -1) return;
+                const removed = files[idx];
+                files.splice(idx, 1);
+                setStatus(`🗑 Removed "${removed.name}"`, 'info');
+                updateUI();
+            }
+
+            function moveFile(index, direction) {
+                const newIndex = index + direction;
+                if (newIndex < 0 || newIndex >= files.length) return;
+                [files[index], files[newIndex]] = [files[newIndex], files[index]];
+                updateUI();
+                setStatus(`↕ Reordered`, 'info');
+            }
+
+            function clearAll() {
+                if (files.length === 0) return;
+                files = [];
+                mergedBlob = null;
+                resultActions.classList.add('hidden');
+                setStatus('🗑 All files cleared', 'info');
+                updateUI();
+            }
+
+            function setStatus(msg, type = 'info') {
+                const icons = {
+                    info: '💡',
+                    success: '✅',
+                    error: '❌',
+                    warning: '⚠️',
+                    loading: '⏳',
+                };
+                const icon = icons[type] || '💡';
+                let content = `${icon} ${msg}`;
+                if (type === 'loading') {
+                    content = `<span class="spinner"></span> ${msg}`;
+                }
+                statusMsg.innerHTML = content;
+            }
+
+            // ----- Merge logic -----
+            async function performMerge() {
+                if (files.length < 2) {
+                    setStatus('Please add at least 2 PDF files to merge.', 'warning');
+                    return;
+                }
+                const maxSize = 50 * 1024 * 1024;
+                const oversized = files.find(f => f.size > maxSize);
+                if (oversized) {
+                    setStatus(`"${oversized.name}" is larger than 50MB. Please use smaller files.`, 'error');
+                    return;
+                }
+                mergeBtn.disabled = true;
+                setStatus('Merging PDFs... please wait', 'loading');
+
+                try {
+                    const { PDFDocument } = PDFLib;
+                    const mergedPdf = await PDFDocument.create();
+                    for (let i = 0; i < files.length; i++) {
+                        const f = files[i];
+                        try {
+                            const arrayBuffer = await f.file.arrayBuffer();
+                            const srcPdf = await PDFDocument.load(arrayBuffer);
+                            const indices = srcPdf.getPageIndices();
+                            const copiedPages = await mergedPdf.copyPages(srcPdf, indices);
+                            copiedPages.forEach(page => mergedPdf.addPage(page));
+                        } catch (err) {
+                            console.error(`Error processing "${f.name}":`, err);
+                            setStatus(`❌ Failed to process "${f.name}". ${err.message || 'Invalid PDF?'}`, 'error');
+                            mergeBtn.disabled = false;
+                            return;
+                        }
+                    }
+                    const mergedBytes = await mergedPdf.save();
+                    mergedBlob = new Blob([mergedBytes], { type: 'application/pdf' });
+                    setStatus(`✅ Merge complete! Merged ${files.length} files.`, 'success');
+                    resultActions.classList.remove('hidden');
+                    mergeBtn.disabled = false;
+                } catch (err) {
+                    console.error('Merge error:', err);
+                    setStatus(`❌ Merge failed: ${err.message || 'Unknown error'}`, 'error');
+                    mergeBtn.disabled = false;
+                }
+            }
+
+            function downloadMerged() {
+                if (!mergedBlob) {
+                    setStatus('No merged PDF to download. Please merge first.', 'warning');
+                    return;
+                }
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(mergedBlob);
+                link.download = 'merged.pdf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                setTimeout(() => URL.revokeObjectURL(link.href), 5000);
+                setStatus('⬇️ Download started!', 'success');
+            }
+
+            function resetAfterDownload() {
+                resultActions.classList.add('hidden');
+                mergedBlob = null;
+                setStatus(`📋 ${files.length} files ready. Merge again or add more.`, 'info');
+            }
+
+            // ----- Events -----
+            fileInput.addEventListener('change', (e) => {
+                if (e.target.files.length > 0) {
+                    addFiles(e.target.files);
+                }
+                fileInput.value = '';
+            });
+
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('dragover');
+            });
+            dropZone.addEventListener('dragleave', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+            });
+            dropZone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropZone.classList.remove('dragover');
+                if (e.dataTransfer.files.length > 0) {
+                    addFiles(e.dataTransfer.files);
+                }
+            });
+            dropZone.addEventListener('click', (e) => {
+                if (e.target.tagName !== 'INPUT') {
+                    fileInput.click();
+                }
+            });
+
+            mergeBtn.addEventListener('click', performMerge);
+            clearBtn.addEventListener('click', clearAll);
+            downloadBtn.addEventListener('click', downloadMerged);
+            resetAfterDownloadBtn.addEventListener('click', resetAfterDownload);
+
+            // ----- Init -----
+            updateUI();
+            setStatus('💡 Add PDFs to get started', 'info');
+
+            document.addEventListener('dragover', (e) => e.preventDefault());
+            document.addEventListener('drop', (e) => e.preventDefault());
+
+            console.log('📄 PDF Merger ready!');
+        })();
+
+        // ─── Smooth scroll for nav links ───
+        document.querySelectorAll('.nav-scroll').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

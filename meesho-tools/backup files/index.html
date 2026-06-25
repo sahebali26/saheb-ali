@@ -1,0 +1,1319 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAHEB Digital Hub – Premium Meesho Tools</title>
+    <meta name="description" content="Free Meesho shipping label cropper, PDF merger, and A4 label tools. Premium tools for sellers." />
+    <meta name="keywords" content="Meesho label cropper, PDF merger, shipping label, A4 label, Meesho tools, SAHEB Digital Hub" />
+    <meta name="robots" content="index, follow" />
+    <link rel="canonical" href="https://www.sahebali.site/meesho-tools.html" />
+
+    <!-- Open Graph -->
+    <meta property="og:title" content="SAHEB Digital Hub – Premium Meesho Tools" />
+    <meta property="og:description" content="Free Meesho shipping label cropper, PDF merger, and A4 label tools." />
+    <meta property="og:url" content="https://www.sahebali.site/meesho-tools.html" />
+    <meta property="og:type" content="website" />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,400&display=swap" rel="stylesheet">
+
+    <style>
+        /* ───────────── Reset & Variables ───────────── */
+        *,
+        *::before,
+        *::after {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --orange: #f97316;
+            --orange-light: #fb923c;
+            --orange-dark: #ea580c;
+            --red: #ef4444;
+            --gradient-primary: linear-gradient(135deg, #f97316, #ef4444, #dc2626);
+            --gradient-glow: linear-gradient(135deg, rgba(249, 115, 22, 0.4), rgba(239, 68, 68, 0.3));
+            --bg-dark: #0a0a12;
+            --bg-card: rgba(255, 255, 255, 0.04);
+            --bg-card-hover: rgba(255, 255, 255, 0.08);
+            --border-glass: rgba(255, 255, 255, 0.06);
+            --border-glow: rgba(249, 115, 22, 0.3);
+            --text-primary: #f1f5f9;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+            --white: #ffffff;
+            --shadow-glow: 0 0 60px rgba(249, 115, 22, 0.08);
+            --radius: 24px;
+            --radius-sm: 14px;
+            --transition: 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --max-width: 1200px;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: var(--bg-dark);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* ───────────── Animated Background ───────────── */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .bg-mesh .orb {
+            position: absolute;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: orbFloat 20s ease-in-out infinite alternate;
+        }
+
+        .bg-mesh .orb:nth-child(1) {
+            width: 600px;
+            height: 600px;
+            background: rgba(249, 115, 22, 0.15);
+            top: -10%;
+            left: -10%;
+            animation-duration: 25s;
+        }
+
+        .bg-mesh .orb:nth-child(2) {
+            width: 500px;
+            height: 500px;
+            background: rgba(239, 68, 68, 0.10);
+            bottom: -10%;
+            right: -10%;
+            animation-duration: 30s;
+            animation-delay: -5s;
+        }
+
+        .bg-mesh .orb:nth-child(3) {
+            width: 400px;
+            height: 400px;
+            background: rgba(251, 146, 60, 0.08);
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            animation-duration: 35s;
+            animation-delay: -10s;
+        }
+
+        @keyframes orbFloat {
+            0% {
+                transform: translate(0, 0) scale(1);
+            }
+            33% {
+                transform: translate(60px, -40px) scale(1.1);
+            }
+            66% {
+                transform: translate(-30px, 50px) scale(0.9);
+            }
+            100% {
+                transform: translate(20px, -20px) scale(1.05);
+            }
+        }
+
+        /* grid lines */
+        .bg-grid {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: 0;
+            pointer-events: none;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.015) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        /* ───────────── Container ───────────── */
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* ───────────── Header ───────────── */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            padding: 14px 0;
+            background: rgba(10, 10, 18, 0.6);
+            backdrop-filter: blur(20px) saturate(1.4);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.04);
+            transition: var(--transition);
+        }
+
+        .header.scrolled {
+            background: rgba(10, 10, 18, 0.85);
+            box-shadow: 0 4px 40px rgba(0, 0, 0, 0.4);
+        }
+
+        .header .container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+        }
+
+        .brand-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .brand-icon {
+            width: 44px;
+            height: 44px;
+            background: var(--gradient-primary);
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-weight: 800;
+            font-size: 1rem;
+            flex-shrink: 0;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .brand-icon::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            border-radius: 14px;
+        }
+
+        .brand-text {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .brand-name {
+            font-weight: 800;
+            font-size: 1.15rem;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+
+        .brand-name span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .brand-tag {
+            font-size: 0.65rem;
+            color: var(--text-secondary);
+            font-weight: 500;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .header-actions a {
+            padding: 8px 22px;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            transition: var(--transition);
+            letter-spacing: 0.2px;
+        }
+
+        .header-actions .btn-outline {
+            border: 1px solid rgba(255, 255, 255, 0.10);
+            color: var(--text-secondary);
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .header-actions .btn-outline:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(255, 255, 255, 0.2);
+            color: var(--white);
+        }
+
+        .header-actions .btn-primary-sm {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.3);
+        }
+
+        .header-actions .btn-primary-sm:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 30px rgba(249, 115, 22, 0.4);
+        }
+
+        /* ───────────── Hero ───────────── */
+        .hero {
+            padding: 140px 0 60px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(249, 115, 22, 0.10);
+            color: var(--orange-light);
+            padding: 6px 20px;
+            border-radius: 40px;
+            font-size: 0.75rem;
+            font-weight: 600;
+            margin-bottom: 24px;
+            border: 1px solid rgba(249, 115, 22, 0.15);
+            backdrop-filter: blur(4px);
+            letter-spacing: 0.3px;
+            animation: fadeUp 0.8s ease-out;
+        }
+
+        .hero-badge .dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #22c55e;
+            display: inline-block;
+            animation: pulseDot 2s ease-in-out infinite;
+        }
+
+        @keyframes pulseDot {
+            0%,
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 0.5;
+                transform: scale(0.8);
+            }
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 3.6rem;
+            font-weight: 900;
+            letter-spacing: -2px;
+            line-height: 1.08;
+            margin-bottom: 16px;
+            animation: fadeUp 0.8s ease-out 0.1s both;
+        }
+
+        .hero h1 .highlight {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            position: relative;
+        }
+
+        .hero h1 .highlight-glow {
+            position: relative;
+        }
+
+        .hero h1 .highlight-glow::after {
+            content: '';
+            position: absolute;
+            bottom: 2px;
+            left: 0;
+            right: 0;
+            height: 6px;
+            background: var(--gradient-primary);
+            border-radius: 4px;
+            opacity: 0.3;
+            filter: blur(8px);
+        }
+
+        .hero p {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto 8px;
+            animation: fadeUp 0.8s ease-out 0.2s both;
+            font-weight: 400;
+        }
+
+        .hero-actions {
+            margin-top: 32px;
+            display: flex;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s ease-out 0.3s both;
+        }
+
+        .hero-actions .btn-hero {
+            padding: 14px 36px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hero-actions .btn-hero-primary {
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 4px 30px rgba(249, 115, 22, 0.35);
+        }
+
+        .hero-actions .btn-hero-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 50px rgba(249, 115, 22, 0.5);
+        }
+
+        .hero-actions .btn-hero-secondary {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--text-secondary);
+        }
+
+        .hero-actions .btn-hero-secondary:hover {
+            background: rgba(255, 255, 255, 0.10);
+            border-color: rgba(255, 255, 255, 0.15);
+            color: var(--white);
+            transform: translateY(-3px);
+        }
+
+        .hero-stats {
+            display: flex;
+            justify-content: center;
+            gap: 48px;
+            margin-top: 44px;
+            flex-wrap: wrap;
+            animation: fadeUp 0.8s ease-out 0.4s both;
+            padding: 20px 32px;
+            background: rgba(255, 255, 255, 0.02);
+            border-radius: 60px;
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            backdrop-filter: blur(4px);
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .hero-stats .stat {
+            text-align: center;
+        }
+
+        .hero-stats .stat .number {
+            font-size: 1.8rem;
+            font-weight: 800;
+            color: var(--white);
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-stats .stat .label {
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            font-weight: 500;
+            margin-top: 2px;
+        }
+
+        /* floating elements */
+        .float-el {
+            position: absolute;
+            pointer-events: none;
+            opacity: 0.06;
+            font-size: 4rem;
+            animation: floatAround 25s ease-in-out infinite alternate;
+        }
+
+        .float-el:nth-child(1) {
+            top: 15%;
+            left: 5%;
+            animation-duration: 20s;
+        }
+        .float-el:nth-child(2) {
+            bottom: 20%;
+            right: 5%;
+            animation-duration: 28s;
+            animation-delay: -5s;
+        }
+        .float-el:nth-child(3) {
+            top: 50%;
+            right: 8%;
+            animation-duration: 22s;
+            animation-delay: -10s;
+            font-size: 3rem;
+        }
+        .float-el:nth-child(4) {
+            bottom: 40%;
+            left: 3%;
+            animation-duration: 26s;
+            animation-delay: -3s;
+            font-size: 3rem;
+        }
+
+        @keyframes floatAround {
+            0% {
+                transform: translate(0, 0) rotate(0deg);
+            }
+            25% {
+                transform: translate(20px, -30px) rotate(5deg);
+            }
+            50% {
+                transform: translate(-10px, 20px) rotate(-3deg);
+            }
+            75% {
+                transform: translate(30px, 10px) rotate(4deg);
+            }
+            100% {
+                transform: translate(-15px, -15px) rotate(-2deg);
+            }
+        }
+
+        /* ───────────── Tools Section ───────────── */
+        .tools-section {
+            padding: 20px 0 70px;
+            position: relative;
+        }
+
+        .tools-section .section-head {
+            text-align: center;
+            margin-bottom: 44px;
+        }
+
+        .tools-section .section-head .sub {
+            display: inline-block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            color: var(--orange-light);
+            background: rgba(249, 115, 22, 0.08);
+            padding: 4px 16px;
+            border-radius: 40px;
+            border: 1px solid rgba(249, 115, 22, 0.10);
+            margin-bottom: 12px;
+        }
+
+        .tools-section .section-head h2 {
+            font-size: 2.4rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--white);
+        }
+
+        .tools-section .section-head h2 span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .tools-section .section-head p {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-top: 8px;
+            max-width: 500px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tools-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 28px;
+        }
+
+        .tool-card {
+            background: var(--bg-card);
+            border-radius: var(--radius);
+            padding: 36px 30px 30px;
+            border: 1px solid var(--border-glass);
+            transition: var(--transition);
+            position: relative;
+            overflow: hidden;
+            backdrop-filter: blur(4px);
+        }
+
+        .tool-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 2px;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: var(--transition);
+        }
+
+        .tool-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: var(--radius);
+            padding: 1px;
+            background: var(--gradient-primary);
+            -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+            -webkit-mask-composite: xor;
+            mask-composite: exclude;
+            opacity: 0;
+            transition: var(--transition);
+            pointer-events: none;
+        }
+
+        .tool-card:hover {
+            transform: translateY(-8px);
+            background: var(--bg-card-hover);
+            border-color: rgba(249, 115, 22, 0.15);
+            box-shadow: var(--shadow-glow);
+        }
+
+        .tool-card:hover::before {
+            opacity: 1;
+        }
+
+        .tool-card:hover::after {
+            opacity: 1;
+        }
+
+        .tool-card .tool-icon-wrap {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            margin-bottom: 18px;
+        }
+
+        .tool-card .tool-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.6rem;
+            flex-shrink: 0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card .tool-icon.orange {
+            background: rgba(249, 115, 22, 0.15);
+            color: var(--orange-light);
+        }
+        .tool-card .tool-icon.blue {
+            background: rgba(59, 130, 246, 0.15);
+            color: #60a5fa;
+        }
+        .tool-card .tool-icon.green {
+            background: rgba(34, 197, 94, 0.15);
+            color: #4ade80;
+        }
+        .tool-card .tool-icon.purple {
+            background: rgba(168, 85, 247, 0.15);
+            color: #c084fc;
+        }
+
+        .tool-card .tool-badge {
+            display: inline-block;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.8px;
+            padding: 2px 14px;
+            border-radius: 40px;
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+            border: 1px solid rgba(34, 197, 94, 0.10);
+            margin-bottom: 0;
+        }
+
+        .tool-card .tool-badge.free {
+            background: rgba(34, 197, 94, 0.12);
+            color: #4ade80;
+        }
+
+        .tool-card h3 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin: 4px 0 6px;
+            color: var(--white);
+            letter-spacing: -0.3px;
+        }
+
+        .tool-card p {
+            color: var(--text-secondary);
+            font-size: 0.92rem;
+            flex: 1;
+            margin-bottom: 16px;
+            line-height: 1.6;
+        }
+
+        .tool-card p strong {
+            color: var(--text-primary);
+            font-weight: 600;
+        }
+
+        .tool-card .tool-features {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px 10px;
+            margin-bottom: 20px;
+        }
+
+        .tool-card .tool-features span {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.04);
+            padding: 3px 14px;
+            border-radius: 40px;
+            color: var(--text-muted);
+            border: 1px solid rgba(255, 255, 255, 0.04);
+            font-weight: 500;
+        }
+
+        .tool-card .btn-tool {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 13px 28px;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: var(--transition);
+            border: none;
+            cursor: pointer;
+            background: var(--gradient-primary);
+            color: #fff;
+            box-shadow: 0 4px 20px rgba(249, 115, 22, 0.25);
+            text-align: center;
+            width: 100%;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tool-card .btn-tool::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            right: 0;
+            bottom: 0;
+            width: 300%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.10), transparent);
+            transform: skewX(-20deg);
+            transition: 0.6s;
+        }
+
+        .tool-card .btn-tool:hover::before {
+            left: 100%;
+        }
+
+        .tool-card .btn-tool:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 35px rgba(249, 115, 22, 0.4);
+        }
+
+        .tool-card .btn-tool .arrow {
+            transition: var(--transition);
+            font-size: 1.1rem;
+        }
+
+        .tool-card .btn-tool:hover .arrow {
+            transform: translateX(4px);
+        }
+
+        /* ───────────── Footer ───────────── */
+        .footer {
+            background: rgba(10, 10, 18, 0.8);
+            backdrop-filter: blur(20px);
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding: 48px 0 24px;
+            margin-top: auto;
+            position: relative;
+            z-index: 1;
+        }
+
+        .footer .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 40px;
+        }
+
+        .footer-brand .brand-name {
+            color: var(--white);
+            font-size: 1.3rem;
+        }
+
+        .footer-brand .brand-name span {
+            background: var(--gradient-primary);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .footer-brand p {
+            font-size: 0.9rem;
+            margin-top: 10px;
+            color: var(--text-muted);
+            max-width: 320px;
+            line-height: 1.7;
+        }
+
+        .footer h4 {
+            color: var(--white);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 14px;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            opacity: 0.7;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 8px;
+        }
+
+        .footer ul li a {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            transition: var(--transition);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .footer ul li a:hover {
+            color: var(--orange-light);
+            transform: translateX(4px);
+        }
+
+        .footer-bottom {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(255, 255, 255, 0.04);
+            padding-top: 20px;
+            margin-top: 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+        }
+
+        .footer-bottom a {
+            color: var(--text-muted);
+            transition: var(--transition);
+        }
+
+        .footer-bottom a:hover {
+            color: var(--orange-light);
+        }
+
+        /* ───────────── Responsive ───────────── */
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 900px) {
+            .footer .container {
+                grid-template-columns: 1fr 1fr;
+            }
+            .footer-brand {
+                grid-column: 1 / -1;
+            }
+            .footer-brand p {
+                max-width: 100%;
+            }
+            .hero-stats {
+                gap: 32px;
+                padding: 16px 24px;
+                max-width: 100%;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero {
+                padding: 120px 0 40px;
+            }
+            .hero h1 {
+                font-size: 2.2rem;
+                letter-spacing: -1px;
+            }
+            .hero p {
+                font-size: 1rem;
+            }
+            .hero-stats {
+                gap: 20px;
+                padding: 14px 20px;
+            }
+            .hero-stats .stat .number {
+                font-size: 1.4rem;
+            }
+
+            .tools-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .header .container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 8px;
+            }
+            .brand {
+                justify-content: center;
+            }
+            .header-actions {
+                justify-content: center;
+                flex-wrap: wrap;
+            }
+            .header-actions a {
+                padding: 6px 16px;
+                font-size: 0.75rem;
+            }
+
+            .footer .container {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .tools-section .section-head h2 {
+                font-size: 1.8rem;
+            }
+
+            .float-el {
+                display: none;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            .hero h1 {
+                font-size: 1.8rem;
+            }
+            .hero-actions .btn-hero {
+                padding: 12px 24px;
+                font-size: 0.85rem;
+                width: 100%;
+                justify-content: center;
+            }
+            .hero-actions {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .tool-card {
+                padding: 24px 18px 20px;
+            }
+            .brand-name {
+                font-size: 1rem;
+            }
+            .brand-tag {
+                font-size: 0.55rem;
+            }
+            .brand-icon {
+                width: 38px;
+                height: 38px;
+                font-size: 0.8rem;
+            }
+            .hero-stats {
+                border-radius: 30px;
+                gap: 16px;
+                padding: 12px 16px;
+            }
+            .hero-stats .stat .number {
+                font-size: 1.2rem;
+            }
+            .hero-stats .stat .label {
+                font-size: 0.7rem;
+            }
+        }
+
+        /* ───────────── Utilities ───────────── */
+        .text-center {
+            text-align: center;
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+        .mt-16 {
+            margin-top: 16px;
+        }
+
+        /* ───────────── Scrollbar ───────────── */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: var(--bg-dark);
+        }
+        ::-webkit-scrollbar-thumb {
+            background: var(--orange);
+            border-radius: 10px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: var(--orange-dark);
+        }
+
+        /* ───────────── Reveal Animations ───────────── */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+
+        .reveal.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .reveal-delay-1 {
+            transition-delay: 0.1s;
+        }
+        .reveal-delay-2 {
+            transition-delay: 0.2s;
+        }
+        .reveal-delay-3 {
+            transition-delay: 0.3s;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  ANIMATED BACKGROUND                       -->
+    <!-- ════════════════════════════════════════════ -->
+    <div class="bg-mesh">
+        <div class="orb"></div>
+        <div class="orb"></div>
+        <div class="orb"></div>
+    </div>
+    <div class="bg-grid"></div>
+
+    <!-- floating emojis -->
+    <div class="float-el" style="top:12%;left:4%;">📦</div>
+    <div class="float-el" style="bottom:18%;right:3%;">✂️</div>
+    <div class="float-el" style="top:45%;right:6%;">📄</div>
+    <div class="float-el" style="bottom:35%;left:2%;">🖨️</div>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  HEADER                                    -->
+    <!-- ════════════════════════════════════════════ -->
+    <header class="header" id="header">
+        <div class="container">
+            <div class="brand">
+                <div class="brand-logo">
+                    <div class="brand-icon">SDH</div>
+                    <div class="brand-text">
+                        <span class="brand-name">SAHEB <span>Digital</span> Hub</span>
+                        <span class="brand-tag">⚡ Premium Meesho Tools</span>
+                    </div>
+                </div>
+            </div>
+            <div class="header-actions">
+                <a href="#tools" class="btn-outline">Tools</a>
+                <a href="#footer" class="btn-primary-sm">About</a>
+            </div>
+        </div>
+    </header>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  HERO                                      -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="hero" id="hero">
+        <div class="container">
+            <div class="hero-badge">
+                <span class="dot"></span>
+                Available Now — 100% Free
+            </div>
+            <h1>
+                Meesho Shipping<br />
+                <span class="highlight">Label Tools</span>
+            </h1>
+            <p>
+                Crop, merge, and format shipping labels for A4 printing —
+                instantly, in your browser, with zero uploads.
+            </p>
+            <div class="hero-actions">
+                <a href="#tools" class="btn-hero btn-hero-primary">
+                    Explore Tools
+                    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5l7 7-7 7"/></svg>
+                </a>
+                <a href="#footer" class="btn-hero btn-hero-secondary">
+                    Learn More
+                </a>
+            </div>
+            <div class="hero-stats">
+                <div class="stat">
+                    <div class="number">3</div>
+                    <div class="label">Powerful Tools</div>
+                </div>
+                <div class="stat">
+                    <div class="number">∞</div>
+                    <div class="label">100% Free</div>
+                </div>
+                <div class="stat">
+                    <div class="number">⚡</div>
+                    <div class="label">Instant & Private</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  TOOLS GRID                                -->
+    <!-- ════════════════════════════════════════════ -->
+    <section class="tools-section" id="tools">
+        <div class="container">
+            <div class="section-head reveal">
+                <span class="sub">✦ Toolkit</span>
+                <h2>Everything you need, <span>all in one place</span></h2>
+                <p>Each tool runs entirely in your browser — your files never leave your device.</p>
+            </div>
+
+            <div class="tools-grid">
+
+                <!-- ─── Tool 1: Label Cropper 8-label ─── -->
+                <div class="tool-card reveal reveal-delay-1">
+                    <div class="tool-icon-wrap">
+                        <div class="tool-icon orange">✂️</div>
+                        <span class="tool-badge free">Free</span>
+                    </div>
+                    <h3>Meesho Label Cropper</h3>
+                    <p>Upload your PDF and automatically crop shipping labels. Supports <strong>8‑label</strong> A4 layout.</p>
+                    <div class="tool-features">
+                        <span>8 per page</span>
+                        <span>Auto-crop</span>
+                        <span>Partner filter</span>
+                    </div>
+                    <a href="A4-4-8-label-croper.html" class="btn-tool">
+                        Launch Tool <span class="arrow">→</span>
+                    </a>
+                </div>
+
+                <!-- ─── Tool 2: PDF Merger ─── -->
+                <div class="tool-card reveal reveal-delay-2">
+                    <div class="tool-icon-wrap">
+                        <div class="tool-icon blue">📄</div>
+                        <span class="tool-badge free">Free</span>
+                    </div>
+                    <h3>PDF Merger</h3>
+                    <p>Combine multiple PDF files into one document. Drag &amp; drop, reorder, and merge instantly.</p>
+                    <div class="tool-features">
+                        <span>Drag &amp; drop</span>
+                        <span>Reorder</span>
+                        <span>Merge</span>
+                    </div>
+                    <a href="pdfmarg.html" class="btn-tool">
+                        Launch Tool <span class="arrow">→</span>
+                    </a>
+                </div>
+
+                <!-- ─── Tool 3: 4-label A4 cropper ─── -->
+                <div class="tool-card reveal reveal-delay-3">
+                    <div class="tool-icon-wrap">
+                        <div class="tool-icon green">📋</div>
+                        <span class="tool-badge free">Free</span>
+                    </div>
+                    <h3>4‑Label A4 Cropper</h3>
+                    <p>Convert shipping label PDFs to A4 sheets with <strong>4 labels</strong> per page in a 2×2 grid.</p>
+                    <div class="tool-features">
+                        <span>4 per page</span>
+                        <span>2×2 grid</span>
+                        <span>Batch</span>
+                    </div>
+                    <a href="A4%204-Label%20Orginal.html" class="btn-tool">
+                        Launch Tool <span class="arrow">→</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  FOOTER                                    -->
+    <!-- ════════════════════════════════════════════ -->
+    <footer class="footer" id="footer">
+        <div class="container">
+
+            <div class="footer-brand">
+                <div class="brand-name">SAHEB <span>Digital</span> Hub</div>
+                <p>
+                    Free, premium Meesho tools for shipping label cropping, PDF merging,
+                    and A4 formatting. Built for sellers who need quick, reliable solutions.
+                </p>
+            </div>
+
+            <div>
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#tools">📦 All Tools</a></li>
+                    <li><a href="A4-4-8-label-croper.html">✂️ Label Cropper</a></li>
+                    <li><a href="pdfmarg.html">📄 PDF Merger</a></li>
+                    <li><a href="A4%204-Label%20Orginal.html">📋 4‑Label Cropper</a></li>
+                </ul>
+            </div>
+
+            <div>
+                <h4>Support</h4>
+                <ul>
+                    <li><a href="#" onclick="alert('📧 Contact: support@sahebali.site'); return false;">📧 Help Centre</a></li>
+                    <li><a href="#" onclick="alert('ℹ️ SAHEB Digital Hub provides free Meesho tools for shipping label management. All tools run locally in your browser — no data is uploaded to any server.'); return false;">ℹ️ About SDH</a></li>
+                    <li><a href="#" onclick="alert('🛠️ All tools are free, open-source, and privacy-first.'); return false;">🔒 Privacy</a></li>
+                </ul>
+            </div>
+
+            <div class="footer-bottom">
+                <span>&copy; 2026 <a href="/">SAHEB Digital Hub</a>. All rights reserved.</span>
+                <span>
+                    <a href="#" onclick="alert('📧 support@sahebali.site'); return false;">Help Centre</a>
+                    &middot;
+                    <a href="#" onclick="alert('ℹ️ SAHEB Digital Hub — Premium Meesho Tools'); return false;">About SDH</a>
+                </span>
+            </div>
+
+        </div>
+    </footer>
+
+    <!-- ════════════════════════════════════════════ -->
+    <!--  SCRIPTS                                   -->
+    <!-- ════════════════════════════════════════════ -->
+    <script>
+        (function() {
+            'use strict';
+
+            // ─── Console ───
+            console.log('🚀 SAHEB Digital Hub — Premium Meesho Tools');
+            console.log('📦 Free, private, browser-based tools for shipping label management.');
+
+            // ─── Header scroll effect ───
+            const header = document.getElementById('header');
+            let lastScroll = 0;
+
+            window.addEventListener('scroll', function() {
+                const current = window.pageYOffset;
+                if (current > 20) {
+                    header.classList.add('scrolled');
+                } else {
+                    header.classList.remove('scrolled');
+                }
+                lastScroll = current;
+            }, { passive: true });
+
+            // ─── Smooth scroll for anchor links ───
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    const href = this.getAttribute('href');
+                    if (href === '#') return;
+                    const target = document.querySelector(href);
+                    if (target) {
+                        e.preventDefault();
+                        const offset = 80;
+                        const top = target.getBoundingClientRect().top + window.pageYOffset - offset;
+                        window.scrollTo({ top, behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // ─── Intersection Observer for reveal animations ───
+            const revealElements = document.querySelectorAll('.reveal');
+
+            if (revealElements.length > 0) {
+                const observer = new IntersectionObserver((entries) => {
+                    entries.forEach(entry => {
+                        if (entry.isIntersecting) {
+                            entry.target.classList.add('visible');
+                        }
+                    });
+                }, {
+                    threshold: 0.15,
+                    rootMargin: '0px 0px -40px 0px'
+                });
+
+                revealElements.forEach(el => observer.observe(el));
+            }
+
+            // ─── Tool card stagger ───
+            const cards = document.querySelectorAll('.tool-card');
+            cards.forEach((card, i) => {
+                card.style.transitionDelay = (i * 0.08) + 's';
+            });
+
+        })();
+    </script>
+
+</body>
+</html>
