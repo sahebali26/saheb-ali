@@ -329,24 +329,9 @@
                         }
 
                         // Draw grid lines (vertical)
-                       for (let c = 1; c < cols; c++) {
-                            const x = margin + c * (cellW + gap) - gap / 2;
-                            a4Page.drawLine({
-                                start: { x, y: margin },
-                                end: { x, y: a4H - margin },
-                                thickness: 1.5,
-                                color: PDFLib.rgb(0.7, 0.7, 0.7),
-                            });
-                        }
+                       
                         // Draw horizontal line between rows
-                         const yLine = a4H - margin - cellH - gap / 2;
-                        a4Page.drawLine({
-                            start: { x: margin, y: yLine },
-                            end: { x: a4W - margin, y: yLine },
-                            thickness: 1.5,
-                            color: PDFLib.rgb(0.7, 0.7, 0.7),
-                        });
-
+                        
                         // Progress update
                         progressBar.value = 40 + ((i + totalPerPage) / pageDataList.length) * 30;
                         await new Promise((r) => setTimeout(r, 5));
@@ -396,4 +381,3 @@
         // ─── Init ───
         resetUI();
         console.log('✅ Lebely Label Cropper loaded (A4 8‑label support)');
-
