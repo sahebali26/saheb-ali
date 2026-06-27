@@ -359,7 +359,7 @@
 
                 progressBar.value = 90;
                 const outBytes = await outputPdf.save();
-                downloadPDF(outBytes, 'lebely-cropped.pdf');
+                downloadPDF(outBytes, 'TDH-Croped.pdf');
                 progressBar.value = 100;
                 setMessage(`✅ Download complete. ${pageDataList.length} labels processed.`);
             } catch (err) {
