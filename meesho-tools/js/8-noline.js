@@ -344,7 +344,7 @@
 
                 progressBar.value = 90;
                 const outBytes = await outputPdf.save();
-                downloadPDF(outBytes, 'lebely-cropped.pdf');
+                downloadPDF(outBytes, 'SDH-Meesho_Label_Croper.pdf');
                 progressBar.value = 100;
                 setMessage(`✅ Download complete. ${pageDataList.length} labels processed.`);
             } catch (err) {
