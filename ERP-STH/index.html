@@ -1,0 +1,1419 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SAHEB TREND HOUSE | Business Management Portal</title>
+
+<meta
+        name="description"
+        content="SAHEB TREND HOUSE Business Management Portal — Central access to ERP, Meesho records, Flipkart records and business management files."
+    >
+
+    <meta
+        name="keywords"
+        content="Saheb Trend House, STH, Business Management Portal, ERP, Meesho, Flipkart, Business Records"
+    >
+
+    <meta
+        name="author"
+        content="SAHEB TREND HOUSE"
+    >
+
+    <meta
+        name="robots"
+        content="noindex, nofollow"
+    >
+
+
+    <!-- Canonical URL -->
+    <link
+        rel="canonical"
+        href="https://sahebali.site/ERP-STH/"
+    >
+
+
+    <!-- =================================================
+         WHATSAPP / FACEBOOK / MESSENGER / LINK PREVIEW
+    ================================================== -->
+
+    <meta
+        property="og:type"
+        content="website"
+    >
+
+    <meta
+        property="og:url"
+        content="https://sahebali.site/ERP-STH/"
+    >
+
+    <meta
+        property="og:title"
+        content="SAHEB TREND HOUSE | Business Management Portal"
+    >
+
+    <meta
+        property="og:description"
+        content="Central business management portal for SAHEB TREND HOUSE. Access ERP, Meesho records, marketplace records and business management files from one place."
+    >
+
+    <meta
+        property="og:site_name"
+        content="SAHEB TREND HOUSE"
+    >
+
+    <meta
+        property="og:locale"
+        content="en_IN"
+    >
+
+    <!--
+        IMPORTANT:
+        Create a preview image named:
+        sth-portal-preview.jpg
+
+        Recommended size:
+        1200 × 630 px
+
+        Upload it inside:
+        /ERP-STH/assets/sth-portal-preview.jpg
+    -->
+
+    <meta
+        property="og:image"
+        content="https://sahebali.site/ERP-STH/assets/sth-portal-preview.jpg"
+    >
+
+    <meta
+        property="og:image:width"
+        content="1200"
+    >
+
+    <meta
+        property="og:image:height"
+        content="630"
+    >
+
+    <meta
+        property="og:image:alt"
+        content="SAHEB TREND HOUSE Business Management Portal"
+    >
+
+
+    <!-- =================================================
+         TWITTER / X LINK PREVIEW
+    ================================================== -->
+
+    <meta
+        name="twitter:card"
+        content="summary_large_image"
+    >
+
+    <meta
+        name="twitter:title"
+        content="SAHEB TREND HOUSE | Business Management Portal"
+    >
+
+    <meta
+        name="twitter:description"
+        content="Central access to SAHEB TREND HOUSE ERP, business records and management systems."
+    >
+
+    <meta
+        name="twitter:image"
+        content="https://sahebali.site/ERP-STH/assets/sth-portal-preview.jpg"
+    >
+
+
+    <!-- =================================================
+         MOBILE / BROWSER
+    ================================================== -->
+
+    <meta
+        name="theme-color"
+        content="#080b12"
+    >
+
+    <meta
+        name="application-name"
+        content="SAHEB TREND HOUSE"
+    >
+
+    <meta
+        name="apple-mobile-web-app-title"
+        content="STH Portal"
+    >
+
+    <meta
+        name="apple-mobile-web-app-capable"
+        content="yes"
+    >
+
+
+    <!-- Favicon -->
+    <link
+        rel="icon"
+        type="image/png"
+        href="/ERP-STH/assets/sth-logo.png"
+    >
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg: #080b12;
+            --card: #111722;
+            --card-hover: #161e2c;
+            --border: rgba(255,255,255,0.09);
+            --text: #f5f7fb;
+            --muted: #8d98aa;
+            --primary: #6c63ff;
+            --primary-dark: #5148e8;
+            --success: #22c55e;
+            --warning: #f59e0b;
+            --danger: #ef4444;
+        }
+
+        body {
+            font-family:
+                Inter,
+                -apple-system,
+                BlinkMacSystemFont,
+                "Segoe UI",
+                sans-serif;
+
+            background:
+                radial-gradient(
+                    circle at 10% 10%,
+                    rgba(108,99,255,0.13),
+                    transparent 30%
+                ),
+                radial-gradient(
+                    circle at 90% 90%,
+                    rgba(34,197,94,0.07),
+                    transparent 28%
+                ),
+                var(--bg);
+
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* =========================
+           LOGIN
+        ========================== */
+
+        #loginScreen {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            padding: 20px;
+
+            background:
+                radial-gradient(
+                    circle at top,
+                    rgba(108,99,255,0.18),
+                    transparent 45%
+                ),
+                #070910;
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 430px;
+
+            background: rgba(17,23,34,0.92);
+            border: 1px solid var(--border);
+
+            border-radius: 24px;
+            padding: 38px;
+
+            box-shadow:
+                0 30px 80px rgba(0,0,0,0.5);
+
+            backdrop-filter: blur(18px);
+
+            animation: loginAppear 0.5s ease;
+        }
+
+        @keyframes loginAppear {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.98);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .brand-icon {
+            width: 62px;
+            height: 62px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            margin-bottom: 20px;
+
+            border-radius: 17px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #8b5cf6
+                );
+
+            font-size: 25px;
+            font-weight: 800;
+
+            box-shadow:
+                0 10px 35px rgba(108,99,255,0.3);
+        }
+
+        .login-box h1 {
+            font-size: 26px;
+            letter-spacing: -0.7px;
+        }
+
+        .login-box .subtitle {
+            color: var(--muted);
+            margin-top: 7px;
+            margin-bottom: 30px;
+            font-size: 14px;
+        }
+
+        .input-group {
+            margin-bottom: 17px;
+        }
+
+        .input-group label {
+            display: block;
+            margin-bottom: 8px;
+
+            font-size: 13px;
+            color: #b7c0cf;
+            font-weight: 600;
+        }
+
+        .input-group input {
+            width: 100%;
+
+            padding: 14px 15px;
+
+            border-radius: 12px;
+            border: 1px solid var(--border);
+
+            background: #0b1019;
+            color: white;
+
+            outline: none;
+
+            transition: 0.2s;
+        }
+
+        .input-group input:focus {
+            border-color: var(--primary);
+
+            box-shadow:
+                0 0 0 3px rgba(108,99,255,0.12);
+        }
+
+        .login-btn {
+            width: 100%;
+
+            border: none;
+            border-radius: 12px;
+
+            padding: 14px;
+
+            margin-top: 8px;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #7c3aed
+                );
+
+            color: white;
+
+            font-weight: 700;
+            font-size: 14px;
+
+            cursor: pointer;
+
+            transition: 0.2s;
+        }
+
+        .login-btn:hover {
+            transform: translateY(-1px);
+
+            box-shadow:
+                0 10px 30px rgba(108,99,255,0.25);
+        }
+
+        #loginError {
+            display: none;
+
+            margin-top: 14px;
+            padding: 11px;
+
+            border-radius: 10px;
+
+            background: rgba(239,68,68,0.1);
+            border: 1px solid rgba(239,68,68,0.2);
+
+            color: #fca5a5;
+
+            font-size: 13px;
+            text-align: center;
+        }
+
+        .login-footer {
+            margin-top: 24px;
+
+            color: #697487;
+            font-size: 11px;
+            text-align: center;
+        }
+
+        /* =========================
+           MAIN PORTAL
+        ========================== */
+
+        #portal {
+            display: none;
+        }
+
+        .container {
+            width: min(1180px, calc(100% - 40px));
+            margin: auto;
+        }
+
+        header {
+            padding: 28px 0;
+
+            border-bottom: 1px solid var(--border);
+        }
+
+        .nav {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 13px;
+        }
+
+        .nav-logo {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background:
+                linear-gradient(
+                    135deg,
+                    var(--primary),
+                    #8b5cf6
+                );
+
+            font-weight: 800;
+            font-size: 15px;
+        }
+
+        .nav-brand h2 {
+            font-size: 16px;
+            letter-spacing: 0.2px;
+        }
+
+        .nav-brand span {
+            display: block;
+
+            color: var(--muted);
+            font-size: 11px;
+
+            margin-top: 2px;
+        }
+
+        .logout-btn {
+            border: 1px solid var(--border);
+            background: rgba(255,255,255,0.03);
+
+            color: #cbd5e1;
+
+            padding: 9px 13px;
+
+            border-radius: 9px;
+
+            cursor: pointer;
+
+            font-size: 12px;
+
+            transition: 0.2s;
+        }
+
+        .logout-btn:hover {
+            background: rgba(239,68,68,0.1);
+            border-color: rgba(239,68,68,0.3);
+            color: #fca5a5;
+        }
+
+        /* HERO */
+
+        .hero {
+            padding: 62px 0 42px;
+        }
+
+        .hero-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 7px;
+
+            padding: 7px 11px;
+
+            border-radius: 999px;
+
+            background: rgba(108,99,255,0.1);
+            border: 1px solid rgba(108,99,255,0.2);
+
+            color: #a5a0ff;
+
+            font-size: 11px;
+            font-weight: 700;
+
+            text-transform: uppercase;
+            letter-spacing: 0.7px;
+        }
+
+        .hero h1 {
+            font-size: clamp(34px, 5vw, 56px);
+
+            letter-spacing: -2px;
+            line-height: 1.05;
+
+            margin-top: 18px;
+        }
+
+        .hero h1 span {
+            color: #817aff;
+        }
+
+        .hero p {
+            max-width: 680px;
+
+            margin-top: 18px;
+
+            color: var(--muted);
+
+            font-size: 15px;
+            line-height: 1.7;
+        }
+
+        /* STATUS */
+
+        .status-bar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            gap: 20px;
+
+            padding: 17px 19px;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,0.025);
+            border: 1px solid var(--border);
+
+            margin-bottom: 34px;
+        }
+
+        .status-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+
+            color: #cbd5e1;
+
+            font-size: 13px;
+        }
+
+        .status-dot {
+            width: 8px;
+            height: 8px;
+
+            border-radius: 50%;
+
+            background: var(--success);
+
+            box-shadow:
+                0 0 0 5px rgba(34,197,94,0.08);
+        }
+
+        .date {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* SECTION */
+
+        .section-title {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-bottom: 17px;
+        }
+
+        .section-title h3 {
+            font-size: 17px;
+        }
+
+        .section-title span {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* CARDS */
+
+        .cards {
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, minmax(0, 1fr));
+
+            gap: 17px;
+
+            margin-bottom: 42px;
+        }
+
+        .card {
+            position: relative;
+
+            padding: 23px;
+
+            border-radius: 18px;
+
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.045),
+                    rgba(255,255,255,0.018)
+                );
+
+            border: 1px solid var(--border);
+
+            text-decoration: none;
+            color: inherit;
+
+            transition:
+                transform 0.25s,
+                border-color 0.25s,
+                background 0.25s;
+
+            overflow: hidden;
+        }
+
+        .card::before {
+            content: "";
+
+            position: absolute;
+
+            width: 140px;
+            height: 140px;
+
+            right: -65px;
+            top: -65px;
+
+            border-radius: 50%;
+
+            background:
+                rgba(108,99,255,0.08);
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+
+            background: var(--card-hover);
+
+            border-color:
+                rgba(108,99,255,0.3);
+        }
+
+        .card-icon {
+            width: 45px;
+            height: 45px;
+
+            border-radius: 13px;
+
+            display: flex;
+            align-items: center;
+            justify-content: center;
+
+            background: rgba(108,99,255,0.11);
+
+            font-size: 20px;
+
+            margin-bottom: 18px;
+        }
+
+        .card h4 {
+            font-size: 15px;
+            margin-bottom: 7px;
+        }
+
+        .card p {
+            color: var(--muted);
+
+            font-size: 12px;
+            line-height: 1.6;
+
+            max-width: 400px;
+        }
+
+        .card-bottom {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+
+            margin-top: 20px;
+        }
+
+        .card-status {
+            font-size: 10px;
+
+            padding: 5px 8px;
+
+            border-radius: 999px;
+
+            background: rgba(34,197,94,0.08);
+            color: #86efac;
+        }
+
+        .card-status.progress {
+            background: rgba(245,158,11,0.09);
+            color: #fcd34d;
+        }
+
+        .card-status.future {
+            background: rgba(148,163,184,0.08);
+            color: #94a3b8;
+        }
+
+        .open-arrow {
+            font-size: 17px;
+            color: #717b8d;
+
+            transition: 0.2s;
+        }
+
+        .card:hover .open-arrow {
+            color: #a5a0ff;
+            transform: translateX(3px);
+        }
+
+        .disabled {
+            cursor: default;
+            opacity: 0.65;
+        }
+
+        .disabled:hover {
+            transform: none;
+            background:
+                linear-gradient(
+                    145deg,
+                    rgba(255,255,255,0.045),
+                    rgba(255,255,255,0.018)
+                );
+            border-color: var(--border);
+        }
+
+        /* QUICK INFO */
+
+        .info-grid {
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, minmax(0, 1fr));
+
+            gap: 15px;
+
+            margin-bottom: 55px;
+        }
+
+        .info-card {
+            padding: 18px;
+
+            border-radius: 15px;
+
+            background: rgba(255,255,255,0.025);
+
+            border: 1px solid var(--border);
+        }
+
+        .info-card .number {
+            font-size: 25px;
+            font-weight: 800;
+        }
+
+        .info-card .label {
+            margin-top: 4px;
+
+            color: var(--muted);
+
+            font-size: 11px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border);
+
+            padding: 24px 0 30px;
+
+            color: #626c7d;
+
+            font-size: 11px;
+
+            text-align: center;
+        }
+
+        /* MOBILE */
+
+        @media (max-width: 700px) {
+
+            .container {
+                width: min(100% - 26px, 1180px);
+            }
+
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .hero {
+                padding-top: 45px;
+            }
+
+            .hero h1 {
+                letter-spacing: -1.2px;
+            }
+
+            .status-bar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .login-box {
+                padding: 28px 22px;
+            }
+
+            .nav-brand h2 {
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<!-- =====================================================
+     LOGIN SCREEN
+===================================================== -->
+
+<div id="loginScreen">
+
+    <div class="login-box">
+
+        <div class="brand-icon">
+            STH
+        </div>
+
+        <h1>SAHEB TREND HOUSE</h1>
+
+        <p class="subtitle">
+            Business Management Portal 
+        </p>
+        <p class="subtitle">
+            ID: STH PS: STH@2026 
+        </p>
+
+        <form id="loginForm">
+
+            <div class="input-group">
+                <label for="userId">Portal ID</label>
+
+                <input
+                    type="text"
+                    id="userId"
+                    placeholder="Enter your portal ID"
+                    autocomplete="username"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label for="password">Password</label>
+
+                <input
+                    type="password"
+                    id="password"
+                    placeholder="Enter your password"
+                    autocomplete="current-password"
+                    required
+                >
+            </div>
+
+            <button
+                type="submit"
+                class="login-btn"
+            >
+                Access Portal
+            </button>
+
+            <div id="loginError">
+                Invalid ID or password. Please try again.
+            </div>
+
+        </form>
+
+        <div class="login-footer">
+            Authorized business access only
+        </div>
+
+    </div>
+
+</div>
+
+
+<!-- =====================================================
+     MAIN PORTAL
+===================================================== -->
+
+<div id="portal">
+
+    <header>
+
+        <div class="container">
+
+            <div class="nav">
+
+                <div class="nav-brand">
+
+                    <div class="nav-logo">
+                        STH
+                    </div>
+
+                    <div>
+                        <h2>SAHEB TREND HOUSE</h2>
+
+                        <span>
+                            Business Management Portal
+                        </span>
+                    </div>
+
+                </div>
+
+                <button
+                    class="logout-btn"
+                    onclick="logout()"
+                >
+                    Logout
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+    <main>
+
+        <div class="container">
+
+            <!-- HERO -->
+
+            <section class="hero">
+
+                <div class="hero-label">
+                    ● Central Business Access
+                </div>
+
+                <h1>
+                    Manage your business<br>
+                    <span>from one place.</span>
+                </h1>
+
+                <p>
+                    A central access point for SAHEB TREND HOUSE
+                    business records, ERP systems, marketplace
+                    records and management documents.
+                </p>
+
+            </section>
+
+
+            <!-- STATUS -->
+
+            <div class="status-bar">
+
+                <div class="status-left">
+
+                    <span class="status-dot"></span>
+
+                    <span>
+                        Portal operational
+                    </span>
+
+                </div>
+
+                <div
+                    class="date"
+                    id="currentDate"
+                ></div>
+
+            </div>
+
+
+            <!-- CORE SYSTEMS -->
+
+            <div class="section-title">
+
+                <h3>
+                    Core Business Systems
+                </h3>
+
+                <span>
+                    Central access
+                </span>
+
+            </div>
+
+
+            <div class="cards">
+
+
+                <!-- MASTER ERP -->
+
+                <a
+                    class="card"
+                    href="https://docs.google.com/spreadsheets/d/1Q1-477W1-HtTWyVqWomJdSkd_zSP5sUtx5qS_DlCDKk/edit?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <div class="card-icon">
+                        📊
+                    </div>
+
+                    <h4>
+                        Master ERP of STH
+                    </h4>
+
+                    <p>
+                        Main business ERP containing centralized
+                        operational records, transactions,
+                        payments and management data.
+                    </p>
+
+                    <div class="card-bottom">
+
+                        <span class="card-status progress">
+                            In Progress
+                        </span>
+
+                        <span class="open-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- MEESHO -->
+
+                <a
+                    class="card"
+                    href="https://docs.google.com/spreadsheets/d/1-qwu09YsNHjacBPtAZpnwSwV8u9iA80tGfFbShlkp5U/edit?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <div class="card-icon">
+                        🛍️
+                    </div>
+
+                    <h4>
+                        Meesho Records
+                    </h4>
+
+                    <p>
+                        Access Meesho order, sales and related
+                        business records maintained by STH.
+                    </p>
+
+                    <div class="card-bottom">
+
+                        <span class="card-status">
+                            Available
+                        </span>
+
+                        <span class="open-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+                <!-- NON MEESHO -->
+
+                <div
+                    class="card disabled"
+                    title="Link not added yet"
+                >
+
+                    <div class="card-icon">
+                        📁
+                    </div>
+
+                    <h4>
+                        Non-Meesho Records
+                    </h4>
+
+                    <p>
+                        Central record space for business activities
+                        outside the Meesho marketplace.
+                    </p>
+
+                    <div class="card-bottom">
+
+                        <span class="card-status future">
+                            Link Pending
+                        </span>
+
+                        <span class="open-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- FLIPKART -->
+
+                <div
+                    class="card disabled"
+                    title="Flipkart link will be added in future"
+                >
+
+                    <div class="card-icon">
+                        🛒
+                    </div>
+
+                    <h4>
+                        Flipkart Records
+                    </h4>
+
+                    <p>
+                        Future centralized access for Flipkart
+                        orders, sales and marketplace records.
+                    </p>
+
+                    <div class="card-bottom">
+
+                        <span class="card-status future">
+                            Coming Soon
+                        </span>
+
+                        <span class="open-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+
+            <!-- TEMPORARY / SUPPORT -->
+
+            <div class="section-title">
+
+                <h3>
+                    Management & Support Files
+                </h3>
+
+                <span>
+                    Temporary / supporting records
+                </span>
+
+            </div>
+
+
+            <div class="cards">
+
+
+                <a
+                    class="card"
+                    href="https://docs.google.com/spreadsheets/d/1sogNAHWT1KWYZcGXoy5vr1u-qGait2ecn1paodCXlxI/edit?usp=sharing"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+
+                    <div class="card-icon">
+                        🗂️
+                    </div>
+
+                    <h4>
+                        Temporary Business Management Sheet
+                    </h4>
+
+                    <p>
+                        Temporary workspace for business management,
+                        calculations, records and supporting data
+                        while the main ERP is being developed.
+                    </p>
+
+                    <div class="card-bottom">
+
+                        <span class="card-status">
+                            Available
+                        </span>
+
+                        <span class="open-arrow">
+                            →
+                        </span>
+
+                    </div>
+
+                </a>
+
+
+            </div>
+
+
+            <!-- QUICK OVERVIEW -->
+
+            <div class="section-title">
+
+                <h3>
+                    Portal Overview
+                </h3>
+
+                <span>
+                    Current status
+                </span>
+
+            </div>
+
+
+            <div class="info-grid">
+
+                <div class="info-card">
+
+                    <div class="number">
+                        5
+                    </div>
+
+                    <div class="label">
+                        Business Resources
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="number">
+                        3
+                    </div>
+
+                    <div class="label">
+                        Active Links
+                    </div>
+
+                </div>
+
+
+                <div class="info-card">
+
+                    <div class="number">
+                        2
+                    </div>
+
+                    <div class="label">
+                        Systems Pending
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </main>
+
+
+    <footer>
+
+        <div class="container">
+
+            © 2026 SAHEB TREND HOUSE · Business Management Portal
+
+        </div>
+
+    </footer>
+
+</div>
+
+
+<script>
+
+    /* =====================================================
+       BASIC LOGIN
+    ====================================================== */
+
+    const VALID_ID = "STH";
+    const VALID_PASSWORD = "STH@2026";
+
+
+    const loginScreen =
+        document.getElementById("loginScreen");
+
+    const portal =
+        document.getElementById("portal");
+
+    const loginForm =
+        document.getElementById("loginForm");
+
+    const loginError =
+        document.getElementById("loginError");
+
+
+    /* Check existing session */
+
+    if (sessionStorage.getItem("sth_authenticated") === "true") {
+
+        showPortal();
+
+    }
+
+
+    /* Login */
+
+    loginForm.addEventListener("submit", function(event) {
+
+        event.preventDefault();
+
+        const enteredId =
+            document.getElementById("userId").value.trim();
+
+        const enteredPassword =
+            document.getElementById("password").value;
+
+
+        if (
+            enteredId === VALID_ID &&
+            enteredPassword === VALID_PASSWORD
+        ) {
+
+            sessionStorage.setItem(
+                "sth_authenticated",
+                "true"
+            );
+
+            loginError.style.display = "none";
+
+            showPortal();
+
+        } else {
+
+            loginError.style.display = "block";
+
+        }
+
+    });
+
+
+    function showPortal() {
+
+        loginScreen.style.display = "none";
+        portal.style.display = "block";
+
+        updateDate();
+
+    }
+
+
+    /* Logout */
+
+    function logout() {
+
+        sessionStorage.removeItem(
+            "sth_authenticated"
+        );
+
+        portal.style.display = "none";
+        loginScreen.style.display = "flex";
+
+        document.getElementById("password").value = "";
+
+    }
+
+
+    /* Current date */
+
+    function updateDate() {
+
+        const dateElement =
+            document.getElementById("currentDate");
+
+        const now = new Date();
+
+        dateElement.textContent =
+            now.toLocaleDateString(
+                "en-IN",
+                {
+                    weekday: "long",
+                    day: "numeric",
+                    month: "long",
+                    year: "numeric"
+                }
+            );
+
+    }
+
+</script>
+
+</body>
+</html>
