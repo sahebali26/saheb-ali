@@ -23,12 +23,11 @@
     <meta name="twitter:title" content="Meesho Label Cropper – 8‑Label A4" />
     <meta name="twitter:description" content="Free Meesho shipping label cropper with 8-label A4 support." />
      
-     <!-- Favicon (using your SDH logo) -->
-   <!-- ── FAVICON & ICONS ──────────────────────────────────────── -->
-  <link rel="icon" type="image/png" sizes="32x32" href="image/SDH.png">
-  <link rel="icon" type="image/png" sizes="16x16" href="image/SDH.png">
-  <link rel="apple-touch-icon" sizes="180x180" href="image/SDH.png">
-  <link rel="shortcut icon" href="image/SDH.png" type="image/x-icon">
+    <!-- Favicon (using your SDH logo) -->
+    <link rel="icon" type="image/png" sizes="32x32" href="image/SDH.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="image/SDH.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="image/SDH.png" />
+    <link rel="shortcut icon" href="image/SDH.png" type="image/x-icon" />
 
     <!-- PDF libraries -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js">
@@ -36,8 +35,557 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js">
     </script>
 
-     <link rel="stylesheet" href="style/8-label.css" />
+    <style>
+        /* ─── RESET & ROOT ─── */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        :root {
+            --bg: #f6f9fc;
+            --card: #ffffff;
+            --primary: #1a3b5d;
+            --accent: #0d6efd;
+            --text: #1e293b;
+            --subtext: #475569;
+            --border: #dce3ed;
+            --shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+            --radius: 16px;
+            --transition: 0.2s ease;
+        }
+        body {
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            padding: 0;
+            margin: 0;
+        }
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
 
+        /* ─── HEADER ─── */
+        .sdh-header {
+            background: var(--primary);
+            color: #fff;
+            padding: 14px 0;
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        .sdh-header .container {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+        }
+        .sdh-brand {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            text-decoration: none;
+            color: #fff;
+            font-weight: 700;
+            font-size: 1.2rem;
+        }
+        .brand-icon {
+            background: rgba(255, 255, 255, 0.15);
+            padding: 4px 10px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+        }
+        .brand-name span {
+            color: #ffd966;
+        }
+        .brand-tag {
+            font-size: 0.7rem;
+            background: rgba(255, 255, 255, 0.12);
+            padding: 2px 10px;
+            border-radius: 30px;
+            font-weight: 400;
+        }
+        .sdh-nav {
+            display: flex;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 6px 16px;
+        }
+        .sdh-nav a {
+            color: #fff;
+            text-decoration: none;
+            font-size: 0.9rem;
+            opacity: 0.85;
+            transition: opacity var(--transition);
+            padding: 4px 2px;
+        }
+        .sdh-nav a:hover {
+            opacity: 1;
+        }
+        .btn-sdh {
+            background: #ffd966;
+            color: var(--primary) !important;
+            padding: 4px 14px !important;
+            border-radius: 40px;
+            font-weight: 600;
+            opacity: 1 !important;
+        }
+        .btn-sdh:hover {
+            background: #ffed4a;
+        }
+
+        /* ─── DROPDOWN ─── */
+        .dropdown {
+            position: relative;
+            display: inline-block;
+        }
+        .dropbtn {
+            background: transparent;
+            border: none;
+            color: #fff;
+            font-size: 0.9rem;
+            cursor: pointer;
+            padding: 4px 2px;
+            opacity: 0.85;
+            font-family: inherit;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .dropbtn:hover {
+            opacity: 1;
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background: #fff;
+            min-width: 200px;
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.12);
+            border-radius: 12px;
+            padding: 8px 0;
+            top: 30px;
+            left: 0;
+            z-index: 10;
+        }
+        .dropdown-content a {
+            color: var(--text) !important;
+            padding: 8px 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            opacity: 1 !important;
+            transition: background 0.15s;
+        }
+        .dropdown-content a:hover {
+            background: #f1f5f9;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+
+        /* ─── APP LAYOUT ─── */
+        .app-wrapper {
+            padding: 32px 0 20px;
+        }
+        .app {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* ─── CARDS ─── */
+        .card {
+            background: var(--card);
+            border-radius: var(--radius);
+            box-shadow: var(--shadow);
+            padding: 28px 32px;
+            margin-bottom: 32px;
+            transition: box-shadow 0.2s;
+        }
+        .card h1 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .card h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .sub {
+            color: var(--subtext);
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        /* ─── FORM ELEMENTS ─── */
+        label {
+            font-weight: 600;
+            font-size: 0.95rem;
+            display: block;
+            margin-bottom: 4px;
+        }
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 12px 14px;
+            border: 2px dashed var(--border);
+            border-radius: 12px;
+            background: #fafcff;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: border 0.2s;
+            margin-bottom: 16px;
+        }
+        input[type="file"]:hover {
+            border-color: var(--accent);
+        }
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px 40px;
+            margin: 8px 0 12px;
+        }
+        .group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 8px 14px;
+        }
+        .group-label {
+            font-weight: 600;
+            font-size: 0.9rem;
+            color: var(--subtext);
+        }
+        .opt {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-weight: 400;
+            font-size: 0.9rem;
+            cursor: pointer;
+        }
+        .opt input[type="radio"] {
+            accent-color: var(--accent);
+            width: 16px;
+            height: 16px;
+        }
+        .mt-16 {
+            margin-top: 16px;
+        }
+        .mt-8 {
+            margin-top: 8px;
+        }
+
+        progress {
+            width: 100%;
+            height: 10px;
+            border-radius: 20px;
+            background: #e9edf2;
+            border: none;
+            margin: 6px 0 10px;
+        }
+        progress::-webkit-progress-bar {
+            background: #e9edf2;
+            border-radius: 20px;
+        }
+        progress::-webkit-progress-value {
+            background: var(--accent);
+            border-radius: 20px;
+        }
+        #message {
+            font-weight: 500;
+            min-height: 1.6em;
+            margin: 2px 0 10px;
+        }
+
+        .flex-wrap {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            align-items: center;
+        }
+        .btn {
+            background: var(--accent);
+            color: #fff;
+            border: none;
+            padding: 10px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s, opacity 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn:hover:not(:disabled) {
+            background: #0b5ed7;
+        }
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-secondary {
+            background: #e9edf2;
+            color: var(--text);
+        }
+        .btn-secondary:hover:not(:disabled) {
+            background: #d5dce6;
+        }
+        .btn-link {
+            background: transparent;
+            color: var(--accent);
+            padding: 8px 12px;
+            text-decoration: underline;
+            font-weight: 500;
+        }
+
+        .filter-row {
+            display: none;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 10px 20px;
+            margin-top: 16px;
+            padding-top: 12px;
+            border-top: 1px solid var(--border);
+        }
+        .filter-row select {
+            padding: 6px 14px;
+            border-radius: 30px;
+            border: 1px solid var(--border);
+            background: #fff;
+            font-size: 0.9rem;
+            min-width: 140px;
+        }
+
+        /* ─── PREVIEW ─── */
+        .preview {
+            display: none;
+        }
+        #pagesContainer {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            justify-content: center;
+            margin-top: 12px;
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 4px 2px 8px;
+        }
+        .pageWrapper {
+            display: inline-block;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            overflow: hidden;
+            background: #fff;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+            transition: border 0.2s;
+            width: 140px;
+        }
+        .pageWrapper canvas {
+            display: block;
+            width: 100%;
+            height: auto;
+        }
+        .pageWrapper.hidden {
+            display: none;
+        }
+
+        /* ─── TOOLS SECTION ─── */
+        .tools-grid-section {
+            margin: 28px 0 16px;
+            padding: 16px 0;
+        }
+        .tools-grid-section h2 {
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        .tool-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            margin-top: 8px;
+        }
+        .tool-btn {
+            background: var(--card);
+            border: 1px solid var(--border);
+            padding: 10px 22px;
+            border-radius: 50px;
+            text-decoration: none;
+            color: var(--text);
+            font-weight: 500;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            transition: background 0.15s, border-color 0.15s;
+            box-shadow: var(--shadow);
+        }
+        .tool-btn:hover {
+            background: #f1f5f9;
+            border-color: var(--accent);
+        }
+
+        /* ─── INSTRUCTIONS ─── */
+        .instructions {
+            background: #f8faff;
+            border-radius: var(--radius);
+            padding: 24px 28px;
+            margin: 20px 0 10px;
+            border: 1px solid var(--border);
+        }
+        .instructions h2 {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            margin-bottom: 12px;
+        }
+        .steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 18px;
+        }
+        .step .num {
+            font-weight: 700;
+            font-size: 0.8rem;
+            color: var(--accent);
+            letter-spacing: 0.5px;
+            margin-bottom: 2px;
+        }
+        .step p {
+            font-size: 0.95rem;
+            color: var(--subtext);
+        }
+
+        /* ─── FOOTER ─── */
+        .sdh-footer {
+            background: var(--primary);
+            color: rgba(255, 255, 255, 0.8);
+            padding: 32px 0 20px;
+            margin-top: 30px;
+        }
+        .sdh-footer .container {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 30px;
+        }
+        .sdh-footer .brand-name {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        .sdh-footer .brand-name span {
+            color: #ffd966;
+        }
+        .brand-desc {
+            font-size: 0.9rem;
+            max-width: 320px;
+            margin-top: 4px;
+            opacity: 0.8;
+        }
+        .sdh-footer h4 {
+            color: #fff;
+            font-weight: 600;
+            font-size: 1rem;
+            margin-bottom: 6px;
+        }
+        .sdh-footer ul {
+            list-style: none;
+            padding: 0;
+        }
+        .sdh-footer ul li {
+            margin-bottom: 4px;
+        }
+        .sdh-footer ul li a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+            font-size: 0.9rem;
+            transition: color 0.2s;
+        }
+        .sdh-footer ul li a:hover {
+            color: #fff;
+        }
+        .footer-bottom {
+            grid-column: 1 / -1;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 16px;
+            margin-top: 8px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            font-size: 0.85rem;
+            opacity: 0.7;
+        }
+        .footer-bottom a {
+            color: rgba(255, 255, 255, 0.7);
+            text-decoration: none;
+        }
+        .footer-bottom a:hover {
+            color: #fff;
+        }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 720px) {
+            .sdh-header .container {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 6px;
+            }
+            .sdh-nav {
+                justify-content: center;
+                gap: 6px 12px;
+            }
+            .card {
+                padding: 20px 16px;
+            }
+            .row {
+                gap: 12px;
+            }
+            .sdh-footer .container {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            #pagesContainer .pageWrapper {
+                width: 110px;
+            }
+        }
+        @media (max-width: 480px) {
+            .brand-tag {
+                display: none;
+            }
+            .btn {
+                padding: 8px 18px;
+                font-size: 0.85rem;
+            }
+        }
+
+        /* extra helper */
+        .inline-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+        }
+        .inline-label input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            accent-color: var(--accent);
+        }
+        .mt-4 {
+            margin-top: 6px;
+        }
+    </style>
 </head>
 <body>
 
@@ -76,7 +624,7 @@
     </header>
 
     <!-- ════════════════════════════════════════════ -->
-    <!--  MAIN APP (unchanged)                      -->
+    <!--  MAIN APP                                  -->
     <!-- ════════════════════════════════════════════ -->
     <div class="app-wrapper">
         <div class="app">
@@ -110,22 +658,21 @@
                     </div>
 
                     <div class="group">
-                        <span class="group-label">Invoice:</span>
-                        <label class="opt">
-                            <input type="radio" name="invoiceMode" value="without" checked /> Without Invoices
-                        </label>
-                        <label class="opt">
-                            <input type="radio" name="invoiceMode" value="with" /><a href="with-invoice.html">With Invoices</a> 
-                        </label>
-                    </div>
-
-                    <div class="group">
                         <span class="group-label">Sort:</span>
                         <label class="opt">
                             <input type="radio" name="sortBy" value="sku" checked /> SKU
                         </label>
                         <label class="opt">
                             <input type="radio" name="sortBy" value="partner" /> Delivery Partner
+                        </label>
+                    </div>
+
+                    <!-- ─── NEW: Inner Lines Toggle ─── -->
+                    <div class="group">
+                        <span class="group-label">Inner Lines:</span>
+                        <label class="opt inline-label">
+                            <input type="checkbox" id="innerLinesToggle" checked />
+                            Show grid lines
                         </label>
                     </div>
                 </div>
@@ -139,8 +686,6 @@
                 <div class="flex-wrap mt-8">
                     <button class="btn" id="downloadButton" disabled>⬇ Download Cropped PDF</button>
                     <button class="btn btn-secondary" id="resetButton">⟳ Reset</button>
-                    <a href="8labels-noline.html">Generate with No inner lines</a>
-
                 </div>
 
                 <!-- Partner filter -->
@@ -160,7 +705,7 @@
             </div>
 
             <!-- ════════════════════════════════════════════ -->
-            <!--  TOOLS SECTION (new)                        -->
+            <!--  TOOLS SECTION                              -->
             <!-- ════════════════════════════════════════════ -->
             <section class="tools-grid-section" id="toolsSection">
                 <h2>🛠️ All Meesho Tools</h2>
@@ -191,7 +736,7 @@
                     </div>
                     <div class="step">
                         <div class="num">Step 3</div>
-                        <p>Select sorting options (SKU or Delivery Partner) and invoice preference.</p>
+                        <p>Select sorting options (SKU or Delivery Partner) and toggle inner grid lines on/off.</p>
                     </div>
                     <div class="step">
                         <div class="num">Step 4</div>
@@ -252,10 +797,407 @@
     </footer>
 
     <!-- ════════════════════════════════════════════ -->
-    <!--  JAVASCRIPT     -->
+    <!--  JAVASCRIPT                                -->
     <!-- ════════════════════════════════════════════ -->
-    <script src="js/8.js"></script>
-    
+    <script>
+        // ─── CONFIG ───
+        const TOP_ANCHOR = "Customer Address";
+        const BOTTOM_ANCHOR = "SKU";
+        const PARTNER_PRIORITY = ["delhivery", "ecom express", "shadowfax", "unknown"];
+
+        // ─── DOM refs ───
+        const fileInput = document.getElementById('fileInput');
+        const downloadBtn = document.getElementById('downloadButton');
+        const resetBtn = document.getElementById('resetButton');
+        const message = document.getElementById('message');
+        const progressBar = document.getElementById('progressBar');
+        const pagesContainer = document.getElementById('pagesContainer');
+        const previewCard = document.getElementById('previewCard');
+        const partnerFilter = document.getElementById('partnerFilter');
+        const filterRow = document.getElementById('filterRow');
+        const innerLinesToggle = document.getElementById('innerLinesToggle');
+
+        // ─── State ───
+        let pdfDoc = null;
+        let pageDataList = [];
+        let partnersFound = new Set();
+        let skippedPages = 0;
+        let originalFile = null;
+
+        // ─── Helpers ───
+        function setMessage(msg, isError = false) {
+            message.textContent = msg;
+            message.style.color = isError ? '#c0392b' : '#2e7d32';
+        }
+
+        function resetUI() {
+            setMessage('');
+            pagesContainer.innerHTML = '';
+            pageDataList = [];
+            partnersFound.clear();
+            skippedPages = 0;
+            partnerFilter.innerHTML = '<option value="all">All</option>';
+            partnerFilter.disabled = true;
+            filterRow.style.display = 'none';
+            downloadBtn.disabled = true;
+            progressBar.value = 0;
+            previewCard.style.display = 'none';
+            pdfDoc = null;
+            originalFile = null;
+        }
+
+        // ─── File handling ───
+        fileInput.addEventListener('change', async (e) => {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            resetUI();
+            originalFile = file;
+            progressBar.value = 0;
+            setMessage('Loading PDF…');
+
+            const arrayBuffer = await file.arrayBuffer();
+            const typedArray = new Uint8Array(arrayBuffer);
+
+            try {
+                const loadingTask = pdfjsLib.getDocument({ data: typedArray });
+                pdfDoc = await loadingTask.promise;
+
+                setMessage(`Processing ${pdfDoc.numPages} pages…`);
+                await analyzeAndRenderAllPages(pdfDoc);
+                sortPages();
+                setupPartnerFilter();
+                progressBar.value = 100;
+                setMessage(`✅ Done. ${pageDataList.length} labels ready. ${skippedPages ? '⚠️ Skipped ' + skippedPages + ' page(s) missing anchors.' : ''}`);
+                downloadBtn.disabled = false;
+                previewCard.style.display = 'block';
+            } catch (err) {
+                setMessage('❌ Error loading PDF: ' + err.message, true);
+                console.error(err);
+            }
+        });
+
+        // ─── Reset ───
+        resetBtn.addEventListener('click', () => {
+            fileInput.value = '';
+            resetUI();
+        });
+
+        // ─── Partner filter ───
+        partnerFilter.addEventListener('change', () => {
+            filterPages(partnerFilter.value);
+        });
+
+        // ─── Sort radio ───
+        document.querySelectorAll('input[name="sortBy"]').forEach((radio) => {
+            radio.addEventListener('change', () => {
+                sortPages();
+                filterPages(partnerFilter.value);
+            });
+        });
+
+        // ─── Analyze PDF ───
+        async function analyzeAndRenderAllPages(pdfDoc) {
+            const numPages = pdfDoc.numPages;
+            for (let i = 1; i <= numPages; i++) {
+                const page = await pdfDoc.getPage(i);
+                const textContent = await page.getTextContent();
+
+                const { topY, bottomY, partner, sku } = findPageDetails(textContent, i);
+                const rawViewport = page.getViewport({ scale: 1 });
+                const gapAboveTop = topY != null ? rawViewport.height - topY : null;
+
+                if (topY == null || bottomY == null) {
+                    skippedPages++;
+                    progressBar.value = 10 + (i / numPages) * 50;
+                    continue;
+                }
+
+                const viewport = page.getViewport({ scale: 1.5 });
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = viewport.width;
+                canvas.height = viewport.height;
+                await page.render({ canvasContext: ctx, viewport }).promise;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'pageWrapper';
+                wrapper.appendChild(canvas);
+                pagesContainer.appendChild(wrapper);
+
+                const cropRegion = calculateCropRegion(topY, bottomY, rawViewport.height, gapAboveTop);
+
+                pageDataList.push({
+                    pageIndex: i - 1,
+                    partner: partner || 'Unknown',
+                    sku: sku || 'N/A',
+                    cropRegion,
+                    pageWrapper: wrapper,
+                });
+
+                progressBar.value = 10 + (i / numPages) * 50;
+                await new Promise((r) => setTimeout(r, 10));
+            }
+            filterPages('all');
+        }
+
+        // ─── Find anchors ───
+        function findPageDetails(textContent, pageIndex) {
+            let topY = null,
+                bottomY = null,
+                partner = null,
+                sku = null;
+            let skuLineIndex = -1;
+
+            textContent.items.forEach((item, index) => {
+                const text = item.str.trim();
+                const y = item.transform[5];
+
+                if (text.includes(TOP_ANCHOR)) topY = y;
+                if (text.includes(BOTTOM_ANCHOR)) bottomY = y;
+
+                const lower = text.toLowerCase();
+                if (lower.includes('delhivery')) partner = 'Delhivery';
+                else if (lower.includes('ecom express')) partner = 'Ecom Express';
+                else if (lower.includes('shadowfax')) partner = 'Shadowfax';
+
+                if (lower === 'sku') skuLineIndex = index;
+                if (skuLineIndex !== -1 && index === skuLineIndex + 10) {
+                    sku = text;
+                    skuLineIndex = -1;
+                }
+
+                if (partner) partnersFound.add(partner);
+            });
+
+            return { topY, bottomY, partner, sku };
+        }
+
+        // ─── Crop region ───
+        function calculateCropRegion(topY, bottomY, pageHeight) {
+            if (topY != null && bottomY != null) {
+                const top = Math.max(topY, bottomY);
+                const bottom = Math.min(topY, bottomY);
+                const PAD = 39;
+                return { x: 0, y: bottom - PAD, w: 595, h: (top - bottom) + PAD * 2 };
+            }
+            return { x: 0, y: 0, w: 595, h: pageHeight };
+        }
+
+        // ─── Sort ───
+        function sortPages() {
+            const sortBy = document.querySelector('input[name="sortBy"]:checked').value;
+            if (sortBy === 'sku') {
+                pageDataList.sort((a, b) => a.sku.localeCompare(b.sku));
+            } else {
+                pageDataList.sort((a, b) => {
+                    const ai = PARTNER_PRIORITY.indexOf(a.partner.toLowerCase());
+                    const bi = PARTNER_PRIORITY.indexOf(b.partner.toLowerCase());
+                    return ai - bi;
+                });
+            }
+            pageDataList.forEach((item) => pagesContainer.appendChild(item.pageWrapper));
+            filterPages(partnerFilter.value);
+        }
+
+        // ─── Filter ───
+        function filterPages(value) {
+            pageDataList.forEach((data) => {
+                const partner = data.partner.toLowerCase();
+                data.pageWrapper.style.display =
+                    (value === 'all' || partner === value) ? 'inline-block' : 'none';
+            });
+        }
+
+        // ─── Partner filter dropdown ───
+        function setupPartnerFilter() {
+            if (partnersFound.size > 0) {
+                partnerFilter.disabled = false;
+                filterRow.style.display = 'flex';
+                for (const p of partnersFound) {
+                    const opt = document.createElement('option');
+                    opt.value = p.toLowerCase();
+                    opt.textContent = p;
+                    partnerFilter.appendChild(opt);
+                }
+            }
+        }
+
+        // ─── DOWNLOAD ────────────────────────────────────────────────────────
+        downloadBtn.addEventListener('click', async () => {
+            if (!pdfDoc || !originalFile) {
+                setMessage('❌ No PDF loaded.', true);
+                return;
+            }
+
+            try {
+                setMessage('Generating PDF…');
+                progressBar.value = 40;
+
+                const layoutMode = document.querySelector('input[name="layoutMode"]:checked').value;
+                const sortBy = document.querySelector('input[name="sortBy"]:checked').value;
+                const showLines = innerLinesToggle.checked; // <-- read toggle state
+
+                const arrayBuffer = await originalFile.arrayBuffer();
+                const pdfBytes = new Uint8Array(arrayBuffer);
+                const sourcePdf = await PDFLib.PDFDocument.load(pdfBytes);
+                const outputPdf = await PDFLib.PDFDocument.create();
+
+                const pages = sourcePdf.getPages();
+
+                if (layoutMode === 'label') {
+                    // ── Label Printer: one per page ──
+                    for (let i = 0; i < pageDataList.length; i++) {
+                        const { pageIndex, cropRegion } = pageDataList[i];
+                        const [copied] = await outputPdf.copyPages(sourcePdf, [pageIndex]);
+                        copied.setCropBox(cropRegion.x, cropRegion.y, cropRegion.w, cropRegion.h);
+                        outputPdf.addPage(copied);
+                        progressBar.value = 40 + ((i + 1) / pageDataList.length) * 30;
+                        await new Promise((r) => setTimeout(r, 5));
+                    }
+                } else {
+                    // ── A4 Layout (4 or 8 labels per page) ──
+                    const isEight = layoutMode === 'a4-8';
+                    const cols = isEight ? 4 : 2;
+                    const rows = 2;
+                    const totalPerPage = cols * rows;
+
+                    const a4W = 842;
+                    const a4H = 595;
+                    const margin = 10;
+                    const gap = 10;
+
+                    const cellW = (a4W - 2 * margin - (cols - 1) * gap) / cols;
+                    const cellH = (a4H - 2 * margin - (rows - 1) * gap) / rows;
+
+                    for (let i = 0; i < pageDataList.length; i += totalPerPage) {
+                        const a4Page = outputPdf.addPage([a4W, a4H]);
+
+                        for (let j = 0; j < totalPerPage && (i + j) < pageDataList.length; j++) {
+                            const idx = i + j;
+                            const { pageIndex, cropRegion } = pageDataList[idx];
+
+                            const col = j % cols;
+                            const row = rows - 1 - Math.floor(j / cols);
+
+                            const xPos = margin + col * (cellW + gap);
+                            const yPos = a4H - margin - cellH - row * (cellH + gap);
+
+                            const embedded = await outputPdf.embedPage(pages[pageIndex], {
+                                left: cropRegion.x,
+                                bottom: cropRegion.y,
+                                right: cropRegion.x + cropRegion.w,
+                                top: cropRegion.y + cropRegion.h,
+                            });
+
+                            const labelW = cropRegion.w;
+                            const labelH = cropRegion.h;
+
+                            const scaleDirect = Math.min(cellW / labelW, cellH / labelH);
+                            const areaDirect = (labelW * scaleDirect) * (labelH * scaleDirect);
+
+                            const scaleRot = Math.min(cellW / labelH, cellH / labelW);
+                            const areaRot = (labelH * scaleRot) * (labelW * scaleRot);
+
+                            if (areaRot > areaDirect) {
+                                const s = scaleRot;
+                                const sw = labelH * s;
+                                const sh = labelW * s;
+                                const cx = xPos + (cellW - sw) / 2 + sw;
+                                const cy = yPos + (cellH - sh) / 2;
+                                a4Page.drawPage(embedded, {
+                                    x: cx,
+                                    y: cy,
+                                    width: labelW * s,
+                                    height: labelH * s,
+                                    rotate: PDFLib.degrees(90),
+                                });
+                            } else {
+                                const s = scaleDirect;
+                                const sw = labelW * s;
+                                const sh = labelH * s;
+                                const cx = xPos + (cellW - sw) / 2;
+                                const cy = yPos + (cellH - sh) / 2;
+                                a4Page.drawPage(embedded, {
+                                    x: cx,
+                                    y: cy,
+                                    width: sw,
+                                    height: sh,
+                                });
+                            }
+                        }
+
+                        // ─── Draw grid lines only if toggle is ON ───
+                        if (showLines) {
+                            // vertical lines
+                            for (let c = 1; c < cols; c++) {
+                                const x = margin + c * (cellW + gap) - gap / 2;
+                                a4Page.drawLine({
+                                    start: { x, y: margin },
+                                    end: { x, y: a4H - margin },
+                                    thickness: 1.5,
+                                    color: PDFLib.rgb(0.7, 0.7, 0.7),
+                                });
+                            }
+                            // horizontal line between rows
+                            const yLine = a4H - margin - cellH - gap / 2;
+                            a4Page.drawLine({
+                                start: { x: margin, y: yLine },
+                                end: { x: a4W - margin, y: yLine },
+                                thickness: 1.5,
+                                color: PDFLib.rgb(0.7, 0.7, 0.7),
+                            });
+                        }
+
+                        progressBar.value = 40 + ((i + totalPerPage) / pageDataList.length) * 30;
+                        await new Promise((r) => setTimeout(r, 5));
+                    }
+
+                    // Rotate all pages to portrait
+                    const allPages = outputPdf.getPages();
+                    allPages.forEach((p) => p.setRotation(PDFLib.degrees(90)));
+                }
+
+                progressBar.value = 90;
+                const outBytes = await outputPdf.save();
+                downloadPDF(outBytes, 'SDH-Meesho_Label_Croper.pdf');
+                progressBar.value = 100;
+                setMessage(`✅ Download complete. ${pageDataList.length} labels processed.`);
+            } catch (err) {
+                setMessage('❌ Download error: ' + err.message, true);
+                console.error(err);
+                progressBar.value = 0;
+            }
+        });
+
+        // ─── Download helper ───
+        function downloadPDF(bytes, filename) {
+            const blob = new Blob([bytes], { type: 'application/pdf' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = filename;
+            link.click();
+            URL.revokeObjectURL(link.href);
+        }
+
+        // ─── Smooth scroll for nav links ───
+        document.querySelectorAll('.nav-scroll').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetId = this.getAttribute('href');
+                if (targetId && targetId.startsWith('#')) {
+                    e.preventDefault();
+                    const target = document.querySelector(targetId);
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    }
+                }
+            });
+        });
+
+        // ─── Init ───
+        resetUI();
+        console.log('✅ Lebely Label Cropper loaded (A4 8‑label support | inner lines toggle)');
+    </script>
 
 </body>
 </html>
