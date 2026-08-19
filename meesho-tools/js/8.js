@@ -1,3 +1,4 @@
+   
         // ─── CONFIG ───
         const TOP_ANCHOR = "Customer Address";
         const BOTTOM_ANCHOR = "SKU";
@@ -13,13 +14,17 @@
         const previewCard = document.getElementById('previewCard');
         const partnerFilter = document.getElementById('partnerFilter');
         const filterRow = document.getElementById('filterRow');
+        const innerLinesToggle = document.getElementById('innerLinesToggle');
+        const fileInfo = document.getElementById('fileInfo');
 
         // ─── State ───
-        let pdfDoc = null;
-        let pageDataList = [];
-        let partnersFound = new Set();
-        let skippedPages = 0;
-        let originalFile = null;
+        let allPageData = []; // combined from all PDFs
+        let allPartners = new Set();
+        let skippedTotal = 0;
+        let originalFiles = []; // store File objects for later
+        let combinedPdfBytes = null; // we'll merge all PDFs into one for source access
+        let sourcePdfDoc = null; // pdf-lib document
+        let pageMap = []; // maps global page index -> { fileIndex, pageIndex }
 
         // ─── Helpers ───
         function setMessage(msg, isError = false) {
@@ -30,46 +35,138 @@
         function resetUI() {
             setMessage('');
             pagesContainer.innerHTML = '';
-            pageDataList = [];
-            partnersFound.clear();
-            skippedPages = 0;
+            allPageData = [];
+            allPartners.clear();
+            skippedTotal = 0;
             partnerFilter.innerHTML = '<option value="all">All</option>';
             partnerFilter.disabled = true;
             filterRow.style.display = 'none';
             downloadBtn.disabled = true;
             progressBar.value = 0;
             previewCard.style.display = 'none';
-            pdfDoc = null;
-            originalFile = null;
+            sourcePdfDoc = null;
+            originalFiles = [];
+            pageMap = [];
+            fileInfo.textContent = 'No files selected.';
         }
 
         // ─── File handling ───
         fileInput.addEventListener('change', async (e) => {
-            const file = e.target.files[0];
-            if (!file) return;
+            const files = e.target.files;
+            if (!files || files.length === 0) {
+                fileInfo.textContent = 'No files selected.';
+                return;
+            }
 
+            fileInfo.textContent = `${files.length} file(s) selected.`;
             resetUI();
-            originalFile = file;
+            originalFiles = Array.from(files);
             progressBar.value = 0;
-            setMessage('Loading PDF…');
-
-            const arrayBuffer = await file.arrayBuffer();
-            const typedArray = new Uint8Array(arrayBuffer);
+            setMessage(`Loading ${files.length} PDF(s)…`);
 
             try {
-                const loadingTask = pdfjsLib.getDocument({ data: typedArray });
-                pdfDoc = await loadingTask.promise;
+                // Step 1: Load all PDFs and merge them into one pdf-lib document
+                const mergedPdf = await PDFLib.PDFDocument.create();
+                let globalPageIndex = 0;
 
-                setMessage(`Processing ${pdfDoc.numPages} pages…`);
-                await analyzeAndRenderAllPages(pdfDoc);
+                for (let fIdx = 0; fIdx < files.length; fIdx++) {
+                    const file = files[fIdx];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const pdfBytes = new Uint8Array(arrayBuffer);
+                    const srcDoc = await PDFLib.PDFDocument.load(pdfBytes);
+                    const copiedPages = await mergedPdf.copyPages(srcDoc, srcDoc.getPageIndices());
+                    for (const page of copiedPages) {
+                        mergedPdf.addPage(page);
+                        pageMap.push({ fileIndex: fIdx, pageIndex: globalPageIndex });
+                        globalPageIndex++;
+                    }
+                }
+
+                sourcePdfDoc = mergedPdf;
+                const totalPages = sourcePdfDoc.getPageCount();
+                setMessage(`Processing ${totalPages} pages from ${files.length} file(s)…`);
+
+                // Step 2: Analyze each page using pdf.js
+                // We need to load each original PDF with pdf.js to get text content
+                // We'll process sequentially
+                let processed = 0;
+                let skipped = 0;
+
+                for (let fIdx = 0; fIdx < files.length; fIdx++) {
+                    const file = files[fIdx];
+                    const arrayBuffer = await file.arrayBuffer();
+                    const typedArray = new Uint8Array(arrayBuffer);
+                    const loadingTask = pdfjsLib.getDocument({ data: typedArray });
+                    const pdfJsDoc = await loadingTask.promise;
+
+                    for (let pIdx = 1; pIdx <= pdfJsDoc.numPages; pIdx++) {
+                        const page = await pdfJsDoc.getPage(pIdx);
+                        const textContent = await page.getTextContent();
+                        const { topY, bottomY, partner, sku } = findPageDetails(textContent, pIdx);
+                        const rawViewport = page.getViewport({ scale: 1 });
+
+                        if (topY == null || bottomY == null) {
+                            skipped++;
+                            skippedTotal++;
+                            processed++;
+                            progressBar.value = 10 + (processed / totalPages) * 50;
+                            continue;
+                        }
+
+                        // Render thumbnail
+                        const viewport = page.getViewport({ scale: 1.5 });
+                        const canvas = document.createElement('canvas');
+                        const ctx = canvas.getContext('2d');
+                        canvas.width = viewport.width;
+                        canvas.height = viewport.height;
+                        await page.render({ canvasContext: ctx, viewport }).promise;
+
+                        const wrapper = document.createElement('div');
+                        wrapper.className = 'pageWrapper';
+                        wrapper.appendChild(canvas);
+                        pagesContainer.appendChild(wrapper);
+
+                        const cropRegion = calculateCropRegion(topY, bottomY, rawViewport.height);
+
+                        // Find the global page index for this page in merged doc
+                        // The merged doc has pages in same order: file0 pages, file1 pages, etc.
+                        let globalIdx = 0;
+                        for (let fi = 0; fi < fIdx; fi++) {
+                            const prevFile = files[fi];
+                            const prevArrayBuffer = await prevFile.arrayBuffer();
+                            const prevTyped = new Uint8Array(prevArrayBuffer);
+                            const prevLoading = pdfjsLib.getDocument({ data: prevTyped });
+                            const prevDoc = await prevLoading.promise;
+                            globalIdx += prevDoc.numPages;
+                        }
+                        globalIdx += (pIdx - 1);
+
+                        allPageData.push({
+                            globalPageIndex: globalIdx,
+                            partner: partner || 'Unknown',
+                            sku: sku || 'N/A',
+                            cropRegion,
+                            pageWrapper: wrapper,
+                            fileIndex: fIdx,
+                            pageNumber: pIdx,
+                        });
+
+                        if (partner) allPartners.add(partner);
+
+                        processed++;
+                        progressBar.value = 10 + (processed / totalPages) * 50;
+                        await new Promise((r) => setTimeout(r, 5));
+                    }
+                }
+
                 sortPages();
                 setupPartnerFilter();
                 progressBar.value = 100;
-                setMessage(`✅ Done. ${pageDataList.length} labels ready. ${skippedPages ? '⚠️ Skipped ' + skippedPages + ' page(s) missing anchors.' : ''}`);
+                setMessage(`✅ Done. ${allPageData.length} labels ready. ${skippedTotal ? '⚠️ Skipped ' + skippedTotal + ' page(s) missing anchors.' : ''}`);
                 downloadBtn.disabled = false;
                 previewCard.style.display = 'block';
             } catch (err) {
-                setMessage('❌ Error loading PDF: ' + err.message, true);
+                setMessage('❌ Error processing PDFs: ' + err.message, true);
                 console.error(err);
             }
         });
@@ -92,53 +189,6 @@
                 filterPages(partnerFilter.value);
             });
         });
-
-        // ─── Analyze PDF ───
-        async function analyzeAndRenderAllPages(pdfDoc) {
-            const numPages = pdfDoc.numPages;
-            for (let i = 1; i <= numPages; i++) {
-                const page = await pdfDoc.getPage(i);
-                const textContent = await page.getTextContent();
-
-                const { topY, bottomY, partner, sku } = findPageDetails(textContent, i);
-                const rawViewport = page.getViewport({ scale: 1 });
-                const gapAboveTop = topY != null ? rawViewport.height - topY : null;
-
-                // Skip if either anchor missing
-                if (topY == null || bottomY == null) {
-                    skippedPages++;
-                    progressBar.value = 10 + (i / numPages) * 50;
-                    continue;
-                }
-
-                // Render thumbnail
-                const viewport = page.getViewport({ scale: 1.5 });
-                const canvas = document.createElement('canvas');
-                const ctx = canvas.getContext('2d');
-                canvas.width = viewport.width;
-                canvas.height = viewport.height;
-                await page.render({ canvasContext: ctx, viewport }).promise;
-
-                const wrapper = document.createElement('div');
-                wrapper.className = 'pageWrapper';
-                wrapper.appendChild(canvas);
-                pagesContainer.appendChild(wrapper);
-
-                const cropRegion = calculateCropRegion(topY, bottomY, rawViewport.height, gapAboveTop);
-
-                pageDataList.push({
-                    pageIndex: i - 1,
-                    partner: partner || 'Unknown',
-                    sku: sku || 'N/A',
-                    cropRegion,
-                    pageWrapper: wrapper,
-                });
-
-                progressBar.value = 10 + (i / numPages) * 50;
-                await new Promise((r) => setTimeout(r, 10));
-            }
-            filterPages('all');
-        }
 
         // ─── Find anchors ───
         function findPageDetails(textContent, pageIndex) {
@@ -165,8 +215,6 @@
                     sku = text;
                     skuLineIndex = -1;
                 }
-
-                if (partner) partnersFound.add(partner);
             });
 
             return { topY, bottomY, partner, sku };
@@ -177,7 +225,7 @@
             if (topY != null && bottomY != null) {
                 const top = Math.max(topY, bottomY);
                 const bottom = Math.min(topY, bottomY);
-                const PAD = 39; // croped height
+                const PAD = 39;
                 return { x: 0, y: bottom - PAD, w: 595, h: (top - bottom) + PAD * 2 };
             }
             return { x: 0, y: 0, w: 595, h: pageHeight };
@@ -187,21 +235,21 @@
         function sortPages() {
             const sortBy = document.querySelector('input[name="sortBy"]:checked').value;
             if (sortBy === 'sku') {
-                pageDataList.sort((a, b) => a.sku.localeCompare(b.sku));
+                allPageData.sort((a, b) => a.sku.localeCompare(b.sku));
             } else {
-                pageDataList.sort((a, b) => {
+                allPageData.sort((a, b) => {
                     const ai = PARTNER_PRIORITY.indexOf(a.partner.toLowerCase());
                     const bi = PARTNER_PRIORITY.indexOf(b.partner.toLowerCase());
                     return ai - bi;
                 });
             }
-            pageDataList.forEach((item) => pagesContainer.appendChild(item.pageWrapper));
+            allPageData.forEach((item) => pagesContainer.appendChild(item.pageWrapper));
             filterPages(partnerFilter.value);
         }
 
         // ─── Filter ───
         function filterPages(value) {
-            pageDataList.forEach((data) => {
+            allPageData.forEach((data) => {
                 const partner = data.partner.toLowerCase();
                 data.pageWrapper.style.display =
                     (value === 'all' || partner === value) ? 'inline-block' : 'none';
@@ -210,10 +258,10 @@
 
         // ─── Partner filter dropdown ───
         function setupPartnerFilter() {
-            if (partnersFound.size > 0) {
+            if (allPartners.size > 0) {
                 partnerFilter.disabled = false;
                 filterRow.style.display = 'flex';
-                for (const p of partnersFound) {
+                for (const p of allPartners) {
                     const opt = document.createElement('option');
                     opt.value = p.toLowerCase();
                     opt.textContent = p;
@@ -224,7 +272,7 @@
 
         // ─── DOWNLOAD ────────────────────────────────────────────────────────
         downloadBtn.addEventListener('click', async () => {
-            if (!pdfDoc || !originalFile) {
+            if (!sourcePdfDoc || allPageData.length === 0) {
                 setMessage('❌ No PDF loaded.', true);
                 return;
             }
@@ -234,34 +282,29 @@
                 progressBar.value = 40;
 
                 const layoutMode = document.querySelector('input[name="layoutMode"]:checked').value;
-                const invoiceMode = document.querySelector('input[name="invoiceMode"]:checked').value;
-                const sortBy = document.querySelector('input[name="sortBy"]:checked').value;
+                const showLines = innerLinesToggle.checked;
 
-                const arrayBuffer = await originalFile.arrayBuffer();
-                const pdfBytes = new Uint8Array(arrayBuffer);
-                const sourcePdf = await PDFLib.PDFDocument.load(pdfBytes);
+                const sourcePdf = sourcePdfDoc;
                 const outputPdf = await PDFLib.PDFDocument.create();
-
                 const pages = sourcePdf.getPages();
 
                 if (layoutMode === 'label') {
                     // ── Label Printer: one per page ──
-                    for (let i = 0; i < pageDataList.length; i++) {
-                        const { pageIndex, cropRegion } = pageDataList[i];
-                        const [copied] = await outputPdf.copyPages(sourcePdf, [pageIndex]);
+                    for (let i = 0; i < allPageData.length; i++) {
+                        const { globalPageIndex, cropRegion } = allPageData[i];
+                        const [copied] = await outputPdf.copyPages(sourcePdf, [globalPageIndex]);
                         copied.setCropBox(cropRegion.x, cropRegion.y, cropRegion.w, cropRegion.h);
                         outputPdf.addPage(copied);
-                        progressBar.value = 40 + ((i + 1) / pageDataList.length) * 30;
+                        progressBar.value = 40 + ((i + 1) / allPageData.length) * 30;
                         await new Promise((r) => setTimeout(r, 5));
                     }
                 } else {
                     // ── A4 Layout (4 or 8 labels per page) ──
                     const isEight = layoutMode === 'a4-8';
                     const cols = isEight ? 4 : 2;
-                    const rows = 2; // both 4 and 8 use 2 rows; for 4, 2x2; for 8, 4x2
-                    const totalPerPage = cols * rows; // 8 or 4
+                    const rows = 2;
+                    const totalPerPage = cols * rows;
 
-                    // Landscape A4 dimensions (before rotation)
                     const a4W = 842;
                     const a4H = 595;
                     const margin = 10;
@@ -270,20 +313,20 @@
                     const cellW = (a4W - 2 * margin - (cols - 1) * gap) / cols;
                     const cellH = (a4H - 2 * margin - (rows - 1) * gap) / rows;
 
-                    for (let i = 0; i < pageDataList.length; i += totalPerPage) {
+                    for (let i = 0; i < allPageData.length; i += totalPerPage) {
                         const a4Page = outputPdf.addPage([a4W, a4H]);
 
-                        for (let j = 0; j < totalPerPage && (i + j) < pageDataList.length; j++) {
+                        for (let j = 0; j < totalPerPage && (i + j) < allPageData.length; j++) {
                             const idx = i + j;
-                            const { pageIndex, cropRegion } = pageDataList[idx];
+                            const { globalPageIndex, cropRegion } = allPageData[idx];
 
                             const col = j % cols;
-                            const row = rows - 1 - Math.floor(j / cols); // top‑down
+                            const row = rows - 1 - Math.floor(j / cols);
 
                             const xPos = margin + col * (cellW + gap);
                             const yPos = a4H - margin - cellH - row * (cellH + gap);
 
-                            const embedded = await outputPdf.embedPage(pages[pageIndex], {
+                            const embedded = await outputPdf.embedPage(pages[globalPageIndex], {
                                 left: cropRegion.x,
                                 bottom: cropRegion.y,
                                 right: cropRegion.x + cropRegion.w,
@@ -293,7 +336,6 @@
                             const labelW = cropRegion.w;
                             const labelH = cropRegion.h;
 
-                            // decide whether to rotate 90°
                             const scaleDirect = Math.min(cellW / labelW, cellH / labelH);
                             const areaDirect = (labelW * scaleDirect) * (labelH * scaleDirect);
 
@@ -328,40 +370,38 @@
                             }
                         }
 
-                        // Draw grid lines (vertical)
-                       for (let c = 1; c < cols; c++) {
-                            const x = margin + c * (cellW + gap) - gap / 2;
+                        if (showLines) {
+                            for (let c = 1; c < cols; c++) {
+                                const x = margin + c * (cellW + gap) - gap / 2;
+                                a4Page.drawLine({
+                                    start: { x, y: margin },
+                                    end: { x, y: a4H - margin },
+                                    thickness: 1.5,
+                                    color: PDFLib.rgb(0.7, 0.7, 0.7),
+                                });
+                            }
+                            const yLine = a4H - margin - cellH - gap / 2;
                             a4Page.drawLine({
-                                start: { x, y: margin },
-                                end: { x, y: a4H - margin },
+                                start: { x: margin, y: yLine },
+                                end: { x: a4W - margin, y: yLine },
                                 thickness: 1.5,
                                 color: PDFLib.rgb(0.7, 0.7, 0.7),
                             });
                         }
-                        // Draw horizontal line between rows
-                         const yLine = a4H - margin - cellH - gap / 2;
-                        a4Page.drawLine({
-                            start: { x: margin, y: yLine },
-                            end: { x: a4W - margin, y: yLine },
-                            thickness: 1.5,
-                            color: PDFLib.rgb(0.7, 0.7, 0.7),
-                        });
 
-                        // Progress update
-                        progressBar.value = 40 + ((i + totalPerPage) / pageDataList.length) * 30;
+                        progressBar.value = 40 + ((i + totalPerPage) / allPageData.length) * 30;
                         await new Promise((r) => setTimeout(r, 5));
                     }
 
-                    // Rotate all pages to portrait
                     const allPages = outputPdf.getPages();
                     allPages.forEach((p) => p.setRotation(PDFLib.degrees(90)));
                 }
 
                 progressBar.value = 90;
                 const outBytes = await outputPdf.save();
-                downloadPDF(outBytes, 'SDH-Meesho_Label_Croper.pdf');
+                downloadPDF(outBytes, 'SDH-Meesho_Label_Croper_Multi.pdf');
                 progressBar.value = 100;
-                setMessage(`✅ Download complete. ${pageDataList.length} labels processed.`);
+                setMessage(`✅ Download complete. ${allPageData.length} labels processed from ${originalFiles.length} file(s).`);
             } catch (err) {
                 setMessage('❌ Download error: ' + err.message, true);
                 console.error(err);
@@ -395,5 +435,5 @@
 
         // ─── Init ───
         resetUI();
-        console.log('✅ Lebely Label Cropper loaded (A4 8‑label support)');
-
+        console.log('✅ Meesho Label Cropper loaded (Multi-PDF support | inner lines toggle)');
+    
