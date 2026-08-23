@@ -1,7 +1,11 @@
 /**
  * Saheb Trend House ERP (ST-House-ERP)
- * Frontend Engine & State Manager
+ * Frontend Engine, Authentication & State Manager
  */
+
+// Credentials
+const AUTH_EMAIL = "saheb2602e.c@gmail.com";
+const AUTH_PASSWORD_HASH = "STH@2026";
 
 const APPS_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx2eq-YOQtAawrCTsu5d-K_JSV_dXP7ZpE7qPyaKrAZ6yUQDAA9uaZk5_UjP24VUieW5Q/exec";
 
@@ -30,10 +34,11 @@ document.addEventListener("DOMContentLoaded", () => {
   setupThemeToggle();
   setupDateFilters();
 
-  // 1. Instant Cache Load
-  loadLocalCachedData();
+  // 1. Check Authentication Status
+  checkInitialAuth();
 
-  // 2. Fast Sheet Sync
+  // 2. Load Local Cache & Preload Google Sheet Data in Background immediately
+  loadLocalCachedData();
   fetchERPData(false);
 
   document.getElementById("sidebarToggleBtn").addEventListener("click", () => {
@@ -46,7 +51,64 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 /* ==========================================================================
-   1. Fast Data Fetching & Local Cache Engine
+   1. Authentication & Security Engine
+   ========================================================================== */
+function checkInitialAuth() {
+  const isAuth = localStorage.getItem("st_erp_auth") === "true" || sessionStorage.getItem("st_erp_auth") === "true";
+  const loginOverlay = document.getElementById("loginOverlay");
+  
+  if (isAuth) {
+    loginOverlay.classList.add("hidden");
+  } else {
+    loginOverlay.classList.remove("hidden");
+  }
+}
+
+function handleLogin(e) {
+  e.preventDefault();
+  const emailInput = document.getElementById("loginEmail").value.trim().toLowerCase();
+  const passwordInput = document.getElementById("loginPassword").value.trim();
+  const rememberMe = document.getElementById("rememberMeCheckbox").checked;
+  const errorMsg = document.getElementById("loginErrorMsg");
+
+  if (emailInput === AUTH_EMAIL.toLowerCase() && passwordInput === AUTH_PASSWORD_HASH) {
+    errorMsg.classList.add("hidden");
+    
+    if (rememberMe) {
+      localStorage.setItem("st_erp_auth", "true");
+    } else {
+      sessionStorage.setItem("st_erp_auth", "true");
+    }
+
+    document.getElementById("loginOverlay").classList.add("hidden");
+    renderAllViews();
+  } else {
+    errorMsg.classList.remove("hidden");
+  }
+}
+
+function handleLogout() {
+  localStorage.removeItem("st_erp_auth");
+  sessionStorage.removeItem("st_erp_auth");
+  document.getElementById("loginOverlay").classList.remove("hidden");
+  document.getElementById("loginPassword").value = "";
+}
+
+function togglePasswordVisibility() {
+  const pwdInput = document.getElementById("loginPassword");
+  const icon = document.getElementById("pwdToggleIcon");
+  
+  if (pwdInput.type === "password") {
+    pwdInput.type = "text";
+    icon.className = "fa-regular fa-eye-slash";
+  } else {
+    pwdInput.type = "password";
+    icon.className = "fa-regular fa-eye";
+  }
+}
+
+/* ==========================================================================
+   2. Fast Background Data Fetching & Cache Engine
    ========================================================================== */
 function loadLocalCachedData() {
   try {
@@ -114,7 +176,7 @@ function showNotification(msg, persistent = false, timeout = 3000) {
 }
 
 /* ==========================================================================
-   2. Robust Helper & Field Matcher
+   3. Robust Helper & Field Matcher
    ========================================================================== */
 function getField(obj, possibleKeys) {
   if (!obj) return "";
@@ -154,7 +216,7 @@ function cleanDateStr(d) {
 }
 
 /* ==========================================================================
-   3. Tab Navigation & View Management
+   4. Tab Navigation & View Management
    ========================================================================== */
 function setupNavigation() {
   const navItems = document.querySelectorAll(".sidebar-menu .nav-item");
@@ -185,7 +247,7 @@ function navigateToTab(tabId) {
 }
 
 /* ==========================================================================
-   4. Date Filtering Engine
+   5. Date Filtering Engine
    ========================================================================== */
 function setupDateFilters() {
   const select = document.getElementById("dateFilterSelect");
@@ -240,7 +302,7 @@ function isDateInFilter(dateStr) {
 }
 
 /* ==========================================================================
-   5. View Renderers
+   6. View Renderers
    ========================================================================== */
 function renderAllViews() {
   renderDashboard();
@@ -255,7 +317,7 @@ function renderAllViews() {
   renderPartners();
 }
 
-// 5.1 Dashboard View: TC!E2, TC!E3, TC!F3, TC!G2
+// 6.1 Dashboard View: TC!E2, TC!E3, TC!F3, TC!G2
 function renderDashboard() {
   const filter = document.getElementById("dateFilterSelect").value;
   const filteredSales = (ERP_DB.sales || []).filter(s => isDateInFilter(cleanDateStr(getField(s, ["Sales Date", "Date"]))));
@@ -349,7 +411,7 @@ function renderDashboard() {
   }
 }
 
-// 5.2 Inventory View
+// 6.2 Inventory View
 function renderInventory() {
   const tbody = document.querySelector("#inventoryTable tbody");
   if (!tbody) return;
@@ -395,7 +457,7 @@ function renderInventory() {
   document.getElementById("invTotalStockValue").innerText = formatINR(totalStockVal);
 }
 
-// 5.3 PO Summary View (Active vs Closed)
+// 6.3 PO Summary View (Active POs: Pending Amount > 0 | Closed POs: Pending Amount = 0)
 function renderPOSummary() {
   const activeTbody = document.querySelector("#poSummaryTable tbody");
   const closedTbody = document.querySelector("#poClosedTable tbody");
@@ -411,7 +473,6 @@ function renderPOSummary() {
     return;
   }
 
-  // Sort ascending by PO ID / Date
   poData.sort((a, b) => {
     const idA = getField(a, ["PO ID", "POID"]).toLowerCase();
     const idB = getField(b, ["PO ID", "POID"]).toLowerCase();
@@ -538,7 +599,7 @@ function printCurrentPO() {
   window.print();
 }
 
-// 5.4 Supplier Ledger View
+// 6.4 Supplier Ledger View
 function renderSuppliers() {
   const tbody = document.querySelector("#supplierTable tbody");
   if (!tbody) return;
@@ -571,7 +632,7 @@ function renderSuppliers() {
   });
 }
 
-// Open Supplier Statement Modal with Filter Controls
+// Open Supplier Statement Modal
 function openSupplierStatementModal(supplierId) {
   currentStatementSupplierId = supplierId;
   const supplierInfo = (ERP_DB.suppliers || []).find(s => getField(s, ["Supplier ID"]) === supplierId) || {};
@@ -616,7 +677,7 @@ function handleStatementFilterChange() {
   filterSupplierStatement();
 }
 
-// Chronological Cumulative Pending Statement Generator
+// Cumulative Pending Calculation
 function filterSupplierStatement() {
   if (!currentStatementSupplierId) return;
 
@@ -681,7 +742,7 @@ function filterSupplierStatement() {
         desc: remarks,
         debit: 0,
         credit: amt,
-        rawTime: new Date(payDate || "1970-01-01").getTime() + 1, // order right after PO on same date
+        rawTime: new Date(payDate || "1970-01-01").getTime() + 1,
         isPayment: true,
         poId: poRef
       });
@@ -705,8 +766,7 @@ function filterSupplierStatement() {
       totalBilled += t.debit;
       totalPaid += (t.isPayment ? t.credit : 0);
 
-      // Cumulative Calculation:
-      // Billed adds to Pending, Payment subtracts from Pending
+      // Billed (PO) adds to pending, Paid subtracts from pending
       runningPending += (t.debit - t.credit);
 
       let pendingHtml = "";
@@ -760,7 +820,7 @@ function printCurrentSupplierStatement() {
   window.print();
 }
 
-// 5.5 Returns View
+// 6.5 Returns View
 function renderReturns() {
   const tbody = document.querySelector("#returnsTable tbody");
   if (!tbody) return;
@@ -803,7 +863,7 @@ function renderReturns() {
   });
 }
 
-// 5.6 Sales View
+// 6.6 Sales View
 function renderSales() {
   const tbody = document.querySelector("#salesTable tbody");
   if (!tbody) return;
@@ -833,7 +893,7 @@ function renderSales() {
   });
 }
 
-// 5.7 Expenses View
+// 6.7 Expenses View
 function renderExpenses() {
   const tbody = document.querySelector("#expensesTable tbody");
   if (!tbody) return;
@@ -855,7 +915,7 @@ function renderExpenses() {
   });
 }
 
-// 5.8 Supplier Payments View
+// 6.8 Supplier Payments View
 function renderPayments() {
   const tbody = document.querySelector("#paymentsTable tbody");
   if (!tbody) return;
@@ -878,7 +938,7 @@ function renderPayments() {
   });
 }
 
-// 5.9 Credit Notes View
+// 6.9 Credit Notes View
 function renderCreditNotes() {
   const tbody = document.querySelector("#creditNotesTable tbody");
   if (!tbody) return;
@@ -904,7 +964,7 @@ function renderCreditNotes() {
   });
 }
 
-// 5.10 Partner View
+// 6.10 Partner View
 function renderPartners() {
   const contTbody = document.querySelector("#partnerContributionTable tbody");
   if (contTbody) {
@@ -947,7 +1007,7 @@ function renderPartners() {
 }
 
 /* ==========================================================================
-   6. Analytics Charts (Chart.js Engine)
+   7. Analytics Charts (Chart.js Engine)
    ========================================================================== */
 function renderAnalyticsCharts() {
   Object.values(chartInstances).forEach(c => c && c.destroy());
@@ -1117,7 +1177,7 @@ function renderAnalyticsCharts() {
 }
 
 /* ==========================================================================
-   7. Table Search & Export Utilities
+   8. Table Search & Export Utilities
    ========================================================================== */
 function filterTable(tableId, query) {
   const filter = query.toLowerCase();
@@ -1154,7 +1214,7 @@ function exportTableToCSV(tableId, filename) {
 }
 
 /* ==========================================================================
-   8. Theme Toggle
+   9. Theme Toggle
    ========================================================================== */
 function setupThemeToggle() {
   const toggleBtn = document.getElementById("themeToggleBtn");

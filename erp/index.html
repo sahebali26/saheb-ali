@@ -17,8 +17,53 @@
 </head>
 <body>
 
+  <!-- LOGIN OVERLAY SCREEN -->
+  <div class="login-overlay" id="loginOverlay">
+    <div class="login-card">
+      <div class="login-header">
+        <div class="login-logo">
+          <i class="fa-solid fa-gem"></i>
+        </div>
+        <h2>Saheb Trend House</h2>
+        <p>Enter your credentials to access ST-House ERP</p>
+      </div>
+
+      <form id="loginForm" onsubmit="handleLogin(event)">
+        <div id="loginErrorMsg" class="login-error hidden">
+          <i class="fa-solid fa-circle-exclamation"></i> Invalid Login ID or Password.
+        </div>
+
+        <div class="form-group">
+          <label for="loginEmail"><i class="fa-regular fa-envelope"></i> Login ID / Email</label>
+          <input type="email" id="loginEmail" placeholder="saheb2602e.c@gmail.com" required autocomplete="username" />
+        </div>
+
+        <div class="form-group">
+          <label for="loginPassword"><i class="fa-solid fa-lock"></i> Password</label>
+          <div class="password-input-wrapper">
+            <input type="password" id="loginPassword" placeholder="••••••••" required autocomplete="current-password" />
+            <button type="button" class="btn-toggle-pwd" onclick="togglePasswordVisibility()" aria-label="Toggle password visibility">
+              <i class="fa-regular fa-eye" id="pwdToggleIcon"></i>
+            </button>
+          </div>
+        </div>
+
+        <div class="login-options">
+          <label class="remember-me">
+            <input type="checkbox" id="rememberMeCheckbox" checked />
+            <span>Remember me</span>
+          </label>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block" id="loginSubmitBtn">
+          <i class="fa-solid fa-right-to-bracket"></i> Sign In to Dashboard
+        </button>
+      </form>
+    </div>
+  </div>
+
   <!-- App Wrapper -->
-  <div class="app-layout">
+  <div class="app-layout" id="appMainLayout">
     
     <!-- Sidebar Navigation -->
     <aside class="sidebar" id="sidebar">
@@ -86,6 +131,9 @@
             <span class="name">Saheb Ali</span>
             <span class="role">Store Owner</span>
           </div>
+          <button class="btn-logout" onclick="handleLogout()" title="Logout">
+            <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          </button>
         </div>
       </div>
     </aside>
@@ -276,7 +324,7 @@
         <section id="posummary-view" class="view-panel">
           <div class="content-box mb-4">
             <div class="box-header">
-              <h3><i class="fa-solid fa-clock-rotate-left"></i> Active Purchase Orders (Pending Fulfillment)</h3>
+              <h3><i class="fa-solid fa-clock-rotate-left"></i> Active Purchase Orders (Pending Amount &gt; 0)</h3>
               <div class="header-actions">
                 <span class="table-hint"><i class="fa-solid fa-hand-pointer"></i> Click any row to view & print</span>
                 <button class="btn btn-sm btn-outline" onclick="exportTableToCSV('poSummaryTable', 'Active_PO_Summary.csv')">
@@ -308,7 +356,7 @@
 
           <div class="content-box">
             <div class="box-header">
-              <h3><i class="fa-solid fa-circle-check" style="color:var(--success);"></i> Closed / Completed Purchase Orders (Pending Qty = 0)</h3>
+              <h3><i class="fa-solid fa-circle-check" style="color:var(--success);"></i> Closed / Completed Purchase Orders (Pending Amount = 0)</h3>
               <div class="header-actions">
                 <button class="btn btn-sm btn-outline" onclick="exportTableToCSV('poClosedTable', 'Closed_PO_Summary.csv')">
                   <i class="fa-solid fa-file-export"></i> Export CSV
@@ -692,7 +740,7 @@
             <h1>Saheb Trend House</h1>
             <p><strong>Address:</strong> Abhayapuri, Assam, India</p>
             <p><strong>Email:</strong> sahebali8474@gmail.com</p>
-            <p><strong>GSTIN:</strong> 18ETVPA4798H1ZV</p>
+            <p><strong>GSTIN:</strong> GNSVTR909</p>
           </div>
           <div class="po-meta-info">
             <h2 id="modalPOId">PO-XXXX-000</h2>
@@ -761,7 +809,7 @@
     </div>
   </div>
 
-  <!-- SUPPLIER ACCOUNT STATEMENT MODAL (With Active / Selective PO Filters & A4 Print) -->
+  <!-- SUPPLIER ACCOUNT STATEMENT MODAL (With Cumulative Pending Amount & A4 Print) -->
   <div class="modal-overlay" id="supplierStatementModal">
     <div class="modal-container statement-modal-container">
       <div class="modal-header">
@@ -774,7 +822,7 @@
         </div>
       </div>
 
-      <!-- Statement View Controls (Hidden in Print) -->
+      <!-- Statement View Controls -->
       <div class="stmt-controls-bar">
         <div class="stmt-filter-group">
           <label><i class="fa-solid fa-filter"></i> Statement View:</label>
@@ -799,7 +847,7 @@
             <h1>Saheb Trend House</h1>
             <p><strong>Address:</strong> Abhayapuri, Assam, India</p>
             <p><strong>Email:</strong> sahebali8474@gmail.com</p>
-            <p><strong>GSTIN:</strong> 18ETVPA4798H1ZV</p>
+            <p><strong>GSTIN:</strong> GNSVTR909</p>
           </div>
           <div class="po-meta-info">
             <h2>SUPPLIER STATEMENT</h2>
@@ -810,7 +858,6 @@
           </div>
         </div>
 
-        <!-- Statement Summary Badges -->
         <div class="statement-kpi-grid">
           <div class="stmt-kpi">
             <span>Total Deals (Billed):</span>
@@ -828,7 +875,7 @@
 
         <hr class="divider" />
 
-        <!-- Transaction Statement Table (Description below Ref, Running Balance removed) -->
+        <!-- Transaction Statement Table (Pending Amount Column) -->
         <div class="statement-ledger-section">
           <table class="table-data" id="supplierStatementTable">
             <thead>
@@ -838,7 +885,7 @@
                 <th>Reference / ID & Description</th>
                 <th>Billed / PO Amount</th>
                 <th>Paid Amount</th>
-                <th>Payment Status</th>
+                <th>Pending Amount</th>
               </tr>
             </thead>
             <tbody></tbody>
