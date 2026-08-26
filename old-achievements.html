@@ -1,0 +1,536 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My History · Saheb Ali | Timeline of a Brave Man</title>
+<meta name="description" content="Official timeline and biography of Saheb Ali, a brave entrepreneur from Assam. Founder of Saheb Trend House, Eduspark.site, and specialist in Graphic Design.">
+  <meta name="keywords" content="Saheb Ali, Saheb Trend House, Eduspark.site, Abhayapuri entrepreneur, Assam E-commerce, Saheb Ali History, Saheb Ali Biography">
+  <meta name="author" content="Saheb Ali">
+  <link rel="canonical" href="https://sahebali26.github.io/saheb-ali/"> <meta property="og:title" content="Saheb Ali | The Journey of a Brave Man">
+  <meta property="og:description" content="From Abhayapuri to building a Pan-India e-commerce brand. Discover the timeline of Saheb Ali.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://sahebali26.github.io/saheb-ali/">
+  
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "name": "Saheb Ali",
+    "url": "https://sahebali26.github.io/saheb-ali/",
+    "jobTitle": "Entrepreneur",
+    "alumniOf": {
+      "@type": "CollegeOrUniversity",
+      "name": "Bongaigaon University, Abhayapuri College"
+    },
+    "knowsAbout": ["E-commerce", "Graphic Design", "Economics", "DTP Services"],
+    "brand": {
+      "@type": "Brand",
+      "name": "Saheb Trend House"
+    },
+    "sameAs": [
+      "https://www.facebook.com/share/14JU4kaxPeb/",
+      "https://www.instagram.com/__saheb_ali_/",
+      "https://www.linkedin.com/in/mr-saheb-955907279"
+    ]
+  }
+  </script>
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+  <style>
+    :root {
+      --neon-gold: #ffd893;
+      --neon-glow: 0 0 15px rgba(255, 216, 147, 0.4);
+      --glass: rgba(255, 255, 255, 0.03);
+      --border: rgba(255, 255, 255, 0.08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background-color: #000000;
+      color: #e0e0e0;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* --- Scroll Progress Bar --- */
+    #scroll-progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 4px;
+      background: linear-gradient(to right, var(--neon-gold), #fff);
+      z-index: 1001;
+      width: 0%;
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Background Decor --- */
+    .bg-glow {
+      position: fixed;
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(255, 216, 147, 0.05) 0%, transparent 70%);
+      top: -100px;
+      right: -100px;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 20px;
+      position: relative;
+      z-index: 1;
+    }
+
+    /* --- Hero Section --- */
+    header {
+      padding: 100px 0 50px;
+      text-align: center;
+    }
+
+    .hero-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.5rem, 8vw, 4.5rem);
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    .hero-subtitle {
+      color: var(--neon-gold);
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      font-weight: 400;
+      margin-bottom: 30px;
+      display: block;
+    }
+
+    .intro-card {
+      background: var(--glass);
+      backdrop-filter: blur(15px);
+      border: 1px solid var(--border);
+      padding: 30px;
+      border-radius: 24px;
+      margin-bottom: 60px;
+      text-align: left;
+    }
+
+    /* --- Search System --- */
+    .search-container {
+      position: sticky;
+      top: 20px;
+      z-index: 100;
+      margin-bottom: 40px;
+    }
+
+    #historySearch {
+      width: 100%;
+      background: rgba(20, 20, 20, 0.8);
+      border: 1px solid var(--border);
+      padding: 15px 25px;
+      border-radius: 50px;
+      color: #fff;
+      font-size: 1rem;
+      backdrop-filter: blur(10px);
+      transition: 0.3s;
+      outline: none;
+    }
+
+    #historySearch:focus {
+      border-color: var(--neon-gold);
+      box-shadow: var(--neon-glow);
+    }
+
+    /* --- Timeline Layout --- */
+    .timeline {
+      position: relative;
+      padding: 40px 0;
+    }
+
+    .timeline::before {
+      content: '';
+      position: absolute;
+      left: 20px;
+      top: 0;
+      width: 2px;
+      height: 100%;
+      background: linear-gradient(to bottom, transparent, var(--border), var(--neon-gold), var(--border), transparent);
+    }
+
+    .timeline-item {
+      position: relative;
+      padding-left: 60px;
+      margin-bottom: 50px;
+      transition: 0.5s;
+      opacity: 0;
+      transform: translateY(30px);
+    }
+
+    .timeline-item.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .timeline-dot {
+      position: absolute;
+      left: 11px;
+      top: 5px;
+      width: 20px;
+      height: 20px;
+      background: #000;
+      border: 2px solid var(--neon-gold);
+      border-radius: 50%;
+      z-index: 2;
+      box-shadow: var(--neon-glow);
+    }
+
+    .timeline-content {
+      background: var(--glass);
+      backdrop-filter: blur(10px);
+      padding: 25px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+      transition: 0.3s ease;
+      cursor: pointer;
+    }
+
+    .timeline-content:hover {
+      border-color: var(--neon-gold);
+      transform: scale(1.02);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    }
+
+    .year-tag {
+      color: var(--neon-gold);
+      font-weight: 700;
+      font-size: 1.2rem;
+      display: block;
+      margin-bottom: 5px;
+    }
+
+    .timeline-content h3 {
+      color: #fff;
+      margin-bottom: 10px;
+    }
+
+    /* --- Popup Modal --- */
+    .modal {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      visibility: hidden;
+      opacity: 0;
+      transition: 0.3s;
+    }
+
+    .modal.active {
+      visibility: visible;
+      opacity: 1;
+    }
+
+    .modal-content {
+      background: #111;
+      border: 1px solid var(--neon-gold);
+      padding: 40px;
+      border-radius: 30px;
+      max-width: 500px;
+      width: 90%;
+      position: relative;
+      text-align: center;
+    }
+
+    .close-modal {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      color: #fff;
+      cursor: pointer;
+      font-size: 1.5rem;
+    }
+
+    .back-btn {
+        display: inline-block;
+        margin-top: 40px;
+        color: var(--neon-gold);
+        text-decoration: none;
+        font-size: 0.9rem;
+        border-bottom: 1px solid transparent;
+        transition: 0.3s;
+    }
+
+    .back-btn:hover {
+        border-bottom-color: var(--neon-gold);
+    }
+
+    /* --- Social links (new) --- */
+    .social-links {
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+      margin-top: 20px;
+      margin-bottom: 20px;
+    }
+
+    .social-icon {
+      color: var(--neon-gold);
+      font-size: 1.8rem;
+      transition: 0.2s;
+      opacity: 0.7;
+    }
+
+    .social-icon:hover {
+      opacity: 1;
+      transform: translateY(-3px);
+      text-shadow: var(--neon-glow);
+    }
+
+    /* --- Footer --- */
+    footer {
+      text-align: center;
+      padding: 50px 0 20px;
+      color: #555;
+      font-size: 0.8rem;
+    }
+
+    hr {
+      border: none;
+      height: 1px;
+      background: linear-gradient(to right, transparent, var(--neon-gold), transparent);
+      margin: 40px 0 20px;
+    }
+
+    /* --- Responsive --- */
+    @media (max-width: 600px) {
+      .timeline::before { left: 15px; }
+      .timeline-dot { left: 6px; }
+      .timeline-item { padding-left: 45px; }
+    }
+  </style>
+</head>
+<body>
+
+  <div id="scroll-progress"></div>
+  <div class="bg-glow"></div>
+
+  <div class="container">
+    
+    <header>
+      <span class="hero-subtitle">The Journey of</span>
+      <h1 class="hero-title">Saheb Ali</h1>
+      <p style="color: #888;">Meaning: <strong style="color: var(--neon-gold);">Brave Man</strong></p>
+    </header>
+
+    <div class="intro-card">
+      <p>I belong to a semi-village near <strong>Abhayapuri Town</strong>. My journey is a blend of traditional education and a relentless drive for digital excellence. From the quiet streets of Assam to building a pan-India e-commerce brand, this is my story.</p>
+    </div>
+
+    <div class="search-container">
+      <input type="text" id="historySearch" placeholder="Search my history (e.g. 2024, Meesho, Eduspark)...">
+    </div>
+
+    <div class="timeline" id="timelineList">
+      
+      <div class="timeline-item" data-text="HSLC 10th SEBA board 2021 school">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('HSLC Completion', 'Successfully completed my HSLC/10th from the SEBA board in 2021, marking the start of my academic journey.')">
+          <span class="year-tag">2021</span>
+          <h3>Academic Foundation</h3>
+          <p>Completed HSLC (10th Standard) under the SEBA Board.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="ADCA computer diploma 2021 skills">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('ADCA Diploma', 'Earned an Advanced Diploma in Computer Applications. This sparked my love for tech and design.')">
+          <span class="year-tag">2021</span>
+          <h3>Digital Awakening</h3>
+          <p>Completed ADCA (Advanced Diploma in Computer Applications).</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="DTP services 2023 design publishing">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('DTP Services', 'Began providing professional Desktop Publishing services, handling layouts and print designs.')">
+          <span class="year-tag">2023</span>
+          <h3>Service Launch</h3>
+          <p>Started providing DTP services professionally.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="HS AHSEC 2024 school completion">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Higher Secondary', 'Finished my HS from AHSEC. A pivotal year for my personal growth.')">
+          <span class="year-tag">2024</span>
+          <h3>Higher Secondary</h3>
+          <p>Completed HS under the AHSEC Board.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="CRM DV NSQF level 4 IT-ITes NASSCOM 2024">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Professional Skill', 'Certified in CRM DV NSQF Level 4 under IT-ITes SSC NASSCOM, enhancing my technical expertise.')">
+          <span class="year-tag">2024</span>
+          <h3>NASSCOM Certification</h3>
+          <p>Achieved CRM DV NSQF Level 4 Certification.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Bongaigaon University BA Economics Honours BU 2024">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('University Life', 'Admitted to Bongaigaon University (BU) for BA in Economics (Honours).')">
+          <span class="year-tag">2024</span>
+          <h3>The Scholar</h3>
+          <p>Started BA Economics Honours at Bongaigaon University.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Eduspark site graduation students help 2024">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Eduspark.site', 'Launched eduspark.site to provide resources and guidance to graduation students.')">
+          <span class="year-tag">2024</span>
+          <h3>Eduspark.site Launch</h3>
+          <p>Developed a digital platform for student resources.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Tranfered Abhapuri college from BU">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('College transfer', 'Transferred to Abhayapuri college from BU (Bongaigaon University) for personal growth and starting business.')">
+          <span class="year-tag">2024</span>
+          <h3>Transfer College</h3>
+          <p>Transferred to Abhayapuri college from BU.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Graphic design Almirah printing furniture 2025">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Graphic Printing', 'Specialized in custom graphic designs for furniture like Almirahs, mixing art with interiors.')">
+          <span class="year-tag">2025</span>
+          <h3>Furniture Design</h3>
+          <p>Started Graphic Designs for furniture/Almirah printing.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="E-commerce artificial jewellery Assam business 2025">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Assam E-comm', 'Started selling artificial jewellery within Assam, testing the e-commerce waters.')">
+          <span class="year-tag">2025</span>
+          <h3>E-commerce Entry</h3>
+          <p>Launched Artificial Jewellery business in Assam.</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Saheb Trend House 2026 Meesho GST All India">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" onclick="openPopup('Saheb Trend House', 'The official launch of Saheb Trend House. With GST and Pan-India shipping via Meesho.')">
+          <span class="year-tag">2026</span>
+          <h3>National Expansion</h3>
+          <p>Proper start of <strong>Saheb Trend House</strong> (All India Selling).</p>
+        </div>
+      </div>
+
+      <div class="timeline-item" data-text="Future Flipkart Amazon business expansion">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" style="border-style: dashed;">
+          <span class="year-tag">Future</span>
+          <h3>The Vision</h3>
+          <p>Expanding Saheb Trend House to Amazon and Flipkart.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- new: personal social links (exactly as requested) -->
+    <hr>
+    <div class="social-links">
+      <a href="https://www.facebook.com/share/14JU4kaxPeb/" target="_blank" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/__saheb_ali_/" target="_blank" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.linkedin.com/in/mr-saheb-955907279" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+    </div>
+    <hr>
+
+    <footer>
+      <p>© 8/3/2025 Saheb Ali · Built for the Brave</p>
+    </footer>
+  </div>
+
+  <div class="modal" id="infoModal">
+    <div class="modal-content">
+      <span class="close-modal" onclick="closePopup()">&times;</span>
+      <h2 id="modalTitle" style="color: var(--neon-gold); margin-bottom: 15px;"></h2>
+      <p id="modalDesc" style="color: #ccc;"></p>
+    </div>
+  </div>
+
+  <script>
+    // --- Scroll Progress ---
+    window.onscroll = function() {
+      let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+      let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      let scrolled = (winScroll / height) * 100;
+      document.getElementById("scroll-progress").style.width = scrolled + "%";
+    };
+
+    // --- Search Logic ---
+    const searchInput = document.getElementById('historySearch');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+
+    searchInput.addEventListener('input', (e) => {
+      const val = e.target.value.toLowerCase();
+      timelineItems.forEach(item => {
+        const text = item.getAttribute('data-text').toLowerCase();
+        if (text.includes(val)) {
+          item.style.display = "block";
+        } else {
+          item.style.display = "none";
+        }
+      });
+    });
+
+    // --- Animation on Scroll ---
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, { threshold: 0.1 });
+
+    timelineItems.forEach(item => observer.observe(item));
+
+    // --- Modal Logic ---
+    function openPopup(title, desc) {
+      document.getElementById('modalTitle').innerText = title;
+      document.getElementById('modalDesc').innerText = desc;
+      document.getElementById('infoModal').classList.add('active');
+    }
+
+    function closePopup() {
+      document.getElementById('infoModal').classList.remove('active');
+    }
+
+    // Close on click outside
+    window.onclick = function(event) {
+      if (event.target == document.getElementById('infoModal')) {
+        closePopup();
+      }
+    }
+  </script>
+</body>
+</html>

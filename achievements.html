@@ -2,49 +2,74 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>My History · Saheb Ali | Timeline of a Brave Man</title>
-<meta name="description" content="Official timeline and biography of Saheb Ali, a brave entrepreneur from Assam. Founder of Saheb Trend House, Eduspark.site, and specialist in Graphic Design.">
-  <meta name="keywords" content="Saheb Ali, Saheb Trend House, Eduspark.site, Abhayapuri entrepreneur, Assam E-commerce, Saheb Ali History, Saheb Ali Biography">
-  <meta name="author" content="Saheb Ali">
-  <link rel="canonical" href="https://sahebali26.github.io/saheb-ali/"> <meta property="og:title" content="Saheb Ali | The Journey of a Brave Man">
-  <meta property="og:description" content="From Abhayapuri to building a Pan-India e-commerce brand. Discover the timeline of Saheb Ali.">
-  <meta property="og:type" content="website">
-  <meta property="og:url" content="https://sahebali26.github.io/saheb-ali/">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
   
+  <title>Journey & Milestones · Saheb Ali | Academic & Business Timeline</title>
+  <meta name="description" content="Official timeline and professional milestones of Saheb Ali: Economics (Honours) scholar at Gauhati University, NIELIT AI Intern, and Founder of Saheb Trend House.">
+  <meta name="keywords" content="Saheb Ali, Saheb Trend House, Gauhati University, Abhayapuri College, Economics Honours, NIELIT Kokrajhar, AI Technology, ADCA, NASSCOM, Assam Entrepreneur">
+  <meta name="author" content="Saheb Ali">
+  <meta name="robots" content="index, follow">
+  <link rel="canonical" href="https://www.sahebali.site/achievements.html">
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="Saheb Ali | Professional Journey & Academic Milestones">
+  <meta property="og:description" content="Explore the academic, technical, and business journey of Saheb Ali — from Abhayapuri, Assam to building a pan-India e-commerce brand.">
+  <meta property="og:type" content="website">
+  <meta property="og:url" content="https://www.sahebali.site/achievements.html">
+  <meta property="og:image" content="https://www.sahebali.site/image/SA-logo.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" sizes="32x32" href="image/SA-logo.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="image/SA-logo.png">
+
+  <!-- Structured Data -->
   <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Person",
     "name": "Saheb Ali",
-    "url": "https://sahebali26.github.io/saheb-ali/",
-    "jobTitle": "Entrepreneur",
-    "alumniOf": {
-      "@type": "CollegeOrUniversity",
-      "name": "Bongaigaon University, Abhayapuri College"
-    },
-    "knowsAbout": ["E-commerce", "Graphic Design", "Economics", "DTP Services"],
+    "url": "https://www.sahebali.site/achievements.html",
+    "jobTitle": "Founder & Entrepreneur",
+    "alumniOf": [
+      {
+        "@type": "CollegeOrUniversity",
+        "name": "Abhayapuri College, Gauhati University"
+      }
+    ],
+    "knowsAbout": ["Economics", "Artificial Intelligence", "E-Commerce", "Digital Business Operations"],
     "brand": {
       "@type": "Brand",
       "name": "Saheb Trend House"
     },
     "sameAs": [
-      "https://www.facebook.com/share/14JU4kaxPeb/",
-      "https://www.instagram.com/__saheb_ali_/",
-      "https://www.linkedin.com/in/mr-saheb-955907279"
+      "https://www.instagram.com/saheb_trend_house",
+      "https://www.linkedin.com/in/mr-saheb-955907279",
+      "https://youtube.com/@EduSmartspark"
     ]
   }
   </script>
 
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <!-- Fonts & Icons -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
-      --neon-gold: #ffd893;
-      --neon-glow: 0 0 15px rgba(255, 216, 147, 0.4);
-      --glass: rgba(255, 255, 255, 0.03);
+      --bg: #090b0e;
+      --bg-card: rgba(18, 22, 30, 0.75);
       --border: rgba(255, 255, 255, 0.08);
+      --border-gold: rgba(217, 170, 90, 0.35);
+      --gold: #d9aa5a;
+      --gold-light: #ffd893;
+      --gold-dim: rgba(217, 170, 90, 0.12);
+      --text: #f0f2f5;
+      --text-muted: #9ba3b0;
+      --text-dim: #6c7686;
+      --radius: 20px;
+      --shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7);
+      --transition: 0.3s cubic-bezier(0.2, 0.8, 0.2, 1);
     }
 
     * {
@@ -54,109 +79,165 @@
     }
 
     body {
-      background-color: #000000;
-      color: #e0e0e0;
+      background-color: var(--bg);
+      color: var(--text);
       font-family: 'Inter', sans-serif;
-      overflow-x: hidden;
       line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* --- Scroll Progress Bar --- */
     #scroll-progress {
       position: fixed;
       top: 0;
       left: 0;
-      height: 4px;
-      background: linear-gradient(to right, var(--neon-gold), #fff);
+      height: 3px;
+      background: linear-gradient(to right, var(--gold), var(--gold-light));
       z-index: 1001;
       width: 0%;
-      box-shadow: var(--neon-glow);
     }
 
-    /* --- Background Decor --- */
     .bg-glow {
       position: fixed;
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(255, 216, 147, 0.05) 0%, transparent 70%);
-      top: -100px;
-      right: -100px;
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(217, 170, 90, 0.06) 0%, transparent 70%);
       pointer-events: none;
       z-index: 0;
     }
+    .glow-1 { top: -120px; right: -100px; }
+    .glow-2 { bottom: 10%; left: -120px; }
 
     .container {
-      max-width: 900px;
+      max-width: 920px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 24px;
       position: relative;
       z-index: 1;
     }
 
-    /* --- Hero Section --- */
-    header {
-      padding: 100px 0 50px;
-      text-align: center;
+    .top-nav {
+      padding: 20px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 40px;
     }
-
-    .hero-title {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(2.5rem, 8vw, 4.5rem);
+    .nav-brand {
+      font-family: 'Outfit', sans-serif;
+      font-weight: 700;
+      font-size: 1.2rem;
       color: #fff;
-      margin-bottom: 10px;
+      text-decoration: none;
+    }
+    .nav-brand span { color: var(--gold); }
+    .nav-back-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--gold-light);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 500;
+      padding: 6px 16px;
+      border-radius: 40px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      transition: var(--transition);
+    }
+    .nav-back-link:hover {
+      background: rgba(217, 170, 90, 0.25);
+      transform: translateX(-3px);
     }
 
-    .hero-subtitle {
-      color: var(--neon-gold);
-      letter-spacing: 4px;
+    .hero {
+      text-align: center;
+      padding: 20px 0 40px;
+    }
+    .sec-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: var(--gold-dim);
+      border: 1px solid var(--border-gold);
+      color: var(--gold-light);
+      padding: 6px 14px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
       text-transform: uppercase;
-      font-weight: 400;
-      margin-bottom: 30px;
-      display: block;
+      letter-spacing: 0.8px;
+      margin-bottom: 14px;
+    }
+    .hero-title {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.2rem, 5vw, 3.4rem);
+      font-weight: 800;
+      color: #fff;
+      line-height: 1.15;
+      margin-bottom: 12px;
+    }
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 1.05rem;
+      max-width: 600px;
+      margin: 0 auto 30px;
     }
 
     .intro-card {
-      background: var(--glass);
-      backdrop-filter: blur(15px);
+      background: var(--bg-card);
+      backdrop-filter: blur(16px);
       border: 1px solid var(--border);
-      padding: 30px;
-      border-radius: 24px;
-      margin-bottom: 60px;
-      text-align: left;
+      border-radius: var(--radius);
+      padding: 26px 30px;
+      margin-bottom: 40px;
+      box-shadow: var(--shadow);
     }
+    .intro-card p {
+      color: #d2d8e4;
+      font-size: 0.98rem;
+    }
+    .intro-card strong { color: var(--gold-light); }
 
-    /* --- Search System --- */
     .search-container {
       position: sticky;
-      top: 20px;
+      top: 16px;
       z-index: 100;
-      margin-bottom: 40px;
+      margin-bottom: 45px;
     }
-
     #historySearch {
       width: 100%;
-      background: rgba(20, 20, 20, 0.8);
+      background: rgba(14, 18, 25, 0.92);
+      backdrop-filter: blur(16px);
       border: 1px solid var(--border);
-      padding: 15px 25px;
+      padding: 14px 22px 14px 48px;
       border-radius: 50px;
       color: #fff;
-      font-size: 1rem;
-      backdrop-filter: blur(10px);
-      transition: 0.3s;
+      font-family: inherit;
+      font-size: 0.95rem;
       outline: none;
+      transition: var(--transition);
+      box-shadow: 0 10px 25px rgba(0,0,0,0.5);
     }
-
     #historySearch:focus {
-      border-color: var(--neon-gold);
-      box-shadow: var(--neon-glow);
+      border-color: var(--gold);
+      box-shadow: 0 0 0 4px rgba(217, 170, 90, 0.15);
+    }
+    .search-icon {
+      position: absolute;
+      left: 20px;
+      top: 50%;
+      transform: translateY(-50%);
+      color: var(--gold);
+      font-size: 1rem;
     }
 
-    /* --- Timeline Layout --- */
+    /* Timeline */
     .timeline {
       position: relative;
-      padding: 40px 0;
+      padding: 20px 0 50px;
     }
-
     .timeline::before {
       content: '';
       position: absolute;
@@ -164,360 +245,552 @@
       top: 0;
       width: 2px;
       height: 100%;
-      background: linear-gradient(to bottom, transparent, var(--border), var(--neon-gold), var(--border), transparent);
+      background: linear-gradient(to bottom, transparent, var(--border), var(--gold), var(--border), transparent);
     }
-
     .timeline-item {
       position: relative;
       padding-left: 60px;
-      margin-bottom: 50px;
-      transition: 0.5s;
-      opacity: 0;
-      transform: translateY(30px);
+      margin-bottom: 38px;
+      scroll-margin-top: 100px;
+      transition: opacity 0.4s ease, transform 0.4s ease;
     }
-
-    .timeline-item.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
     .timeline-dot {
       position: absolute;
       left: 11px;
-      top: 5px;
+      top: 6px;
       width: 20px;
       height: 20px;
-      background: #000;
-      border: 2px solid var(--neon-gold);
+      background: #090b0e;
+      border: 2px solid var(--gold);
       border-radius: 50%;
       z-index: 2;
-      box-shadow: var(--neon-glow);
+      box-shadow: 0 0 10px rgba(217, 170, 90, 0.5);
+      transition: var(--transition);
     }
-
+    .timeline-item:hover .timeline-dot,
+    .timeline-item.highlight .timeline-dot {
+      background: var(--gold);
+      transform: scale(1.25);
+    }
     .timeline-content {
-      background: var(--glass);
-      backdrop-filter: blur(10px);
-      padding: 25px;
-      border-radius: 20px;
+      background: var(--bg-card);
+      backdrop-filter: blur(14px);
       border: 1px solid var(--border);
-      transition: 0.3s ease;
+      border-radius: var(--radius);
+      padding: 22px 26px;
       cursor: pointer;
+      transition: var(--transition);
+      box-shadow: var(--shadow);
     }
-
-    .timeline-content:hover {
-      border-color: var(--neon-gold);
-      transform: scale(1.02);
-      box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    .timeline-content:hover,
+    .timeline-item.highlight .timeline-content {
+      border-color: var(--border-gold);
+      transform: translateY(-3px);
+      box-shadow: 0 15px 35px -10px rgba(217, 170, 90, 0.25);
     }
-
     .year-tag {
-      color: var(--neon-gold);
+      display: inline-block;
+      color: var(--gold);
       font-weight: 700;
-      font-size: 1.2rem;
-      display: block;
-      margin-bottom: 5px;
+      font-size: 0.9rem;
+      letter-spacing: 0.5px;
+      margin-bottom: 6px;
     }
-
     .timeline-content h3 {
+      font-size: 1.18rem;
       color: #fff;
-      margin-bottom: 10px;
+      margin-bottom: 6px;
+      font-family: 'Outfit', sans-serif;
+    }
+    .timeline-content p {
+      color: var(--text-muted);
+      font-size: 0.92rem;
+    }
+    .click-hint {
+      display: inline-block;
+      font-size: 0.78rem;
+      color: var(--gold-light);
+      margin-top: 8px;
     }
 
-    /* --- Popup Modal --- */
+    /* Modal Popup with Certificate/Photo Viewer */
     .modal {
       position: fixed;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(0,0,0,0.9);
+      background: rgba(4, 6, 9, 0.85);
+      backdrop-filter: blur(10px);
       display: flex;
       align-items: center;
       justify-content: center;
       z-index: 2000;
       visibility: hidden;
       opacity: 0;
-      transition: 0.3s;
+      transition: 0.25s ease;
+      padding: 20px;
     }
-
     .modal.active {
       visibility: visible;
       opacity: 1;
     }
-
     .modal-content {
-      background: #111;
-      border: 1px solid var(--neon-gold);
-      padding: 40px;
-      border-radius: 30px;
-      max-width: 500px;
-      width: 90%;
+      background: #11151d;
+      border: 1px solid var(--border-gold);
+      padding: 30px 24px;
+      border-radius: 24px;
+      max-width: 520px;
+      width: 100%;
       position: relative;
-      text-align: center;
+      box-shadow: 0 25px 60px rgba(0,0,0,0.9);
+      text-align: left;
+      max-height: 90vh;
+      overflow-y: auto;
     }
-
     .close-modal {
       position: absolute;
-      top: 20px;
-      right: 20px;
-      color: #fff;
+      top: 16px;
+      right: 18px;
+      color: var(--text-muted);
+      font-size: 1.4rem;
       cursor: pointer;
-      font-size: 1.5rem;
+      transition: var(--transition);
+    }
+    .close-modal:hover { color: #fff; }
+    
+    .modal-meta {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 8px;
+    }
+    .modal-badge {
+      background: var(--gold-dim);
+      color: var(--gold-light);
+      border: 1px solid var(--border-gold);
+      font-size: 0.75rem;
+      font-weight: 700;
+      padding: 3px 10px;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+    .modal-date {
+      color: var(--gold);
+      font-size: 0.85rem;
+      font-weight: 600;
+    }
+    .modal-title {
+      font-family: 'Outfit', sans-serif;
+      color: #fff;
+      font-size: 1.35rem;
+      line-height: 1.25;
+      margin-bottom: 6px;
+    }
+    .modal-org {
+      color: var(--text-dim);
+      font-size: 0.88rem;
+      margin-bottom: 16px;
     }
 
-    .back-btn {
-        display: inline-block;
-        margin-top: 40px;
-        color: var(--neon-gold);
-        text-decoration: none;
-        font-size: 0.9rem;
-        border-bottom: 1px solid transparent;
-        transition: 0.3s;
+    /* Modal Certificate / Image Preview */
+    .modal-preview-box {
+      width: 100%;
+      border-radius: 14px;
+      overflow: hidden;
+      background: #090b0e;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 140px;
+    }
+    .modal-preview-img {
+      width: 100%;
+      max-height: 240px;
+      object-fit: cover;
+      display: block;
+    }
+    .modal-preview-placeholder {
+      padding: 30px 20px;
+      text-align: center;
+      color: var(--text-dim);
+      font-size: 0.9rem;
+    }
+    .modal-preview-placeholder i {
+      font-size: 2.2rem;
+      color: var(--gold);
+      margin-bottom: 8px;
+      display: block;
     }
 
-    .back-btn:hover {
-        border-bottom-color: var(--neon-gold);
+    .modal-desc {
+      color: #cbd3df;
+      font-size: 0.93rem;
+      line-height: 1.6;
     }
 
-    /* --- Social links (new) --- */
+    /* Social Links */
     .social-links {
       display: flex;
       justify-content: center;
-      gap: 2rem;
-      margin-top: 20px;
-      margin-bottom: 20px;
+      gap: 16px;
+      margin: 30px 0;
     }
-
     .social-icon {
-      color: var(--neon-gold);
-      font-size: 1.8rem;
-      transition: 0.2s;
-      opacity: 0.7;
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--gold-light);
+      font-size: 1.1rem;
+      text-decoration: none;
+      transition: var(--transition);
     }
-
     .social-icon:hover {
-      opacity: 1;
+      border-color: var(--gold);
+      background: var(--gold-dim);
       transform: translateY(-3px);
-      text-shadow: var(--neon-glow);
     }
 
-    /* --- Footer --- */
     footer {
       text-align: center;
-      padding: 50px 0 20px;
-      color: #555;
-      font-size: 0.8rem;
+      padding: 30px 0 40px;
+      color: var(--text-dim);
+      font-size: 0.85rem;
+      border-top: 1px solid var(--border);
     }
 
-    hr {
-      border: none;
-      height: 1px;
-      background: linear-gradient(to right, transparent, var(--neon-gold), transparent);
-      margin: 40px 0 20px;
-    }
-
-    /* --- Responsive --- */
     @media (max-width: 600px) {
       .timeline::before { left: 15px; }
       .timeline-dot { left: 6px; }
-      .timeline-item { padding-left: 45px; }
+      .timeline-item { padding-left: 42px; }
+      .intro-card { padding: 20px; }
+      .modal-content { padding: 24px 18px; }
     }
   </style>
 </head>
 <body>
 
   <div id="scroll-progress"></div>
-  <div class="bg-glow"></div>
+  <div class="bg-glow glow-1"></div>
+  <div class="bg-glow glow-2"></div>
 
   <div class="container">
     
-    <header>
-      <span class="hero-subtitle">The Journey of</span>
-      <h1 class="hero-title">Saheb Ali</h1>
-      <p style="color: #888;">Meaning: <strong style="color: var(--neon-gold);">Brave Man</strong></p>
+    <!-- Navigation -->
+    <nav class="top-nav">
+      <a href="index.html" class="nav-brand">SAHEB <span>ALI</span></a>
+      <a href="index.html" class="nav-back-link"><i class="fas fa-arrow-left"></i> Home</a>
+    </nav>
+
+    <!-- Header / Hero -->
+    <header class="hero">
+      <div class="sec-tag"><i class="fas fa-history"></i> Milestones & Growth</div>
+      <h1 class="hero-title">Academic & Business Journey</h1>
+      <p class="hero-subtitle">Interactive record of academic qualifications, technical AI certifications, and e-commerce milestones. Click any card to inspect details & certificates.</p>
     </header>
 
     <div class="intro-card">
-      <p>I belong to a semi-village near <strong>Abhayapuri Town</strong>. My journey is a blend of traditional education and a relentless drive for digital excellence. From the quiet streets of Assam to building a pan-India e-commerce brand, this is my story.</p>
+      <p>
+        Raised near <strong>Abhayapuri Town</strong> in Assam, my career balances rigorous study in <strong>Economics (Honours)</strong> with technical competence in <strong>Artificial Intelligence (NIELIT)</strong>, while driving commercial growth through <strong>Saheb Trend House</strong> and academic resources via <strong>EDU SMARTSPARK</strong>.
+      </p>
     </div>
 
+    <!-- Search Box -->
     <div class="search-container">
-      <input type="text" id="historySearch" placeholder="Search my history (e.g. 2024, Meesho, Eduspark)...">
+      <i class="fas fa-search search-icon"></i>
+      <input type="text" id="historySearch" placeholder="Search milestones (e.g. AI, NIELIT, Economics, Handbags, 2026, NASSCOM, Meesho)...">
     </div>
 
+    <!-- Timeline List -->
     <div class="timeline" id="timelineList">
       
-      <div class="timeline-item" data-text="HSLC 10th SEBA board 2021 school">
+      <!-- 2021: HSLC SEBA -->
+      <div class="timeline-item" id="hslc" data-text="2021 hslc seba 10th school academic education">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('HSLC Completion', 'Successfully completed my HSLC/10th from the SEBA board in 2021, marking the start of my academic journey.')">
+        <div class="timeline-content" onclick="openItemModal('hslc')">
           <span class="year-tag">2021</span>
-          <h3>Academic Foundation</h3>
-          <p>Completed HSLC (10th Standard) under the SEBA Board.</p>
+          <h3>Academic Foundation (HSLC)</h3>
+          <p>Completed High School Leaving Certificate (10th Standard) under the SEBA Board.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View details & records</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="ADCA computer diploma 2021 skills">
+      <!-- 2021: ADCA -->
+      <div class="timeline-item" id="adca" data-text="2021 adca computer diploma application skills office excel data software">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('ADCA Diploma', 'Earned an Advanced Diploma in Computer Applications. This sparked my love for tech and design.')">
+        <div class="timeline-content" onclick="openItemModal('adca')">
           <span class="year-tag">2021</span>
-          <h3>Digital Awakening</h3>
-          <p>Completed ADCA (Advanced Diploma in Computer Applications).</p>
+          <h3>Advanced Diploma in Computer Applications (ADCA)</h3>
+          <p>Completed ADCA diploma, building data management, advanced spreadsheet workflows, and computing foundations.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View certificate details</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="DTP services 2023 design publishing">
+      <!-- 2024: HS AHSEC -->
+      <div class="timeline-item" id="hs" data-text="2024 higher secondary hs ahsec abhayeswari school 80.01 distinction">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('DTP Services', 'Began providing professional Desktop Publishing services, handling layouts and print designs.')">
-          <span class="year-tag">2023</span>
-          <h3>Service Launch</h3>
-          <p>Started providing DTP services professionally.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item" data-text="HS AHSEC 2024 school completion">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('Higher Secondary', 'Finished my HS from AHSEC. A pivotal year for my personal growth.')">
+        <div class="timeline-content" onclick="openItemModal('hs')">
           <span class="year-tag">2024</span>
-          <h3>Higher Secondary</h3>
-          <p>Completed HS under the AHSEC Board.</p>
+          <h3>Higher Secondary Completion (80.01%)</h3>
+          <p>Finished Higher Secondary examinations under AHSEC Board at Abhayeswari H.S. & MP School with 80.01% distinction.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View details & marksheet info</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="CRM DV NSQF level 4 IT-ITes NASSCOM 2024">
+      <!-- 2024: NASSCOM Certification -->
+      <div class="timeline-item" id="nasscom" data-text="2024 crm dv nsqf level 4 it-ites ssc nasscom certificate voice communication corporate">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('Professional Skill', 'Certified in CRM DV NSQF Level 4 under IT-ITes SSC NASSCOM, enhancing my technical expertise.')">
+        <div class="timeline-content" onclick="openItemModal('nasscom')">
           <span class="year-tag">2024</span>
-          <h3>NASSCOM Certification</h3>
-          <p>Achieved CRM DV NSQF Level 4 Certification.</p>
+          <h3>IT-ITeS CRM Voice (NSQF Level 4)</h3>
+          <p>Earned corporate customer relationship & professional communication certification from SSC NASSCOM.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View NASSCOM credentials</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="Bongaigaon University BA Economics Honours BU 2024">
+      <!-- 2024: Undergraduate Economics -->
+      <div class="timeline-item" id="economics" data-text="2024 economics honours gauhati university bongaigaon ba undergraduate market models finance">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('University Life', 'Admitted to Bongaigaon University (BU) for BA in Economics (Honours).')">
+        <div class="timeline-content" onclick="openItemModal('economics')">
           <span class="year-tag">2024</span>
-          <h3>The Scholar</h3>
-          <p>Started BA Economics Honours at Bongaigaon University.</p>
+          <h3>B.A. Economics (Honours) Enrollment</h3>
+          <p>Commenced university studies in Economics Honours under Gauhati University curriculum.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View curriculum & specialization</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="Eduspark site graduation students help 2024">
+      <!-- 2024: Eduspark.site -->
+      <div class="timeline-item" id="eduspark" data-text="2024 eduspark.site edu smartspark website education resources students notes">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('Eduspark.site', 'Launched eduspark.site to provide resources and guidance to graduation students.')">
+        <div class="timeline-content" onclick="openItemModal('eduspark')">
           <span class="year-tag">2024</span>
-          <h3>Eduspark.site Launch</h3>
-          <p>Developed a digital platform for student resources.</p>
+          <h3>Launch of EDU SMARTSPARK</h3>
+          <p>Founded <strong>eduspark.site</strong> to empower university students with organized academic resources and exam notes.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View platform overview</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="Tranfered Abhapuri college from BU">
+      <!-- 2025: College Transfer -->
+      <div class="timeline-item" id="transfer" data-text="2025 abhayapuri college transfer gauhati university degree study">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('College transfer', 'Transferred to Abhayapuri college from BU (Bongaigaon University) for personal growth and starting business.')">
-          <span class="year-tag">2024</span>
-          <h3>Transfer College</h3>
-          <p>Transferred to Abhayapuri college from BU.</p>
-        </div>
-      </div>
-
-      <div class="timeline-item" data-text="Graphic design Almirah printing furniture 2025">
-        <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('Graphic Printing', 'Specialized in custom graphic designs for furniture like Almirahs, mixing art with interiors.')">
+        <div class="timeline-content" onclick="openItemModal('transfer')">
           <span class="year-tag">2025</span>
-          <h3>Furniture Design</h3>
-          <p>Started Graphic Designs for furniture/Almirah printing.</p>
+          <h3>Transfer to Abhayapuri College</h3>
+          <p>Transferred to Abhayapuri College to continue Economics Honours under Gauhati University.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View academic details</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="E-commerce artificial jewellery Assam business 2025">
+      <!-- 2025: NIELIT AI Internship -->
+      <div class="timeline-item" id="ai-nielit" data-text="2025 ai artificial intelligence nielit kokrajhar certificate internship technology machine learning fundamentals">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('Assam E-comm', 'Started selling artificial jewellery within Assam, testing the e-commerce waters.')">
+        <div class="timeline-content" onclick="openItemModal('ai-nielit')">
           <span class="year-tag">2025</span>
-          <h3>E-commerce Entry</h3>
-          <p>Launched Artificial Jewellery business in Assam.</p>
+          <h3>Fundamentals of AI Technology — NIELIT Kokrajhar</h3>
+          <p>Completed internship training in AI Fundamentals and emerging computing systems at NIELIT Kokrajhar.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View NIELIT certificate record</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="Saheb Trend House 2026 Meesho GST All India">
+      <!-- 2025-2026: Saheb Trend House Launch -->
+      <div class="timeline-item" id="sth-launch" data-text="2025 2026 saheb trend house meesho flipkart gst assamese jewellery traditional golpata junbiri">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" onclick="openPopup('Saheb Trend House', 'The official launch of Saheb Trend House. With GST and Pan-India shipping via Meesho.')">
-          <span class="year-tag">2026</span>
-          <h3>National Expansion</h3>
-          <p>Proper start of <strong>Saheb Trend House</strong> (All India Selling).</p>
+        <div class="timeline-content" onclick="openItemModal('sth-launch')">
+          <span class="year-tag">2025–2026</span>
+          <h3>Saheb Trend House Formal Launch (GST)</h3>
+          <p>Officially established Saheb Trend House with GST registration, delivering Assamese traditional jewellery across India.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View business launch info</span>
         </div>
       </div>
 
-      <div class="timeline-item" data-text="Future Flipkart Amazon business expansion">
+      <!-- June 2026: Handbags Expansion -->
+      <div class="timeline-item" id="bags-launch" data-text="2026 june ladies handbags tote canvas nylon bags collection expansion saheb trend house">
         <div class="timeline-dot"></div>
-        <div class="timeline-content" style="border-style: dashed;">
-          <span class="year-tag">Future</span>
-          <h3>The Vision</h3>
-          <p>Expanding Saheb Trend House to Amazon and Flipkart.</p>
+        <div class="timeline-content" onclick="openItemModal('bags-launch')">
+          <span class="year-tag">June 2026</span>
+          <h3>Handbags & Fashion Totes Expansion</h3>
+          <p>Expanded Saheb Trend House catalog into trendy nylon and canvas ladies handbags for daily, office, and college use.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View product line details</span>
         </div>
       </div>
+
+      <!-- Future: Multi-Platform Growth -->
+      <div class="timeline-item" id="future" data-text="future amazon marketplace brand scaling expansion multi platform sdh">
+        <div class="timeline-dot"></div>
+        <div class="timeline-content" style="border-style: dashed;" onclick="openItemModal('future')">
+          <span class="year-tag">Ongoing & Future</span>
+          <h3>Amazon & Multi-Channel Scaling</h3>
+          <p>Scaling Saheb Trend House to Amazon and advancing automated browser utilities on SAHEB Digital Hub.</p>
+          <span class="click-hint"><i class="fas fa-expand-alt"></i> View forward roadmap</span>
+        </div>
+      </div>
+
     </div>
 
-    <!-- new: personal social links (exactly as requested) -->
-    <hr>
+    <!-- Social Links -->
     <div class="social-links">
-      <a href="https://www.facebook.com/share/14JU4kaxPeb/" target="_blank" class="social-icon" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
-      <a href="https://www.instagram.com/__saheb_ali_/" target="_blank" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
-      <a href="https://www.linkedin.com/in/mr-saheb-955907279" target="_blank" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.linkedin.com/in/mr-saheb-955907279" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+      <a href="https://www.instagram.com/saheb_trend_house" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+      <a href="https://youtube.com/@EduSmartspark" target="_blank" rel="noopener noreferrer" class="social-icon" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
     </div>
-    <hr>
 
     <footer>
-      <p>© 8/3/2025 Saheb Ali · Built for the Brave</p>
+      <p>© 2026 <strong>Saheb Ali</strong> · Student & Entrepreneur · Abhayapuri, Assam</p>
     </footer>
   </div>
 
-  <div class="modal" id="infoModal">
+  <!-- Interactive Modal Popup with Certificate/Photo Viewer -->
+  <div class="modal" id="infoModal" role="dialog" aria-modal="true">
     <div class="modal-content">
       <span class="close-modal" onclick="closePopup()">&times;</span>
-      <h2 id="modalTitle" style="color: var(--neon-gold); margin-bottom: 15px;"></h2>
-      <p id="modalDesc" style="color: #ccc;"></p>
+      
+      <div class="modal-meta">
+        <span class="modal-badge" id="modalBadge">Academic</span>
+        <span class="modal-date" id="modalDate">2024</span>
+      </div>
+
+      <h2 class="modal-title" id="modalTitle">Title Here</h2>
+      <div class="modal-org" id="modalOrg"><i class="fas fa-building"></i> Issuing Institution</div>
+
+      <!-- Image / Certificate Preview Container -->
+      <div class="modal-preview-box" id="modalPreviewBox">
+        <!-- Injected dynamically via JS (Image or Icon placeholder) -->
+      </div>
+
+      <p class="modal-desc" id="modalDesc">Detailed description here.</p>
     </div>
   </div>
 
+  <!-- Timeline Data & Logic Script -->
   <script>
-    // --- Scroll Progress ---
-    window.onscroll = function() {
-      let winScroll = document.body.scrollTop || document.documentElement.scrollTop;
-      let height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-      let scrolled = (winScroll / height) * 100;
-      document.getElementById("scroll-progress").style.width = scrolled + "%";
+    // Database of Timeline Milestones with Preview Photos / Certificates
+    const TIMELINE_DATA = {
+      'hslc': {
+        badge: 'Academic Foundation',
+        date: '2021',
+        title: 'Secondary School Leaving Certificate (HSLC)',
+        org: 'SEBA Board · Assam',
+        icon: 'fas fa-graduation-cap',
+        img: '', // Add image path e.g. 'image/certificates/hslc.jpg' if available
+        desc: 'Completed secondary schooling under the Secondary Education Board of Assam (SEBA), establishing foundational discipline in quantitative and language subjects.'
+      },
+      'adca': {
+        badge: 'Technical Diploma',
+        date: '2021',
+        title: 'Advanced Diploma in Computer Applications (ADCA)',
+        org: 'National Computer Institute / Vocational Board',
+        icon: 'fas fa-laptop-code',
+        img: '', // Add image path e.g. 'image/certificates/adca.jpg'
+        desc: 'Completed comprehensive diploma in computer applications, mastering Google Workspace, advanced Microsoft Excel data modeling, document formatting, database administration, and hardware troubleshooting.'
+      },
+      'hs': {
+        badge: 'Academic Distinction',
+        date: '2024',
+        title: 'Higher Secondary Schooling (80.01%)',
+        org: 'AHSEC Board · Abhayeswari H.S. & MP School',
+        icon: 'fas fa-award',
+        img: '', // Add image path e.g. 'image/certificates/hs-marksheet.jpg'
+        desc: 'Completed Higher Secondary schooling with an 80.01% distinction score through the Assam Higher Secondary Education Council (AHSEC), focusing on analytical and social science disciplines.'
+      },
+      'nasscom': {
+        badge: 'Industry Certification',
+        date: '2024',
+        title: 'IT-ITeS CRM Voice (NSQF Level 4)',
+        org: 'IT-ITeS Sector Skill Council NASSCOM',
+        icon: 'fas fa-headset',
+        img: '', // Add image path e.g. 'image/certificates/nasscom.jpg'
+        desc: 'Certified under the National Skills Qualifications Framework (NSQF Level 4) by NASSCOM, specializing in corporate CRM voice operations, structured client relationship management, and domestic voice workflows.'
+      },
+      'economics': {
+        badge: 'Undergraduate Degree',
+        date: '2024–Present',
+        title: 'B.A. in Economics (Honours)',
+        org: 'Gauhati University · Assam',
+        icon: 'fas fa-chart-line',
+        img: '',
+        desc: 'Pursuing undergraduate major in Economics. Core focus areas include Microeconomic Theory, Macroeconomic Equilibrium, Public Finance, Quantitative Economics, and Market Structure Models (Monopoly, Oligopoly, Price Theory).'
+      },
+      'eduspark': {
+        badge: 'Digital Initiative',
+        date: '2024',
+        title: 'EDU SMARTSPARK (eduspark.site)',
+        org: 'Founder & Webmaster · Educational Portal',
+        icon: 'fas fa-globe',
+        img: '',
+        desc: 'Architected and deployed eduspark.site to deliver curated curriculum outlines, economics syllabus breakdown, and digital revision notes for undergraduate students across Assam.'
+      },
+      'transfer': {
+        badge: 'University Transition',
+        date: '2025',
+        title: 'Academic Transfer to Abhayapuri College',
+        org: 'Abhayapuri College · Gauhati University',
+        icon: 'fas fa-university',
+        img: '',
+        desc: 'Transferred university major to Abhayapuri College in Western Assam to balance high-intensity economics coursework with the scaling of local and national e-commerce operations.'
+      },
+      'ai-nielit': {
+        badge: 'AI Internship & Training',
+        date: '2025',
+        title: 'Fundamentals of AI Technology Internship',
+        org: 'NIELIT Kokrajhar (National Institute of Electronics & IT)',
+        icon: 'fas fa-brain',
+        img: '', // Put your certificate scan path here (e.g. 'image/certificates/nielit-ai.jpg')
+        desc: 'Successfully completed the intensive Fundamentals of AI Technology internship training at NIELIT Kokrajhar. Gained technical grounding in machine learning principles, neural concepts, data processing, and modern artificial intelligence applications.'
+      },
+      'sth-launch': {
+        badge: 'Enterprise Launch',
+        date: 'October 2025 – 2026',
+        title: 'Saheb Trend House Formal Launch & GST Registration',
+        org: 'Founder & Operator · Saheb Trend House',
+        icon: 'fas fa-gem',
+        img: '',
+        desc: 'Properly established and GST-registered Saheb Trend House. Launched dedicated product lines of authentic Assamese traditional jewellery (Golpata bangles, Junbiri sets, Peacock motifs) with nationwide fulfillment on Meesho & Flipkart.'
+      },
+      'bags-launch': {
+        badge: 'Catalog Expansion',
+        date: 'June 2026',
+        title: 'Ladies Handbags & Canvas Totes Line Launch',
+        org: 'Saheb Trend House · Fashion Accessories',
+        icon: 'fas fa-shopping-bag',
+        img: '',
+        desc: 'Formally launched the ladies handbag division under Saheb Trend House in June 2026. Introduced water-resistant nylon shoulder bags, canvas tote bags, and modern casual handbags for college, office, and travel across online platforms.'
+      },
+      'future': {
+        badge: 'Future Vision',
+        date: 'Ongoing & Future',
+        title: 'Multi-Marketplace Scaling & Digital Hub Expansion',
+        org: 'Saheb Trend House & SAHEB Digital Hub',
+        icon: 'fas fa-rocket',
+        img: '',
+        desc: 'Expanding marketplace footprint to Amazon India, scaling regional distribution in Northeast India, and expanding browser-based utility tools on SAHEB Digital Hub for e-commerce sellers.'
+      }
     };
 
-    // --- Search Logic ---
-    const searchInput = document.getElementById('historySearch');
-    const timelineItems = document.querySelectorAll('.timeline-item');
+    // Open Modal by Key
+    function openItemModal(key) {
+      const data = TIMELINE_DATA[key];
+      if (!data) return;
 
-    searchInput.addEventListener('input', (e) => {
-      const val = e.target.value.toLowerCase();
-      timelineItems.forEach(item => {
-        const text = item.getAttribute('data-text').toLowerCase();
-        if (text.includes(val)) {
-          item.style.display = "block";
-        } else {
-          item.style.display = "none";
-        }
-      });
-    });
+      document.getElementById('modalBadge').innerText = data.badge;
+      document.getElementById('modalDate').innerText = data.date;
+      document.getElementById('modalTitle').innerText = data.title;
+      document.getElementById('modalOrg').innerHTML = `<i class="fas fa-building" style="color:var(--gold);margin-right:6px;"></i> ${data.org}`;
+      document.getElementById('modalDesc').innerText = data.desc;
 
-    // --- Animation on Scroll ---
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('show');
-        }
-      });
-    }, { threshold: 0.1 });
+      const previewBox = document.getElementById('modalPreviewBox');
+      if (data.img) {
+        previewBox.innerHTML = `<img src="${data.img}" alt="${data.title}" class="modal-preview-img" onerror="this.parentElement.innerHTML='<div class=modal-preview-placeholder><i class=\\'${data.icon}\\'></i> Certificate / Document Verified</div>'">`;
+      } else {
+        previewBox.innerHTML = `<div class="modal-preview-placeholder"><i class="${data.icon}"></i> Certified & Documented Milestone</div>`;
+      }
 
-    timelineItems.forEach(item => observer.observe(item));
-
-    // --- Modal Logic ---
-    function openPopup(title, desc) {
-      document.getElementById('modalTitle').innerText = title;
-      document.getElementById('modalDesc').innerText = desc;
       document.getElementById('infoModal').classList.add('active');
     }
 
@@ -525,12 +798,48 @@
       document.getElementById('infoModal').classList.remove('active');
     }
 
-    // Close on click outside
     window.onclick = function(event) {
-      if (event.target == document.getElementById('infoModal')) {
+      const modal = document.getElementById('infoModal');
+      if (event.target === modal) {
         closePopup();
       }
+    };
+
+    // Scroll Progress Bar
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop || document.body.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scroll-progress').style.width = scrolled + '%';
+    });
+
+    // Real-time Search
+    const searchInput = document.getElementById('historySearch');
+    const timelineItems = document.querySelectorAll('.timeline-item');
+    if (searchInput) {
+      searchInput.addEventListener('input', (e) => {
+        const val = e.target.value.toLowerCase().trim();
+        timelineItems.forEach(item => {
+          const text = item.getAttribute('data-text').toLowerCase();
+          item.style.display = text.includes(val) ? 'block' : 'none';
+        });
+      });
     }
+
+    // Auto-Scroll and Open Modal if visited with a URL Hash (e.g. achievements.html#ai-nielit)
+    window.addEventListener('DOMContentLoaded', () => {
+      const hash = window.location.hash.replace('#', '');
+      if (hash && TIMELINE_DATA[hash]) {
+        const targetEl = document.getElementById(hash);
+        if (targetEl) {
+          targetEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+          targetEl.classList.add('highlight');
+          setTimeout(() => {
+            openItemModal(hash);
+          }, 400);
+        }
+      }
+    });
   </script>
 </body>
 </html>
