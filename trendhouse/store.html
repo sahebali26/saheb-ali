@@ -479,8 +479,34 @@ const MEESHO = 'https://www.meesho.com/SahebTrendHouse?ms=2';
 
 // ── HARDCODED PRODUCTS (fallback + initial display) ──
 const PRODS = [
+    {
+    id:'P-B1 Hey Sweaty Black',
+    name:'Hey Sweaty Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Black',
+    sn:'Nylon Tote Bag (Black)', price:249, mrp:499, rat:4.2, rev:18,
+    cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
+    metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
+    sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
+    color:'Black', material:'Nylon', origin:'India', newArrival:true,
+    murl:'https://www.meesho.com/women-black-tote-bag-stylish-handbag-for-girls-office-college-daily-use-printed-shoulder-bag-with-front-pocket/p/hrpvn7?ms=2&source=Meri+Shopping+App&pid=product&productId=hrpvn7',
+    desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+    imgs:['https://images.meesho.com/images/products/1074482035/hjjw7_512.avif?width=512','https://images.meesho.com/images/products/1074482035/eb8xn_512.avif?width=512','https://images.meesho.com/images/products/1074482035/fcwjr_512.avif?width=512','https://images.meesho.com/images/products/1074482035/zdpuf_512.avif?width=512'],
+    sizes:['One Size'], vis:true
+  },
   {
-    id:'P1 KHARU-GOLD 01', name:'Assamese Traditional Jewellery Golpata Set for Women & Girls',
+    id:'P-B2 Hey Sweaty Grey',
+    name:'Hey Sweaty Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Grey',
+    sn:'Nylon Tote Bag (Grey)', price:249, mrp:499, rat:4.2, rev:18,
+    cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
+    metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
+    sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
+    color:'Black', material:'Nylon', origin:'India', newArrival:true,
+    murl:'https://www.meesho.com/hey-sweaty-grey-bag-for-women-girls-fashionable-daily-use-handbag-casual-shoulder-bag-lightweight-nylon-ladies-purse-office-college-shopping-bag/p/hlu4x3?ms=2&source=Meri+Shop',
+    desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+    imgs:['https://images.meesho.com/images/products/1064602983/ax8h4_512.avif?width=512','https://images.meesho.com/images/products/1064602983/zlabw_512.avif?width=512','https://images.meesho.com/images/products/1064602983/cyoc0_512.avif?width=512','https://images.meesho.com/images/products/1064602983/ku5wo_512.avif?width=512'],
+    sizes:['One Size'], vis:true
+  },
+  {
+    id:'P-Kh1 KHARU-GOLD 01', name:'Assamese Traditional Jewellery Golpata Set for Women & Girls',
     sn:'Golpata Bangle Set', price:435, mrp:799, rat:4.1, rev:40,
     cat:'Bangles', occ:'Bihu, Wedding, Ethnic Party', type:'Kangan (Bangle)',
     metal:'Brass', plating:'Gold Plated', stone:'No Stone', qty:'2 Pieces',
@@ -492,7 +518,7 @@ const PRODS = [
     sizes:['2.2 cm','2.4 cm','2.6 cm','2.8 cm'], vis:true
   },
   {
-    id:'P2 NECKLACE RED SUNFLOWER', name:'Assamese Traditional Jewellery Set – Floral Necklace & Earrings',
+    id:'P-NK1 NECKLACE RED SUNFLOWER', name:'Assamese Traditional Jewellery Set – Floral Necklace & Earrings',
     sn:'Floral Necklace Set', price:278, mrp:500, rat:4.5, rev:54,
     cat:'Jewellery Set', occ:'Bihu, Wedding, Cultural Events', type:'Necklace and Earrings',
     metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
@@ -503,7 +529,7 @@ const PRODS = [
     sizes:['Free Size'], vis:true
   },
   {
-    id:'P3 NECKLACE PEACOCK', name:'Assamese Traditional Jewellery Set – Peacock Necklace & Earrings',
+    id:'P-NK2 NECKLACE PEACOCK', name:'Assamese Traditional Jewellery Set – Peacock Necklace & Earrings',
     sn:'Peacock Necklace Set', price:311, mrp:560, rat:4.3, rev:28,
     cat:'Jewellery Set', occ:'Bihu, Wedding, Festive', type:'Necklace and Earrings',
     metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
@@ -514,7 +540,7 @@ const PRODS = [
     sizes:['Free Size'], vis:true
   },
   {
-    id:'P4 NECKLACE JUNBIRI', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
+    id:'P-NK3 NECKLACE JUNBIRI', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
     sn:'Junbiri Necklace Set', price:317, mrp:570, rat:4.0, rev:6,
     cat:'Jewellery Set', occ:'Bihu, Cultural Programs, Weddings', type:'Necklace and Earrings',
     metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
@@ -525,69 +551,34 @@ const PRODS = [
     sizes:['Free Size'], vis:true
   },
   {
-    id:'P5 BAG HELLO BEAUTIFUL',
+    id:'P-B3 BAG HELLO BEAUTIFUL',
     name:'Hello Beautiful Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Black',
     sn:'Nylon Tote Bag (Black)', price:249, mrp:499, rat:4.2, rev:18,
     cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
     metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
     sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
-    color:'Black', material:'Nylon', origin:'India', newArrival:true,
+    color:'Black', material:'Nylon', origin:'India', newArrival:false,
     murl:'https://www.meesho.com/hello-beautiful-womens-tote-bag-for-women-stylish-nylon-handbag-daily-use-shoulder-bag-for-girls-large-capacity-tote-purse-simple-hand-bag-for-women-black/p/fw4h3m?ms=2',
     desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
-    imgs:['https://images.meesho.com/images/products/969018456/qyjq4_512.webp','https://images.meesho.com/images/products/969018456/f1hij_512.webp','https://images.meesho.com/images/products/969018456/97kjw_512.webp','https://images.meesho.com/images/products/969018456/grqew_512.webp'],
+    imgs:['https://images.meesho.com/images/products/960949138/qhtsw_512.avif?width=512','https://images.meesho.com/images/products/969018456/f1hij_512.webp','https://images.meesho.com/images/products/969018456/97kjw_512.webp','https://images.meesho.com/images/products/969018456/grqew_512.webp'],
     sizes:['One Size'], vis:true
   },
     {
-    id:'P6 Tote Grey Charm',
-    name:'Korean Style Canvas girl\'s Tote Bag – Stylish canvas Handbag, Large Capacity, Daily Use, Grey',
+    id:'P-B4 Rabbit Love Teal',
+    name:'Rabbit Love Teal – Korean Style Canvas girl\'s Tote Bag – Stylish canvas Handbag, Large Capacity, Daily Use, Teal',
     sn:'Nylon Tote Bag (Black)', price:311, mrp:899, rat:4.2, rev:18,
     cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
     metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
     sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
-    color:'Grey', material:'Canvas', origin:'India', newArrival:true,
-    murl:'https://www.meesho.com/rabbit-tote-bag-for-women--girls--korean-handbag--large-capacity-canvas-handbag-for-women--stylish-tote-bag-for-women--cute-shoulder-bag-for-college-office--travel/p/fvf15w?_ms=1.2',
+    color:'Teal', material:'Canvas', origin:'India', newArrival:true,
+    murl:'https://www.meesho.com/SahebTrendHouse?ms=2',
     desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
-    imgs:['https://images.meesho.com/images/products/959762084/ocdc7.avif'],
-    sizes:['One Size'], vis:false
+    imgs:['https://images.meesho.com/images/products/992213951/ogdcs.avif'],
+    sizes:['One Size'], vis:true
   },
+
   {
-    id:'P7 KHARU003-Gold-4Heart', name:'Assamese Traditional Jewellery Golpata Set for Women & Girls',
-    sn:'Golpata Bangle Set', price:435, mrp:799, rat:4.1, rev:40,
-    cat:'Bangles', occ:'Bihu, Wedding, Ethnic Party', type:'Kangan (Bangle)',
-    metal:'Brass', plating:'Gold Plated', stone:'No Stone', qty:'2 Pieces',
-    sizing:'Non-Adjustable (2.2–2.8 cm)', trend:'Gold Filigree', color:'Gold',
-    origin:'India', newArrival:true,
-    murl:'https://www.meesho.com/latest-women-bridal-bangles/p/f5kg6j?ms=2&source=Meri+Shop',
-    desc:'Celebrate Assamese heritage with this premium gold-tone bangle set. Features rich engraved designs, elegant craftsmanship, and timeless beauty. Perfect for Assamese weddings, Bihu, ethnic parties and cultural functions. Handcrafted with care, each piece reflects the rich artistry of Assam.',
-    imgs:['https://images.meesho.com/images/products/916344811/jhxgn_512.avif?width=512','https://images.meesho.com/images/products/916344811/kpi10_512.avif?width=512','https://images.meesho.com/images/products/916344811/9rgwq_512.avif?width=512'],
-    sizes:['2.6 cm'], vis:true
-  },
-  {
-    id:'P8 KHARU5-Gold-Rec_GR', name:'Assamese Traditional Jewellery Golpata Set for Women & Girls',
-    sn:'Golpata Bangle Set', price:435, mrp:799, rat:4.1, rev:40,
-    cat:'Bangles', occ:'Bihu, Wedding, Ethnic Party', type:'Kangan (Bangle)',
-    metal:'Brass', plating:'Gold Plated', stone:'No Stone', qty:'2 Pieces',
-    sizing:'Non-Adjustable (2.2–2.8 cm)', trend:'Gold Filigree', color:'Gold',
-    origin:'India', newArrival:false,
-    murl:'https://www.meesho.com/latest-women-bridal-bangles/p/f5oeim?ms=2&source=Meri+Shop',
-    desc:'Celebrate Assamese heritage with this premium gold-tone bangle set. Features rich engraved designs, elegant craftsmanship, and timeless beauty. Perfect for Assamese weddings, Bihu, ethnic parties and cultural functions. Handcrafted with care, each piece reflects the rich artistry of Assam.',
-    imgs:['https://images.meesho.com/images/products/916529278/djyjh_512.avif?width=512','https://images.meesho.com/images/products/916529278/oj2ee_512.avif?width=512','https://images.meesho.com/images/products/916529278/w51xg_512.avif?width=512'],
-    sizes:['2.6 cm'], vis:true
-  },
-  {
-    id:'P9 KHARU4-Gold-Red', name:'Assamese Traditional Jewellery Golpata Set for Women & Girls',
-    sn:'Golpata Bangle Set', price:435, mrp:799, rat:4.1, rev:40,
-    cat:'Bangles', occ:'Bihu, Wedding, Ethnic Party', type:'Kangan (Bangle)',
-    metal:'Brass', plating:'Gold Plated', stone:'No Stone', qty:'2 Pieces',
-    sizing:'Non-Adjustable (2.2–2.8 cm)', trend:'Gold Filigree', color:'Gold',
-    origin:'India', newArrival:false,
-    murl:'https://www.meesho.com/latest-women-bridal-bangles-muthi-kharu-with-red-mina-work/p/f3rwnu?ms=2&source=Meri+Shop',
-    desc:'Celebrate Assamese heritage with this premium gold-tone bangle set. Features rich engraved designs, elegant craftsmanship, and timeless beauty. Perfect for Assamese weddings, Bihu, ethnic parties and cultural functions. Handcrafted with care, each piece reflects the rich artistry of Assam.',
-    imgs:['https://images.meesho.com/images/products/913333530/wwcxa_512.avif?width=512','https://images.meesho.com/images/products/913333530/2yefm_512.avif?width=512','https://images.meesho.com/images/products/916529278/w51xg_512.avif?width=512'],
-    sizes:['2.4','2.6 cm'], vis:true
-  },
-  {
-    id:'P10 NECKLACE Peacoc Green Red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
+    id:'P-NK4 NECKLACE Peacoc Green Red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
     sn:'Junbiri Necklace Set', price:317, mrp:570, rat:4.0, rev:6,
     cat:'Jewellery Set', occ:'Bihu, Cultural Programs, Weddings', type:'Necklace and Earrings',
     metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
@@ -598,7 +589,7 @@ const PRODS = [
     sizes:['Free Size'], vis:true
   },
   {
-    id:'P11 NECKLACE square red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
+    id:'P-NK5 NECKLACE square red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
     sn:'Junbiri Necklace Set', price:250, mrp:399, rat:4.0, rev:6,
     cat:'Jewellery Set', occ:'Bihu, Cultural Programs, Weddings', type:'Necklace and Earrings',
     metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
@@ -609,7 +600,7 @@ const PRODS = [
     sizes:['Free Size'], vis:true
   },
   {
-    id:'P12 NECKLACE01 junibiri red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
+    id:'P-NK6 NECKLACE01 junibiri red', name:'Assamese Traditional Jewellery Set – Junbiri Necklace & Earrings',
     sn:'Junbiri Necklace Set', price:250, mrp:399, rat:4.0, rev:6,
     cat:'Jewellery Set', occ:'Bihu, Cultural Programs, Weddings', type:'Necklace and Earrings',
     metal:'Alloy', plating:'Gold Plated', stone:'Artificial Stones & Beads', qty:'1 Set',
@@ -620,19 +611,70 @@ const PRODS = [
     sizes:['Free Size'], vis:true
   },
   {
-    id:'P13 BAG HELLO BEAUTIFUL Olive Green',
+    id:'P-B5 BAG HELLO BEAUTIFUL Olive Green',
     name:'Hello Beautiful Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Olive Green',
     sn:'Nylon Tote Bag (Olive Green)', price:249, mrp:499, rat:4.2, rev:18,
     cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
     metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
     sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
-    color:'Olive Green', material:'Nylon', origin:'India', newArrival:true,
+    color:'Olive Green', material:'Nylon', origin:'India', newArrival:false,
     murl:'https://www.meesho.com/hello-beautiful-olive-green-hand-bage-for-girls-and-women-casual-and-simple-hand-bag-for-girls-and-women-for-college-and-office/p/g7d10y?ms=2&source=Meri+Shop',
     desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
     imgs:['https://images.meesho.com/images/products/979823986/p49xw_512.avif?width=512','https://images.meesho.com/images/products/979823986/h6p6q_512.avif?width=512','https://images.meesho.com/images/products/979823986/ycwdx_512.avif?width=512','https://images.meesho.com/images/products/979823986/z3cks_512.avif?width=512'],
     sizes:['One Size'], vis:true
   },
-
+  {
+    id:'P-B6 BAG HELLO BEAUTIFUL Purple',
+    name:'Hello Beautiful Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Purple',
+    sn:'Nylon Tote Bag (Purple)', price:249, mrp:499, rat:4.2, rev:18,
+    cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
+    metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
+    sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
+    color:'Purple', material:'Nylon', origin:'India', newArrival:false,
+    murl:'https://www.meesho.com/hello-beautiful-purple-bag-for-women-girls-fashionable-daily-use-handbag-casual-shoulder-bag-lightweight-nylon-ladies-purse-office-college-shopping-bag/p/girdgh?ms=2&source=Meri+Shop',
+    desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+    imgs:['https://images.meesho.com/images/products/998969057/1goky_512.avif?width=512','https://images.meesho.com/images/products/998969057/0rab7_512.avif?width=512','https://images.meesho.com/images/products/998969057/dup4s_512.avif?width=512','https://images.meesho.com/images/products/998969057/cttnt_512.avif?width=512'],
+    sizes:['One Size'], vis:true
+  },
+  {
+    id:'P-B7 BAG HELLO BEAUTIFUL Dark Green',
+    name:'Hello Beautiful Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Dark Green',
+    sn:'Nylon Tote Bag (Dark Green)', price:249, mrp:499, rat:4.2, rev:18,
+    cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
+    metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
+    sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
+    color:'Purple', material:'Nylon', origin:'India', newArrival:false,
+    murl:'https://www.meesho.com/hello-beautiful-dark-green-bag-for-women-girls-fashionable-daily-use-handbag-casual-shoulder-bag-lightweight-nylon-ladies-purse-office-college-shopping-bag/p/girdgj?ms=2',
+    desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+    imgs:['https://images.meesho.com/images/products/998969059/yw5zw_512.avif?width=512','https://images.meesho.com/images/products/998969059/pjdu6_512.avif?width=512','https://images.meesho.com/images/products/998969059/9ml7s_512.avif?width=512','https://images.meesho.com/images/products/998969059/pvcxu_512.avif?width=512'],
+    sizes:['One Size'], vis:true
+  },
+    {
+    id:'P-B7 BAG HELLO BEAUTIFUL Lavender',
+    name:'Hello Beautiful Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Lavender',
+    sn:'Nylon Tote Bag (Lavender)', price:249, mrp:499, rat:4.2, rev:18,
+    cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
+    metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
+    sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
+    color:'Lavender', material:'Nylon', origin:'India', newArrival:false,
+    murl:'https://www.meesho.com/hello-beautiful-lavender-bag-for-women-girls-fashionable-daily-use-handbag-casual-shoulder-bag-lightweight-nylon-ladies-purse-office-college-shopping-bag/p/girdgk?ms=2',
+    desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+    imgs:['https://images.meesho.com/images/products/998969060/pukpr_512.avif?width=512','https://images.meesho.com/images/products/998969060/yjrnb_512.avif?width=512','https://images.meesho.com/images/products/998969060/6sry8_512.avif?width=512','https://images.meesho.com/images/products/998969060/bilzv_512.avif?width=512'],
+    sizes:['One Size'], vis:true
+  },
+   {
+    id:'P-B7 BAG HELLO BEAUTIFUL Maroon',
+    name:'Hello Beautiful Women\'s Tote Bag – Stylish Nylon Handbag, Large Capacity, Daily Use, Maroon',
+    sn:'Nylon Tote Bag (Maroon)', price:249, mrp:499, rat:4.2, rev:18,
+    cat:'Handbags', occ:'Daily Use, Office, College, Travel', type:'Tote Bag',
+    metal:'N/A', plating:'N/A', stone:'N/A', qty:'1 Piece',
+    sizing:'Large (L 38 × W 10 × H 30 cm approx)', trend:'Casual Modern',
+    color:'Maroon', material:'Nylon', origin:'India', newArrival:false,
+    murl:'https://www.meesho.com/hello-beautiful-maroon-hand-bage-for-girls-and-women-casual-and-simple-hand-bag-for-girls-and-women-for-college-and-office/p/gffjmw?ms=2',
+    desc:'Spacious and stylish daily-use tote bag designed for modern women. Made from durable, water-resistant nylon with a clean minimalist look. Large interior easily holds wallet, water bottle, documents, makeup and more. Dual comfortable handles for shoulder carry. Lightweight and easy to clean. Perfect for office, college, shopping and travel.',
+    imgs:['https://images.meesho.com/images/products/993378344/yr7tp_512.avif?width=512','https://images.meesho.com/images/products/993378344/hh47y_512.avif?width=512','https://images.meesho.com/images/products/993378344/1zdls_512.avif?width=512','https://images.meesho.com/images/products/993378344/5srvd_512.avif?width=512'],
+    sizes:['One Size'], vis:true
+  },
 
 ];
 
