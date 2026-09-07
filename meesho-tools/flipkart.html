@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SAHEB DIGITAL HUB · Flipkart Label Cropper</title>
+    <!-- Font Awesome (icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #f4f7fc;
+            font-family: 'Segoe UI', Roboto, system-ui, -apple-system, sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            min-height: 100vh;
+            padding: 2rem 1rem;
+        }
+
+        /* card container */
+        .hub-card {
+            max-width: 820px;
+            width: 100%;
+            background: #ffffff;
+            border-radius: 32px;
+            box-shadow: 0 20px 40px -12px rgba(0, 20, 30, 0.25);
+            padding: 2.2rem 2.5rem;
+            transition: 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            backdrop-filter: blur(2px);
+        }
+
+        @media (max-width: 600px) {
+            .hub-card {
+                padding: 1.8rem 1.2rem;
+                border-radius: 24px;
+            }
+        }
+
+        /* header with brand */
+        .brand-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 0.5rem;
+            flex-wrap: wrap;
+        }
+
+        .brand-icon {
+            background: #0a2b4e;
+            color: white;
+            width: 48px;
+            height: 48px;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: 0 6px 12px rgba(10, 43, 78, 0.2);
+        }
+
+        .brand-title {
+            font-size: 1.9rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: #0a2b4e;
+            line-height: 1.2;
+        }
+
+        .brand-title span {
+            color: #e65c2e;
+            font-weight: 800;
+        }
+
+        .hub-sub {
+            color: #2c3e50;
+            font-size: 0.95rem;
+            border-left: 4px solid #e65c2e;
+            padding-left: 14px;
+            margin: 6px 0 16px 0;
+            background: #f0f5fe;
+            border-radius: 0 12px 12px 0;
+            padding: 10px 16px;
+            font-weight: 500;
+        }
+
+        .hub-sub i {
+            color: #e65c2e;
+            margin-right: 6px;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0a1e2f;
+            margin: 0.25rem 0 0.1rem 0;
+        }
+
+        .tagline {
+            color: #3a4e62;
+            margin-bottom: 1.8rem;
+            font-size: 1rem;
+            border-bottom: 1px solid #e9edf4;
+            padding-bottom: 1.2rem;
+        }
+
+        label {
+            font-weight: 600;
+            display: block;
+            margin-top: 8px;
+            color: #1f2a3a;
+            font-size: 0.95rem;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 14px 16px;
+            font-size: 0.95rem;
+            border: 2px dashed #cbd5e1;
+            border-radius: 20px;
+            background: #fafcff;
+            transition: 0.2s;
+            cursor: pointer;
+            margin: 4px 0 8px 0;
+        }
+
+        input[type="file"]:hover {
+            border-color: #e65c2e;
+            background: #fef8f5;
+        }
+
+        .radio-group {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 24px 32px;
+            background: #f2f6fd;
+            padding: 14px 20px;
+            border-radius: 40px;
+            margin: 14px 0 10px 0;
+        }
+
+        .radio-group label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 500;
+            margin: 0;
+            color: #1f2a3a;
+        }
+
+        .radio-group input[type="radio"] {
+            accent-color: #e65c2e;
+            width: 18px;
+            height: 18px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            width: 100%;
+            margin-top: 28px;
+            padding: 16px 22px;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: white;
+            background: #0a2b4e;
+            border: none;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 6px 14px rgba(10, 43, 78, 0.25);
+            letter-spacing: 0.3px;
+        }
+
+        .btn-primary i {
+            margin-right: 10px;
+        }
+
+        .btn-primary:hover {
+            background: #123f66;
+            transform: scale(1.01);
+            box-shadow: 0 8px 20px rgba(10, 43, 78, 0.35);
+        }
+
+        #message {
+            text-align: center;
+            font-size: 1rem;
+            margin-top: 22px;
+            min-height: 28px;
+            color: #1a7a3a;
+            font-weight: 500;
+        }
+
+        .footnote {
+            margin-top: 24px;
+            font-size: 0.85rem;
+            color: #5a6e7e;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 20px;
+        }
+
+        .footnote i {
+            color: #e65c2e;
+        }
+
+        .badge-saheb {
+            display: inline-block;
+            background: #e65c2e10;
+            padding: 4px 14px;
+            border-radius: 40px;
+            color: #b1451f;
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 0.3px;
+            border: 1px solid #e65c2e30;
+        }
+
+        /* small screens */
+        @media (max-width: 480px) {
+            .brand-title {
+                font-size: 1.5rem;
+            }
+            .radio-group {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                border-radius: 24px;
+            }
+            .hub-sub {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="hub-card">
+
+    <!-- ====== BRAND HEADER ====== -->
+    <div class="brand-header">
+        <div class="brand-icon">
+            <i class="fas fa-crop-alt"></i>
+        </div>
+        <div class="brand-title">
+            SAHEB <span>DIGITAL HUB</span>
+        </div>
+        <span class="badge-saheb"><i class="fas fa-bolt"></i> v2.0</span>
+    </div>
+
+    <div class="hub-sub">
+        <i class="fas fa-tag"></i> 
+        Flipkart Label Cropper · crop &amp; format shipping labels in seconds
+    </div>
+
+    <!-- ====== MAIN TOOL ====== -->
+    <h2><i class="fas fa-box-open" style="color: #e65c2e; margin-right: 8px;"></i>Flipkart Label Crop Tool</h2>
+    <div class="tagline">
+        Upload your PDF &amp; let the tool automatically crop labels for your delivery partners.<br />
+        <span style="background: #eef3fa; padding: 2px 12px; border-radius: 40px; font-size: 0.9rem;">
+            <i class="fas fa-robot"></i> SAHEB DIGITAL HUB automation
+        </span>
+    </div>
+
+    <label for="fileInput"><i class="fas fa-file-pdf" style="color: #e65c2e;"></i> Upload Label PDF</label>
+    <input type="file" id="fileInput" accept="application/pdf" />
+
+    <div class="radio-group">
+        <label>
+            <input type="radio" name="invoiceMode" value="without" checked /> Without Invoices
+        </label>
+        <label>
+            <input type="radio" name="invoiceMode" value="with" /> With Invoices
+        </label>
+    </div>
+
+    <button id="processButton" class="btn-primary">
+        <i class="fas fa-download"></i> Download Cropped PDF
+    </button>
+    <div id="message"></div>
+
+    <!-- extra info -->
+    <div class="footnote">
+        <i class="fas fa-shield-alt"></i> Secure · batch crop · SKU detection &nbsp;|&nbsp; 
+        <span style="font-weight: 600; color: #0a2b4e;">SAHEB DIGITAL HUB</span> 
+        <span style="opacity: 0.6;">· free tool</span>
+    </div>
+</div>
+
+<!-- ====== PDF LIBS ====== -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pdf-lib/1.17.1/pdf-lib.min.js"></script>
+
+<script>
+    (function() {
+        const { degrees } = PDFLib;
+
+        pdfjsLib.GlobalWorkerOptions.workerSrc =
+            "https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.14.305/pdf.worker.min.js";
+
+        const fileInput = document.getElementById('fileInput');
+        const processButton = document.getElementById('processButton');
+        const message = document.getElementById('message');
+
+        let layoutMode = "label";
+        let invoiceMode = 'without';
+
+        // ---------- inject A4/label toggle ----------
+        const toggleContainer = document.createElement("div");
+        toggleContainer.classList.add("radio-group");
+        toggleContainer.style.marginTop = "6px";
+        toggleContainer.innerHTML = `
+            <label><input type="radio" name="layoutMode" value="label" checked> Labels</label>
+            <label><input type="radio" name="layoutMode" value="a4"> A4 Mode</label>
+        `;
+        processButton.parentNode.insertBefore(toggleContainer, processButton);
+
+        // radio listeners
+        document.querySelectorAll('input[name="layoutMode"]').forEach(input => {
+            input.addEventListener('change', () => {
+                layoutMode = input.value;
+            });
+        });
+
+        document.querySelectorAll('input[name="invoiceMode"]').forEach(input => {
+            input.addEventListener('change', () => {
+                invoiceMode = input.value;
+            });
+        });
+
+        // ---------- core processing ----------
+        processButton.addEventListener('click', async () => {
+            const file = fileInput.files[0];
+            if (!file) {
+                alert("📄 Please select a PDF file first.");
+                return;
+            }
+
+            message.textContent = "⏳ Processing … please wait.";
+            message.style.color = "#1a4b7a";
+
+            try {
+                const typedArray = new Uint8Array(await file.arrayBuffer());
+                const inputPdf = await PDFLib.PDFDocument.load(typedArray);
+                const textPdf = await pdfjsLib.getDocument({ data: typedArray }).promise;
+                const croppedDoc = await PDFLib.PDFDocument.create();
+                const pages = inputPdf.getPages();
+
+                let cropBoxes = [];
+                let residualBoxes = [];
+
+                for (let i = 0; i < pages.length; i++) {
+                    const pageText = await textPdf.getPage(i + 1);
+                    const textContent = await pageText.getTextContent();
+
+                    let awbY = null, bottomY = null, leftX = null, rightX = null, addressY = null;
+                    let orderY = null, signatureY = null, qtyX = null, totalX = null;
+                    let qtyY = null, cessY = null, sellerY = null;
+
+                    for (const item of textContent.items) {
+                        const text = item.str.toLowerCase();
+                        const x = item.transform[4];
+                        const y = item.transform[5];
+
+                        if (text.includes('awb no')) awbY = y;
+                        if (text.includes('shipping/customer address')) addressY = y;
+                        if (text.includes('printed at')) bottomY = y;
+                        if (text.includes('std')) leftX = x;
+                        if (text.includes('qty')) rightX = x + item.width - 60;
+                        if (text.includes('sold by')) orderY = y;
+                        if (text.includes('authorized signature')) signatureY = y;
+                        if (text.includes('fssai')) sellerY = y;
+                        if (text.includes('total qty')) qtyY = y;
+                        if (text.includes('cess')) cessY = y;
+                        if (text.includes('total qty')) qtyX = x;
+                        if (text.includes('total price')) totalX = x;
+                    }
+
+                    if (!signatureY && sellerY) signatureY = sellerY + 15;
+
+                    if (awbY && addressY && bottomY && leftX !== null && rightX !== null) {
+                        const lHeight = awbY - bottomY;
+                        const cropBoxLabel = {
+                            x: leftX - 7,
+                            y: bottomY - 10,
+                            width: rightX - 5,
+                            height: lHeight - 370
+                        };
+
+                        const orderHeight = (orderY - qtyY) + (cessY - qtyY - 200) + (orderY - cessY - 110);
+                        const cropBoxLabelResidual = {
+                            x: qtyX - 10,
+                            y: qtyY - 10,
+                            width: totalX - 7,
+                            height: orderHeight
+                        };
+
+                        const cropBoxA4 = {
+                            x: leftX - 5,
+                            y: bottomY - 15,
+                            width: rightX + 180,
+                            height: (awbY + 80) - (bottomY - 10)
+                        };
+
+                        const cropBoxA4LabelResidual = {
+                            x: qtyX - 10,
+                            y: qtyY - 10,
+                            width: totalX + 40,
+                            height: orderHeight + 220
+                        };
+
+                        const cropBox = layoutMode === 'a4' ? cropBoxA4 : cropBoxLabel;
+                        cropBoxes.push({ index: i, ...cropBox });
+
+                        const residualBox = layoutMode === 'a4' ? cropBoxA4LabelResidual : cropBoxLabelResidual;
+                        residualBoxes.push({ index: i, ...residualBox });
+                    }
+                }
+
+                // ---------- build output ----------
+                if (layoutMode === "label") {
+                    for (let k = 0; k < cropBoxes.length; k++) {
+                        const label = cropBoxes[k];
+                        const resid = residualBoxes[k];
+
+                        const [p1] = await croppedDoc.copyPages(inputPdf, [label.index]);
+                        p1.setMediaBox(label.x, label.y, label.x + label.width, label.y + label.height);
+                        croppedDoc.addPage(p1);
+
+                        if (invoiceMode === 'with') {
+                            const [p2] = await croppedDoc.copyPages(inputPdf, [resid.index]);
+                            p2.setMediaBox(resid.x, resid.y, resid.x + resid.width, resid.y + resid.height);
+                            p2.setRotation(degrees(90));
+                            croppedDoc.addPage(p2);
+                        }
+                    }
+                } else {
+                    // A4 mode
+                    const a4Width = 595;
+                    const a4Height = 842;
+                    const margin = 10, gap = 10;
+                    const cellWidth = (a4Width - 2 * margin - gap) / 2;
+                    const cellHeight = (a4Height - 2 * margin - gap) / 2;
+
+                    for (let i = 0; i < cropBoxes.length; i += (invoiceMode === 'with' ? 2 : 4)) {
+                        const a4Page = croppedDoc.addPage([a4Width, a4Height]);
+
+                        // vertical line
+                        a4Page.drawLine({
+                            start: { x: a4Width / 2, y: margin },
+                            end: { x: a4Width / 2, y: a4Height - margin },
+                            thickness: 2,
+                            color: PDFLib.rgb(0.5, 0.5, 0.5)
+                        });
+                        // horizontal line
+                        a4Page.drawLine({
+                            start: { x: margin, y: a4Height / 2 },
+                            end: { x: a4Width - margin, y: a4Height / 2 },
+                            thickness: 2,
+                            color: PDFLib.rgb(0.5, 0.5, 0.5)
+                        });
+
+                        for (let j = 0; j < (invoiceMode === 'with' ? 2 : 4) && (i + j) < cropBoxes.length; j++) {
+                            const crop = cropBoxes[i + j];
+                            const { x, y, width, height, index } = crop;
+
+                            const embedded = await croppedDoc.embedPage(pages[index], {
+                                left: x,
+                                bottom: y,
+                                right: x + width,
+                                top: y + height
+                            });
+
+                            let residual = null, residEmbedded = null;
+                            if (invoiceMode === 'with') {
+                                residual = residualBoxes[i + j];
+                                residEmbedded = await croppedDoc.embedPage(pages[residual.index], {
+                                    left: residual.x,
+                                    bottom: residual.y,
+                                    right: residual.x + residual.width,
+                                    top: residual.y + residual.height
+                                });
+                            }
+
+                            const col = j % 2;
+                            const row = Math.floor(j / 2);
+                            const posX = margin + col * (cellWidth + gap);
+                            const posY = a4Height - margin - (row + 1) * cellHeight - row * gap;
+
+                            const scale = Math.min(cellWidth / width, cellHeight / height);
+                            const scaledWidth = width * scale;
+                            const scaledHeight = height * scale;
+                            const offsetX = posX + (cellWidth - scaledWidth) / 2;
+                            const offsetY = posY + (cellHeight - scaledHeight) / 2;
+
+                            a4Page.drawPage(embedded, {
+                                x: offsetX,
+                                y: offsetY,
+                                width: scaledWidth,
+                                height: scaledHeight
+                            });
+
+                            if (invoiceMode === 'with' && residEmbedded) {
+                                const residScale = Math.min(cellWidth / residual.width, cellHeight / residual.height);
+                                const residW = residual.width * residScale;
+                                const residH = residual.height * residScale;
+                                const residX = posX + (cellWidth - residW) / 2;
+                                const residY = margin + (cellHeight - residH) / 2;
+                                a4Page.drawPage(residEmbedded, {
+                                    x: residX,
+                                    y: residY,
+                                    width: residW,
+                                    height: residH
+                                });
+                            }
+                        }
+                    }
+                }
+
+                const croppedBytes = await croppedDoc.save();
+                const blob = new Blob([croppedBytes], { type: 'application/pdf' });
+                const link = document.createElement('a');
+                link.href = URL.createObjectURL(blob);
+                link.download = `SAHEB_Flipkart_cropped.pdf`;
+                link.click();
+                URL.revokeObjectURL(link.href);
+
+                message.textContent = "✅ Done! PDF downloaded successfully.";
+                message.style.color = "#1a7a3a";
+            } catch (err) {
+                console.error(err);
+                message.textContent = "❌ Error: " + (err.message || "something went wrong");
+                message.style.color = "#b23b3b";
+            }
+        });
+    })();
+</script>
+</body>
+</html>
