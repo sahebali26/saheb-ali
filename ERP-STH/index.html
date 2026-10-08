@@ -135,7 +135,7 @@ footer{border-top:1px solid var(--line);padding:25px 0 35px;color:#6f7885;font-s
       <a class="btn primary" href="https://www.sahebali.site/erp/">Open Business Dashboard <b>↗</b></a>
       <a class="btn" href="#systems">Explore Systems ↓</a>
     </div>
-    <div class="meta"><span>11 access points</span><span>Business • Records • Seller • Tools</span><span>STH 2026</span></div>
+    <div class="meta"><span>12 access points</span><span>Business • Records • Seller • Tools</span><span>STH 2026</span></div>
   </div>
 </section>
 
@@ -213,51 +213,152 @@ footer{border-top:1px solid var(--line);padding:25px 0 35px;color:#6f7885;font-s
 </footer>
 
 <script>
-const items = [{"name": "Core Business Dashboard", "description": "Live operational dashboard, key metrics, and direct management access for STH operations.", "url": "https://www.sahebali.site/erp/", "category": "Business Systems", "icon": "▦", "priority": "primary", "external": false, "tags": "dashboard business erp operations management"}, {"name": "Master ERP of STH", "description": "Main business ERP containing centralized operational records, transactions, payments and management data.", "url": "https://docs.google.com/spreadsheets/d/1Q1-477W1-HtTWyVqWomJdSkd_zSP5sUtx5qS_DlCDKk/edit?usp=sharing", "category": "Records & Management", "icon": "▤", "external": true, "tags": "master erp records spreadsheet google sheets transactions payments"}, {"name": "Meesho Records", "description": "Business records and operational data maintained for Meesho.", "url": "https://docs.google.com/spreadsheets/d/1-qwu09YsNHjacBPtAZpnwSwV8u9iA80tGfFbShlkp5U/edit?usp=sharing", "category": "Records & Management", "icon": "▤", "external": true, "tags": "meesho records spreadsheet google sheets"}, {"name": "Temporary Business Management Sheet", "description": "Temporary workspace for business management and supporting records.", "url": "https://docs.google.com/spreadsheets/d/1sogNAHWT1KWYZcGXoy5vr1u-qGait2ecn1paodCXlxI/edit?usp=sharing", "category": "Records & Management", "icon": "◫", "external": true, "tags": "temporary business management spreadsheet"}, {"name": "Jewelry Business Management Sheet", "description": "Management sheet dedicated to the jewelry business.", "url": "https://docs.google.com/spreadsheets/d/1cUlHZJQYhBnfut4ykNJhyhroqGz4mD-_bLKYZFO9HUw/edit?usp=sharing", "category": "Records & Management", "icon": "◇", "external": true, "tags": "jewelry business management spreadsheet"}, {"name": "SAHEB Digital Hub", "description": "E-commerce and digital productivity tools for day-to-day operations.", "url": "https://www.sahebali.site/ecom-tools/", "category": "Digital Tools", "icon": "⌘", "external": false, "tags": "digital hub tools ecommerce productivity"}, {"name": "Flipkart Label Croper", "description": "Quick access to the Flipkart label cropping utility.", "url": "https://pdf.pi7.org/flipkart-label-cropper", "category": "Digital Tools", "icon": "⌗", "external": true, "tags": "flipkart label cropper tool pdf"}, {"name": "Meesho Seller Hub", "description": "Direct seller access for Meesho operations.", "url": "https://supplier.meesho.com/panel/v3/new/growth/vyakt/home", "category": "Seller Hubs", "icon": "◉", "external": true, "tags": "meesho seller hub orders products"}, {"name": "Flipkart Seller Hub", "description": "Direct seller access for Flipkart operations.", "url": "https://seller.flipkart.com/index.html#dashboard/home-page", "category": "Seller Hubs", "icon": "◈", "external": true, "tags": "flipkart seller hub orders products"}, {"name": "STH Official Site", "description": "Official Saheb Trend House website.", "url": "https://www.sahebali.site/trendhouse/", "category": "Official", "icon": "↗", "external": false, "tags": "sth saheb trend house official website"}, {"name": "Owner of STH website", "description": "Main personal website and digital profile.", "url": "https://www.sahebali.site/", "category": "Official", "icon": "◎", "external": false, "tags": "owner saheb website profile"}];
-
 const $ = s => document.querySelector(s);
 const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 
-function card(item) {
-  const target = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
-  return `<a class="card ${item.priority === 'primary' ? 'primary' : ''}" href="${esc(item.url)}"${target} data-search="${esc((item.name+' '+item.description+' '+item.category+' '+item.tags).toLowerCase())}">
-    <div class="cardtop"><span class="icon">${item.icon}</span><span class="external">${item.external ? '↗' : '→'}</span></div>
-    <h3>${esc(item.name)}</h3>
-    <p>${esc(item.description)}</p>
-    <div class="cardfoot"><span class="category">${esc(item.category)}</span><span class="open">Open ${item.external ? '↗' : '→'}</span></div>
-  </a>`;
-}
+/*
+  ============================================================
+  EASY EDIT AREA
+  ------------------------------------------------------------
+  To add/edit an access point, edit the HTML cards below.
 
-function renderGrid(id, category) {
-  $(id).innerHTML = items.filter(x => x.category === category).map(card).join('');
-}
-renderGrid('#businessGrid','Business Systems');
-renderGrid('#sellerGrid','Seller Hubs');
-renderGrid('#toolsGrid','Digital Tools');
-renderGrid('#officialGrid','Official');
+  - href="..."          = link
+  - <h3>...</h3>       = name
+  - <p>...</p>          = description
+  - data-search="..."   = search keywords
+  - class="external"    = opens in a new tab
+  - class="primary"     = highlighted card
+  - data-category="..." = category used by search
+  ============================================================
+*/
 
-const recordItems = items.filter(x => x.category === 'Records & Management');
-$('#recordFolders').innerHTML = recordItems.map((item,i) => `
-  <a class="folder" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">
-    <div class="folder-art">
-      <div class="folder-papers"><i class="paper"></i><i class="paper"></i><i class="paper"></i></div>
-      <div class="folder-tab"></div><div class="folder-shape"></div>
-    </div>
-    <h3>${esc(item.name)}</h3>
-    <p>${esc(item.description)}</p>
-  </a>`).join('');
+/* BUSINESS SYSTEMS */
+const businessHTML = `
+  <a class="card primary" href="https://www.sahebali.site/erp/" data-category="Business Systems"
+     data-search="core business dashboard live operational dashboard key metrics direct management access sth operations business erp">
+    <div class="cardtop"><span class="icon">▦</span><span class="external">→</span></div>
+    <h3>Core Business Dashboard</h3>
+    <p>Live operational dashboard, key metrics, and direct management access for STH operations.</p>
+    <div class="cardfoot"><span class="category">Business Systems</span><span class="open">Open →</span></div>
+  </a>
 
-const allCards = [...document.querySelectorAll('.card')];
+  <a class="card" href="--" data-category="Business Systems"
+     data-search="team member access management team members staff authorized access">
+    <div class="cardtop"><span class="icon">♙</span><span class="external">→</span></div>
+    <h3>Team Member Access Management</h3>
+    <p>Manage and control access for authorized STH team members.</p>
+    <div class="cardfoot"><span class="category">Business Systems</span><span class="open">Open →</span></div>
+  </a>
+`;
+
+/* RECORDS & MANAGEMENT */
+const recordsHTML = `
+  <a class="folder" href="https://docs.google.com/spreadsheets/d/1Q1-477W1-HtTWyVqWomJdSkd_zSP5sUtx5qS_DlCDKk/edit?usp=sharing" target="_blank" rel="noopener noreferrer"
+     data-category="Records & Management" data-search="master erp records spreadsheet google sheets transactions payments">
+    <div class="folder-art"><div class="folder-papers"><i class="paper"></i><i class="paper"></i><i class="paper"></i></div><div class="folder-tab"></div><div class="folder-shape"></div></div>
+    <h3>Master ERP of STH</h3>
+    <p>Main business ERP containing centralized operational records, transactions, payments and management data.</p>
+  </a>
+
+  <a class="folder" href="https://docs.google.com/spreadsheets/d/1-qwu09YsNHjacBPtAZpnwSwV8u9iA80tGfFbShlkp5U/edit?usp=sharing" target="_blank" rel="noopener noreferrer"
+     data-category="Records & Management" data-search="meesho records spreadsheet google sheets">
+    <div class="folder-art"><div class="folder-papers"><i class="paper"></i><i class="paper"></i><i class="paper"></i></div><div class="folder-tab"></div><div class="folder-shape"></div></div>
+    <h3>Meesho Records</h3>
+    <p>Business records and operational data maintained for Meesho.</p>
+  </a>
+
+  <a class="folder" href="https://docs.google.com/spreadsheets/d/1sogNAHWT1KWYZcGXoy5vr1u-qGait2ecn1paodCXlxI/edit?usp=sharing" target="_blank" rel="noopener noreferrer"
+     data-category="Records & Management" data-search="temporary business management spreadsheet">
+    <div class="folder-art"><div class="folder-papers"><i class="paper"></i><i class="paper"></i><i class="paper"></i></div><div class="folder-tab"></div><div class="folder-shape"></div></div>
+    <h3>Temporary Business Management Sheet</h3>
+    <p>Temporary workspace for business management and supporting records.</p>
+  </a>
+
+  <a class="folder" href="https://docs.google.com/spreadsheets/d/1cUlHZJQYhBnfut4ykNJhyhroqGz4mD-_bLKYZFO9HUw/edit?usp=sharing" target="_blank" rel="noopener noreferrer"
+     data-category="Records & Management" data-search="jewelry business management spreadsheet">
+    <div class="folder-art"><div class="folder-papers"><i class="paper"></i><i class="paper"></i><i class="paper"></i></div><div class="folder-tab"></div><div class="folder-shape"></div></div>
+    <h3>Jewelry Business Management Sheet</h3>
+    <p>Management sheet dedicated to the jewelry business.</p>
+  </a>
+`;
+
+/* SELLER HUBS */
+const sellerHTML = `
+  <a class="card" href="https://supplier.meesho.com/panel/v3/new/growth/vyakt/home" target="_blank" rel="noopener noreferrer"
+     data-category="Seller Hubs" data-search="meesho seller hub orders products">
+    <div class="cardtop"><span class="icon">◉</span><span class="external">↗</span></div>
+    <h3>Meesho Seller Hub</h3>
+    <p>Direct seller access for Meesho operations.</p>
+    <div class="cardfoot"><span class="category">Seller Hubs</span><span class="open">Open ↗</span></div>
+  </a>
+
+  <a class="card" href="https://seller.flipkart.com/index.html#dashboard/home-page" target="_blank" rel="noopener noreferrer"
+     data-category="Seller Hubs" data-search="flipkart seller hub orders products">
+    <div class="cardtop"><span class="icon">◈</span><span class="external">↗</span></div>
+    <h3>Flipkart Seller Hub</h3>
+    <p>Direct seller access for Flipkart operations.</p>
+    <div class="cardfoot"><span class="category">Seller Hubs</span><span class="open">Open ↗</span></div>
+  </a>
+`;
+
+/* DIGITAL TOOLS */
+const toolsHTML = `
+  <a class="card" href="https://www.sahebali.site/ecom-tools/" data-category="Digital Tools"
+     data-search="saheb digital hub tools ecommerce productivity">
+    <div class="cardtop"><span class="icon">⌘</span><span class="external">→</span></div>
+    <h3>SAHEB Digital Hub</h3>
+    <p>E-commerce and digital productivity tools for day-to-day operations.</p>
+    <div class="cardfoot"><span class="category">Digital Tools</span><span class="open">Open →</span></div>
+  </a>
+
+  <a class="card" href="https://pdf.pi7.org/flipkart-label-cropper" target="_blank" rel="noopener noreferrer"
+     data-category="Digital Tools" data-search="flipkart label cropper tool pdf">
+    <div class="cardtop"><span class="icon">⌗</span><span class="external">↗</span></div>
+    <h3>Flipkart Label Croper</h3>
+    <p>Quick access to the Flipkart label cropping utility.</p>
+    <div class="cardfoot"><span class="category">Digital Tools</span><span class="open">Open ↗</span></div>
+  </a>
+`;
+
+/* OFFICIAL */
+const officialHTML = `
+  <a class="card" href="https://www.sahebali.site/trendhouse/" data-category="Official"
+     data-search="sth saheb trend house official website">
+    <div class="cardtop"><span class="icon">↗</span><span class="external">→</span></div>
+    <h3>STH Official Site</h3>
+    <p>Official Saheb Trend House website.</p>
+    <div class="cardfoot"><span class="category">Official</span><span class="open">Open →</span></div>
+  </a>
+
+  <a class="card" href="https://www.sahebali.site/" data-category="Official"
+     data-search="owner saheb website profile">
+    <div class="cardtop"><span class="icon">◎</span><span class="external">→</span></div>
+    <h3>Owner of STH website</h3>
+    <p>Main personal website and digital profile.</p>
+    <div class="cardfoot"><span class="category">Official</span><span class="open">Open →</span></div>
+  </a>
+`;
+
+$('#businessGrid').innerHTML = businessHTML;
+$('#sellerGrid').innerHTML = sellerHTML;
+$('#toolsGrid').innerHTML = toolsHTML;
+$('#officialGrid').innerHTML = officialHTML;
+$('#recordFolders').innerHTML = recordsHTML;
+
+const allCards = [...document.querySelectorAll('.card, .folder')];
+
 function filter() {
   const q = $('#search').value.trim().toLowerCase();
   let count = 0;
   allCards.forEach(c => {
-    const match = !q || c.dataset.search.includes(q);
+    const text = (c.dataset.search || '') + ' ' + (c.textContent || '').toLowerCase();
+    const match = !q || text.includes(q);
     c.style.display = match ? '' : 'none';
-    if(match) count++;
+    if (match) count++;
   });
   $('#noResults').style.display = q && count === 0 ? 'block' : 'none';
 }
+
 $('#search').addEventListener('input', filter);
 document.addEventListener('keydown', e => {
   if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
@@ -285,6 +386,7 @@ function resize(){W=canvas.width=innerWidth*devicePixelRatio;H=canvas.height=inn
 function init(){resize();particles=Array.from({length:34},()=>({x:innerWidth*(.2+.6*Math.random()),y:innerHeight*.05+Math.random()*innerHeight*.7,l:120+Math.random()*350,a:.018+Math.random()*.045,s:.0003+Math.random()*.0008,p:Math.random()*6.28}));}
 function draw(t){ctx.clearRect(0,0,innerWidth,innerHeight);ctx.save();ctx.translate(innerWidth/2,0);ctx.globalCompositeOperation='screen';particles.forEach(p=>{const sway=Math.sin(t*p.s+p.p)*28;const g=ctx.createLinearGradient(0,p.y,0,p.y+p.l);g.addColorStop(0,'rgba(0,217,255,'+p.a+')');g.addColorStop(1,'rgba(0,217,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(sway-2,p.y);ctx.lineTo(sway+12,p.y);ctx.lineTo(sway+70,p.y+p.l);ctx.lineTo(sway+40,p.y+p.l);ctx.closePath();ctx.fill();});ctx.restore();requestAnimationFrame(draw);}
 if(!matchMedia('(prefers-reduced-motion: reduce)').matches){init();addEventListener('resize',resize);requestAnimationFrame(draw)} else {canvas.style.display='none'}
+
 </script>
 </body>
 </html>
