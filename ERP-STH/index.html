@@ -1,604 +1,290 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>SAHEB TREND HOUSE | Business Management Portal</title>
-
-    <meta
-        name="description"
-        content="SAHEB TREND HOUSE Business Management Portal — Central access to ERP, Meesho records, Flipkart records and business management files."
-    >
-
-    <meta
-        name="keywords"
-        content="Saheb Trend House, STH, Business Management Portal, ERP, Meesho, Flipkart, Business Records"
-    >
-
-    <meta
-        name="author"
-        content="SAHEB TREND HOUSE"
-    >
-
-    <meta
-        name="robots"
-        content="noindex, nofollow"
-    >
-
-    <!-- Canonical URL -->
-    <link
-        rel="canonical"
-        href="https://sahebali.site/ERP-STH/"
-    >
-
-    <!-- =================================================
-         WHATSAPP / FACEBOOK / MESSENGER / LINK PREVIEW
-    ================================================== -->
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="https://sahebali.site/ERP-STH/">
-    <meta property="og:title" content="SAHEB TREND HOUSE | Business Management Portal">
-    <meta property="og:description" content="Central business management portal for SAHEB TREND HOUSE. Access ERP, Meesho records, marketplace records and business management files from one place.">
-    <meta property="og:site_name" content="SAHEB TREND HOUSE">
-    <meta property="og:locale" content="en_IN">
-    <meta property="og:image" content="https://sahebali.site/ERP-STH/assets/sth-portal-preview.jpg">
-    <meta property="og:image:width" content="1200">
-    <meta property="og:image:height" content="630">
-    <meta property="og:image:alt" content="SAHEB TREND HOUSE Business Management Portal">
-
-    <!-- =================================================
-         TWITTER / X LINK PREVIEW
-    ================================================== -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="SAHEB TREND HOUSE | Business Management Portal">
-    <meta name="twitter:description" content="Central access to SAHEB TREND HOUSE ERP, business records and management systems.">
-    <meta name="twitter:image" content="https://sahebali.site/ERP-STH/assets/sth-portal-preview.jpg">
-
-    <!-- =================================================
-         MOBILE / BROWSER
-    ================================================== -->
-    <meta name="theme-color" content="#080b12">
-    <meta name="application-name" content="SAHEB TREND HOUSE">
-    <meta name="apple-mobile-web-app-title" content="STH Portal">
-    <meta name="apple-mobile-web-app-capable" content="yes">
-
-    <!-- Favicon -->
-    <link rel="icon" type="image/png" href="/ERP-STH/assets/sth-logo.png">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --bg: #080b12;
-            --card: #111722;
-            --card-hover: #161e2c;
-            --border: rgba(255,255,255,0.09);
-            --text: #f5f7fb;
-            --muted: #8d98aa;
-            --primary: #6c63ff;
-            --primary-dark: #5148e8;
-            --success: #22c55e;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-        }
-
-        body {
-            font-family: Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-            background:
-                radial-gradient(circle at 10% 10%, rgba(108,99,255,0.13), transparent 30%),
-                radial-gradient(circle at 90% 90%, rgba(34,197,94,0.07), transparent 28%),
-                var(--bg);
-            color: var(--text);
-            min-height: 100vh;
-        }
-
-        .container {
-            width: min(1180px, calc(100% - 40px));
-            margin: auto;
-        }
-
-        header {
-            padding: 28px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .nav {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-        }
-
-        .nav-brand {
-            display: flex;
-            align-items: center;
-            gap: 13px;
-        }
-
-        .nav-logo {
-            width: 45px;
-            height: 45px;
-            border-radius: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, var(--primary), #8b5cf6);
-            font-weight: 800;
-            font-size: 15px;
-        }
-
-        .nav-brand h2 {
-            font-size: 16px;
-            letter-spacing: 0.2px;
-        }
-
-        .nav-brand span {
-            display: block;
-            color: var(--muted);
-            font-size: 11px;
-            margin-top: 2px;
-        }
-
-        /* HERO */
-        .hero {
-            padding: 62px 0 42px;
-        }
-
-        .hero-label {
-            display: inline-flex;
-            align-items: center;
-            gap: 7px;
-            padding: 7px 11px;
-            border-radius: 999px;
-            background: rgba(108,99,255,0.1);
-            border: 1px solid rgba(108,99,255,0.2);
-            color: #a5a0ff;
-            font-size: 11px;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.7px;
-        }
-
-        .hero h1 {
-            font-size: clamp(34px, 5vw, 56px);
-            letter-spacing: -2px;
-            line-height: 1.05;
-            margin-top: 18px;
-        }
-
-        .hero h1 span {
-            color: #817aff;
-        }
-
-        .hero p {
-            max-width: 680px;
-            margin-top: 18px;
-            color: var(--muted);
-            font-size: 15px;
-            line-height: 1.7;
-        }
-
-        /* STATUS */
-        .status-bar {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 20px;
-            padding: 17px 19px;
-            border-radius: 15px;
-            background: rgba(255,255,255,0.025);
-            border: 1px solid var(--border);
-            margin-bottom: 34px;
-        }
-
-        .status-left {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            color: #cbd5e1;
-            font-size: 13px;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--success);
-            box-shadow: 0 0 0 5px rgba(34,197,94,0.08);
-        }
-
-        .date {
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        /* SECTION */
-        .section-title {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-bottom: 17px;
-        }
-
-        .section-title h3 {
-            font-size: 17px;
-        }
-
-        .section-title span {
-            color: var(--muted);
-            font-size: 12px;
-        }
-
-        /* CARDS */
-        .cards {
-            display: grid;
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 17px;
-            margin-bottom: 42px;
-        }
-
-        .card {
-            position: relative;
-            padding: 23px;
-            border-radius: 18px;
-            background: linear-gradient(145deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
-            border: 1px solid var(--border);
-            text-decoration: none;
-            color: inherit;
-            transition: transform 0.25s, border-color 0.25s, background 0.25s;
-            overflow: hidden;
-        }
-
-        .card::before {
-            content: "";
-            position: absolute;
-            width: 140px;
-            height: 140px;
-            right: -65px;
-            top: -65px;
-            border-radius: 50%;
-            background: rgba(108,99,255,0.08);
-        }
-
-        .card:hover {
-            transform: translateY(-4px);
-            background: var(--card-hover);
-            border-color: rgba(108,99,255,0.3);
-        }
-
-        .card-icon {
-            width: 45px;
-            height: 45px;
-            border-radius: 13px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: rgba(108,99,255,0.11);
-            font-size: 20px;
-            margin-bottom: 18px;
-        }
-
-        .card h4 {
-            font-size: 15px;
-            margin-bottom: 7px;
-        }
-
-        .card p {
-            color: var(--muted);
-            font-size: 12px;
-            line-height: 1.6;
-            max-width: 400px;
-        }
-
-        .card-bottom {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            margin-top: 20px;
-        }
-
-        .card-status {
-            font-size: 10px;
-            padding: 5px 8px;
-            border-radius: 999px;
-            background: rgba(34,197,94,0.08);
-            color: #86efac;
-        }
-
-        .card-status.progress {
-            background: rgba(245,158,11,0.09);
-            color: #fcd34d;
-        }
-
-        .card-status.future {
-            background: rgba(148,163,184,0.08);
-            color: #94a3b8;
-        }
-
-        .open-arrow {
-            font-size: 17px;
-            color: #717b8d;
-            transition: 0.2s;
-        }
-
-        .card:hover .open-arrow {
-            color: #a5a0ff;
-            transform: translateX(3px);
-        }
-
-        .disabled {
-            cursor: default;
-            opacity: 0.65;
-        }
-
-        .disabled:hover {
-            transform: none;
-            background: linear-gradient(145deg, rgba(255,255,255,0.045), rgba(255,255,255,0.018));
-            border-color: var(--border);
-        }
-
-        /* QUICK INFO */
-        .info-grid {
-            display: grid;
-            grid-template-columns: repeat(3, minmax(0, 1fr));
-            gap: 15px;
-            margin-bottom: 55px;
-        }
-
-        .info-card {
-            padding: 18px;
-            border-radius: 15px;
-            background: rgba(255,255,255,0.025);
-            border: 1px solid var(--border);
-        }
-
-        .info-card .number {
-            font-size: 25px;
-            font-weight: 800;
-        }
-
-        .info-card .label {
-            margin-top: 4px;
-            color: var(--muted);
-            font-size: 11px;
-        }
-
-        footer {
-            border-top: 1px solid var(--border);
-            padding: 24px 0 30px;
-            color: #626c7d;
-            font-size: 11px;
-            text-align: center;
-        }
-
-        /* MOBILE */
-        @media (max-width: 700px) {
-            .container {
-                width: min(100% - 26px, 1180px);
-            }
-
-            .cards {
-                grid-template-columns: 1fr;
-            }
-
-            .info-grid {
-                grid-template-columns: 1fr;
-            }
-
-            .hero {
-                padding-top: 45px;
-            }
-
-            .hero h1 {
-                letter-spacing: -1.2px;
-            }
-
-            .status-bar {
-                align-items: flex-start;
-                flex-direction: column;
-            }
-
-            .nav-brand h2 {
-                font-size: 14px;
-            }
-        }
-    </style>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#07090c">
+<meta name="description" content="STH Central Access — one central gateway to Saheb Trend House business systems, records, seller platforms, digital tools and official resources.">
+<title>STH Central Access — Saheb Trend House</title>
+<style>
+:root {
+  --bg:#07090c; --panel:rgba(255,255,255,.045); --panel2:rgba(255,255,255,.065);
+  --line:rgba(255,255,255,.09); --text:#f5f7fa; --muted:#9ba4b2;
+  --accent:#00d9ff; --accent2:#6fe9ff; --max:1180px; --radius:22px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font-family:Inter,ui-sans-serif,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;overflow-x:hidden}
+a{color:inherit;text-decoration:none}
+button,input{font:inherit}
+button{color:inherit}
+::selection{background:rgba(0,217,255,.22)}
+#rays{position:fixed;inset:0;z-index:-3;pointer-events:none;opacity:.65}
+.bg{position:fixed;inset:0;z-index:-4;background:
+ radial-gradient(900px 520px at 50% -100px,rgba(0,217,255,.09),transparent 65%),
+ radial-gradient(700px 500px at 90% 55%,rgba(0,140,255,.045),transparent 70%),
+ #07090c}
+.noise{position:fixed;inset:0;z-index:-2;pointer-events:none;opacity:.025;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+.container{width:min(calc(100% - 40px),var(--max));margin:auto}
+header{position:sticky;top:0;z-index:20;border-bottom:1px solid transparent;background:rgba(7,9,12,.68);backdrop-filter:blur(18px);transition:.25s}
+header.scrolled{border-color:var(--line)}
+.nav{height:72px;display:flex;align-items:center;justify-content:space-between;gap:20px}
+.brand{display:flex;align-items:center;gap:11px;font-weight:750;letter-spacing:-.02em}
+.brandmark{width:34px;height:34px;border:1px solid rgba(0,217,255,.35);border-radius:10px;display:grid;place-items:center;color:var(--accent);font-size:14px;background:rgba(0,217,255,.05);box-shadow:0 0 30px rgba(0,217,255,.08)}
+.brand small{display:block;color:var(--muted);font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;margin-top:2px}
+.navlinks{display:flex;gap:5px;align-items:center}
+.navlinks a{font-size:13px;color:#aeb6c2;padding:9px 11px;border-radius:10px}
+.navlinks a:hover{background:rgba(255,255,255,.05);color:#fff}
+.status{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:#aeb6c2;border:1px solid var(--line);padding:8px 10px;border-radius:999px;white-space:nowrap}
+.dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#72f2bf;box-shadow:0 0 12px rgba(114,242,191,.8);margin-right:7px}
+.menu{display:none;border:1px solid var(--line);background:var(--panel);border-radius:10px;width:40px;height:40px;cursor:pointer}
+.mobile{display:none;border-top:1px solid var(--line);padding:10px 0 16px}
+.mobile a{display:block;padding:11px 4px;color:#c4cbd5}
+.hero{min-height:650px;display:flex;align-items:center;justify-content:center;text-align:center;padding:95px 0 70px;position:relative}
+.hero-inner{max-width:850px}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;color:#aeb8c5;font-size:11px;letter-spacing:.16em;text-transform:uppercase;border:1px solid var(--line);background:rgba(255,255,255,.025);border-radius:999px;padding:8px 12px;animation:up .7s both}
+.hero h1{font-size:clamp(46px,7.2vw,86px);line-height:.96;letter-spacing:-.065em;margin:25px 0 22px;font-weight:720;animation:up .7s .08s both}
+.hero h1 span{background:linear-gradient(100deg,#fff 20%,#a8f4ff 58%,#8edfff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero p{max-width:690px;margin:auto;color:var(--muted);font-size:17px;line-height:1.7;animation:up .7s .16s both}
+.actions{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:30px;animation:up .7s .24s both}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:9px;border:1px solid var(--line);padding:12px 17px;border-radius:13px;background:rgba(255,255,255,.045);font-size:13px;font-weight:650;cursor:pointer;transition:.2s}
+.btn:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.17);background:rgba(255,255,255,.075)}
+.btn.primary{background:#eafcff;color:#071014;border-color:#eafcff;box-shadow:0 8px 35px rgba(0,217,255,.12)}
+.btn.primary:hover{background:#fff;box-shadow:0 10px 40px rgba(0,217,255,.2)}
+.meta{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:24px;color:#727c8a;font-size:11px;animation:up .7s .3s both}
+.meta span{padding:6px 9px;border:1px solid rgba(255,255,255,.055);border-radius:8px}
+.section{padding:55px 0}
+.section-head{display:flex;justify-content:space-between;align-items:end;gap:25px;margin-bottom:22px}
+.kicker{color:var(--accent);font-size:10px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;margin-bottom:9px}
+.section h2{font-size:30px;letter-spacing:-.035em;margin:0}
+.section-head p{margin:0;color:var(--muted);font-size:13px;line-height:1.6;max-width:490px;text-align:right}
+.searchbar{position:relative;margin-bottom:34px}
+.searchbar input{width:100%;height:58px;padding:0 105px 0 48px;border:1px solid var(--line);border-radius:16px;background:rgba(255,255,255,.035);color:#fff;outline:none}
+.searchbar input:focus{border-color:rgba(0,217,255,.38);box-shadow:0 0 0 4px rgba(0,217,255,.06)}
+.searchicon{position:absolute;left:18px;top:19px;color:#7d8794}
+.shortcut{position:absolute;right:12px;top:12px;color:#747e8b;border:1px solid var(--line);padding:7px 9px;border-radius:8px;font-size:10px}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+.grid.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.card{position:relative;display:flex;flex-direction:column;min-height:205px;padding:22px;border:1px solid var(--line);border-radius:var(--radius);background:linear-gradient(145deg,rgba(255,255,255,.055),rgba(255,255,255,.025));overflow:hidden;transition:.22s}
+.card:before{content:"";position:absolute;width:180px;height:180px;right:-80px;top:-90px;background:rgba(0,217,255,.07);filter:blur(30px);border-radius:50%;pointer-events:none}
+.card:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.16);box-shadow:0 18px 55px rgba(0,0,0,.25)}
+.card.primary{border-color:rgba(0,217,255,.22);background:linear-gradient(145deg,rgba(0,217,255,.075),rgba(255,255,255,.025))}
+.cardtop{display:flex;justify-content:space-between;align-items:start}
+.icon{width:42px;height:42px;border-radius:12px;border:1px solid var(--line);display:grid;place-items:center;color:var(--accent2);background:rgba(0,217,255,.045);font-size:18px}
+.external{font-size:12px;color:#707987}
+.card h3{font-size:18px;letter-spacing:-.025em;margin:22px 0 8px}
+.card p{color:var(--muted);font-size:13px;line-height:1.6;margin:0;max-width:500px}
+.cardfoot{margin-top:auto;padding-top:22px;display:flex;align-items:center;justify-content:space-between}
+.category{font-size:9px;text-transform:uppercase;letter-spacing:.13em;color:#707987}
+.open{font-size:12px;font-weight:700;color:#dce7ee}
+.folder-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.folder{min-height:180px;border:1px solid var(--line);border-radius:20px;background:rgba(255,255,255,.03);padding:20px;cursor:pointer;position:relative;overflow:hidden;transition:.25s}
+.folder:hover{border-color:rgba(255,255,255,.16);transform:translateY(-2px)}
+.folder-art{height:75px;position:relative;margin-bottom:13px}
+.folder-shape{position:absolute;left:4px;top:18px;width:105px;height:55px;background:#17232d;border:1px solid rgba(255,255,255,.1);border-radius:6px 10px 10px 10px;transform:skewY(-1deg);box-shadow:0 14px 35px rgba(0,0,0,.28)}
+.folder-tab{position:absolute;left:9px;top:10px;width:36px;height:13px;background:#17232d;border:1px solid rgba(255,255,255,.1);border-bottom:0;border-radius:5px 5px 0 0}
+.folder-papers{position:absolute;left:18px;top:0;display:flex;gap:5px;opacity:.9}
+.paper{width:25px;height:34px;background:#e9f3f5;border-radius:3px;transform:rotate(-7deg);box-shadow:0 5px 15px rgba(0,0,0,.2)}
+.paper:nth-child(2){transform:rotate(4deg);margin-top:-4px}
+.paper:nth-child(3){transform:rotate(12deg);margin-top:2px}
+.folder h3{font-size:15px;margin:0 0 5px}
+.folder p{font-size:11px;color:var(--muted);line-height:1.5;margin:0}
+.folder.opened .folder-papers{animation:papers .45s both}
+@keyframes papers{to{transform:translateY(-7px) translateX(8px)}}
+.no-results{display:none;text-align:center;border:1px dashed var(--line);padding:45px;border-radius:20px;color:var(--muted)}
+.cta{margin:50px 0 70px;border:1px solid rgba(0,217,255,.15);border-radius:28px;padding:45px;background:radial-gradient(600px 200px at 50% 0,rgba(0,217,255,.08),transparent 70%),rgba(255,255,255,.025);text-align:center}
+.cta h2{margin:0 0 10px;font-size:32px;letter-spacing:-.04em}
+.cta p{color:var(--muted);margin:0 auto 22px;max-width:560px;line-height:1.6;font-size:13px}
+footer{border-top:1px solid var(--line);padding:25px 0 35px;color:#6f7885;font-size:11px}
+.footerin{display:flex;justify-content:space-between;gap:15px}
+.reveal{opacity:0;transform:translateY(18px);transition:opacity .65s,transform .65s}
+.reveal.show{opacity:1;transform:none}
+@keyframes up{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+@media(max-width:900px){.navlinks,.status{display:none}.menu{display:block}.mobile.open{display:block}.folder-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:680px){.container{width:min(calc(100% - 28px),var(--max))}.hero{min-height:570px;padding:65px 0 45px}.hero p{font-size:15px}.section{padding:42px 0}.section-head{display:block}.section-head p{text-align:left;margin-top:8px}.grid,.grid.three,.folder-grid{grid-template-columns:1fr}.card{min-height:185px}.cta{padding:34px 20px;margin-bottom:50px}.cta h2{font-size:26px}.footerin{display:block;line-height:1.8}.shortcut{display:none}.searchbar input{padding-right:20px}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*::before,*::after{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}.reveal{opacity:1;transform:none}}
+</style>
 </head>
-
 <body>
+<div class="bg"></div><canvas id="rays"></canvas><div class="noise"></div>
 
-    <header>
-        <div class="container">
-            <div class="nav">
-                <div class="nav-brand">
-                    <div class="nav-logo">STH</div>
-                    <div>
-                        <h2>SAHEB TREND HOUSE</h2>
-                        <span>Business Management Portal</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </header>
+<header id="header">
+  <div class="container nav">
+    <a class="brand" href="#top" aria-label="STH Central Access home">
+      <span class="brandmark">STH</span>
+      <span>Central Access<small>Saheb Trend House</small></span>
+    </a>
+    <nav class="navlinks" aria-label="Primary navigation">
+      <a href="#systems">Systems</a><a href="#records">Records</a><a href="#seller">Seller</a><a href="#tools">Tools</a><a href="#official">Official</a>
+    </nav>
+    <span class="status"><span class="dot"></span>Access Portal</span>
+    <button class="menu" id="menuBtn" aria-label="Open navigation menu" aria-expanded="false">☰</button>
+  </div>
+  <div class="container mobile" id="mobileNav">
+    <a href="#systems">Systems</a><a href="#records">Records</a><a href="#seller">Seller Hubs</a><a href="#tools">Digital Tools</a><a href="#official">Official</a>
+  </div>
+</header>
 
-    <main>
-        <div class="container">
+<main id="top">
+<section class="hero">
+  <div class="hero-inner">
+    <div class="eyebrow"><span class="dot"></span> SAHEB TREND HOUSE • CENTRAL ACCESS</div>
+    <h1>Everything for STH.<br><span>One central access.</span></h1>
+    <p>A single gateway to business systems, records, seller platforms, digital tools and official resources — organized for fast everyday access.</p>
+    <div class="actions">
+      <a class="btn primary" href="https://www.sahebali.site/erp/">Open Business Dashboard <b>↗</b></a>
+      <a class="btn" href="#systems">Explore Systems ↓</a>
+    </div>
+    <div class="meta"><span>11 access points</span><span>Business • Records • Seller • Tools</span><span>STH 2026</span></div>
+  </div>
+</section>
 
-            <!-- HERO -->
-            <section class="hero">
-                <div class="hero-label">● Central Business Access</div>
-                <h1>Manage your business<br><span>from one place.</span></h1>
-                <p>A central access point for SAHEB TREND HOUSE business records, ERP systems, marketplace records and management documents.</p>
-            </section>
+<section class="section" id="systems">
+  <div class="container">
+    <div class="searchbar">
+      <span class="searchicon">⌕</span>
+      <input id="search" type="search" placeholder="Search systems, tools or records..." autocomplete="off" aria-label="Search access points">
+      <span class="shortcut">Ctrl K</span>
+    </div>
 
-            <!-- STATUS -->
-            <div class="status-bar">
-                <div class="status-left">
-                    <span class="status-dot"></span>
-                    <span>Portal operational</span>
-                </div>
-                <div class="date" id="currentDate"></div>
-            </div>
+    <div class="section-head reveal">
+      <div><div class="kicker">01 / Core Access</div><h2>Business Systems</h2></div>
+      <p>Start with the main operational dashboard and the systems that keep STH organized.</p>
+    </div>
+    <div class="grid" id="businessGrid"></div>
+    <div class="no-results" id="noResults">No access point found.<br><small>Try another search term.</small></div>
+  </div>
+</section>
 
-            <!-- CORE SYSTEMS -->
-            <div class="section-title">
-                <h3>Core Business Records</h3>
-                <span>Central access</span>
-            </div>
+<section class="section" id="records">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="kicker">02 / Organized Records</div><h2>Records & Management</h2></div>
+      <p>Open the spreadsheets and management workspaces used for centralized business records.</p>
+    </div>
+    <div class="folder-grid" id="recordFolders"></div>
+  </div>
+</section>
 
-            <div class="cards">
+<section class="section" id="seller">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="kicker">03 / Marketplaces</div><h2>Seller Hubs</h2></div>
+      <p>Direct access to the marketplace environments used to operate STH's seller accounts.</p>
+    </div>
+    <div class="grid" id="sellerGrid"></div>
+  </div>
+</section>
 
-                <!-- CORE BUSINESS DASHBOARD -->
-                <a class="card" href="https://www.sahebali.site/erp/" target="_blank" rel="noopener noreferrer">
-                    <div class="card-icon">⚡</div>
-                    <h4>Core Business Dashboard</h4>
-                    <p>Live operational dashboard, key metrics, and direct management access for STH operations.</p>
-                    <div class="card-bottom">
-                        <span class="card-status">Available</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </a>
+<section class="section" id="tools">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="kicker">04 / Utilities</div><h2>Digital Tools</h2></div>
+      <p>Useful tools for e-commerce workflows and day-to-day digital operations.</p>
+    </div>
+    <div class="grid" id="toolsGrid"></div>
+  </div>
+</section>
 
-                <!-- MASTER ERP -->
-                <a class="card" href="https://docs.google.com/spreadsheets/d/1Q1-477W1-HtTWyVqWomJdSkd_zSP5sUtx5qS_DlCDKk/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
-                    <div class="card-icon">📊</div>
-                    <h4>Master ERP of STH</h4>
-                    <p>Main business ERP containing centralized operational records, transactions, payments and management data.</p>
-                    <div class="card-bottom">
-                        <span class="card-status">Available</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </a>
+<section class="section" id="official">
+  <div class="container">
+    <div class="section-head reveal">
+      <div><div class="kicker">05 / Brand</div><h2>Official</h2></div>
+      <p>Public-facing destinations for Saheb Trend House and its owner.</p>
+    </div>
+    <div class="grid" id="officialGrid"></div>
+  </div>
+</section>
 
-                <!-- MEESHO -->
-                <a class="card" href="https://docs.google.com/spreadsheets/d/1-qwu09YsNHjacBPtAZpnwSwV8u9iA80tGfFbShlkp5U/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
-                    <div class="card-icon">🛍️</div>
-                    <h4>Meesho Records</h4>
-                    <p>Access Meesho order, sales and related business records maintained by STH.</p>
-                    <div class="card-bottom">
-                        <span class="card-status">Available</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </a>
+<section class="container">
+  <div class="cta reveal">
+    <h2>STH, connected.</h2>
+    <p>One clean access layer for the systems, records and platforms behind Saheb Trend House.</p>
+    <a class="btn primary" href="https://www.sahebali.site/trendhouse/">Visit STH Official Site ↗</a>
+  </div>
+</section>
+</main>
 
-                <!-- NON MEESHO -->
-                <div class="card disabled" title="Link not added yet">
-                    <div class="card-icon">📁</div>
-                    <h4>NonGST-Meesho Records</h4>
-                    <p>Central record space for business activities outside the Meesho marketplace.</p>
-                    <div class="card-bottom">
-                        <span class="card-status future">Link Pending</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </div>
+<footer>
+  <div class="container footerin">
+    <span>SAHEB TREND HOUSE · CENTRAL ACCESS</span>
+    <span>© 2026 · <a href="https://www.sahebali.site/">sahebali.site</a></span>
+  </div>
+</footer>
 
-                <!-- FLIPKART -->
-                <div class="card disabled" title="Flipkart link will be added in future">
-                    <div class="card-icon">🛒</div>
-                    <h4>Flipkart Records</h4>
-                    <p>Future centralized access for Flipkart orders, sales and marketplace records.</p>
-                    <div class="card-bottom">
-                        <span class="card-status future">Coming Soon</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </div>
+<script>
+const items = [{"name": "Core Business Dashboard", "description": "Live operational dashboard, key metrics, and direct management access for STH operations.", "url": "https://www.sahebali.site/erp/", "category": "Business Systems", "icon": "▦", "priority": "primary", "external": false, "tags": "dashboard business erp operations management"}, {"name": "Master ERP of STH", "description": "Main business ERP containing centralized operational records, transactions, payments and management data.", "url": "https://docs.google.com/spreadsheets/d/1Q1-477W1-HtTWyVqWomJdSkd_zSP5sUtx5qS_DlCDKk/edit?usp=sharing", "category": "Records & Management", "icon": "▤", "external": true, "tags": "master erp records spreadsheet google sheets transactions payments"}, {"name": "Meesho Records", "description": "Business records and operational data maintained for Meesho.", "url": "https://docs.google.com/spreadsheets/d/1-qwu09YsNHjacBPtAZpnwSwV8u9iA80tGfFbShlkp5U/edit?usp=sharing", "category": "Records & Management", "icon": "▤", "external": true, "tags": "meesho records spreadsheet google sheets"}, {"name": "Temporary Business Management Sheet", "description": "Temporary workspace for business management and supporting records.", "url": "https://docs.google.com/spreadsheets/d/1sogNAHWT1KWYZcGXoy5vr1u-qGait2ecn1paodCXlxI/edit?usp=sharing", "category": "Records & Management", "icon": "◫", "external": true, "tags": "temporary business management spreadsheet"}, {"name": "Jewelry Business Management Sheet", "description": "Management sheet dedicated to the jewelry business.", "url": "https://docs.google.com/spreadsheets/d/1cUlHZJQYhBnfut4ykNJhyhroqGz4mD-_bLKYZFO9HUw/edit?usp=sharing", "category": "Records & Management", "icon": "◇", "external": true, "tags": "jewelry business management spreadsheet"}, {"name": "SAHEB Digital Hub", "description": "E-commerce and digital productivity tools for day-to-day operations.", "url": "https://www.sahebali.site/ecom-tools/", "category": "Digital Tools", "icon": "⌘", "external": false, "tags": "digital hub tools ecommerce productivity"}, {"name": "Flipkart Label Croper", "description": "Quick access to the Flipkart label cropping utility.", "url": "https://pdf.pi7.org/flipkart-label-cropper", "category": "Digital Tools", "icon": "⌗", "external": true, "tags": "flipkart label cropper tool pdf"}, {"name": "Meesho Seller Hub", "description": "Direct seller access for Meesho operations.", "url": "https://supplier.meesho.com/panel/v3/new/growth/vyakt/home", "category": "Seller Hubs", "icon": "◉", "external": true, "tags": "meesho seller hub orders products"}, {"name": "Flipkart Seller Hub", "description": "Direct seller access for Flipkart operations.", "url": "https://seller.flipkart.com/index.html#dashboard/home-page", "category": "Seller Hubs", "icon": "◈", "external": true, "tags": "flipkart seller hub orders products"}, {"name": "STH Official Site", "description": "Official Saheb Trend House website.", "url": "https://www.sahebali.site/trendhouse/", "category": "Official", "icon": "↗", "external": false, "tags": "sth saheb trend house official website"}, {"name": "Owner of STH website", "description": "Main personal website and digital profile.", "url": "https://www.sahebali.site/", "category": "Official", "icon": "◎", "external": false, "tags": "owner saheb website profile"}];
 
-            </div>
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]);
 
-             <!-- AFFILIATE SECTIO -->
-            <div class="section-title">
-                <h3>STH Creator & Affiliate Management</h3>
-                <span>STH SOCIAL Management</span>
-            </div>
+function card(item) {
+  const target = item.external ? ' target="_blank" rel="noopener noreferrer"' : '';
+  return `<a class="card ${item.priority === 'primary' ? 'primary' : ''}" href="${esc(item.url)}"${target} data-search="${esc((item.name+' '+item.description+' '+item.category+' '+item.tags).toLowerCase())}">
+    <div class="cardtop"><span class="icon">${item.icon}</span><span class="external">${item.external ? '↗' : '→'}</span></div>
+    <h3>${esc(item.name)}</h3>
+    <p>${esc(item.description)}</p>
+    <div class="cardfoot"><span class="category">${esc(item.category)}</span><span class="open">Open ${item.external ? '↗' : '→'}</span></div>
+  </a>`;
+}
 
-            <div class="cards">
-                <a class="card" href="https://docs.google.com/spreadsheets/d/1tvJHIRAY2jL8W4d83jCgobnC01CV50hqBEBkzRBRsxY/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
-                    <div class="card-icon">💃</div>
-                    <h4>Creator Management Sheet</h4>
-                    <p>STH Creator & Affiliate Management</p>
-                    <div class="card-bottom">
-                        <span class="card-status">Available</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </a>
-            </div>
+function renderGrid(id, category) {
+  $(id).innerHTML = items.filter(x => x.category === category).map(card).join('');
+}
+renderGrid('#businessGrid','Business Systems');
+renderGrid('#sellerGrid','Seller Hubs');
+renderGrid('#toolsGrid','Digital Tools');
+renderGrid('#officialGrid','Official');
 
-            <!-- TEMPORARY / SUPPORT -->
-            <div class="section-title">
-                <h3>Management & Support Files</h3>
-                <span>Temporary / supporting records</span>
-            </div>
+const recordItems = items.filter(x => x.category === 'Records & Management');
+$('#recordFolders').innerHTML = recordItems.map((item,i) => `
+  <a class="folder" href="${esc(item.url)}" target="_blank" rel="noopener noreferrer">
+    <div class="folder-art">
+      <div class="folder-papers"><i class="paper"></i><i class="paper"></i><i class="paper"></i></div>
+      <div class="folder-tab"></div><div class="folder-shape"></div>
+    </div>
+    <h3>${esc(item.name)}</h3>
+    <p>${esc(item.description)}</p>
+  </a>`).join('');
 
-            <div class="cards">
-                <a class="card" href="https://docs.google.com/spreadsheets/d/1sogNAHWT1KWYZcGXoy5vr1u-qGait2ecn1paodCXlxI/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
-                    <div class="card-icon">🗂️</div>
-                    <h4>Temporary Business Management Sheet</h4>
-                    <p>Temporary workspace for business management, calculations, records and supporting data while the main ERP is being developed.</p>
-                    <div class="card-bottom">
-                        <span class="card-status">Available</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </a>
-            </div>
+const allCards = [...document.querySelectorAll('.card')];
+function filter() {
+  const q = $('#search').value.trim().toLowerCase();
+  let count = 0;
+  allCards.forEach(c => {
+    const match = !q || c.dataset.search.includes(q);
+    c.style.display = match ? '' : 'none';
+    if(match) count++;
+  });
+  $('#noResults').style.display = q && count === 0 ? 'block' : 'none';
+}
+$('#search').addEventListener('input', filter);
+document.addEventListener('keydown', e => {
+  if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+    e.preventDefault(); $('#search').focus();
+  }
+  if (e.key === 'Escape') $('#search').blur();
+});
 
-            <div class="cards">
-                <a class="card" href="https://docs.google.com/spreadsheets/d/1cUlHZJQYhBnfut4ykNJhyhroqGz4mD-_bLKYZFO9HUw/edit?usp=sharing" target="_blank" rel="noopener noreferrer">
-                    <div class="card-icon">🗂️</div>
-                    <h4>Jewelry Business Management Sheet</h4>
-                    <p>Old Jewelry workspace for business management, calculations, records and supporting data while the main ERP is being developed.</p>
-                    <div class="card-bottom">
-                        <span class="card-status">Available</span>
-                        <span class="open-arrow">→</span>
-                    </div>
-                </a>
-            </div>
+$('#menuBtn').addEventListener('click', () => {
+  const nav = $('#mobileNav');
+  const open = nav.classList.toggle('open');
+  $('#menuBtn').setAttribute('aria-expanded', open);
+});
+document.querySelectorAll('#mobileNav a').forEach(a => a.addEventListener('click',()=>$('#mobileNav').classList.remove('open')));
 
-            <!-- QUICK OVERVIEW -->
-            <div class="section-title">
-                <h3>Portal Overview</h3>
-                <span>Current status</span>
-            </div>
+const header = $('#header');
+addEventListener('scroll',()=>header.classList.toggle('scrolled',scrollY>10),{passive:true});
 
-            <div class="info-grid">
-                <div class="info-card">
-                    <div class="number">6</div>
-                    <div class="label">Business Resources</div>
-                </div>
+const observer = new IntersectionObserver(entries => entries.forEach(e => {if(e.isIntersecting)e.target.classList.add('show')}),{threshold:.12});
+document.querySelectorAll('.reveal').forEach(el=>observer.observe(el));
 
-                <div class="info-card">
-                    <div class="number">4</div>
-                    <div class="label">Active Links</div>
-                </div>
-
-                <div class="info-card">
-                    <div class="number">2</div>
-                    <div class="label">Systems Pending</div>
-                </div>
-            </div>
-
-        </div>
-    </main>
-
-    <footer>
-        <div class="container">
-            © 2026 SAHEB TREND HOUSE · Business Management Portal
-        </div>
-    </footer>
-
-    <script>
-        const dateElement = document.getElementById("currentDate");
-        const now = new Date();
-        dateElement.textContent = now.toLocaleDateString("en-IN", {
-            weekday: "long",
-            day: "numeric",
-            month: "long",
-            year: "numeric"
-        });
-    </script>
-
+const canvas = $('#rays'), ctx = canvas.getContext('2d');
+let W,H,particles=[];
+function resize(){W=canvas.width=innerWidth*devicePixelRatio;H=canvas.height=innerHeight*devicePixelRatio;canvas.style.width=innerWidth+'px';canvas.style.height=innerHeight+'px';ctx.setTransform(devicePixelRatio,0,0,devicePixelRatio,0,0);}
+function init(){resize();particles=Array.from({length:34},()=>({x:innerWidth*(.2+.6*Math.random()),y:innerHeight*.05+Math.random()*innerHeight*.7,l:120+Math.random()*350,a:.018+Math.random()*.045,s:.0003+Math.random()*.0008,p:Math.random()*6.28}));}
+function draw(t){ctx.clearRect(0,0,innerWidth,innerHeight);ctx.save();ctx.translate(innerWidth/2,0);ctx.globalCompositeOperation='screen';particles.forEach(p=>{const sway=Math.sin(t*p.s+p.p)*28;const g=ctx.createLinearGradient(0,p.y,0,p.y+p.l);g.addColorStop(0,'rgba(0,217,255,'+p.a+')');g.addColorStop(1,'rgba(0,217,255,0)');ctx.fillStyle=g;ctx.beginPath();ctx.moveTo(sway-2,p.y);ctx.lineTo(sway+12,p.y);ctx.lineTo(sway+70,p.y+p.l);ctx.lineTo(sway+40,p.y+p.l);ctx.closePath();ctx.fill();});ctx.restore();requestAnimationFrame(draw);}
+if(!matchMedia('(prefers-reduced-motion: reduce)').matches){init();addEventListener('resize',resize);requestAnimationFrame(draw)} else {canvas.style.display='none'}
+</script>
 </body>
 </html>
