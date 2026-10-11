@@ -6,7 +6,7 @@
  */
 
 // Authentication Credentials
-const AUTH_EMAIL = "saheb2602e.c@gmail.com";
+const AUTH_EMAIL = "saheb2602e.c@STH.com";
 const AUTH_PASSWORD_HASH = "STH@2026";
 
 // Live Google Apps Script Web App Endpoint
