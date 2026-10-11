@@ -43,6 +43,7 @@ let ERP_DB = {
 };
 
 let isConnected = false;
+let lastKnownTimestamps = JSON.parse(localStorage.getItem("st_erp_sheet_timestamps") || "{}");
 let isFetchingData = false;
 let chartInstances = {};
 let currentSelectedPO = null;
@@ -126,9 +127,9 @@ document.addEventListener("DOMContentLoaded", () => {
 function startAutoRefresh() {
   if (autoRefreshIntervalTimer) clearInterval(autoRefreshIntervalTimer);
   autoRefreshIntervalTimer = setInterval(() => {
-    // Refresh in background every 40s if document is visible
+    // Idea 2: Lightweight change detection ping (~200ms) instead of heavy full reload!
     if (!isFetchingData && !document.hidden && isConnected) {
-      fetchERPData(false, true);
+      checkAndSyncChanges();
     }
   }, AUTO_REFRESH_INTERVAL_MS);
 }
@@ -136,6 +137,244 @@ function startAutoRefresh() {
 /**
  * Manual Refresh Button Handler (Guaranteed to execute immediately on click)
  */
+/**
+ * Idea 1: Per-Page / Section Refresh Button Handler
+ * Fetches only the requested section from Google Sheets in 1-2 seconds!
+ */
+async function refreshSection(sectionKey) {
+  const btn = document.getElementById(`refreshBtn-${sectionKey}`);
+  const icon = btn ? btn.querySelector("i") : null;
+  if (icon) icon.classList.add("fa-spin");
+
+  const lastUpdatedText = document.getElementById("lastUpdatedText");
+  if (lastUpdatedText) lastUpdatedText.innerText = `Refreshing ${sectionKey.toUpperCase()} data...`;
+
+  // Action name mapping with fallbacks
+  const sectionActionMap = {
+    inventory: "getInventory",
+    dashboard: "getInventory",
+    suppliers: "getSuppliers",
+    supplier_ledger: "getSuppliers",
+    expenses: "getExpenses",
+    meesho: "getMeesho",
+    flipkart: "getFlipkart",
+    team: "getTeam",
+    business: "getBusiness"
+  };
+
+  try {
+    // 1. Try modern getSectionData endpoint
+    let url = `${APPS_SCRIPT_URL}?action=getSectionData&section=${encodeURIComponent(sectionKey)}&_t=${Date.now()}`;
+    let controller = new AbortController();
+    let timeoutId = setTimeout(() => controller.abort(), 35000);
+
+    let response = await fetch(url, {
+      method: "GET",
+      headers: { "Accept": "application/json" },
+      mode: "cors",
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    let result = await response.json();
+
+    // 2. If Apps Script is running an older deployment that returns "Unknown action", fallback gracefully!
+    if (result.status === "error" && result.message && result.message.includes("Unknown action")) {
+      console.warn(`[Fallback] getSectionData unknown on Apps Script. Trying direct action: ${sectionActionMap[sectionKey] || 'getAllData'}`);
+      
+      const directAction = sectionActionMap[sectionKey];
+      if (directAction) {
+        url = `${APPS_SCRIPT_URL}?action=${directAction}&_t=${Date.now()}`;
+        controller = new AbortController();
+        timeoutId = setTimeout(() => controller.abort(), 35000);
+        response = await fetch(url, { method: "GET", headers: { "Accept": "application/json" }, mode: "cors", signal: controller.signal });
+        clearTimeout(timeoutId);
+        result = await response.json();
+      }
+
+      // If still unknown (very old script deployment), fallback to getAllData
+      if (result.status === "error" && result.message && result.message.includes("Unknown action")) {
+        console.warn("[Fallback] Direct section action unknown. Falling back to getAllData...");
+        url = `${APPS_SCRIPT_URL}?action=getAllData&_t=${Date.now()}`;
+        controller = new AbortController();
+        timeoutId = setTimeout(() => controller.abort(), 50000);
+        response = await fetch(url, { method: "GET", headers: { "Accept": "application/json" }, mode: "cors", signal: controller.signal });
+        clearTimeout(timeoutId);
+        result = await response.json();
+      }
+    }
+
+    if (result.status === "success" && result.data) {
+      updateSectionData(sectionKey, result.data);
+
+      try {
+        localStorage.setItem("st_erp_cached_db", JSON.stringify(ERP_DB));
+      } catch (e) {}
+
+      const timeStr = new Date().toLocaleTimeString();
+      if (lastUpdatedText) {
+        lastUpdatedText.innerText = `Refreshed ${sectionKey.toUpperCase()} data at ${timeStr}`;
+      }
+    } else {
+      throw new Error(result.message || "Failed to load section data from database.");
+    }
+  } catch (err) {
+    console.error(`Error refreshing ${sectionKey}:`, err);
+    if (lastUpdatedText) {
+      lastUpdatedText.innerHTML = `<span style="color:var(--danger); font-weight:600;">Refresh failed: ${err.message}</span> <small style="color:var(--text-secondary);">(Deploy 'New version' in Apps Script)</small>`;
+    }
+  } finally {
+    if (icon) icon.classList.remove("fa-spin");
+  }
+}
+
+/**
+ * Updates ERP_DB dynamically for only the refreshed section and triggers its view renders
+ */
+function updateSectionData(sectionKey, data) {
+  const s = String(sectionKey || "").toLowerCase();
+
+  if (s === "inventory" || s === "dashboard") {
+    if (data.inventory) {
+      ERP_DB.inventory = data.inventory.filter(item => String(getField(item, ["Status", "status"])).trim().toLowerCase() !== "inactive");
+    }
+    if (data.products) {
+      ERP_DB.products = data.products.filter(item => String(getField(item, ["Status", "status"])).trim().toLowerCase() !== "inactive");
+    }
+    if (data.sales) ERP_DB.sales = data.sales;
+    if (data.returns) {
+      ERP_DB.returns = data.returns.map(r => {
+        let retType = "RTO";
+        const rawType = String(r["Return Type"] || r["Returns Type"] || r["Type"] || r["Remarks"] || "").toLowerCase();
+        if (rawType.includes("customer")) retType = "Customer Return";
+        else if (rawType.includes("rto") || rawType.includes("logistics")) retType = "RTO";
+        r["_returnType"] = retType;
+        return r;
+      });
+    }
+    if (data.newStock) ERP_DB.newStock = data.newStock;
+
+    renderInventory();
+    renderSales();
+    renderReturns();
+    renderDashboard();
+    renderAllRecordsTable();
+  } else if (s === "suppliers" || s === "supplier_ledger") {
+    if (data.suppliers) ERP_DB.suppliers = data.suppliers;
+    if (data.suppliersSummary) ERP_DB.suppliersSummary = data.suppliersSummary;
+    if (data.purchaseOrders) ERP_DB.purchaseOrders = data.purchaseOrders;
+    if (data.poSummarySheet) ERP_DB.poSummarySheet = data.poSummarySheet;
+    if (data.purchaseReceived) ERP_DB.purchaseReceived = data.purchaseReceived;
+    if (data.supplierPayments) {
+      ERP_DB.supplierPayments = data.supplierPayments;
+      ERP_DB.creditNotes = data.supplierPayments.filter(p => {
+        const pid = String(p["Payment ID"] || "");
+        const method = String(p["Payment Method"] || p["Method"] || "").toLowerCase();
+        const type = String(p["Payment Type"] || "").toLowerCase();
+        return pid.includes("CR") || method.includes("credit") || type.includes("credit");
+      });
+    }
+
+    compilePOSummary();
+    compileSupplierMetrics();
+    renderSuppliers();
+    renderPOSummary();
+    renderInvoicesTable();
+    renderPayments();
+    renderCreditNotes();
+    renderDashboard();
+  } else if (s === "expenses") {
+    if (data.expenses) ERP_DB.expenses = data.expenses;
+    renderExpenses();
+    renderBusinessDashboard();
+    renderDashboard();
+  } else if (s === "meesho") {
+    if (data.meesho) ERP_DB.meesho = data.meesho;
+    renderMeesho();
+    renderDashboard();
+  } else if (s === "flipkart") {
+    if (data.flipkart) ERP_DB.flipkart = data.flipkart;
+    renderFlipkart();
+    renderDashboard();
+  } else if (s === "team" || s === "employ" || s === "partner") {
+    if (data.employ) ERP_DB.employ = data.employ;
+    if (data.partnerTransactions) ERP_DB.partnerTransactions = data.partnerTransactions;
+    renderPartners();
+    renderBusinessDashboard();
+  } else if (s === "business") {
+    if (data.purchaseOrders) ERP_DB.purchaseOrders = data.purchaseOrders;
+    if (data.poSummarySheet) ERP_DB.poSummarySheet = data.poSummarySheet;
+    if (data.supplierPayments) ERP_DB.supplierPayments = data.supplierPayments;
+    if (data.expenses) ERP_DB.expenses = data.expenses;
+    if (data.employ) ERP_DB.employ = Object.assign(ERP_DB.employ || {}, data.employ);
+    compilePOSummary();
+    renderBusinessDashboard();
+  }
+}
+
+/**
+ * Idea 2: Background Change Detection Engine
+ * Pings Google Apps Script for modified timestamps (~200ms).
+ * Only downloads the changed spreadsheet if an edit was detected!
+ */
+async function checkAndSyncChanges() {
+  if (isFetchingData || document.hidden || !isConnected) return;
+
+  try {
+    const url = `${APPS_SCRIPT_URL}?action=checkModified&_t=${Date.now()}`;
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), 12000);
+
+    const res = await fetch(url, {
+      method: "GET",
+      headers: { "Accept": "application/json" },
+      mode: "cors",
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+
+    if (!res.ok) return;
+    const json = await res.json();
+    if (json.status !== "success" || !json.timestamps) return;
+
+    const newTs = json.timestamps;
+    const toUpdate = new Set();
+
+    // Compare with last known timestamps
+    if (lastKnownTimestamps.INVENTORY && newTs.INVENTORY > lastKnownTimestamps.INVENTORY) {
+      toUpdate.add("inventory");
+    }
+    if (lastKnownTimestamps.SUPPLIER_LEDGER && newTs.SUPPLIER_LEDGER > lastKnownTimestamps.SUPPLIER_LEDGER) {
+      toUpdate.add("suppliers");
+    }
+    if (lastKnownTimestamps.EXPENSES && newTs.EXPENSES > lastKnownTimestamps.EXPENSES) {
+      toUpdate.add("expenses");
+    }
+    if (lastKnownTimestamps.MEESHO && newTs.MEESHO > lastKnownTimestamps.MEESHO) {
+      toUpdate.add("meesho");
+    }
+    if (lastKnownTimestamps.FLIPKART && newTs.FLIPKART > lastKnownTimestamps.FLIPKART) {
+      toUpdate.add("flipkart");
+    }
+    if ((lastKnownTimestamps.EMPLOYEES && newTs.EMPLOYEES > lastKnownTimestamps.EMPLOYEES) ||
+        (lastKnownTimestamps.INVESTORS && newTs.INVESTORS > lastKnownTimestamps.INVESTORS)) {
+      toUpdate.add("team");
+    }
+
+    // Save latest timestamps
+    lastKnownTimestamps = newTs;
+    localStorage.setItem("st_erp_sheet_timestamps", JSON.stringify(lastKnownTimestamps));
+
+    // Refresh only the detected changed sections
+    for (const sec of toUpdate) {
+      console.log(`[Smart Sync] Detected edit in sheet for ${sec}. Auto-syncing...`);
+      await refreshSection(sec);
+    }
+  } catch (err) {
+    // Non-critical background ping
+  }
+}
+
 function handleManualRefresh() {
   isFetchingData = false; // ensure not blocked
   fetchERPData(true, false);
@@ -236,7 +475,7 @@ async function fetchERPData(isManual = false, isBackground = false) {
 
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 18000); // 18s timeout
+    const timeoutId = setTimeout(() => controller.abort(), 60000); // 60s timeout to allow Google Sheets sufficient time
 
     const url = `${APPS_SCRIPT_URL}?action=getAllData&_t=${Date.now()}`;
     const response = await fetch(url, {
@@ -263,6 +502,36 @@ async function fetchERPData(isManual = false, isBackground = false) {
     }
 
     if (result.status === "success" && result.data) {
+      const data = result.data;
+      const invCount = (data.inventory || []).length;
+      const salesCount = (data.sales || []).length;
+      const supCount = (data.suppliers || []).length;
+      const poCount = (data.purchaseOrders || []).length;
+      const totalCount = invCount + salesCount + supCount + poCount;
+
+      console.log(`[ERP Sync] Loaded: ${invCount} products, ${salesCount} sales, ${supCount} suppliers, ${poCount} POs`);
+
+      // Check if Apps Script connected, but Google Sheets returned 0 rows due to permissions/not found
+      if (totalCount === 0 && result._errors && result._errors.length > 0) {
+        isConnected = false;
+        const errDetails = result._errors.join("<br>• ");
+        if (lastUpdatedText) {
+          lastUpdatedText.innerHTML = `<span style="color:var(--danger); font-weight:700;">Google Sheets Access Error</span>`;
+        }
+        if (statusDot) { statusDot.className = "status-dot offline"; }
+        if (statusText) statusText.innerText = "Sheets Missing / Access Error";
+        if (banner) {
+          banner.style.display = "flex";
+          banner.className = "connection-banner failed";
+          if (bannerIcon) bannerIcon.className = "fa-solid fa-triangle-exclamation";
+          if (bannerText) {
+            bannerText.innerHTML = `<strong>Connected to Script, but cannot read Google Sheets:</strong><br>• <small>${errDetails}</small><br><small style="margin-top:4px; display:block;">Ensure your Google Sheets are shared with the Google account that deployed Apps Script.</small>`;
+          }
+        }
+        renderDisconnectedState(result._errors[0]);
+        return;
+      }
+
       isConnected = true;
       populateDatabase(result.data);
 
@@ -271,20 +540,21 @@ async function fetchERPData(isManual = false, isBackground = false) {
       } catch (err) {}
 
       const timeStr = new Date().toLocaleTimeString();
-      if (lastUpdatedText) lastUpdatedText.innerText = "Live synced with Google Sheets at " + timeStr;
+      const summaryMsg = totalCount > 0 ? `Synced ${invCount} products, ${salesCount} sales at ${timeStr}` : `Live synced with Google Sheets at ${timeStr}`;
+      if (lastUpdatedText) lastUpdatedText.innerText = summaryMsg;
       if (statusDot) { statusDot.className = "status-dot online"; }
       if (statusText) statusText.innerText = "Database Connected";
       
       if (banner) {
         banner.className = "connection-banner connected";
         if (bannerIcon) bannerIcon.className = "fa-solid fa-circle-check";
-        if (bannerText) bannerText.innerHTML = `Connected to live Google Sheets database. Synced at <strong>${timeStr}</strong>.`;
+        if (bannerText) bannerText.innerHTML = `Connected to live Google Sheets database. Synced <strong>${totalCount} records</strong> at <strong>${timeStr}</strong>.`;
         setTimeout(() => {
           if (banner) {
             banner.style.display = "none";
             banner.className = "connection-banner";
           }
-        }, 2200);
+        }, 2500);
       }
 
       if (diagText) {
@@ -902,6 +1172,19 @@ function renderInventory() {
 
   const activeList = (ERP_DB.inventory || []).filter(item => String(getField(item, ["Status"])).toLowerCase() !== "inactive");
   let healthy = 0, actionReq = 0, outStock = 0;
+
+  if (activeList.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="9" class="text-center text-muted" style="padding:28px;">
+      <i class="fa-solid fa-boxes-stacked" style="font-size:1.8rem; margin-bottom:8px; display:block; color:var(--text-muted);"></i>
+      <strong>No inventory products loaded</strong><br>
+      <span style="font-size:0.75rem;">Check that your Stock Ledger sheet tab contains product rows.</span>
+    </td></tr>`;
+    document.getElementById("invTotalProducts").innerText = "0";
+    document.getElementById("invHealthyStock").innerText = "0";
+    document.getElementById("invActionRequired").innerText = "0";
+    document.getElementById("invOutOfStock").innerText = "0";
+    return;
+  }
 
   activeList.forEach(item => {
     const current = parseNumber(getField(item, ["Current Stock"]));
@@ -1612,6 +1895,18 @@ function renderSuppliers() {
   let grandDeals = 0;
   let grandPaid = 0;
   let grandPending = 0;
+
+  if (suppliers.length === 0) {
+    tbody.innerHTML = `<tr><td colspan="6" class="text-center text-muted" style="padding:28px;">
+      <i class="fa-solid fa-truck-field" style="font-size:1.8rem; margin-bottom:8px; display:block; color:var(--text-muted);"></i>
+      <strong>No suppliers loaded</strong><br>
+      <span style="font-size:0.75rem;">Check that your Suppliers sheet tab contains supplier records.</span>
+    </td></tr>`;
+    document.getElementById("kpiSupTotalDeals").innerText = "₹0.00";
+    document.getElementById("kpiSupTotalPaid").innerText = "₹0.00";
+    document.getElementById("kpiSupTotalPending").innerText = "₹0.00";
+    return;
+  }
 
   suppliers.forEach(row => {
     const sId = row["Supplier ID"] || row["id"];
@@ -4476,16 +4771,10 @@ function exportTableToCSV(tableId, filename) {
 }
 
 function setupThemeToggle() {
-  const toggleBtn = document.getElementById("themeToggleBtn");
   const savedTheme = localStorage.getItem("st_erp_theme") || "light";
   document.documentElement.setAttribute("data-theme", savedTheme);
   updateThemeIcon(savedTheme);
-
-  if (toggleBtn) {
-    toggleBtn.addEventListener("click", () => {
-      toggleTheme();
-    });
-  }
+  // Duplicate addEventListener removed so onclick in HTML toggles cleanly once!
 }
 
 function toggleTheme() {
@@ -4503,12 +4792,30 @@ function updateThemeIcon(theme) {
 }
 
 function getField(obj, possibleKeys) {
-  if (!obj) return "";
+  if (!obj || typeof obj !== "object") return "";
+
+  // 1. Direct key match
   for (let key of possibleKeys) {
     if (obj[key] !== undefined && obj[key] !== null && obj[key] !== "") {
       return obj[key];
     }
   }
+
+  // 2. Normalized match (handles trailing spaces, case differences, underscores)
+  const objKeys = Object.keys(obj);
+  for (let targetKey of possibleKeys) {
+    const cleanTarget = targetKey.toLowerCase().replace(/[\s_\-\.]/g, "");
+    for (let k of objKeys) {
+      const cleanK = k.toLowerCase().replace(/[\s_\-\.]/g, "");
+      if (cleanK === cleanTarget) {
+        const val = obj[k];
+        if (val !== undefined && val !== null && val !== "") {
+          return val;
+        }
+      }
+    }
+  }
+
   return "";
 }
 

@@ -293,8 +293,8 @@
 <div class="date-filter-group" id="globalDateFilterContainer" style="display:flex; align-items:center; gap:6px; background:var(--bg-app); border:1px solid var(--border-color); padding:4px 10px; border-radius:var(--radius-sm);">
 <i class="fa-regular fa-calendar" style="color:var(--text-secondary); font-size:0.8rem;"></i>
 <select id="dateFilterSelect" onchange="handleGlobalDateFilterChange()" style="background:transparent; border:none; font-size:0.8rem; font-weight:600; color:var(--text-primary); outline:none; cursor:pointer;">
+<option value="latest" selected>Latest Record Date</option>
 <option value="today">Today's Date</option>
-<option value="latest">Latest Record Date</option>
 <option value="this_week">Last 7 Days (Week)</option>
 <option value="this_month">This Month</option>
 <option value="all">All Time Records</option>
@@ -349,6 +349,7 @@
 <p id="dashboardDateScopeText">Filtered records update dynamically according to date filter</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-dashboard" onclick="refreshSection('dashboard')" title="Refresh Dashboard Data"><i class="fa-solid fa-arrows-rotate"></i> Refresh Dashboard</button>
 <a class="btn btn-sm btn-outline" href="https://docs.google.com/spreadsheets/d/1bz1C-n9jJnkSxyuF6XvzagrDy49J1K5csmJ11zoOHoI/edit?gid=0#gid=0" target="_blank">
 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Inventory Sheet
               </a>
@@ -515,6 +516,7 @@
 <p>Active products stock ledger, shipments, returns log, stock analytics &amp; sales trends</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-inventory" onclick="refreshSection('inventory')" title="Refresh Inventory Sheets Only"><i class="fa-solid fa-arrows-rotate"></i> Refresh Inventory</button>
 <button class="btn btn-sm btn-primary" onclick="openAddProductModal()"><i class="fa-solid fa-plus"></i> Add Product</button>
 <a class="btn btn-sm btn-outline" href="https://docs.google.com/spreadsheets/d/1bz1C-n9jJnkSxyuF6XvzagrDy49J1K5csmJ11zoOHoI/edit?gid=0#gid=0" target="_blank">
 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Inventory Sheet
@@ -879,6 +881,7 @@
 <p>Vendor commitments, PO lifecycle, payment ledgers, and account statements</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-suppliers" onclick="refreshSection('suppliers')" title="Refresh Supplier Ledger Only"><i class="fa-solid fa-arrows-rotate"></i> Refresh Suppliers</button>
 <button class="btn btn-sm btn-primary" onclick="openCreatePOModal()"><i class="fa-solid fa-plus"></i> Create PO</button>
 <button class="btn btn-sm btn-outline" onclick="openRecordPaymentModal()"><i class="fa-solid fa-money-bill-wave"></i> Record Payment</button>
 <a class="btn btn-sm btn-outline" href="https://docs.google.com/spreadsheets/d/1S1xoWEWYHZIVq_104cj-FTTjmyJBcBzVT4Aep_mnQrw/edit?gid=1807318611#gid=1807318611" target="_blank">
@@ -1342,6 +1345,7 @@
 <p>Packaging materials, transportation fuel, and portal overheads</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-expenses" onclick="refreshSection('expenses')" title="Refresh Expenses Only"><i class="fa-solid fa-arrows-rotate"></i> Refresh Expenses</button>
 <button class="btn btn-sm btn-primary" onclick="openAddExpenseModal()"><i class="fa-solid fa-plus"></i> Add Expense</button>
 <a class="btn btn-sm btn-outline" href="https://docs.google.com/spreadsheets/d/1X148GPfw8zvyyYI84WUe_LcDWD8Kaa-dFcWvOw0R_0A/edit?gid=0#gid=0" target="_blank">
 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Expenses Sheet
@@ -1466,6 +1470,7 @@
 <p>Dispatched orders, reverse logistics, customer return deductions, and payouts</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-meesho" onclick="refreshSection('meesho')" title="Refresh Meesho Data Only"><i class="fa-solid fa-arrows-rotate"></i> Refresh Meesho</button>
 <a class="btn btn-sm btn-outline" href="https://docs.google.com/spreadsheets/d/1Ex8h2CcoWHaCLnhz37uBsrHVO_ZxpGTZviMearsHiA8/edit?gid=1454704415#gid=1454704415" target="_blank">
 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Meesho Sheet
               </a>
@@ -1706,6 +1711,7 @@
 <p>Performance metrics, return rates, sales velocity, RTO audit, and SKU profitability</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-flipkart" onclick="refreshSection('flipkart')" title="Refresh Flipkart Data Only"><i class="fa-solid fa-arrows-rotate"></i> Refresh Flipkart</button>
 <a class="btn btn-sm btn-outline" href="https://docs.google.com/spreadsheets/d/1smmEd2olBJC3D591XiGtQKPKaGNuhlcEkNQfuYOWZj8/edit?gid=0#gid=0" target="_blank">
 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Flipkart Sheet
               </a>
@@ -1896,6 +1902,7 @@
 <p>Employee directory, shift timesheets, wage disbursements, and investor capital ledger</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-team" onclick="refreshSection('team')" title="Refresh Staff &amp; Investor Data Only"><i class="fa-solid fa-arrows-rotate"></i> Refresh Team</button>
 <a class="btn btn-sm btn-outline" href="https://docs.google.com/spreadsheets/d/1d3XYro4f0osK0tHHn0KGXaFjU1nHOqPwLlXQDHSIALc/edit?gid=0#gid=0" style="margin-right:4px;" target="_blank">
 <i class="fa-solid fa-arrow-up-right-from-square"></i> Open Employee Sheet
               </a>
@@ -2029,6 +2036,7 @@
 <p>Total business expenses including procurement deals, operational costs, staff wages &amp; logistics</p>
 </div>
 <div class="toolbar-actions">
+<button class="btn btn-sm btn-outline" id="refreshBtn-business" onclick="refreshSection('business')" title="Refresh Business Expenses"><i class="fa-solid fa-arrows-rotate"></i> Refresh Business</button>
 <button class="btn btn-sm btn-outline" onclick="exportTableToCSV('businessExpenseTable', 'Consolidated_Business_Expenses.csv')">
 <i class="fa-solid fa-file-export"></i> Export Expenses CSV
               </button>

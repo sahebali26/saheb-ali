@@ -26,11 +26,85 @@
 
 // SPREADSHEET INSTANCE CACHE (Reduces execution time from 10s to <2s)
 const _SS_CACHE = {};
-function getCachedSpreadsheet(spreadsheetId) {
+function getCachedSpreadsheet(spreadsheetId, errors) {
   if (!_SS_CACHE[spreadsheetId]) {
-    _SS_CACHE[spreadsheetId] = SpreadsheetApp.openById(spreadsheetId);
+    try {
+      _SS_CACHE[spreadsheetId] = SpreadsheetApp.openById(spreadsheetId);
+    } catch (err) {
+      if (errors) {
+        errors.push("Cannot open spreadsheet (" + spreadsheetId + "): " + err.message);
+      }
+      return null;
+    }
   }
   return _SS_CACHE[spreadsheetId];
+}
+
+/**
+ * Robust sheet finder: handles case-insensitivity, whitespace, underscores, and synonyms.
+ */
+function findSheet(ss, targetName, alternativeNames) {
+  if (!ss) return null;
+  // 1. Exact match
+  let sheet = ss.getSheetByName(targetName);
+  if (sheet) return sheet;
+
+  // 2. Alternative names exact match
+  if (alternativeNames && alternativeNames.length) {
+    for (let i = 0; i < alternativeNames.length; i++) {
+      sheet = ss.getSheetByName(alternativeNames[i]);
+      if (sheet) return sheet;
+    }
+  }
+
+  // 3. Case-insensitive and trimmed match
+  const sheets = ss.getSheets();
+  const cleanTarget = targetName.toLowerCase().replace(/[\s_\-\/]/g, "");
+  const altCleans = (alternativeNames || []).map(function(a) {
+    return a.toLowerCase().replace(/[\s_\-\/]/g, "");
+  });
+
+  for (let j = 0; j < sheets.length; j++) {
+    const sName = sheets[j].getName().toLowerCase().replace(/[\s_\-\/]/g, "");
+    if (sName === cleanTarget || altCleans.indexOf(sName) !== -1) {
+      return sheets[j];
+    }
+  }
+
+  // 4. Substring match
+  for (let k = 0; k < sheets.length; k++) {
+    const sName = sheets[k].getName().toLowerCase();
+    if (sName.indexOf(cleanTarget) !== -1 || cleanTarget.indexOf(sName) !== -1) {
+      return sheets[k];
+    }
+  }
+
+  // 5. Fallback: if only 1 sheet in workbook, use it
+  if (sheets.length === 1) {
+    return sheets[0];
+  }
+
+  return null;
+}
+
+/**
+ * Auto-detects the header row index (handles merged title banners on row 1).
+ */
+function findHeaderRowIndex(values) {
+  for (let r = 0; r < Math.min(values.length, 5); r++) {
+    const row = values[r];
+    let filled = 0;
+    for (let c = 0; c < row.length; c++) {
+      if (row[c] !== "" && row[c] !== null && row[c] !== undefined) {
+        filled++;
+      }
+    }
+    // If a row has 3 or more non-empty columns, it is the header row
+    if (filled >= 3) {
+      return r;
+    }
+  }
+  return 0;
 }
 
 const SPREADSHEET_IDS = {
@@ -65,14 +139,32 @@ function doGet(e) {
       case "getAllData":
         return handleGetAllData();
 
+      case "checkModified":
+        return handleCheckModified();
+
+      case "getSectionData":
+        return handleGetSectionData(e.parameter.section);
+
       case "getInventory":
-        return handleGetSheetData(SPREADSHEET_IDS.INVENTORY, ["Stock Ledger", "Daily Shipment", "Returs", "Products"]);
+        return handleGetSectionData("inventory");
 
       case "getSuppliers":
-        return handleGetSheetData(SPREADSHEET_IDS.SUPPLIER_LEDGER, ["Suppliers", "PO", "PurchaseRecived", "Payments"]);
+        return handleGetSectionData("suppliers");
 
       case "getExpenses":
-        return handleGetSheetData(SPREADSHEET_IDS.EXPENSES, ["Packing Expenses", "Transportation", "Other Expenses"]);
+        return handleGetSectionData("expenses");
+
+      case "getMeesho":
+        return handleGetSectionData("meesho");
+
+      case "getFlipkart":
+        return handleGetSectionData("flipkart");
+
+      case "getTeam":
+        return handleGetSectionData("team");
+
+      case "getBusiness":
+        return handleGetSectionData("business");
 
       default:
         return createJsonResponse({
@@ -175,37 +267,124 @@ function handleAuth(email, password) {
  * Retrieves and compiles all live operational data across the connected spreadsheets.
  */
 function handleGetAllData() {
+  const errors = [];
+  const stats = {};
+
   const result = {
     timestamp: new Date().toISOString(),
-    inventory: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Stock Ledger"),
-    products: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Products"),
-    sales: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Daily Shipment"),
-    returns: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Returs"),
-    newStock: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Imported Data"),
-    suppliers: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Suppliers"),
-    suppliersSummary: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Suppliers Summery", ["Suppliers Summary", "Supplier Summary"]),
-    purchaseOrders: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO"),
-    poSummarySheet: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO Summery", ["PO Summary", "PO_Summary"]),
-    purchaseReceived: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PurchaseRecived", ["Purchase/recieved", "Purchase/Recived", "Purchase Received", "Imported Data", "PurchaseRecieved"]),
-    supplierPayments: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Payments"),
+    inventory: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Stock Ledger", ["Stock", "Inventory", "StockLedger"], errors, stats),
+    products: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Products", ["Product", "Items"], errors, stats),
+    sales: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Daily Shipment", ["Daily Shipments", "Sales", "Shipments"], errors, stats),
+    returns: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Returs", ["Returns", "Return", "Retur"], errors, stats),
+    newStock: getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Imported Data", ["Inward", "New Stock", "Purchase"], errors, stats),
+    suppliers: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Suppliers", ["Supplier", "Vendors"], errors, stats),
+    suppliersSummary: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Suppliers Summery", ["Suppliers Summary", "Supplier Summary", "SuppliersSummery"], errors, stats),
+    purchaseOrders: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO", ["Purchase Orders", "Purchase Order", "POs"], errors, stats),
+    poSummarySheet: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO Summery", ["PO Summary", "PO_Summary", "POSummery"], errors, stats),
+    purchaseReceived: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PurchaseRecived", ["Purchase/recieved", "Purchase/Recived", "Purchase Received", "Imported Data", "PurchaseRecieved", "GRN"], errors, stats),
+    supplierPayments: getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Payments", ["Payment", "Supplier Payments"], errors, stats),
     expenses: {
-      packing: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Packing Expenses"),
-      transportation: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Transportation"),
-      other: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Other Expenses")
+      packing: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Packing Expenses", ["Packing", "Packaging Expenses", "Packaging"], errors, stats),
+      transportation: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Transportation", ["Travel", "Transport", "Logistics"], errors, stats),
+      other: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Other Expenses", ["Other", "Setup Expenses", "Setup"], errors, stats)
     },
     employ: {
-      employees: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Employs"),
-      salary: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Salery"),
-      attendance: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Employ Attendence")
+      employees: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Employs", ["Employees", "Staff", "Employee"], errors, stats),
+      salary: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Salery", ["Salary", "Salaries", "Wages"], errors, stats),
+      attendance: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Employ Attendence", ["Attendance", "Timesheet", "Attendence"], errors, stats)
     },
-    partnerTransactions: getSheetObjects(SPREADSHEET_IDS.INVESTORS, "Investments"),
-    flipkart: getSheetObjects(SPREADSHEET_IDS.FLIPKART, "Sheet1"),
+    partnerTransactions: getSheetObjects(SPREADSHEET_IDS.INVESTORS, "Investments", ["Investment", "Investors", "Capital"], errors, stats),
+    flipkart: getSheetObjects(SPREADSHEET_IDS.FLIPKART, "Sheet1", ["Flipkart", "Sales", "Orders"], errors, stats),
     meesho: getMeeshoSummary(SPREADSHEET_IDS.MEESHO)
   };
 
   return createJsonResponse({
     status: "success",
-    data: result
+    data: result,
+    _errors: errors,
+    _stats: stats
+  });
+}
+
+/**
+ * Returns last modified timestamps across all spreadsheets to detect changes in ~200ms.
+ */
+function handleCheckModified() {
+  const timestamps = {};
+  const props = PropertiesService.getScriptProperties();
+  for (const key in SPREADSHEET_IDS) {
+    try {
+      timestamps[key] = DriveApp.getFileById(SPREADSHEET_IDS[key]).getLastUpdated().getTime();
+    } catch (err) {
+      const p = props.getProperty("MODIFIED_" + key);
+      timestamps[key] = p ? parseInt(p, 10) : 0;
+    }
+  }
+  return createJsonResponse({
+    status: "success",
+    timestamps: timestamps,
+    serverTime: Date.now()
+  });
+}
+
+/**
+ * Returns data ONLY for the requested section/sheet to make refreshing instantaneous (1-2s).
+ */
+function handleGetSectionData(section) {
+  const s = String(section || "").toLowerCase();
+  const data = {};
+
+  if (s === "inventory" || s === "dashboard") {
+    data.inventory = getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Stock Ledger");
+    data.products = getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Products");
+    data.sales = getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Daily Shipment");
+    data.returns = getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Returs");
+    data.newStock = getSheetObjects(SPREADSHEET_IDS.INVENTORY, "Imported Data");
+  } else if (s === "suppliers" || s === "supplier_ledger") {
+    data.suppliers = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Suppliers");
+    data.suppliersSummary = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Suppliers Summery", ["Suppliers Summary", "Supplier Summary"]);
+    data.purchaseOrders = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO");
+    data.poSummarySheet = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO Summery", ["PO Summary", "PO_Summary"]);
+    data.purchaseReceived = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PurchaseRecived", ["Purchase/recieved", "Purchase/Recived", "Purchase Received", "Imported Data", "PurchaseRecieved"]);
+    data.supplierPayments = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Payments");
+  } else if (s === "expenses") {
+    data.expenses = {
+      packing: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Packing Expenses"),
+      transportation: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Transportation"),
+      other: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Other Expenses")
+    };
+  } else if (s === "meesho") {
+    data.meesho = getMeeshoSummary(SPREADSHEET_IDS.MEESHO);
+  } else if (s === "flipkart") {
+    data.flipkart = getSheetObjects(SPREADSHEET_IDS.FLIPKART, "Sheet1");
+  } else if (s === "team" || s === "employ" || s === "partner") {
+    data.employ = {
+      employees: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Employs"),
+      salary: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Salery"),
+      attendance: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Employ Attendence")
+    };
+    data.partnerTransactions = getSheetObjects(SPREADSHEET_IDS.INVESTORS, "Investments");
+  } else if (s === "business") {
+    data.purchaseOrders = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO");
+    data.poSummarySheet = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "PO Summery", ["PO Summary", "PO_Summary"]);
+    data.supplierPayments = getSheetObjects(SPREADSHEET_IDS.SUPPLIER_LEDGER, "Payments");
+    data.expenses = {
+      packing: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Packing Expenses"),
+      transportation: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Transportation"),
+      other: getSheetObjects(SPREADSHEET_IDS.EXPENSES, "Other Expenses")
+    };
+    data.employ = {
+      salary: getSheetObjects(SPREADSHEET_IDS.EMPLOYEES, "Salery")
+    };
+  } else {
+    return createJsonResponse({ status: "error", message: "Unknown section: " + section });
+  }
+
+  return createJsonResponse({
+    status: "success",
+    section: s,
+    data: data,
+    timestamp: new Date().toISOString()
   });
 }
 
@@ -220,25 +399,31 @@ function handleGetSheetData(spreadsheetId, sheetNames) {
 /**
  * Reads any sheet and returns clean array of row objects.
  */
-function getSheetObjects(spreadsheetId, sheetName, alternativeNames) {
+function getSheetObjects(spreadsheetId, sheetName, alternativeNames, errors, stats) {
   try {
-    const ss = getCachedSpreadsheet(spreadsheetId);
-    let sheet = ss.getSheetByName(sheetName);
-    if (!sheet && alternativeNames && alternativeNames.length) {
-      for (let k = 0; k < alternativeNames.length; k++) {
-        sheet = ss.getSheetByName(alternativeNames[k]);
-        if (sheet) break;
+    const ss = getCachedSpreadsheet(spreadsheetId, errors);
+    if (!ss) return [];
+
+    let sheet = findSheet(ss, sheetName, alternativeNames);
+    if (!sheet) {
+      const available = ss.getSheets().map(function(s) { return s.getName(); }).join(", ");
+      if (errors) {
+        errors.push("Sheet '" + sheetName + "' not found in spreadsheet (" + spreadsheetId + "). Available tabs: [" + available + "]");
       }
+      return [];
     }
-    if (!sheet) return [];
 
     const values = sheet.getDataRange().getValues();
-    if (values.length <= 1) return [];
+    if (values.length <= 1) {
+      if (stats) stats[sheetName] = 0;
+      return [];
+    }
 
-    const headers = values[0].map(function(h) { return String(h).trim(); });
+    const headerIdx = findHeaderRowIndex(values);
+    const headers = values[headerIdx].map(function(h) { return String(h || "").trim(); });
     const rows = [];
 
-    for (let i = 1; i < values.length; i++) {
+    for (let i = headerIdx + 1; i < values.length; i++) {
       const row = values[i];
       let hasData = false;
       for (let j = 0; j < row.length; j++) {
@@ -255,16 +440,24 @@ function getSheetObjects(spreadsheetId, sheetName, alternativeNames) {
         if (header) {
           let cell = row[j];
           if (cell instanceof Date) {
-            cell = Utilities.formatDate(cell, Session.getScriptTimeZone(), "yyyy-MM-dd");
+            const y = cell.getFullYear();
+            const m = ("0" + (cell.getMonth() + 1)).slice(-2);
+            const d = ("0" + cell.getDate()).slice(-2);
+            cell = y + "-" + m + "-" + d;
           }
           obj[header] = cell !== undefined ? cell : "";
         }
       }
       rows.push(obj);
     }
+
+    if (stats) stats[sheetName] = rows.length;
     return rows;
   } catch (err) {
     Logger.log("Error reading " + sheetName + " from " + spreadsheetId + ": " + err);
+    if (errors) {
+      errors.push("Error reading '" + sheetName + "': " + err.message);
+    }
     return [];
   }
 }
